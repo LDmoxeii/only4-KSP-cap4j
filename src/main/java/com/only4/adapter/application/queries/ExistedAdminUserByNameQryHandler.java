@@ -26,7 +26,7 @@ public class ExistedAdminUserByNameQryHandler implements Query<ExistedAdminUserB
         Long existed = adminUserMapper.existedByName(request.getName());
         // mybatis / jpa 哪个顺手就用哪个吧！
         return ExistedAdminUserByNameQryResponse.builder()
-                .existed(existed == 0L)
+                .existed(existed != 0L)
                 .build();
     }
 }

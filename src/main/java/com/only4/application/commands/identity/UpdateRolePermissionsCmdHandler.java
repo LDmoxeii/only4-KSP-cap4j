@@ -19,16 +19,18 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UpdateRolePermissionsCmdHandler implements Command<UpdateRolePermissionsCmdRequest, UpdateRolePermissionsCmdResponse> {
+public class UpdateRolePermissionsCmdHandler implements
+    Command<UpdateRolePermissionsCmdRequest, UpdateRolePermissionsCmdResponse> {
 
-    @Override
-    public UpdateRolePermissionsCmdResponse exec(UpdateRolePermissionsCmdRequest cmd) {
-        Mediator.repositories().findOne(JpaPredicate.byId(Role.class, cmd.roleId))
-                .orElseThrow(() -> new KnownException("角色不存在, roleId=" + cmd.roleId))
-                .updateRolePermission(cmd.permissions);
-        Mediator.uow().save();
-        return UpdateRolePermissionsCmdResponse.builder()
-                .success(true)
-                .build();
-    }
+  @Override
+  public UpdateRolePermissionsCmdResponse exec(UpdateRolePermissionsCmdRequest cmd) {
+    Role role = Mediator.repositories().findOne(JpaPredicate.byId(Role.class, cmd.roleId))
+        .orElseThrow(() -> new KnownException("角色不存在, roleId=" + cmd.roleId));
+    role.updateRolePermission(cmd.permissions);
+    Mediator.uow().persist(role);
+    Mediator.uow().save();
+    return UpdateRolePermissionsCmdResponse.builder()
+        .success(true)
+        .build();
+  }
 }

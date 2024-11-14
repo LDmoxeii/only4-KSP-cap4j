@@ -18,6 +18,7 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeleteAdminUserCmdRequest implements RequestParam<DeleteAdminUserCmdResponse> {
-    Long adminUserId;
+
+  Long adminUserId;
 
 }

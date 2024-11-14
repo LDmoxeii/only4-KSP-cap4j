@@ -6,7 +6,8 @@ import lombok.Data;
  * @author LD_moxeii
  */
 @Data
-public class UpdateRoleInfoRequest {
-    String name;
-    String description;
+public class AdminUserQryRequest {
+  private String name;
+  private String phone;
+
 }

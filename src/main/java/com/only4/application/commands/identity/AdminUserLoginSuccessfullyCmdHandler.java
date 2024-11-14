@@ -19,16 +19,16 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AdminUserLoginSuccessfullyCmdHandler implements Command<AdminUserLoginSuccessfullyCmdRequest, AdminUserLoginSuccessfullyCmdResponse> {
+public class AdminUserLoginSuccessfullyCmdHandler implements
+    Command<AdminUserLoginSuccessfullyCmdRequest, AdminUserLoginSuccessfullyCmdResponse> {
 
-    @Override
-    public AdminUserLoginSuccessfullyCmdResponse exec(AdminUserLoginSuccessfullyCmdRequest cmd) {
-        Mediator.repositories().findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-                .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId))
-                .loginSuccessful(cmd.refreshToken, cmd.loginExpiryDate);
-        Mediator.uow().save();
-        return AdminUserLoginSuccessfullyCmdResponse.builder()
-                .success(true)
-                .build();
-    }
+  @Override
+  public AdminUserLoginSuccessfullyCmdResponse exec(AdminUserLoginSuccessfullyCmdRequest cmd) {
+    Mediator.repositories().findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
+        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId))
+        .loginSuccessful(cmd.refreshToken, cmd.loginExpiryDate);
+    return AdminUserLoginSuccessfullyCmdResponse.builder()
+        .success(true)
+        .build();
+  }
 }

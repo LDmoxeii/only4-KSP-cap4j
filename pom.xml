@@ -7,7 +7,7 @@
     <version>1.2.3</version>
     <packaging>jar</packaging>
 
-    <name>ddd-sample</name>
+    <name>only4-ksp-cap4j</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -202,9 +202,8 @@
             <version>6.6</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -217,7 +216,7 @@
                 <version>${cap4j.version}</version>
                 <configuration>
                     <basePackage>com.only4</basePackage>
-                    <archTemplate>cap4j-ddd-arch-template</archTemplate>
+                        <archTemplate>F:\only4\only4-KSP-cap4j\cap4j-ddd-codegen-template.json</archTemplate>
                     <archTemplateEncoding>UTF-8</archTemplateEncoding>
                     <outputEncoding>UTF-8</outputEncoding>
                     <designFile></designFile>

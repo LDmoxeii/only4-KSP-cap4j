@@ -17,5 +17,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateAdminUserRoleInfoCmdResponse {
-    boolean success;
+
+  boolean success;
 }

@@ -1,5 +1,7 @@
 package com.only4.domain.aggregates.role;
 
+import cn.hutool.extra.spring.SpringUtil;
+import com.only4.adapter._share.utils.SpringUtils;
 import com.only4.domain.aggregates.role.events.RoleInfoChangedDomainEvent;
 import com.only4.domain.aggregates.role.events.RolePermissionChangedDomainEvent;
 import lombok.AllArgsConstructor;
@@ -8,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
@@ -40,12 +44,6 @@ public class Role {
 
     // 【行为方法开始】
 
-    public Role(String name, String description, List<RolePermission> rolePermissions) {
-        this.name = name;
-        this.description = description;
-        this.rolePermissions = rolePermissions;
-    }
-
     public void updateRoleInfo(String name, String description) {
         this.name = name;
         this.description = description;
@@ -53,10 +51,10 @@ public class Role {
     }
 
     public void updateRolePermission(List<RolePermission> newPermissions) {
-        Map<Long, RolePermission> currentPermissionMap = this.rolePermissions.stream()
-                .collect(Collectors.toMap(RolePermission::getId, rolePermission -> rolePermission));
-        Map<Long, RolePermission> newPsermissionMap = newPermissions.stream()
-                .collect(Collectors.toMap(RolePermission::getId, rolePermission -> rolePermission));
+        Map<String, RolePermission> currentPermissionMap = this.rolePermissions.stream()
+                .collect(Collectors.toMap(RolePermission::getPermissionCode, rolePermission -> rolePermission));
+        Map<String, RolePermission> newPsermissionMap = newPermissions.stream()
+                .collect(Collectors.toMap(RolePermission::getPermissionCode, rolePermission -> rolePermission));
         currentPermissionMap.keySet().stream()
                 .filter(key -> !newPsermissionMap.containsKey(key))
                 .forEach(key ->this.rolePermissions.remove(currentPermissionMap.get(key)));
@@ -97,11 +95,12 @@ public class Role {
      * 创建时间
      * timestamp
      */
-    @Column(name = "`created_at`", insertable = false, updatable = false)
+    @Column(name = "`created_at`")
     java.time.LocalDateTime createdAt;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "`role_id`", nullable = false)
+    @Fetch(FetchMode.SUBSELECT)
     private java.util.List<com.only4.domain.aggregates.role.RolePermission> rolePermissions;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动

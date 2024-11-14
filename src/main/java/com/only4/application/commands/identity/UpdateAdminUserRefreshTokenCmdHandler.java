@@ -19,17 +19,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UpdateAdminUserRefreshTokenCmdHandler implements Command<UpdateAdminUserRefreshTokenCmdRequest, UpdateAdminUserRefreshTokenCmdResponse> {
+public class UpdateAdminUserRefreshTokenCmdHandler implements
+    Command<UpdateAdminUserRefreshTokenCmdRequest, UpdateAdminUserRefreshTokenCmdResponse> {
 
-    @Override
-    public UpdateAdminUserRefreshTokenCmdResponse exec(UpdateAdminUserRefreshTokenCmdRequest cmd) {
-        Mediator.repositories().findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-                .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId))
-                .updateRefreshToken(cmd.refreshToken);
-        Mediator.uow().save();
+  @Override
+  public UpdateAdminUserRefreshTokenCmdResponse exec(UpdateAdminUserRefreshTokenCmdRequest cmd) {
+    AdminUser adminUser = Mediator.repositories()
+        .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
+        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId));
+    adminUser.updateRefreshToken(cmd.refreshToken);
+    Mediator.uow().persist(adminUser);
+    Mediator.uow().save();
 
-        return UpdateAdminUserRefreshTokenCmdResponse.builder()
-                .success(true)
-                .build();
-    }
+    return UpdateAdminUserRefreshTokenCmdResponse.builder()
+        .success(true)
+        .build();
+  }
 }

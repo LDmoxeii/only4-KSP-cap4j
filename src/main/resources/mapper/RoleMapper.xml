@@ -2,34 +2,65 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.only4.adapter.infra.mybatis.mapper.RoleMapper">
 
+    <resultMap id="role" type="com.only4.domain.aggregates.role.Role">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="created_at" property="createdAt"/>
+        <collection property="rolePermissions" ofType="com.only4.domain.aggregates.role.RolePermission">
+            <result column="permission_code" property="permissionCode"/>
+            <result column="permission_remark" property="permissionRemark"/>
+        </collection>
+    </resultMap>
+
     <select id="existByName" resultType="java.lang.Long">
         SELECT COUNT(1)
         FROM role
         WHERE name = #{name}
     </select>
-    <select id="getByName" resultType="com.only4.domain.aggregates.role.Role">
-        SELECT id, name, description
-        FROM role
+    <select id="getByName" resultMap="role">
+      SELECT r.id                 as id,
+             r.name               as name,
+             r.description        as description,
+             rp.permission_code   as permission_code,
+             rp.permission_remark as permission_remark
+      FROM role r
+             LEFT JOIN role_permission rp on r.id = rp.role_id
         WHERE name = #{name}
     </select>
-    <select id="getAll" resultType="com.only4.domain.aggregates.role.Role">
-        SELECT id, name, description
-        FROM role
+    <select id="getAll" resultMap="role">
+      SELECT r.id                 as id,
+             r.name               as name,
+             r.description        as description,
+             rp.permission_code   as permission_code,
+             rp.permission_remark as permission_remark
+      FROM role r
+             LEFT JOIN role_permission rp on r.id = rp.role_id
     </select>
-    <select id="getByCondition" resultType="com.only4.domain.aggregates.role.Role">
-        SELECT id, name, description
-        FROM role
-        WHERE 1=1
-        <if test="name != null">
-            AND name = #{name}
-        </if>
-        <if test="description != null">
-            AND description = #{description}
-        </if>
+    <select id="getByCondition" resultMap="role">
+      SELECT r.id                 as id,
+      r.name               as name,
+      r.description        as description,
+      rp.permission_code   as permission_code,
+      rp.permission_remark as permission_remark
+      FROM role r
+      LEFT JOIN role_permission rp on r.id = rp.role_id
+      WHERE 1=1
+      <if test="name != null and name != ''">
+        AND name = #{name}
+      </if>
+      <if test="description != null and description != ''">
+        AND description = #{description}
+      </if>
     </select>
-    <select id="getById" resultType="com.only4.domain.aggregates.role.Role">
-        SELECT id, name, description
-        FROM role
-        WHERE id = #{id}
+    <select id="getById" resultMap="role">
+      SELECT r.id                 as id,
+             r.name               as name,
+             r.description        as description,
+             rp.permission_code   as permission_code,
+             rp.permission_remark as permission_remark
+      FROM role r
+             LEFT JOIN role_permission rp on r.id = rp.role_id
+      WHERE r.id = #{id}
     </select>
 </mapper>

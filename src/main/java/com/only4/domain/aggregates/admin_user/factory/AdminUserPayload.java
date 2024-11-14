@@ -2,18 +2,16 @@ package com.only4.domain.aggregates.admin_user.factory;
 
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.dto.AssignAdminUserRoleDto;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.netcorepal.cap4j.ddd.domain.aggregate.AggregatePayload;
-
-import java.util.List;
+import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 /**
  * AdminUser工厂负载
- *
  *
  * @author cap4j-ddd-codegen
  * @date 2024/11/13
@@ -24,8 +22,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminUserPayload implements AggregatePayload<AdminUser> {
-    String name;
-    String phone;
-    String password;
-    List<AssignAdminUserRoleDto> rolesToBeAssigned;
+
+  String name;
+  String phone;
+  String password;
+  List<AssignAdminUserRoleDto> rolesToBeAssigned;
 }

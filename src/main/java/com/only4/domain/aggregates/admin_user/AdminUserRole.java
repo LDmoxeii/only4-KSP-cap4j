@@ -1,5 +1,11 @@
 package com.only4.domain.aggregates.admin_user;
 
+import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,8 +14,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
-
-import javax.persistence.*;
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 用户角色表
@@ -33,11 +38,6 @@ public class AdminUserRole {
 
     // 【行为方法开始】
 
-    public AdminUserRole(Long roleId, String roleName) {
-        this.roleId = roleId;
-        this.roleName = roleName;
-    }
-
     public void updateRoleInfo(String  roleName) {
         this.roleName = roleName;
     }
@@ -57,7 +57,7 @@ public class AdminUserRole {
 
     /**
      * 角色ID
-     * bigint(20)
+     * bigint
      */
     @Column(name = "`role_id`")
     Long roleId;

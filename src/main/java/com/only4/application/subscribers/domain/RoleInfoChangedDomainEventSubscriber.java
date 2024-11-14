@@ -22,9 +22,14 @@ public class RoleInfoChangedDomainEventSubscriber {
     public void on(RoleInfoChangedDomainEvent event) {
         Role role = event.getRole();
         var send = Mediator.queries().send(new GetAdminUserByRoleIdQryRequest(role.getId()));
-        send.getAdminUsers().forEach(adminUser -> {
-            Mediator.commands().send(new UpdateAdminUserRoleInfoCmdRequest(adminUser.getId(), role.getId(), role.getName()));
-        });
+        send.getAdminUsers().forEach(adminUser ->
+                Mediator.commands()
+                        .send(UpdateAdminUserRoleInfoCmdRequest.builder()
+                                .adminUserId(adminUser.getId())
+                                .roleId(role.getId())
+                                .roleName(role.getName())
+                                .build())
+        );
     }
 
 }

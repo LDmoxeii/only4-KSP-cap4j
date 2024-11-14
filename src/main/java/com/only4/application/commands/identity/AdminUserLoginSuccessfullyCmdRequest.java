@@ -1,12 +1,11 @@
 package com.only4.application.commands.identity;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.application.RequestParam;
-
-import java.time.LocalDateTime;
 
 /**
  * AdminUserLoginSuccessfullyCmd命令请求参数
@@ -19,12 +18,13 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminUserLoginSuccessfullyCmdRequest implements RequestParam<AdminUserLoginSuccessfullyCmdResponse> {
+public class AdminUserLoginSuccessfullyCmdRequest implements
+    RequestParam<AdminUserLoginSuccessfullyCmdResponse> {
 
-    Long adminUserId;
+  Long adminUserId;
 
-    String refreshToken;
+  String refreshToken;
 
-    LocalDateTime loginExpiryDate;
+  LocalDateTime loginExpiryDate;
 
 }

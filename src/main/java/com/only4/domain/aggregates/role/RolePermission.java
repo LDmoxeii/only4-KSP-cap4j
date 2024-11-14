@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 import javax.persistence.*;
 
@@ -32,12 +33,6 @@ import javax.persistence.*;
 public class RolePermission {
 
     // 【行为方法开始】
-
-    public RolePermission(String permissionCode, String permissionRemark) {
-        this.permissionCode = permissionCode;
-        this.permissionRemark = permissionRemark;
-    }
-
 
     // 【行为方法结束】
 

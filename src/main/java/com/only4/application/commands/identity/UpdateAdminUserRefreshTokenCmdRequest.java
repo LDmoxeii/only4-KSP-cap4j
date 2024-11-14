@@ -17,10 +17,11 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateAdminUserRefreshTokenCmdRequest implements RequestParam<UpdateAdminUserRefreshTokenCmdResponse> {
+public class UpdateAdminUserRefreshTokenCmdRequest implements
+    RequestParam<UpdateAdminUserRefreshTokenCmdResponse> {
 
-    Long adminUserId;
+  Long adminUserId;
 
-    String refreshToken;
+  String refreshToken;
 
 }

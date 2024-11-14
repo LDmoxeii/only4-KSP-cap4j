@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/13
+ * @date 2024/11/14
  */
 @RequiredArgsConstructor
 public class AdminUserRoleSchema {
@@ -33,7 +33,7 @@ public class AdminUserRoleSchema {
 
     /**
      * 角色ID
-     * bigint(20)
+     * bigint
      */
     public Schema.Field<Long> roleId() {
         return root == null ? new Schema.Field<>("roleId") : new Schema.Field<>(root.get("roleId"));

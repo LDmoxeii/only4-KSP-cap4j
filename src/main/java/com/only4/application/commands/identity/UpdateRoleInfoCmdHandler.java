@@ -1,6 +1,7 @@
 package com.only4.application.commands.identity;
 
 import com.only4._share.exception.KnownException;
+import com.only4.adapter._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.role.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,17 +21,19 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UpdateRoleInfoCmdHandler implements Command<UpdateRoleInfoCmdRequest, UpdateRoleInfoCmdResponse> {
+public class UpdateRoleInfoCmdHandler implements
+    Command<UpdateRoleInfoCmdRequest, UpdateRoleInfoCmdResponse> {
 
-    @Override
-    @Validated
-    public UpdateRoleInfoCmdResponse exec(UpdateRoleInfoCmdRequest cmd) {
-        Mediator.repositories().findOne(JpaPredicate.byId(Role.class, cmd.roleId))
-                .orElseThrow(() -> new KnownException("角色不存在, roleId=" + cmd.roleId))
-                .updateRoleInfo(cmd.name, cmd.description);
-        Mediator.uow().save();
-        return UpdateRoleInfoCmdResponse.builder()
-                .success(true)
-                .build();
-    }
+  @Override
+  public UpdateRoleInfoCmdResponse exec(UpdateRoleInfoCmdRequest cmd) {
+    ValidatorUtils.validate(cmd);
+    Role role = Mediator.repositories().findOne(JpaPredicate.byId(Role.class, cmd.roleId))
+        .orElseThrow(() -> new KnownException("角色不存在, roleId=" + cmd.roleId));
+    role.updateRoleInfo(cmd.name, cmd.description);
+    Mediator.uow().persist(role);
+    Mediator.uow().save();
+    return UpdateRoleInfoCmdResponse.builder()
+        .success(true)
+        .build();
+  }
 }

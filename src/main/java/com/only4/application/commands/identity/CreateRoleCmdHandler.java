@@ -21,21 +21,21 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class CreateRoleCmdHandler implements Command<CreateRoleCmdRequest, CreateRoleCmdResponse> {
 
-    @Override
-    public CreateRoleCmdResponse exec(CreateRoleCmdRequest cmd) {
-        ValidatorUtils.validate(cmd);
-        Role role = Mediator.factories().create(
-                RolePayload.builder()
-                        .name(cmd.name)
-                        .description(cmd.description)
-                        .permissions(cmd.permissions)
-                        .build()
-        );
-        Mediator.uow().persist(role);
-        Mediator.uow().save();
-        return CreateRoleCmdResponse.builder()
-                .id(role.getId())
-                .success(true)
-                .build();
-    }
+  @Override
+  public CreateRoleCmdResponse exec(CreateRoleCmdRequest cmd) {
+    ValidatorUtils.validate(cmd);
+    Role role = Mediator.factories().create(
+        RolePayload.builder()
+            .name(cmd.name)
+            .description(cmd.description)
+            .permissions(cmd.permissions)
+            .build()
+    );
+    Mediator.uow().persist(role);
+    Mediator.uow().save();
+    return CreateRoleCmdResponse.builder()
+        .id(role.getId())
+        .success(true)
+        .build();
+  }
 }

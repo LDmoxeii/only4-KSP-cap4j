@@ -4,6 +4,7 @@ import com.only4.domain.aggregates.role.Role;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface RoleMapper {
@@ -14,7 +15,7 @@ public interface RoleMapper {
 
     List<Role> getAll();
 
-    List<Role> getByCondition(String name, String description);
+    List<Role> getByCondition(@Param("name") String name,@Param("description") String description);
 
     Role getById(Long id);
 }

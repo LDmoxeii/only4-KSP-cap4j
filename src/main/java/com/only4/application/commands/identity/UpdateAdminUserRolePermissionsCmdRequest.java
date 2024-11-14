@@ -1,13 +1,12 @@
 package com.only4.application.commands.identity;
 
 import com.only4.domain.aggregates.admin_user.AdminUserPermission;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.application.RequestParam;
-
-import java.util.List;
 
 /**
  * UpdateAdminUserRolePermissionsCmd命令请求参数
@@ -20,12 +19,13 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateAdminUserRolePermissionsCmdRequest implements RequestParam<UpdateAdminUserRolePermissionsCmdResponse> {
+public class UpdateAdminUserRolePermissionsCmdRequest implements
+    RequestParam<UpdateAdminUserRolePermissionsCmdResponse> {
 
-    Long roleId;
+  Long roleId;
 
-    Long adminUserId;
+  Long adminUserId;
 
-    List<AdminUserPermission> permissions;
+  List<AdminUserPermission> permissions;
 
 }

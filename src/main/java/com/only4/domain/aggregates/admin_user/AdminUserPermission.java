@@ -1,5 +1,14 @@
 package com.only4.domain.aggregates.admin_user;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,9 +17,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
-
-import javax.persistence.*;
-import java.util.List;
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 用户权限表
@@ -33,9 +40,6 @@ import java.util.List;
 public class AdminUserPermission {
 
     // 【行为方法开始】
-    public AdminUserPermission(String permissionCode, String permissionRemark) {
-
-    }
 
     public void addSourceRoleId(Long sourceRoleId) {
         if (this.getSourceRoleIds().contains(sourceRoleId)) return;
@@ -46,7 +50,7 @@ public class AdminUserPermission {
 
 
     @Transient
-    List<Long> sourceRoleIds;
+    final List<Long> sourceRoleIds = new ArrayList<>();
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
     @Id

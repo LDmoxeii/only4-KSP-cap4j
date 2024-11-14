@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateRoleCmdResponse {
-    Long id;
-    boolean success;
+
+  Long id;
+  boolean success;
 }

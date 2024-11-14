@@ -17,10 +17,11 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateAdminUserPasswordCmdRequest implements RequestParam<UpdateAdminUserPasswordCmdResponse> {
+public class UpdateAdminUserPasswordCmdRequest implements
+    RequestParam<UpdateAdminUserPasswordCmdResponse> {
 
-    Long adminUserId;
+  Long adminUserId;
 
-    String password;
+  String password;
 
 }

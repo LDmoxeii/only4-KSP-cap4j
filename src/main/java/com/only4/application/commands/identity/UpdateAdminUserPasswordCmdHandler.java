@@ -19,16 +19,19 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UpdateAdminUserPasswordCmdHandler implements Command<UpdateAdminUserPasswordCmdRequest, UpdateAdminUserPasswordCmdResponse> {
+public class UpdateAdminUserPasswordCmdHandler implements
+    Command<UpdateAdminUserPasswordCmdRequest, UpdateAdminUserPasswordCmdResponse> {
 
-    @Override
-    public UpdateAdminUserPasswordCmdResponse exec(UpdateAdminUserPasswordCmdRequest cmd) {
-        Mediator.repositories().findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-                        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId))
-                                .updatePassword(cmd.password);
-        Mediator.uow().save();
-        return UpdateAdminUserPasswordCmdResponse.builder()
-                .success(true)
-                .build();
-    }
+  @Override
+  public UpdateAdminUserPasswordCmdResponse exec(UpdateAdminUserPasswordCmdRequest cmd) {
+    AdminUser adminUser = Mediator.repositories()
+        .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
+        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId));
+    adminUser.updatePassword(cmd.password);
+    Mediator.uow().persist(adminUser);
+    Mediator.uow().save();
+    return UpdateAdminUserPasswordCmdResponse.builder()
+        .success(true)
+        .build();
+  }
 }

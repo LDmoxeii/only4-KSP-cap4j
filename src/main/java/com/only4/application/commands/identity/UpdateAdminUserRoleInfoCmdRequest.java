@@ -17,12 +17,13 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateAdminUserRoleInfoCmdRequest implements RequestParam<UpdateAdminUserRoleInfoCmdResponse> {
+public class UpdateAdminUserRoleInfoCmdRequest implements
+    RequestParam<UpdateAdminUserRoleInfoCmdResponse> {
 
-    Long adminUserId;
+  Long adminUserId;
 
-    Long roleId;
+  Long roleId;
 
-    String roleName;
+  String roleName;
 
 }

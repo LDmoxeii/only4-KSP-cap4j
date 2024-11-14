@@ -17,5 +17,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeleteAdminUserCmdResponse {
-    boolean success;
+
+  boolean success;
 }

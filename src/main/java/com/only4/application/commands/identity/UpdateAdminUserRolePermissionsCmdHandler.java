@@ -19,16 +19,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UpdateAdminUserRolePermissionsCmdHandler implements Command<UpdateAdminUserRolePermissionsCmdRequest, UpdateAdminUserRolePermissionsCmdResponse> {
+public class UpdateAdminUserRolePermissionsCmdHandler implements
+    Command<UpdateAdminUserRolePermissionsCmdRequest, UpdateAdminUserRolePermissionsCmdResponse> {
 
-    @Override
-    public UpdateAdminUserRolePermissionsCmdResponse exec(UpdateAdminUserRolePermissionsCmdRequest cmd) {
-        Mediator.repositories().findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-                .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId))
-                .updateRolePermissions(cmd.roleId, cmd.permissions);
-        Mediator.uow().save();
-        return UpdateAdminUserRolePermissionsCmdResponse.builder()
-                .success(true)
-                .build();
-    }
+  @Override
+  public UpdateAdminUserRolePermissionsCmdResponse exec(
+      UpdateAdminUserRolePermissionsCmdRequest cmd) {
+    AdminUser adminUser = Mediator.repositories()
+        .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
+        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId));
+    adminUser.updateRolePermissions(cmd.roleId, cmd.permissions);
+    Mediator.uow().persist(adminUser);
+    Mediator.uow().save();
+    return UpdateAdminUserRolePermissionsCmdResponse.builder()
+        .success(true)
+        .build();
+  }
 }

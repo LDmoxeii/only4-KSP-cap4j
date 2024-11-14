@@ -18,17 +18,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UpdateAdminUserRoleInfoCmdHandler implements Command<UpdateAdminUserRoleInfoCmdRequest, UpdateAdminUserRoleInfoCmdResponse> {
+public class UpdateAdminUserRoleInfoCmdHandler implements
+    Command<UpdateAdminUserRoleInfoCmdRequest, UpdateAdminUserRoleInfoCmdResponse> {
 
-    @Override
-    public UpdateAdminUserRoleInfoCmdResponse exec(UpdateAdminUserRoleInfoCmdRequest cmd) {
-        Mediator.repositories().findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-                .orElseThrow(() -> new RuntimeException("用户不存在, adminUserId=" + cmd.adminUserId))
-                .updateRoleInfo(cmd.roleId, cmd.roleName);
-        Mediator.uow().save();
+  @Override
+  public UpdateAdminUserRoleInfoCmdResponse exec(UpdateAdminUserRoleInfoCmdRequest cmd) {
+    AdminUser adminUser = Mediator.repositories()
+        .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
+        .orElseThrow(() -> new RuntimeException("用户不存在, adminUserId=" + cmd.adminUserId));
+    adminUser.updateRoleInfo(cmd.roleId, cmd.roleName);
+    Mediator.uow().persist(adminUser);
+    Mediator.uow().save();
 
-        return UpdateAdminUserRoleInfoCmdResponse.builder()
-                .success(true)
-                .build();
-    }
+    return UpdateAdminUserRoleInfoCmdResponse.builder()
+        .success(true)
+        .build();
+  }
 }
