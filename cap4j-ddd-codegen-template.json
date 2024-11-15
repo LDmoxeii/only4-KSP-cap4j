@@ -679,15 +679,7 @@
               "children": [
                 {
                   "type": "dir",
-                  "name": "${basePackage}",
-                  "children": [
-                    {
-                      "type": "file",
-                      "name": "AppTest.java",
-                      "format": "raw",
-                      "data": "package ${basePackage};\n\nimport junit.framework.Test;\nimport junit.framework.TestCase;\nimport junit.framework.TestSuite;\n\n/**\n * Unit test for simple App.\n */\npublic class AppTest \n    extends TestCase\n{\n    /**\n     * Create the test case\n     *\n     * @param testName name of the test case\n     */\n    public AppTest( String testName )\n    {\n        super( testName );\n    }\n\n    /**\n     * @return the suite of tests being tested\n     */\n    public static Test suite()\n    {\n        return new TestSuite( AppTest.class );\n    }\n\n    /**\n     * Rigourous Test :-)\n     */\n    public void testApp()\n    {\n        assertTrue( true );\n    }\n}\n"
-                    }
-                  ]
+                  "name": "${basePackage}"
                 }
               ]
             }
