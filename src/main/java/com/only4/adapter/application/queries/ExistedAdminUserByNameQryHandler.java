@@ -19,14 +19,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class ExistedAdminUserByNameQryHandler implements Query<ExistedAdminUserByNameQryRequest, ExistedAdminUserByNameQryResponse> {
-    private final AdminUserMapper adminUserMapper;
+  private final AdminUserMapper adminUserMapper;
 
-    @Override
-    public ExistedAdminUserByNameQryResponse exec(ExistedAdminUserByNameQryRequest request) {
-        Long existed = adminUserMapper.existedByName(request.getName());
-        // mybatis / jpa 哪个顺手就用哪个吧！
-        return ExistedAdminUserByNameQryResponse.builder()
-                .existed(existed != 0L)
-                .build();
-    }
+  @Override
+  public ExistedAdminUserByNameQryResponse exec(ExistedAdminUserByNameQryRequest request) {
+    Long existed = adminUserMapper.existedByName(request.getName());
+    // mybatis / jpa 哪个顺手就用哪个吧！
+    return ExistedAdminUserByNameQryResponse.builder()
+        .existed(existed != 0L)
+        .build();
+  }
 }
