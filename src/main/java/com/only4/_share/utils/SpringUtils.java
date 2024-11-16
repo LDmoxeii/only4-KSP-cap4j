@@ -1,4 +1,4 @@
-package com.only4.adapter._share.utils;
+package com.only4._share.utils;
 
 import cn.hutool.extra.spring.SpringUtil;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;

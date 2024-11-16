@@ -1,7 +1,7 @@
 package com.only4.application.commands.identity;
 
 import com.only4._share.exception.KnownException;
-import com.only4.adapter._share.utils.ValidatorUtils;
+import com.only4.application._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.role.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,6 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.netcorepal.cap4j.ddd.domain.repo.Predicate;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 /**
  * DeleteRoleCmd命令请求实现

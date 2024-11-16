@@ -1,6 +1,6 @@
 package com.only4.application.commands.identity;
 
-import com.only4.adapter._share.utils.ValidatorUtils;
+import com.only4.application._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.factory.AdminUserPayload;
 import lombok.RequiredArgsConstructor;
