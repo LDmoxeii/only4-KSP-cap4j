@@ -22,6 +22,6 @@ public class UpdateAdminUserPasswordCmdRequest implements
 
   Long adminUserId;
 
-  String password;
+  String newPassword;
 
 }

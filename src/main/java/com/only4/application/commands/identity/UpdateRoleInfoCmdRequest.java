@@ -1,7 +1,6 @@
 package com.only4.application.commands.identity;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +20,6 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 @AllArgsConstructor
 public class UpdateRoleInfoCmdRequest implements RequestParam<UpdateRoleInfoCmdResponse> {
 
-  @NotNull
   public Long roleId;
 
   @NotEmpty

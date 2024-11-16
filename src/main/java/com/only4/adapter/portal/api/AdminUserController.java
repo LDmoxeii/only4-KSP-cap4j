@@ -121,7 +121,7 @@ public class AdminUserController {
     commands().send(
         UpdateAdminUserPasswordCmdRequest.builder()
             .adminUserId(id)
-            .password(newPassword)
+            .newPassword(newPassword)
             .build()
     );
     return ResponseData.success("ok");

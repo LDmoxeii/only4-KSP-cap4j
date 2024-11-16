@@ -23,9 +23,9 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 public class UpdateAdminUserRolesCmdRequest implements
     RequestParam<UpdateAdminUserRolesCmdResponse> {
 
+  Long adminUserId;
+
   @NotEmpty
   public List<AssignAdminUserRoleDto> rolesToBeAssigned;
-  @NotEmpty
-  Long adminUserId;
 
 }
