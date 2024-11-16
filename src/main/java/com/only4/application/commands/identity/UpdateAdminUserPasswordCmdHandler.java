@@ -27,7 +27,7 @@ public class UpdateAdminUserPasswordCmdHandler implements
     AdminUser adminUser = Mediator.repositories()
         .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
         .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId));
-    adminUser.updatePassword(cmd.password);
+    adminUser.updatePassword(cmd.newPassword);
     Mediator.uow().persist(adminUser);
     Mediator.uow().save();
     return UpdateAdminUserPasswordCmdResponse.builder()
