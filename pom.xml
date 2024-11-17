@@ -14,7 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <cap4j.version>1.0.0-alpha-2</cap4j.version>
+    <cap4j.version>1.0.0-alpha-3</cap4j.version>
 
     <org.projectlombok.version>1.18.16</org.projectlombok.version>
 
