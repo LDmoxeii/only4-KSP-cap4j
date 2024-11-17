@@ -6,22 +6,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.only4.adapter.infra.mybatis.mapper.AdminUserMapper;
-import com.only4.application.queries.identity.GetAdminUserByIdQryRequest;
-import com.only4.application.queries.identity.GetAdminUserByIdQryResponse;
+import com.only4.application.queries.admin_user.GetAdminUserByIdQryRequest;
+import com.only4.application.queries.admin_user.GetAdminUserByIdQryResponse;
 import com.only4.domain.aggregates.admin_user.AdminUser;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 
+@ExtendWith(MockitoExtension.class)
 class GetAdminUserByIdQryTest {
-
-  private static AutoCloseable autoCloseable;
 
   @InjectMocks
   GetAdminUserByIdQryHandler handler;
@@ -31,11 +27,6 @@ class GetAdminUserByIdQryTest {
 
   @Mock
   AdminUserMapper mapper;
-
-  @BeforeEach
-  void setup() {
-    autoCloseable = MockitoAnnotations.openMocks(this);
-  }
 
   @Test
   void exec() {
@@ -52,14 +43,10 @@ class GetAdminUserByIdQryTest {
     // 执行测试方法
     GetAdminUserByIdQryResponse result = handler.exec(request);
 
-    verify(mapper.getById(any()));
+    verify(mapper).getById(any());
 
     // 验证结果
     assertEquals(expect, result);
   }
 
-  @AfterEach
-  void tearDown() throws Exception {
-    autoCloseable.close();
-  }
 }

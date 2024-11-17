@@ -1,8 +1,8 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.AdminUserMapper;
-import com.only4.application.queries.identity.GetAllAdminUserQryRequest;
-import com.only4.application.queries.identity.GetAllAdminUserQryResponse;
+import com.only4.application.queries.admin_user.GetAllAdminUserQryRequest;
+import com.only4.application.queries.admin_user.GetAllAdminUserQryResponse;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

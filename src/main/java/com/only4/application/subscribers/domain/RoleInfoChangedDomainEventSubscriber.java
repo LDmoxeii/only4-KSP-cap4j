@@ -1,7 +1,7 @@
 package com.only4.application.subscribers.domain;
 
-import com.only4.application.commands.identity.UpdateAdminUserRoleInfoCmdRequest;
-import com.only4.application.queries.identity.GetAdminUserByRoleIdQryRequest;
+import com.only4.application.commands.admin_user.UpdateAdminUserRoleInfoCmdRequest;
+import com.only4.application.queries.admin_user.GetAdminUserByRoleIdQryRequest;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.events.RoleInfoChangedDomainEvent;
 import lombok.RequiredArgsConstructor;

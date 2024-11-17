@@ -1,8 +1,8 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.AdminUserMapper;
-import com.only4.application.queries.identity.ExistedAdminUserByRoleIdQryRequest;
-import com.only4.application.queries.identity.ExistedAdminUserByRoleIdQryResponse;
+import com.only4.application.queries.admin_user.ExistedAdminUserByRoleIdQryRequest;
+import com.only4.application.queries.admin_user.ExistedAdminUserByRoleIdQryResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.application.query.Query;
