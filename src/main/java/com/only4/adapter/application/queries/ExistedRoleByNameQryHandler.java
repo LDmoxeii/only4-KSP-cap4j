@@ -1,8 +1,8 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.RoleMapper;
-import com.only4.application.queries.identity.ExistedRoleByNameQryRequest;
-import com.only4.application.queries.identity.ExistedRoleByNameQryResponse;
+import com.only4.application.queries.role.ExistedRoleByNameQryRequest;
+import com.only4.application.queries.role.ExistedRoleByNameQryResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.application.query.Query;

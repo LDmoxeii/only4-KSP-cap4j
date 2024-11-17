@@ -1,8 +1,8 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.RoleMapper;
-import com.only4.application.queries.identity.GetRolesByIdQryRequest;
-import com.only4.application.queries.identity.GetRolesByIdQryResponse;
+import com.only4.application.queries.role.GetRolesByIdQryRequest;
+import com.only4.application.queries.role.GetRolesByIdQryResponse;
 import com.only4.domain.aggregates.role.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

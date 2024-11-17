@@ -1,7 +1,7 @@
 package com.only4.application.subscribers.domain;
 
-import com.only4.application.commands.identity.UpdateAdminUserRolePermissionsCmdRequest;
-import com.only4.application.queries.identity.GetAdminUserByRoleIdQryRequest;
+import com.only4.application.commands.admin_user.UpdateAdminUserRolePermissionsCmdRequest;
+import com.only4.application.queries.admin_user.GetAdminUserByRoleIdQryRequest;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.AdminUserPermission;
 import com.only4.domain.aggregates.role.Role;
