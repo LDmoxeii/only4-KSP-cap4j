@@ -14,7 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <cap4j.version>1.0.0-alpha-2</cap4j.version>
+    <cap4j.version>1.0.0-alpha-3</cap4j.version>
 
     <org.projectlombok.version>1.18.16</org.projectlombok.version>
 
@@ -192,27 +192,33 @@
     </dependency>
 
     <!--redisson-->
-<!--    <dependency>-->
-<!--      <groupId>org.redisson</groupId>-->
-<!--      <artifactId>redisson-spring-boot-starter</artifactId>-->
-<!--      <version>${redisson.version}</version>-->
-<!--    </dependency>-->
-
-<!--    <dependency>-->
-<!--      <groupId>com.baomidou</groupId>-->
-<!--      <artifactId>lock4j-redisson-spring-boot-starter</artifactId>-->
-<!--      <version>${lock4j.version}</version>-->
-<!--    </dependency>-->
-
-<!--    <dependency>-->
-<!--      <groupId>com.fasterxml.jackson.datatype</groupId>-->
-<!--      <artifactId>jackson-datatype-jsr310</artifactId>-->
-<!--    </dependency>-->
-    <!-- https://mvnrepository.com/artifact/org.easymock/easymock -->
     <dependency>
-      <groupId>org.easymock</groupId>
-      <artifactId>easymock</artifactId>
-      <version>5.3.0</version>
+      <groupId>org.redisson</groupId>
+      <artifactId>redisson-spring-boot-starter</artifactId>
+      <version>${redisson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
+      <version>${lock4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.ben-manes.caffeine</groupId>
+      <artifactId>caffeine</artifactId>
+      <version>2.9.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-inline</artifactId>
+      <version>5.2.0</version>
       <scope>test</scope>
     </dependency>
 
@@ -291,11 +297,11 @@
         <artifactId>maven-archetype-plugin</artifactId>
         <version>3.2.0</version>
       </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.2.0</version> <!-- Update to a newer version -->
-        </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version> <!-- Update to a newer version -->
+      </plugin>
 
     </plugins>
   </build>

@@ -1,12 +1,12 @@
-package com.only4.adapter._share.utils;
+package com.only4.application._share.utils;
 
+import com.only4._share.utils.SpringUtils;
+import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 /**
  * Validator 校验框架工具

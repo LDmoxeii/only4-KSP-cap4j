@@ -1,6 +1,6 @@
 package com.only4.application.commands.identity;
 
-import com.only4.adapter._share.utils.ValidatorUtils;
+import com.only4.application._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.factory.AdminUserPayload;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +25,8 @@ public class CreateAdminUserCmdHandler implements
   @Override
   public CreateAdminUserCmdResponse exec(CreateAdminUserCmdRequest cmd) {
     ValidatorUtils.validate(cmd);
+
+    // 创建实体
     AdminUser adminUser = Mediator.factories().create(
         AdminUserPayload.builder()
             .name(cmd.name)
@@ -33,8 +35,12 @@ public class CreateAdminUserCmdHandler implements
             .rolesToBeAssigned(cmd.rolesToBeAssigned)
             .build()
     );
+
+    // 保存数据库
     Mediator.uow().persist(adminUser);
     Mediator.uow().save();
+
+    // 返回结果
     return CreateAdminUserCmdResponse.builder()
         .id(adminUser.getId())
         .success(true)
