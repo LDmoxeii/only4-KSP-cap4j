@@ -1,2 +1,4 @@
 com.only4._share.configure.CacheConfig
 com.only4._share.configure.RedisConfig
+com.only4.adapter._share.configure.SecurityConfig
+com.only4.adapter._share.handler.AllUrlHandler
