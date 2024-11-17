@@ -3,6 +3,7 @@ package com.only4.adapter.portal.api;
 import static org.netcorepal.cap4j.ddd.Mediator.commands;
 import static org.netcorepal.cap4j.ddd.Mediator.queries;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.only4._share.exception.KnownException;
 import com.only4.adapter.portal.api._share.ResponseData;
 import com.only4.adapter.portal.api.request.AdminUserQryRequest;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author LD_moxeii
  */
 @Slf4j
+@SaIgnore
 @RestController
 @RequestMapping("adminUser")
 public class AdminUserController {
