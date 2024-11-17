@@ -14,7 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <cap4j.version>1.0.0-alpha-3</cap4j.version>
+    <cap4j.version>1.0.0-alpha-2</cap4j.version>
 
     <org.projectlombok.version>1.18.16</org.projectlombok.version>
 
@@ -33,8 +33,14 @@
     <knife4j.version>3.0.3</knife4j.version>
     <swagger3.version>2.2.7</swagger3.version>
 
+    <mockito.version>5.2.0</mockito.version>
+
     <redisson.version>3.37.0</redisson.version>
     <lock4j.version>2.2.7</lock4j.version>
+    <caffeine.version>2.9.3</caffeine.version>
+
+    <satoken.version>1.38.0</satoken.version>
+
   </properties>
 
   <dependencyManagement>
@@ -191,7 +197,15 @@
       <scope>test</scope>
     </dependency>
 
-    <!--redisson-->
+    <!-- mockito -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-inline</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- redisson -->
     <dependency>
       <groupId>org.redisson</groupId>
       <artifactId>redisson-spring-boot-starter</artifactId>
@@ -207,7 +221,7 @@
     <dependency>
       <groupId>com.github.ben-manes.caffeine</groupId>
       <artifactId>caffeine</artifactId>
-      <version>2.9.3</version>
+      <version>${caffeine.version}</version>
     </dependency>
 
     <dependency>
@@ -215,11 +229,11 @@
       <artifactId>jackson-datatype-jsr310</artifactId>
     </dependency>
 
+    <!--  satoken  -->
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-inline</artifactId>
-      <version>5.2.0</version>
-      <scope>test</scope>
+      <groupId>cn.dev33</groupId>
+      <artifactId>sa-token-spring-boot-starter</artifactId>
+      <version>${satoken.version}</version>
     </dependency>
 
   </dependencies>
