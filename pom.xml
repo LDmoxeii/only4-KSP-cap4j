@@ -39,7 +39,7 @@
     <lock4j.version>2.2.7</lock4j.version>
     <caffeine.version>2.9.3</caffeine.version>
 
-    <satoken.version>1.38.0</satoken.version>
+    <satoken.version>1.39.0</satoken.version>
 
   </properties>
 
@@ -59,6 +59,18 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- Sa-Token 整合 jwt -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-jwt</artifactId>
+                <version>${satoken.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>cn.hutool</groupId>
+                        <artifactId>hutool-all</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -234,6 +246,11 @@
       <groupId>cn.dev33</groupId>
       <artifactId>sa-token-spring-boot-starter</artifactId>
       <version>${satoken.version}</version>
+    </dependency>
+    <!-- Sa-Token 整合 jwt -->
+    <dependency>
+      <groupId>cn.dev33</groupId>
+      <artifactId>sa-token-jwt</artifactId>
     </dependency>
 
   </dependencies>
