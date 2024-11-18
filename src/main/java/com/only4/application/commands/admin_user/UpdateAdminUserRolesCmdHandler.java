@@ -1,5 +1,6 @@
 package com.only4.application.commands.admin_user;
 
+import com.only4._share.exception.KnownException;
 import com.only4.application._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +29,9 @@ public class UpdateAdminUserRolesCmdHandler implements
   public UpdateAdminUserRolesCmdResponse exec(UpdateAdminUserRolesCmdRequest cmd) {
     ValidatorUtils.validate(cmd);
     AdminUser adminUser = Mediator.repositories()
-        .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-        .orElseThrow(() -> new RuntimeException("用户不存在, adminUserId=" + cmd.adminUserId));
-    adminUser.updateRoles(cmd.rolesToBeAssigned);
+        .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
+        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+    adminUser.updateRoles(cmd.getRolesToBeAssigned());
     Mediator.uow().persist(adminUser);
     Mediator.uow().save();
     return UpdateAdminUserRolesCmdResponse.builder()

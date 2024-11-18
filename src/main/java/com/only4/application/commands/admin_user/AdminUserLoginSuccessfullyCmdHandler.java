@@ -4,6 +4,7 @@ import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.netcorepal.cap4j.ddd.Mediator;
 import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
@@ -24,9 +25,10 @@ public class AdminUserLoginSuccessfullyCmdHandler implements
 
   @Override
   public AdminUserLoginSuccessfullyCmdResponse exec(AdminUserLoginSuccessfullyCmdRequest cmd) {
-    Mediator.repositories().findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId))
-        .loginSuccessful(cmd.refreshToken, cmd.loginExpiryDate);
+    var adminUser = Mediator.repositories()
+        .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
+        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+    adminUser.loginSuccessful(cmd.getRefreshToken(), cmd.getLoginExpiryDate());
     return AdminUserLoginSuccessfullyCmdResponse.builder()
         .success(true)
         .build();

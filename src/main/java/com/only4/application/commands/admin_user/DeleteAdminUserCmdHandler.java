@@ -27,8 +27,8 @@ public class DeleteAdminUserCmdHandler implements
   @Override
   public DeleteAdminUserCmdResponse exec(DeleteAdminUserCmdRequest cmd) {
     AdminUser adminUser = Mediator.repositories()
-        .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId));
+        .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
+        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
     if (Objects.equals(adminUser.getName(), AppDefaultCredentials.NAME)) {
       throw new KnownException("默认账号不允许删除");
     }

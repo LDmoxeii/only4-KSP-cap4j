@@ -25,9 +25,9 @@ public class UpdateAdminUserPasswordCmdHandler implements
   @Override
   public UpdateAdminUserPasswordCmdResponse exec(UpdateAdminUserPasswordCmdRequest cmd) {
     AdminUser adminUser = Mediator.repositories()
-        .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId));
-    adminUser.updatePassword(cmd.newPassword);
+        .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
+        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+    adminUser.updatePassword(cmd.getNewPassword());
     Mediator.uow().persist(adminUser);
     Mediator.uow().save();
     return UpdateAdminUserPasswordCmdResponse.builder()

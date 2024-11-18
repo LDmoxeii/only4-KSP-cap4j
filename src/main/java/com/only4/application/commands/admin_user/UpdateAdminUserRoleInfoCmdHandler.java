@@ -1,5 +1,6 @@
 package com.only4.application.commands.admin_user;
 
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +25,9 @@ public class UpdateAdminUserRoleInfoCmdHandler implements
   @Override
   public UpdateAdminUserRoleInfoCmdResponse exec(UpdateAdminUserRoleInfoCmdRequest cmd) {
     AdminUser adminUser = Mediator.repositories()
-        .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-        .orElseThrow(() -> new RuntimeException("用户不存在, adminUserId=" + cmd.adminUserId));
-    adminUser.updateRoleInfo(cmd.roleId, cmd.roleName);
+        .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
+        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+    adminUser.updateRoleInfo(cmd.getRoleId(), cmd.getRoleName());
     Mediator.uow().persist(adminUser);
     Mediator.uow().save();
 

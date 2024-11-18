@@ -29,10 +29,10 @@ public class CreateAdminUserCmdHandler implements
     // 创建实体
     AdminUser adminUser = Mediator.factories().create(
         AdminUserPayload.builder()
-            .name(cmd.name)
-            .phone(cmd.phone)
-            .password(cmd.password)
-            .rolesToBeAssigned(cmd.rolesToBeAssigned)
+            .name(cmd.getName())
+            .phone(cmd.getPhone())
+            .password(cmd.getPassword())
+            .rolesToBeAssigned(cmd.getRolesToBeAssigned())
             .build()
     );
 

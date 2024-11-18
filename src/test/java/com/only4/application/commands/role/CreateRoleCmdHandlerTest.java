@@ -3,12 +3,13 @@ package com.only4.application.commands.role;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.only4.application._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.role.Role;
-import lombok.var;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,13 +24,13 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.AggregateFactorySupervisor;
 class CreateRoleCmdHandlerTest {
 
   @InjectMocks
-  CreateRoleCmdHandler handler;
+  CreateRoleCmdHandler target;
 
   @Mock
-  CreateRoleCmdRequest cmd;
+  CreateRoleCmdRequest request;
 
   @Mock
-  AggregateFactorySupervisor supervisor;
+  AggregateFactorySupervisor factory;
 
   @Mock
   UnitOfWork uow;
@@ -39,25 +40,26 @@ class CreateRoleCmdHandlerTest {
 
   @Test
   void exec() {
-    var response = CreateRoleCmdResponse.builder()
-        .success(true)
-        .build();
     try (
-        MockedStatic<Mediator> ignored = mockStatic(Mediator.class);
+        MockedStatic<Mediator> mediator = mockStatic(Mediator.class);
         MockedStatic<ValidatorUtils> validatorUtil = mockStatic(ValidatorUtils.class)
     ) {
-      when(Mediator.factories()).thenReturn(supervisor);
-      when(supervisor.create(any())).thenReturn(role);
+      when(Mediator.factories()).thenReturn(factory);
+      when(factory.create(any())).thenReturn(role);
       when(Mediator.uow()).thenReturn(uow);
+      when(role.getId()).thenReturn(1L);
 
-      CreateRoleCmdResponse actol = handler.exec(cmd);
+      val actual = target.exec(request);
 
-      validatorUtil.verify(() -> ValidatorUtils.validate(cmd));
-      verify(supervisor).create(any());
+      validatorUtil.verify(() -> ValidatorUtils.validate(request));
+      mediator.verify(Mediator::factories);
+      verify(factory).create(any());
+      mediator.verify(Mediator::uow, times(2));
       verify(uow).persist(role);
       verify(uow).save();
+      verify(role).getId();
 
-      assertEquals(response.success, actol.success);
+      assertEquals(role.getId(), actual.id);
     }
   }
 }
