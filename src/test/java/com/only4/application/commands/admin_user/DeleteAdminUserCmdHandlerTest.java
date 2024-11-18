@@ -1,19 +1,19 @@
 package com.only4.application.commands.admin_user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.AdminUser;
+import com.only4.domain.aggregates.admin_user.AppDefaultCredentials;
 import java.util.Optional;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,17 +36,6 @@ class DeleteAdminUserCmdHandlerTest {
   @Mock
   UnitOfWork uow;
 
-  @Mock
-  AdminUser adminUser;
-
-  MockedStatic<Mediator> mediatorMockedStatic;
-
-  @BeforeEach
-  void setup() {
-    mediatorMockedStatic = mockStatic(Mediator.class);
-
-  }
-
   @Test
   void execSuccess() {
     DeleteAdminUserCmdRequest request = DeleteAdminUserCmdRequest.builder().build();
@@ -54,62 +43,64 @@ class DeleteAdminUserCmdHandlerTest {
         .success(true)
         .build();
 
-    when(Mediator.repositories())
-        .thenReturn(supervisor);
-    when(Mediator.uow())
-        .thenReturn(uow);
-    when(supervisor.findOne(any()))
-        .thenReturn(Optional.of(adminUser));
+    AdminUser adminUser = AdminUser.builder()
+        .isDeleted(false)
+        .build();
+    try (MockedStatic<Mediator> ignored = mockStatic(Mediator.class)) {
+      when(Mediator.repositories()).thenReturn(supervisor);
+      when(supervisor.findOne(any())).thenReturn(Optional.of(adminUser));
+      when(Mediator.uow()).thenReturn(uow);
 
-    DeleteAdminUserCmdResponse actual = handler.exec(request);
+      DeleteAdminUserCmdResponse actual = handler.exec(request);
 
-    verify(supervisor).findOne(any());
-    verify(uow).remove(adminUser);
-    verify(uow).save();
+      verify(supervisor).findOne(any());
+      verify(uow).remove(adminUser);
+      verify(uow).save();
 
-    assertEquals(response, actual);
+      assertEquals(response, actual);
+    }
   }
 
   @Test
   void execFail() {
     DeleteAdminUserCmdRequest request = DeleteAdminUserCmdRequest.builder().build();
-    when(Mediator.repositories())
-        .thenReturn(supervisor);
-    when(Mediator.uow())
-        .thenReturn(uow);
-    when(supervisor.findOne(any()))
-        .thenReturn(Optional.empty());
+    AdminUser adminUser = AdminUser.builder()
+        .isDeleted(false)
+        .build();
+    try (MockedStatic<Mediator> ignored = mockStatic(Mediator.class)) {
+      when(Mediator.repositories()).thenReturn(supervisor);
+      when(supervisor.findOne(any())).thenReturn(Optional.empty());
 
-    KnownException knownException = assertThrows(KnownException.class, () -> handler.exec(request));
+      KnownException knownException = assertThrows(KnownException.class,
+          () -> handler.exec(request));
 
-    assertTrue(knownException.getMessage().contains("用户不存在"));
+      verify(uow, never()).remove(adminUser);
+      verify(uow, never()).save();
 
-    verify(supervisor).findOne(any());
-    verifyNoInteractions(uow);
+      assertFalse(adminUser.getIsDeleted());
+      assertTrue(knownException.getMessage().contains("用户不存在"));
+    }
   }
 
   @Test
   void execFail2() {
     DeleteAdminUserCmdRequest request = DeleteAdminUserCmdRequest.builder().build();
-    AdminUser build = AdminUser.builder().name("admin@d3shop.com").build();
-    when(Mediator.repositories())
-        .thenReturn(supervisor);
-    when(Mediator.uow())
-        .thenReturn(uow);
-    when(supervisor.findOne(any()))
-        .thenReturn(Optional.of(build))
-        .thenThrow(KnownException.class);
+    AdminUser adminUser = AdminUser.builder().name("admin@d3shop.com").build();
+    try (MockedStatic<Mediator> ignored = mockStatic(Mediator.class)) {
+      when(Mediator.repositories()).thenReturn(supervisor);
+      when(supervisor.findOne(any())).thenReturn(Optional.of(adminUser));
+      when(Mediator.uow()).thenReturn(uow);
 
-    KnownException knownException = assertThrows(KnownException.class, () -> handler.exec(request));
-    assertTrue(knownException.getMessage().contains("默认账号不允许删除"));
+      KnownException knownException = assertThrows(KnownException.class,
+          () -> handler.exec(request));
 
-    verify(supervisor).findOne(any());
-    verifyNoInteractions(uow);
-  }
+      verify(supervisor).findOne(any());
+      verify(uow, never()).remove(adminUser);
+      verify(uow, never()).save();
 
-  @AfterEach
-  void tearDown() {
-    mediatorMockedStatic.close();
+      assertEquals(AppDefaultCredentials.NAME, adminUser.getName());
+      assertTrue(knownException.getMessage().contains("默认账号不允许删除"));
+    }
   }
 
 }

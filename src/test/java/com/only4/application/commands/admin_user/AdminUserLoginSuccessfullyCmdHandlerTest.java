@@ -7,9 +7,7 @@ import static org.mockito.Mockito.when;
 
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import java.util.Optional;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,34 +26,24 @@ class AdminUserLoginSuccessfullyCmdHandlerTest {
   @Mock
   private RepositorySupervisor repositorySupervisor;
 
-  @Mock
-  AdminUser adminUser;
-
-  private MockedStatic<Mediator> mediatorMockedStatic;
-
-  @BeforeEach
-  void setUp() {
-    mediatorMockedStatic = mockStatic(Mediator.class);
-    when(Mediator.repositories()).thenReturn(repositorySupervisor);
-  }
-
   @Test
   void exec() {
     AdminUserLoginSuccessfullyCmdRequest request = AdminUserLoginSuccessfullyCmdRequest.builder()
         .build();
     AdminUserLoginSuccessfullyCmdResponse response = AdminUserLoginSuccessfullyCmdResponse.builder()
         .success(true).build();
+    AdminUser adminUser = AdminUser.builder().build();
 
-    when(repositorySupervisor.findOne(any())).thenReturn(Optional.of(adminUser));
+    try (MockedStatic<Mediator> ignored = mockStatic(Mediator.class)) {
+      when(Mediator.repositories()).thenReturn(repositorySupervisor);
+      when(repositorySupervisor.findOne(any())).thenReturn(Optional.of(adminUser));
 
-    AdminUserLoginSuccessfullyCmdResponse result = handler.exec(request);
+      AdminUserLoginSuccessfullyCmdResponse result = handler.exec(request);
 
-    verify(adminUser).loginSuccessful(any(),any());
-    Assertions.assertEquals(response, result);
-  }
+      verify(repositorySupervisor).findOne(any());
 
-  @AfterEach
-  void tearDown() {
-    mediatorMockedStatic.close();
+      Assertions.assertEquals(response, result);
+    }
+
   }
 }

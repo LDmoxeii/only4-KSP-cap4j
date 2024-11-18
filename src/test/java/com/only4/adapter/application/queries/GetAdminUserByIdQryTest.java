@@ -23,15 +23,14 @@ class GetAdminUserByIdQryTest {
   GetAdminUserByIdQryHandler handler;
 
   @Mock
-  AdminUser adminUser;
-
-  @Mock
   AdminUserMapper mapper;
 
   @Test
   void exec() {
     // 预期入参
     GetAdminUserByIdQryRequest request = GetAdminUserByIdQryRequest.builder().build();
+
+    AdminUser adminUser = AdminUser.builder().build();
 
     // 预期结果
     GetAdminUserByIdQryResponse expect = GetAdminUserByIdQryResponse.builder()
