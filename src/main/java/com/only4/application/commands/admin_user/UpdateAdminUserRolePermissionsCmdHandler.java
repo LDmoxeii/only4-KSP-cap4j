@@ -26,9 +26,9 @@ public class UpdateAdminUserRolePermissionsCmdHandler implements
   public UpdateAdminUserRolePermissionsCmdResponse exec(
       UpdateAdminUserRolePermissionsCmdRequest cmd) {
     AdminUser adminUser = Mediator.repositories()
-        .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId));
-    adminUser.updateRolePermissions(cmd.roleId, cmd.permissions);
+        .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
+        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+    adminUser.updateRolePermissions(cmd.getRoleId(), cmd.getPermissions());
     Mediator.uow().persist(adminUser);
     Mediator.uow().save();
     return UpdateAdminUserRolePermissionsCmdResponse.builder()

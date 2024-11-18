@@ -25,9 +25,10 @@ public class UpdateAdminUserRefreshTokenCmdHandler implements
   @Override
   public UpdateAdminUserRefreshTokenCmdResponse exec(UpdateAdminUserRefreshTokenCmdRequest cmd) {
     AdminUser adminUser = Mediator.repositories()
-        .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
-        .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.adminUserId));
-    adminUser.updateRefreshToken(cmd.refreshToken);
+        .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
+        .orElseThrow(() ->
+            new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+    adminUser.updateRefreshToken(cmd.getRefreshToken());
     Mediator.uow().persist(adminUser);
     Mediator.uow().save();
 

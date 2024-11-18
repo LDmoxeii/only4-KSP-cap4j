@@ -26,9 +26,10 @@ public class UpdateRoleInfoCmdHandler implements
   @Override
   public UpdateRoleInfoCmdResponse exec(UpdateRoleInfoCmdRequest cmd) {
     ValidatorUtils.validate(cmd);
-    Role role = Mediator.repositories().findOne(JpaPredicate.byId(Role.class, cmd.roleId))
-        .orElseThrow(() -> new KnownException("角色不存在, roleId=" + cmd.roleId));
-    role.updateRoleInfo(cmd.name, cmd.description);
+    Role role = Mediator.repositories()
+        .findOne(JpaPredicate.byId(Role.class, cmd.getRoleId()))
+        .orElseThrow(() -> new KnownException("角色不存在, roleId=" + cmd.getRoleId()));
+    role.updateRoleInfo(cmd.getName(), cmd.getDescription());
     Mediator.uow().persist(role);
     Mediator.uow().save();
     return UpdateRoleInfoCmdResponse.builder()

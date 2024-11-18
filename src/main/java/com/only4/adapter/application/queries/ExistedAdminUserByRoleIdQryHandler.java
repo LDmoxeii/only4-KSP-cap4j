@@ -23,7 +23,7 @@ public class ExistedAdminUserByRoleIdQryHandler implements Query<ExistedAdminUse
 
     @Override
     public ExistedAdminUserByRoleIdQryResponse exec(ExistedAdminUserByRoleIdQryRequest request) {
-        Long existed = adminUserMapper.existedByRoleId();
+        Long existed = adminUserMapper.existedByRoleId(request.getRoleId());
         // mybatis / jpa 哪个顺手就用哪个吧！
         return ExistedAdminUserByRoleIdQryResponse.builder()
                 .existed(existed != 0L)

@@ -1,13 +1,19 @@
 package com.only4.application.commands.admin_user;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.AdminUser;
+import java.time.LocalDateTime;
 import java.util.Optional;
-import org.junit.jupiter.api.Assertions;
+import lombok.var;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,29 +27,50 @@ import org.netcorepal.cap4j.ddd.domain.repo.RepositorySupervisor;
 class AdminUserLoginSuccessfullyCmdHandlerTest {
 
   @InjectMocks
-  private AdminUserLoginSuccessfullyCmdHandler handler;
+  private AdminUserLoginSuccessfullyCmdHandler target;
 
   @Mock
   private RepositorySupervisor repositorySupervisor;
 
+  @Mock
+  private AdminUser adminUser;
+
+  @Mock
+  private AdminUserLoginSuccessfullyCmdRequest request;
   @Test
   void exec() {
-    AdminUserLoginSuccessfullyCmdRequest request = AdminUserLoginSuccessfullyCmdRequest.builder()
-        .build();
-    AdminUserLoginSuccessfullyCmdResponse response = AdminUserLoginSuccessfullyCmdResponse.builder()
-        .success(true).build();
-    AdminUser adminUser = AdminUser.builder().build();
 
-    try (MockedStatic<Mediator> ignored = mockStatic(Mediator.class)) {
+    try (MockedStatic<Mediator> mediator = mockStatic(Mediator.class)) {
+      var now = LocalDateTime.now();
+      when(request.getAdminUserId()).thenReturn(1L);
+      when(request.getRefreshToken()).thenReturn("refreshToken");
+      when(request.getLoginExpiryDate()).thenReturn(now);
       when(Mediator.repositories()).thenReturn(repositorySupervisor);
       when(repositorySupervisor.findOne(any())).thenReturn(Optional.of(adminUser));
 
-      AdminUserLoginSuccessfullyCmdResponse result = handler.exec(request);
+      AdminUserLoginSuccessfullyCmdResponse actual = target.exec(request);
 
+      mediator.verify(Mediator::repositories);
       verify(repositorySupervisor).findOne(any());
+      verify(adminUser).loginSuccessful("refreshToken", now);
 
-      Assertions.assertEquals(response, result);
+      assertTrue(actual.isSuccess());
     }
+  }
 
+  @Test
+  void exec_not_found() {
+    try (MockedStatic<Mediator> mediator = mockStatic(Mediator.class)) {
+      when(request.getAdminUserId()).thenReturn(1L);
+      when(Mediator.repositories()).thenReturn(repositorySupervisor);
+      when(repositorySupervisor.findOne(any())).thenReturn(Optional.empty());
+
+      var actaul = assertThrows(KnownException.class, () -> target.exec(request));
+
+      mediator.verify(Mediator::repositories);
+      verify(repositorySupervisor).findOne(any());
+      verify(adminUser, never()).loginSuccessful(any(), any());
+      assertEquals("用户不存在, adminUserId=1", actaul.getMessage());
+    }
   }
 }
