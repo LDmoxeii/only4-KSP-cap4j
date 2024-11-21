@@ -8,7 +8,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.only4.application._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.factory.AdminUserPayload;
 import java.util.Collections;
@@ -45,7 +44,6 @@ class CreateAdminUserCmdHandlerTest {
   void testExec() {
     try (
         MockedStatic<Mediator> mediator = mockStatic(Mediator.class);
-        MockedStatic<ValidatorUtils> validatorUtil = mockStatic(ValidatorUtils.class)
     ) {
       when(request.getName()).thenReturn("testName");
       when(request.getPhone()).thenReturn("testPhone");
@@ -58,7 +56,6 @@ class CreateAdminUserCmdHandlerTest {
       // 执行方法
       val actual = handler.exec(request);
 
-      validatorUtil.verify(() -> ValidatorUtils.validate(request));
       mediator.verify(Mediator::factories);
       verify(factory).create(any(AdminUserPayload.class));
       mediator.verify(Mediator::uow, times(2));

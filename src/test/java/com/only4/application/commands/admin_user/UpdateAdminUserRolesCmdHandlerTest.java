@@ -11,7 +11,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.only4._share.exception.KnownException;
-import com.only4.application._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import java.util.Collections;
 import java.util.Optional;
@@ -43,7 +42,6 @@ class UpdateAdminUserRolesCmdHandlerTest {
   void exec() {
     try (
         MockedStatic<Mediator> mediator  = mockStatic(Mediator.class);
-        MockedStatic<ValidatorUtils> validator = mockStatic(ValidatorUtils.class)
     ) {
       when(request.getAdminUserId()).thenReturn(1L);
       when(request.getRolesToBeAssigned()).thenReturn(Collections.emptyList());
@@ -53,7 +51,6 @@ class UpdateAdminUserRolesCmdHandlerTest {
 
       var actual = target.exec(request);
 
-      validator.verify(() -> ValidatorUtils.validate(request));
       mediator.verify(Mediator::repositories);
       verify(request).getAdminUserId();
       verify(request).getRolesToBeAssigned();
@@ -71,7 +68,6 @@ class UpdateAdminUserRolesCmdHandlerTest {
   void exec_fail() {
     try (
         MockedStatic<Mediator> mediator  = mockStatic(Mediator.class);
-        MockedStatic<ValidatorUtils> validator = mockStatic(ValidatorUtils.class)
     ) {
       when(request.getAdminUserId()).thenReturn(1L);
       when(Mediator.repositories()).thenReturn(supervisor);
@@ -79,7 +75,6 @@ class UpdateAdminUserRolesCmdHandlerTest {
 
       var actual = assertThrows(KnownException.class, () -> target.exec(request));
 
-      validator.verify(() -> ValidatorUtils.validate(request));
       mediator.verify(Mediator::repositories);
       verify(supervisor).findOne(any());
       verify(request, times(2)).getAdminUserId();

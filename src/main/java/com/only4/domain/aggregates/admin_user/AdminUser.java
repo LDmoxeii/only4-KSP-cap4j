@@ -59,17 +59,19 @@ public class AdminUser {
   }
 
   public void updateRoleInfo(Long roleId, String roleName) {
-    this.adminUserRoles.stream()
-        .filter(r -> Objects.equals(r.roleId, roleId))
+    this.getAdminUserRoles().stream()
+        .filter(r -> Objects.equals(r.getRoleId(), roleId))
         .findFirst()
-        .ifPresent(r -> r.updateRoleInfo(roleName));
+        .orElseThrow(() -> new KnownException("角色不存在, roleId=" + roleId))
+        .updateRoleInfo(roleName);
   }
 
   public void updateRoles(List<AssignAdminUserRoleDto> rolesToBeAssigned) {
-    Map<Long, AdminUserRole> currentRoleMap = this.adminUserRoles.stream()
-        .collect(Collectors.toMap(r -> r.roleId, r -> r));
+    Map<Long, AdminUserRole> currentRoleMap = this.getAdminUserRoles().stream()
+        .collect(Collectors.toMap(r -> r.getRoleId(), r -> r));
     Map<Long, AssignAdminUserRoleDto> targetRoleMap = rolesToBeAssigned.stream()
         .collect(Collectors.toMap(AssignAdminUserRoleDto::getRoleId, r -> r));
+
     currentRoleMap.keySet().stream()
         .filter(roleId -> !targetRoleMap.containsKey(roleId))
         .forEach(roleId -> {
@@ -93,7 +95,7 @@ public class AdminUser {
 
   private void addRolePermissions(Long roleId, List<AdminUserPermission> newPermissions) {
     newPermissions.forEach(permission -> {
-      Optional<AdminUserPermission> existingPermission = this.adminUserPermissions.stream()
+      Optional<AdminUserPermission> existingPermission = this.getAdminUserPermissions().stream()
           .filter(p -> Objects.equals(p.permissionCode, permission.getPermissionCode()))
           .findFirst();
       existingPermission
@@ -111,14 +113,14 @@ public class AdminUser {
   }
 
   private void removeRolePermissions(Long roleId) {
-    this.adminUserPermissions.stream()
+    this.getAdminUserPermissions().stream()
         .filter(p -> p.getSourceRoleIds().remove(roleId)
             && p.getSourceRoleIds().isEmpty())
         .forEach(permission -> this.adminUserPermissions.remove(permission));
   }
 
   public void setSpecificPermissions(List<AdminUserPermission> permissionsToBeAssigned) {
-    Map<String, AdminUserPermission> currentSpecificPermissionMap = this.adminUserPermissions.stream()
+    Map<String, AdminUserPermission> currentSpecificPermissionMap = this.getAdminUserPermissions().stream()
         .collect(Collectors.toMap(AdminUserPermission::getPermissionCode, p -> p));
     Map<String, AdminUserPermission> newSpecificPermissionMap = permissionsToBeAssigned.stream()
         .collect(Collectors.toMap(AdminUserPermission::getPermissionCode, p -> p));
@@ -130,7 +132,7 @@ public class AdminUser {
     newSpecificPermissionMap.keySet().stream()
         .filter(permissionCode -> !currentSpecificPermissionMap.containsKey(permissionCode))
         .forEach(permissionCode -> {
-          if (this.adminUserPermissions.stream()
+          if (this.getAdminUserPermissions().stream()
               .anyMatch(p -> Objects.equals(p.getPermissionCode(), permissionCode))) {
             throw new KnownException("权限重复！");
           }
@@ -146,7 +148,7 @@ public class AdminUser {
   }
 
   public boolean isInRole(String roleName) {
-    return this.adminUserRoles.stream().anyMatch(r -> Objects.equals(r.roleName, roleName));
+    return this.getAdminUserRoles().stream().anyMatch(r -> Objects.equals(r.roleName, roleName));
   }
 
   public void loginSuccessful(String refreshToken, LocalDateTime loginExpiryDate) {

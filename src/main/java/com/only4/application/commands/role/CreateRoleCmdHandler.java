@@ -1,6 +1,5 @@
 package com.only4.application.commands.role;
 
-import com.only4.application._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.factory.RolePayload;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,6 @@ public class CreateRoleCmdHandler implements Command<CreateRoleCmdRequest, Creat
 
   @Override
   public CreateRoleCmdResponse exec(CreateRoleCmdRequest cmd) {
-    ValidatorUtils.validate(cmd);
     Role role = Mediator.factories().create(
         RolePayload.builder()
             .name(cmd.name)

@@ -56,7 +56,7 @@ public class Role {
     }
 
     public void updateRolePermission(List<RolePermission> newPermissions) {
-        Map<String, RolePermission> currentPermissionMap = this.rolePermissions.stream()
+        Map<String, RolePermission> currentPermissionMap = this.getRolePermissions().stream()
                 .collect(Collectors.toMap(RolePermission::getPermissionCode, rolePermission -> rolePermission));
         Map<String, RolePermission> newPsermissionMap = newPermissions.stream()
                 .collect(Collectors.toMap(RolePermission::getPermissionCode, rolePermission -> rolePermission));
