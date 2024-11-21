@@ -7,7 +7,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.only4.application._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.role.Role;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -42,7 +41,6 @@ class CreateRoleCmdHandlerTest {
   void exec() {
     try (
         MockedStatic<Mediator> mediator = mockStatic(Mediator.class);
-        MockedStatic<ValidatorUtils> validatorUtil = mockStatic(ValidatorUtils.class)
     ) {
       when(Mediator.factories()).thenReturn(factory);
       when(factory.create(any())).thenReturn(role);
@@ -51,7 +49,6 @@ class CreateRoleCmdHandlerTest {
 
       val actual = target.exec(request);
 
-      validatorUtil.verify(() -> ValidatorUtils.validate(request));
       mediator.verify(Mediator::factories);
       verify(factory).create(any());
       mediator.verify(Mediator::uow, times(2));

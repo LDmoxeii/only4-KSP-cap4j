@@ -11,7 +11,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.only4._share.exception.KnownException;
-import com.only4.application._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.role.Role;
 import java.util.Optional;
 import lombok.val;
@@ -43,7 +42,6 @@ class DeleteRoleCmdHandlerTest {
   void exec() {
     try (
         MockedStatic<Mediator> mediator = mockStatic(Mediator.class);
-        MockedStatic<ValidatorUtils> validator = mockStatic(ValidatorUtils.class)
     ) {
       when(request.getRoleId()).thenReturn(1L);
       when(Mediator.repositories()).thenReturn(supervisor);
@@ -52,7 +50,6 @@ class DeleteRoleCmdHandlerTest {
 
       val actual = target.exec(request);
 
-      validator.verify(() -> ValidatorUtils.validate(request));
       mediator.verify(Mediator::repositories);
       verify(supervisor).findOne(any());
       mediator.verify(Mediator::uow, times(2));
@@ -67,7 +64,6 @@ class DeleteRoleCmdHandlerTest {
   void exec_role_not_found() {
     try (
         MockedStatic<Mediator> mediator = mockStatic(Mediator.class);
-        MockedStatic<ValidatorUtils> validator = mockStatic(ValidatorUtils.class)
     ) {
       when(request.getRoleId()).thenReturn(1L);
       when(Mediator.repositories()).thenReturn(supervisor);
@@ -76,7 +72,6 @@ class DeleteRoleCmdHandlerTest {
       val actual = assertThrows(KnownException.class,
           () -> target.exec(request));
 
-      validator.verify(() -> ValidatorUtils.validate(request));
       mediator.verify(Mediator::repositories);
       verify(supervisor).findOne(any());
       mediator.verify(Mediator::uow, never());

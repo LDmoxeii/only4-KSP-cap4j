@@ -1,7 +1,6 @@
 package com.only4.application.commands.role;
 
 import com.only4._share.exception.KnownException;
-import com.only4.application._share.utils.ValidatorUtils;
 import com.only4.domain.aggregates.role.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +24,6 @@ public class UpdateRoleInfoCmdHandler implements
 
   @Override
   public UpdateRoleInfoCmdResponse exec(UpdateRoleInfoCmdRequest cmd) {
-    ValidatorUtils.validate(cmd);
     Role role = Mediator.repositories()
         .findOne(JpaPredicate.byId(Role.class, cmd.getRoleId()))
         .orElseThrow(() -> new KnownException("角色不存在, roleId=" + cmd.getRoleId()));
