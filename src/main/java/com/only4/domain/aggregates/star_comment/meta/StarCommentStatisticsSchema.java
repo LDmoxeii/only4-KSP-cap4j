@@ -1,7 +1,7 @@
-package com.only4.domain.aggregates.role.meta;
+package com.only4.domain.aggregates.star_comment.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.role.RolePermission;
+import com.only4.domain.aggregates.star_comment.StarCommentStatistics;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -13,15 +13,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
- * 角色权限表
+ *
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
 @RequiredArgsConstructor
-public class RolePermissionSchema {
-    private final Path<RolePermission> root;
+public class StarCommentStatisticsSchema {
+    private final Path<StarCommentStatistics> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder criteriaBuilder() {
@@ -37,19 +37,19 @@ public class RolePermissionSchema {
     }
 
     /**
-     * 权限编码
-     * varchar(255)
+     * 点赞数
+     * bigint
      */
-    public Schema.Field<String> permissionCode() {
-        return root == null ? new Schema.Field<>("permissionCode") : new Schema.Field<>(root.get("permissionCode"));
+    public Schema.Field<Long> likes() {
+        return root == null ? new Schema.Field<>("likes") : new Schema.Field<>(root.get("likes"));
     }
 
     /**
-     * 权限备注
-     * varchar(255)
+     * 举报数
+     * bigint
      */
-    public Schema.Field<String> permissionRemark() {
-        return root == null ? new Schema.Field<>("permissionRemark") : new Schema.Field<>(root.get("permissionRemark"));
+    public Schema.Field<Long> reports() {
+        return root == null ? new Schema.Field<>("reports") : new Schema.Field<>(root.get("reports"));
     }
 
 
@@ -76,7 +76,7 @@ public class RolePermissionSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<RolePermissionSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder){
         return builder.build(this);
     }
 
@@ -87,10 +87,10 @@ public class RolePermissionSchema {
      * @param distinct
      * @return
      */
-    public static Specification<RolePermission> specify(Schema.PredicateBuilder<RolePermissionSchema> builder, boolean distinct) {
+    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder, boolean distinct) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            RolePermissionSchema rolePermission = new RolePermissionSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(rolePermission));
+            StarCommentStatisticsSchema starCommentStatistics = new StarCommentStatisticsSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(starCommentStatistics));
             criteriaQuery.distinct(distinct);
             return null;
         };
@@ -101,10 +101,10 @@ public class RolePermissionSchema {
      * @param builder
      * @return
      */
-    public static Specification<RolePermission> specify(Schema.PredicateBuilder<RolePermissionSchema> builder) {
+    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            RolePermissionSchema rolePermission = new RolePermissionSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(rolePermission));
+            StarCommentStatisticsSchema starCommentStatistics = new StarCommentStatisticsSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(starCommentStatistics));
             return null;
         };
     }
@@ -114,7 +114,7 @@ public class RolePermissionSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Schema.OrderBuilder<RolePermissionSchema>... builders) {
+    public static Sort orderBy(Schema.OrderBuilder<StarCommentStatisticsSchema>... builders) {
         return orderBy(Arrays.asList(builders));
     }
 
@@ -124,12 +124,12 @@ public class RolePermissionSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<RolePermissionSchema>> builders) {
+    public static Sort orderBy(Collection<Schema.OrderBuilder<StarCommentStatisticsSchema>> builders) {
         if(null == builders || builders.isEmpty()) {
             return Sort.unsorted();
         }
         return Sort.by(builders.stream()
-                .map(builder -> builder.build(new RolePermissionSchema(null, null)))
+                .map(builder -> builder.build(new StarCommentStatisticsSchema(null, null)))
                 .collect(Collectors.toList())
         );
     }

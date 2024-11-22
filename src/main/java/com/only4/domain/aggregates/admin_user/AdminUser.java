@@ -30,6 +30,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
+
 /**
  * 用户表
  * <p>
@@ -141,10 +142,10 @@ public class AdminUser {
   }
 
   public void delete() {
-    if (isDeleted) {
+    if (delFlag) {
       throw new KnownException("用户已经被删除！");
     }
-    this.isDeleted = true;
+    this.delFlag = true;
   }
 
   public boolean isInRole(String roleName) {
@@ -164,6 +165,20 @@ public class AdminUser {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`admin_user_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.admin_user.AdminUserRole> adminUserRoles;
+
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`admin_user_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.admin_user.AdminUserPermission> adminUserPermissions;
+
+    /**
+     * ID
+     * bigint
+     */
     @Id
     @GeneratedValue(generator = "org.netcorepal.cap4j.ddd.domain.distributed.SnowflakeIdentifierGenerator")
     @GenericGenerator(name = "org.netcorepal.cap4j.ddd.domain.distributed.SnowflakeIdentifierGenerator", strategy = "org.netcorepal.cap4j.ddd.domain.distributed.SnowflakeIdentifierGenerator")
@@ -216,18 +231,8 @@ public class AdminUser {
      * 逻辑删除
      * tinyint(1)
      */
-    @Column(name = "`is_deleted`")
-    Boolean isDeleted;
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "`admin_user_id`", nullable = false)
-    @Fetch(FetchMode.SUBSELECT)
-    private java.util.List<com.only4.domain.aggregates.admin_user.AdminUserPermission> adminUserPermissions;
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "`admin_user_id`", nullable = false)
-    @Fetch(FetchMode.SUBSELECT)
-    private java.util.List<com.only4.domain.aggregates.admin_user.AdminUserRole> adminUserRoles;
+    @Column(name = "`del_flag`")
+    Boolean delFlag;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

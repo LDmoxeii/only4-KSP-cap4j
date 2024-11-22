@@ -1,7 +1,7 @@
-package com.only4.domain.aggregates.role.meta;
+package com.only4.domain.aggregates.favorites.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.role.RolePermission;
+import com.only4.domain.aggregates.favorites.Favorites;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -13,15 +13,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
- * 角色权限表
+ * 收藏夹
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
 @RequiredArgsConstructor
-public class RolePermissionSchema {
-    private final Path<RolePermission> root;
+public class FavoritesSchema {
+    private final Path<Favorites> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder criteriaBuilder() {
@@ -37,19 +37,52 @@ public class RolePermissionSchema {
     }
 
     /**
-     * 权限编码
-     * varchar(255)
+     * 消费者ID
+     * bigint
      */
-    public Schema.Field<String> permissionCode() {
-        return root == null ? new Schema.Field<>("permissionCode") : new Schema.Field<>(root.get("permissionCode"));
+    public Schema.Field<Long> customerId() {
+        return root == null ? new Schema.Field<>("customerId") : new Schema.Field<>(root.get("customerId"));
     }
 
     /**
-     * 权限备注
+     * 标题
+     * varchar(20)
+     */
+    public Schema.Field<String> title() {
+        return root == null ? new Schema.Field<>("title") : new Schema.Field<>(root.get("title"));
+    }
+
+    /**
+     * 描述
      * varchar(255)
      */
-    public Schema.Field<String> permissionRemark() {
-        return root == null ? new Schema.Field<>("permissionRemark") : new Schema.Field<>(root.get("permissionRemark"));
+    public Schema.Field<String> description() {
+        return root == null ? new Schema.Field<>("description") : new Schema.Field<>(root.get("description"));
+    }
+
+    /**
+     * 收藏夹状态
+     * 0:INIT:INIT
+     * int
+     */
+    public Schema.Field<com.only4.domain.aggregates.favorites.enums.FavoritesState> state() {
+        return root == null ? new Schema.Field<>("state") : new Schema.Field<>(root.get("state"));
+    }
+
+    /**
+     * 默认标识
+     * tinyint(1)
+     */
+    public Schema.Field<Boolean> def() {
+        return root == null ? new Schema.Field<>("def") : new Schema.Field<>(root.get("def"));
+    }
+
+    /**
+     * 逻辑删除
+     * tinyint(1)
+     */
+    public Schema.Field<Boolean> delFlag() {
+        return root == null ? new Schema.Field<>("delFlag") : new Schema.Field<>(root.get("delFlag"));
     }
 
 
@@ -76,7 +109,7 @@ public class RolePermissionSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<RolePermissionSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<FavoritesSchema> builder){
         return builder.build(this);
     }
 
@@ -87,10 +120,10 @@ public class RolePermissionSchema {
      * @param distinct
      * @return
      */
-    public static Specification<RolePermission> specify(Schema.PredicateBuilder<RolePermissionSchema> builder, boolean distinct) {
+    public static Specification<Favorites> specify(Schema.PredicateBuilder<FavoritesSchema> builder, boolean distinct) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            RolePermissionSchema rolePermission = new RolePermissionSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(rolePermission));
+            FavoritesSchema favorites = new FavoritesSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(favorites));
             criteriaQuery.distinct(distinct);
             return null;
         };
@@ -101,10 +134,10 @@ public class RolePermissionSchema {
      * @param builder
      * @return
      */
-    public static Specification<RolePermission> specify(Schema.PredicateBuilder<RolePermissionSchema> builder) {
+    public static Specification<Favorites> specify(Schema.PredicateBuilder<FavoritesSchema> builder) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            RolePermissionSchema rolePermission = new RolePermissionSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(rolePermission));
+            FavoritesSchema favorites = new FavoritesSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(favorites));
             return null;
         };
     }
@@ -114,7 +147,7 @@ public class RolePermissionSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Schema.OrderBuilder<RolePermissionSchema>... builders) {
+    public static Sort orderBy(Schema.OrderBuilder<FavoritesSchema>... builders) {
         return orderBy(Arrays.asList(builders));
     }
 
@@ -124,12 +157,12 @@ public class RolePermissionSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<RolePermissionSchema>> builders) {
+    public static Sort orderBy(Collection<Schema.OrderBuilder<FavoritesSchema>> builders) {
         if(null == builders || builders.isEmpty()) {
             return Sort.unsorted();
         }
         return Sort.by(builders.stream()
-                .map(builder -> builder.build(new RolePermissionSchema(null, null)))
+                .map(builder -> builder.build(new FavoritesSchema(null, null)))
                 .collect(Collectors.toList())
         );
     }

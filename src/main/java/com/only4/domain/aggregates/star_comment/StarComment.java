@@ -1,4 +1,4 @@
-package com.only4.domain.aggregates.role;
+package com.only4.domain.aggregates.star_comment;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,16 +15,16 @@ import org.hibernate.annotations.GenericGenerator;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 /**
- * 角色权限表
+ * 星球评论
  *
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
  * @author cap4j-ddd-codegen
- * @date 2024/11/13
+ * @date 2024/11/22
  */
-@Aggregate(aggregate = "role", name = "RolePermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Role" }, description = "角色权限表")
+@Aggregate(aggregate = "star_comment", name = "StarComment", root = true, type = Aggregate.TYPE_ENTITY, description = "星球评论")
 @Entity
-@Table(name = "`role_permission`")
+@Table(name = "`star_comment`")
 @DynamicInsert
 @DynamicUpdate
 
@@ -32,9 +32,11 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 @NoArgsConstructor
 @Builder
 @Getter
-public class RolePermission {
+public class StarComment {
 
     // 【行为方法开始】
+
+
 
     // 【行为方法结束】
 
@@ -53,18 +55,25 @@ public class RolePermission {
     Long id;
 
     /**
-     * 权限编码
-     * varchar(255)
+     * 文章ID
+     * bigint
      */
-    @Column(name = "`permission_code`")
-    String permissionCode;
+    @Column(name = "`article_id`")
+    Long articleId;
 
     /**
-     * 权限备注
+     * 作者ID
+     * bigint
+     */
+    @Column(name = "`author_id`")
+    Long authorId;
+
+    /**
+     * 内容
      * varchar(255)
      */
-    @Column(name = "`permission_remark`")
-    String permissionRemark;
+    @Column(name = "`content`")
+    String content;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

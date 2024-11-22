@@ -277,10 +277,9 @@
           <table></table>
           <ignoreTable>\_\_%</ignoreTable>
           <ignoreFields>db_%</ignoreFields>
-          <idField>id</idField>
           <versionField>version</versionField>
-          <deletedField>is_deleted</deletedField>
-          <readonlyFields>created_at,db_updated_at</readonlyFields>
+          <deletedField>del_flag</deletedField>
+          <readonlyFields>db_created_at,db_updated_at</readonlyFields>
           <entityClassExtraImports>static
             org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events
           </entityClassExtraImports>
