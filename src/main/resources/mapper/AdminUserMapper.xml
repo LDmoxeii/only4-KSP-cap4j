@@ -11,7 +11,7 @@
     <result column="refresh_token" property="refreshToken"/>
     <result column="login_expiry_date" property="loginExpiryDate"/>
     <result column="created_at" property="createdAt"/>
-    <result column="is_deleted" property="isDeleted"/>
+    <result column="is_deleted" property="delFlag"/>
     <collection property="adminUserPermissions"
       ofType="com.only4.domain.aggregates.admin_user.AdminUserPermission">
       <result column="permission_code" property="permissionCode"/>

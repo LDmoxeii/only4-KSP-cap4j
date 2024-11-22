@@ -1,7 +1,7 @@
-package com.only4.domain.aggregates.role.meta;
+package com.only4.domain.aggregates.star.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.role.RolePermission;
+import com.only4.domain.aggregates.star.Star;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -13,15 +13,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
- * 角色权限表
+ * 星球
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
 @RequiredArgsConstructor
-public class RolePermissionSchema {
-    private final Path<RolePermission> root;
+public class StarSchema {
+    private final Path<Star> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder criteriaBuilder() {
@@ -37,19 +37,43 @@ public class RolePermissionSchema {
     }
 
     /**
-     * 权限编码
-     * varchar(255)
+     * 星主ID
+     * bigint
      */
-    public Schema.Field<String> permissionCode() {
-        return root == null ? new Schema.Field<>("permissionCode") : new Schema.Field<>(root.get("permissionCode"));
+    public Schema.Field<Long> masterId() {
+        return root == null ? new Schema.Field<>("masterId") : new Schema.Field<>(root.get("masterId"));
     }
 
     /**
-     * 权限备注
+     * 星球名
+     * varchar(20)
+     */
+    public Schema.Field<String> name() {
+        return root == null ? new Schema.Field<>("name") : new Schema.Field<>(root.get("name"));
+    }
+
+    /**
+     * 描述
      * varchar(255)
      */
-    public Schema.Field<String> permissionRemark() {
-        return root == null ? new Schema.Field<>("permissionRemark") : new Schema.Field<>(root.get("permissionRemark"));
+    public Schema.Field<String> description() {
+        return root == null ? new Schema.Field<>("description") : new Schema.Field<>(root.get("description"));
+    }
+
+    /**
+     * 价格
+     * bigint(20) unsigned zerofill
+     */
+    public Schema.Field<Long> price() {
+        return root == null ? new Schema.Field<>("price") : new Schema.Field<>(root.get("price"));
+    }
+
+    /**
+     * 逻辑删除
+     * tinyint(1)
+     */
+    public Schema.Field<Boolean> delFlag() {
+        return root == null ? new Schema.Field<>("delFlag") : new Schema.Field<>(root.get("delFlag"));
     }
 
 
@@ -76,7 +100,7 @@ public class RolePermissionSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<RolePermissionSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<StarSchema> builder){
         return builder.build(this);
     }
 
@@ -87,10 +111,10 @@ public class RolePermissionSchema {
      * @param distinct
      * @return
      */
-    public static Specification<RolePermission> specify(Schema.PredicateBuilder<RolePermissionSchema> builder, boolean distinct) {
+    public static Specification<Star> specify(Schema.PredicateBuilder<StarSchema> builder, boolean distinct) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            RolePermissionSchema rolePermission = new RolePermissionSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(rolePermission));
+            StarSchema star = new StarSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(star));
             criteriaQuery.distinct(distinct);
             return null;
         };
@@ -101,10 +125,10 @@ public class RolePermissionSchema {
      * @param builder
      * @return
      */
-    public static Specification<RolePermission> specify(Schema.PredicateBuilder<RolePermissionSchema> builder) {
+    public static Specification<Star> specify(Schema.PredicateBuilder<StarSchema> builder) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            RolePermissionSchema rolePermission = new RolePermissionSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(rolePermission));
+            StarSchema star = new StarSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(star));
             return null;
         };
     }
@@ -114,7 +138,7 @@ public class RolePermissionSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Schema.OrderBuilder<RolePermissionSchema>... builders) {
+    public static Sort orderBy(Schema.OrderBuilder<StarSchema>... builders) {
         return orderBy(Arrays.asList(builders));
     }
 
@@ -124,12 +148,12 @@ public class RolePermissionSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<RolePermissionSchema>> builders) {
+    public static Sort orderBy(Collection<Schema.OrderBuilder<StarSchema>> builders) {
         if(null == builders || builders.isEmpty()) {
             return Sort.unsorted();
         }
         return Sort.by(builders.stream()
-                .map(builder -> builder.build(new RolePermissionSchema(null, null)))
+                .map(builder -> builder.build(new StarSchema(null, null)))
                 .collect(Collectors.toList())
         );
     }
