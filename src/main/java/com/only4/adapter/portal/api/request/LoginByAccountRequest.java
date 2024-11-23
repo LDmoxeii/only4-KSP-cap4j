@@ -1,7 +1,14 @@
 package com.only4.adapter.portal.api.request;
 
+import lombok.Data;
+
 /**
  * @author LD_moxeii
  */
-public class LoginRequest {
+@Data
+public class LoginByAccountRequest {
+
+  private String account;
+  private String password;
+
 }
