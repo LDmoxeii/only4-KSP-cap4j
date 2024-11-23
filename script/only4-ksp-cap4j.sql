@@ -11,11 +11,241 @@
  Target Server Version : 80033
  File Encoding         : 65001
 
- Date: 23/11/2024 11:50:42
+ Date: 23/11/2024 16:54:39
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for __achrived_event
+-- ----------------------------
+DROP TABLE IF EXISTS `__achrived_event`;
+CREATE TABLE `__achrived_event`  (
+  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `event_uuid` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '事件uuid',
+  `svc_name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '服务',
+  `event_type` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '事件类型',
+  `data` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '事件数据',
+  `data_type` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '事件数据类型',
+  `exception` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '事件发送异常',
+  `expire_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '过期时间',
+  `create_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `event_state` int(0) NOT NULL DEFAULT 0 COMMENT '分发状态',
+  `last_try_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '上次尝试时间',
+  `next_try_time` datetime(0) NOT NULL DEFAULT '0001-01-01 00:00:00' COMMENT '下次尝试时间',
+  `tried_times` int(0) NOT NULL DEFAULT 0 COMMENT '已尝试次数',
+  `try_times` int(0) NOT NULL DEFAULT 0 COMMENT '尝试次数',
+  `version` int(0) NOT NULL DEFAULT 0,
+  `db_created_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `db_updated_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_db_created_at`(`db_created_at`) USING BTREE,
+  INDEX `idx_db_updated_at`(`db_updated_at`) USING BTREE,
+  INDEX `idx_event_uuid`(`event_uuid`) USING BTREE,
+  INDEX `idx_event_type`(`event_type`, `svc_name`) USING BTREE,
+  INDEX `idx_create_at`(`create_at`) USING BTREE,
+  INDEX `idx_expire_at`(`expire_at`) USING BTREE,
+  INDEX `idx_next_try_time`(`next_try_time`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '事件发件箱存档 support by cap4j\n@I;' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of __achrived_event
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for __archived_saga
+-- ----------------------------
+DROP TABLE IF EXISTS `__archived_saga`;
+CREATE TABLE `__archived_saga`  (
+  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `saga_uuid` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'SAGA uuid',
+  `svc_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '服务',
+  `saga_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'SAGA类型',
+  `param` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '参数',
+  `param_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '参数类型',
+  `result` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '结果',
+  `result_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '结果类型',
+  `exception` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '执行异常',
+  `expire_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '过期时间',
+  `create_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `saga_state` int(0) NOT NULL DEFAULT 0 COMMENT '执行状态@E=0:INIT:init|-1:EXECUTING:executing|-2:CANCEL:cancel|-3:EXPIRED:expired|-4:EXHAUSTED:exhausted|-9:EXCEPTION:exception|1:EXECUTED:executed;@T=SagaState;',
+  `last_try_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '上次尝试时间',
+  `next_try_time` datetime(0) NOT NULL DEFAULT '0001-01-01 00:00:00' COMMENT '下次尝试时间',
+  `tried_times` int(0) NOT NULL DEFAULT 0 COMMENT '已尝试次数',
+  `try_times` int(0) NOT NULL DEFAULT 0 COMMENT '尝试次数',
+  `version` int(0) NOT NULL DEFAULT 0,
+  `db_created_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `db_updated_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_db_created_at`(`db_created_at`) USING BTREE,
+  INDEX `idx_db_updated_at`(`db_updated_at`) USING BTREE,
+  INDEX `idx_saga_uuid`(`saga_uuid`) USING BTREE,
+  INDEX `idx_saga_type`(`saga_type`, `svc_name`) USING BTREE,
+  INDEX `idx_create_at`(`create_at`) USING BTREE,
+  INDEX `idx_expire_at`(`expire_at`) USING BTREE,
+  INDEX `idx_next_try_time`(`next_try_time`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'SAGA事务(存档) support by cap4j\n@I;' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of __archived_saga
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for __archived_saga_process
+-- ----------------------------
+DROP TABLE IF EXISTS `__archived_saga_process`;
+CREATE TABLE `__archived_saga_process`  (
+  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `saga_id` bigint(0) NOT NULL DEFAULT 0,
+  `process_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'SAGA处理环节代码',
+  `param` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '参数',
+  `param_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '参数类型',
+  `result` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '结果',
+  `result_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '结果类型',
+  `exception` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '执行异常',
+  `process_state` int(0) NOT NULL DEFAULT 0 COMMENT '执行状态@E=0:INIT:init|-1:EXECUTING:executing|-9:EXCEPTION:exception|1:EXECUTED:executed;@T=SagaProcessState;',
+  `create_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `last_try_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '上次尝试时间',
+  `tried_times` int(0) NOT NULL DEFAULT 0 COMMENT '尝试次数',
+  `db_created_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `db_updated_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_db_created_at`(`db_created_at`) USING BTREE,
+  INDEX `idx_db_updated_at`(`db_updated_at`) USING BTREE,
+  INDEX `idx_saga_id`(`saga_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'SAGA事务-子环节(存档) support by cap4j\n@I;' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of __archived_saga_process
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for __event
+-- ----------------------------
+DROP TABLE IF EXISTS `__event`;
+CREATE TABLE `__event`  (
+  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `event_uuid` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '事件uuid',
+  `svc_name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '服务',
+  `event_type` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '事件类型',
+  `data` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '事件数据',
+  `data_type` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '事件数据类型',
+  `exception` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '事件发送异常',
+  `expire_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '过期时间',
+  `create_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `event_state` int(0) NOT NULL DEFAULT 0 COMMENT '分发状态',
+  `last_try_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '上次尝试时间',
+  `next_try_time` datetime(0) NOT NULL DEFAULT '0001-01-01 00:00:00' COMMENT '下次尝试时间',
+  `tried_times` int(0) NOT NULL DEFAULT 0 COMMENT '已尝试次数',
+  `try_times` int(0) NOT NULL DEFAULT 0 COMMENT '尝试次数',
+  `version` int(0) NOT NULL DEFAULT 0,
+  `db_created_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `db_updated_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_db_created_at`(`db_created_at`) USING BTREE,
+  INDEX `idx_db_updated_at`(`db_updated_at`) USING BTREE,
+  INDEX `idx_event_uuid`(`event_uuid`) USING BTREE,
+  INDEX `idx_event_type`(`event_type`, `svc_name`) USING BTREE,
+  INDEX `idx_create_at`(`create_at`) USING BTREE,
+  INDEX `idx_expire_at`(`expire_at`) USING BTREE,
+  INDEX `idx_next_try_time`(`next_try_time`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '事件发件箱 support by cap4j\n@I;' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of __event
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for __locker
+-- ----------------------------
+DROP TABLE IF EXISTS `__locker`;
+CREATE TABLE `__locker`  (
+  `id` int(0) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '锁名称',
+  `pwd` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '锁密码',
+  `lock_at` datetime(0) NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT '锁获取时间',
+  `unlock_at` datetime(0) NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT '锁释放时间',
+  `version` bigint(0) UNSIGNED NOT NULL DEFAULT 0,
+  `db_created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `db_updated_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `uniq_name`(`name`) USING BTREE,
+  INDEX `idx_db_created_at`(`db_created_at`) USING BTREE,
+  INDEX `idx_db_updated_at`(`db_updated_at`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '锁 support by cap4j\n@I;' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of __locker
+-- ----------------------------
+INSERT INTO `__locker` VALUES (1, 'saga_compense[only4-KSP-cap4j]', 'cRrxRMqO', '2024-11-21 11:09:00', '2024-11-21 11:09:00', 0, '2024-11-17 04:55:00', '2024-11-21 03:09:00');
+
+-- ----------------------------
+-- Table structure for __saga
+-- ----------------------------
+DROP TABLE IF EXISTS `__saga`;
+CREATE TABLE `__saga`  (
+  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `saga_uuid` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'SAGA uuid',
+  `svc_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '服务',
+  `saga_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'SAGA类型',
+  `param` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '参数',
+  `param_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '参数类型',
+  `result` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '结果',
+  `result_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '结果类型',
+  `exception` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '执行异常',
+  `expire_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '过期时间',
+  `create_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `saga_state` int(0) NOT NULL DEFAULT 0 COMMENT '执行状态@E=0:INIT:init|-1:EXECUTING:executing|-2:CANCEL:cancel|-3:EXPIRED:expired|-4:EXHAUSTED:exhausted|-9:EXCEPTION:exception|1:EXECUTED:executed;@T=SagaState;',
+  `last_try_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '上次尝试时间',
+  `next_try_time` datetime(0) NOT NULL DEFAULT '0001-01-01 00:00:00' COMMENT '下次尝试时间',
+  `tried_times` int(0) NOT NULL DEFAULT 0 COMMENT '已尝试次数',
+  `try_times` int(0) NOT NULL DEFAULT 0 COMMENT '尝试次数',
+  `version` int(0) NOT NULL DEFAULT 0,
+  `db_created_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `db_updated_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_db_created_at`(`db_created_at`) USING BTREE,
+  INDEX `idx_db_updated_at`(`db_updated_at`) USING BTREE,
+  INDEX `idx_saga_uuid`(`saga_uuid`) USING BTREE,
+  INDEX `idx_saga_type`(`saga_type`, `svc_name`) USING BTREE,
+  INDEX `idx_create_at`(`create_at`) USING BTREE,
+  INDEX `idx_expire_at`(`expire_at`) USING BTREE,
+  INDEX `idx_next_try_time`(`next_try_time`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'SAGA事务 support by cap4j\n@I;' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of __saga
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for __saga_process
+-- ----------------------------
+DROP TABLE IF EXISTS `__saga_process`;
+CREATE TABLE `__saga_process`  (
+  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `saga_id` bigint(0) NOT NULL DEFAULT 0,
+  `process_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'SAGA处理环节代码',
+  `param` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '参数',
+  `param_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '参数类型',
+  `result` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '结果',
+  `result_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '结果类型',
+  `exception` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '执行异常',
+  `process_state` int(0) NOT NULL DEFAULT 0 COMMENT '执行状态@E=0:INIT:init|-1:EXECUTING:executing|-9:EXCEPTION:exception|1:EXECUTED:executed;@T=SagaProcessState;',
+  `create_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `last_try_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '上次尝试时间',
+  `tried_times` int(0) NOT NULL DEFAULT 0 COMMENT '尝试次数',
+  `db_created_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `db_updated_at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_db_created_at`(`db_created_at`) USING BTREE,
+  INDEX `idx_db_updated_at`(`db_updated_at`) USING BTREE,
+  INDEX `idx_saga_id`(`saga_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'SAGA事务-子环节 support by cap4j\n@I;' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of __saga_process
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for admin_user
@@ -75,7 +305,7 @@ CREATE TABLE `admin_user_role`  (
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
-  `arthor_id` bigint(0) NULL DEFAULT NULL COMMENT '作者ID',
+  `author_id` bigint(0) NULL DEFAULT NULL COMMENT '作者ID',
   `state` int(0) NULL DEFAULT NULL COMMENT '文章状态@T=ArticleState;@E=0:INIT;',
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标题',
@@ -128,6 +358,7 @@ CREATE TABLE `article_comment_like`  (
 DROP TABLE IF EXISTS `article_comment_statistics`;
 CREATE TABLE `article_comment_statistics`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
+  `article_comment_id` bigint(0) NULL DEFAULT NULL COMMENT '文章评论ID',
   `likes` bigint(0) NULL DEFAULT NULL COMMENT '点赞数',
   `reports` bigint(0) NULL DEFAULT NULL COMMENT '举报数',
   PRIMARY KEY (`id`) USING BTREE
@@ -159,11 +390,12 @@ CREATE TABLE `article_like`  (
 DROP TABLE IF EXISTS `article_statistics`;
 CREATE TABLE `article_statistics`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
+  `article_id` bigint(0) NULL DEFAULT NULL COMMENT '文章ID',
   `likes` bigint(0) NULL DEFAULT NULL COMMENT '点赞数',
   `reports` bigint(0) NULL DEFAULT NULL COMMENT '举报数',
   `comments` bigint(0) NULL DEFAULT NULL COMMENT '评论数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '@P=article;' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章统计表\r\n@P=article;' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article_statistics
@@ -211,10 +443,11 @@ CREATE TABLE `customer`  (
 DROP TABLE IF EXISTS `customer_permission`;
 CREATE TABLE `customer_permission`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
+  `customer_id` bigint(0) NULL DEFAULT NULL COMMENT '消费者ID',
   `permission_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限编码',
   `permission_remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '@P=customer;' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消费者权限表\r\n @P=customer;\r\n @L=true;' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of customer_permission
@@ -226,6 +459,7 @@ CREATE TABLE `customer_permission`  (
 DROP TABLE IF EXISTS `customer_role`;
 CREATE TABLE `customer_role`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
+  `customer_id` bigint(0) NULL DEFAULT NULL COMMENT '消费者ID',
   `role_id` bigint(0) NULL DEFAULT NULL COMMENT '角色ID',
   `role_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色名',
   PRIMARY KEY (`id`) USING BTREE
@@ -241,6 +475,7 @@ CREATE TABLE `customer_role`  (
 DROP TABLE IF EXISTS `customer_statistics`;
 CREATE TABLE `customer_statistics`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
+  `customer_id` bigint(0) NULL DEFAULT NULL COMMENT '消费者ID',
   `rank` bigint(0) NULL DEFAULT NULL COMMENT '经验',
   `likes` bigint(0) NULL DEFAULT NULL COMMENT '点赞数',
   `fans` bigint(0) NULL DEFAULT NULL COMMENT '粉丝数',
@@ -420,6 +655,7 @@ CREATE TABLE `star_comment_like`  (
 DROP TABLE IF EXISTS `star_comment_statistics`;
 CREATE TABLE `star_comment_statistics`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
+  `star_comment_id` int(0) NULL DEFAULT NULL COMMENT '星球评论ID',
   `likes` bigint(0) NULL DEFAULT NULL COMMENT '点赞数',
   `reports` bigint(0) NULL DEFAULT NULL COMMENT '举报数',
   PRIMARY KEY (`id`) USING BTREE
@@ -435,6 +671,7 @@ CREATE TABLE `star_comment_statistics`  (
 DROP TABLE IF EXISTS `star_statistics`;
 CREATE TABLE `star_statistics`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
+  `star_id` bigint(0) NULL DEFAULT NULL COMMENT '星球ID',
   `stardust` bigint(0) NULL DEFAULT NULL COMMENT '星尘',
   `comments` bigint(0) NULL DEFAULT NULL COMMENT '评论数',
   PRIMARY KEY (`id`) USING BTREE

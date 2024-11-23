@@ -6,8 +6,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -17,7 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/22
+ * @date 2024/11/23
  */
 @RequiredArgsConstructor
 public class StarSchema {
@@ -104,6 +107,18 @@ public class StarSchema {
         return builder.build(this);
     }
 
+    /**
+     * StarStatistics 关联查询条件定义
+     *
+     * @param joinType
+     * @return
+     */
+    public com.only4.domain.aggregates.star.meta.StarStatisticsSchema joinStarStatistics(Schema.JoinType joinType) {
+        JoinType type = joinType.toJpaJoinType();
+        Join<Star, com.only4.domain.aggregates.star.StarStatistics> join = ((Root<Star>) root).join("starStatistics", type);
+        com.only4.domain.aggregates.star.meta.StarStatisticsSchema schema = new com.only4.domain.aggregates.star.meta.StarStatisticsSchema(join, criteriaBuilder);
+        return schema;
+    }
 
     /**
      * 构建查询条件
