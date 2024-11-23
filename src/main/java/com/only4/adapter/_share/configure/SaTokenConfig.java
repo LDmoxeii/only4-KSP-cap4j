@@ -7,7 +7,6 @@ import cn.dev33.satoken.stp.StpLogic;
 import com.only4.adapter._share.core.dao.PlusSaTokenDao;
 import com.only4.adapter._share.core.service.SaPermissionImpl;
 import com.only4.adapter._share.factory.YmlPropertySourceFactory;
-import com.only4.adapter._share.handler.SaTokenExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -41,14 +40,6 @@ public class SaTokenConfig {
     @Bean
     public SaTokenDao saTokenDao() {
         return new PlusSaTokenDao();
-    }
-
-    /**
-     * 异常处理器
-     */
-    @Bean
-    public SaTokenExceptionHandler saTokenExceptionHandler() {
-        return new SaTokenExceptionHandler();
     }
 
 }
