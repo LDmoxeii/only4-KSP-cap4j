@@ -22,7 +22,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "article", name = "ArticleStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "")
+@Aggregate(aggregate = "article", name = "ArticleStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "文章统计表")
 @Entity
 @Table(name = "`article_statistics`")
 @DynamicInsert

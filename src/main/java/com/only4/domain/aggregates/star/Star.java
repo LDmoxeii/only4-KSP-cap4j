@@ -1,9 +1,13 @@
 package com.only4.domain.aggregates.star;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +15,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -22,7 +28,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
  * @author cap4j-ddd-codegen
- * @date 2024/11/22
+ * @date 2024/11/23
  */
 @Aggregate(aggregate = "star", name = "Star", root = true, type = Aggregate.TYPE_ENTITY, description = "星球")
 @Entity
@@ -47,6 +53,11 @@ public class Star {
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
+
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`star_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.star.StarStatistics> starStatistics;
 
     /**
      * ID

@@ -21,7 +21,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "customer", name = "CustomerPermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Customer" }, description = "")
+@Aggregate(aggregate = "customer", name = "CustomerPermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Customer" }, description = "消费者权限表")
 @Entity
 @Table(name = "`customer_permission`")
 @DynamicInsert

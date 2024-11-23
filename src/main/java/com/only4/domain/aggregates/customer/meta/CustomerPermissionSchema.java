@@ -13,11 +13,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
- *
+ * 消费者权限表
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/22
+ * @date 2024/11/23
  */
 @RequiredArgsConstructor
 public class CustomerPermissionSchema {
