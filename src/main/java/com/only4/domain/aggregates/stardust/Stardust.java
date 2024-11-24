@@ -1,20 +1,19 @@
 package com.only4.domain.aggregates.stardust;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.only4.domain.aggregates.stardust.events.CustomerJoinedStarDomainEvent;
+import com.only4.domain.aggregates.stardust.events.CustomerLeavedStarDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.*;
+
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 星尘
@@ -40,6 +39,13 @@ public class Stardust {
 
     // 【行为方法开始】
 
+    public void create() {
+        events().attach(new CustomerJoinedStarDomainEvent(this), this);
+    }
+
+    public void delete() {
+        events().attach(new CustomerLeavedStarDomainEvent(this), this);
+    }
 
 
     // 【行为方法结束】

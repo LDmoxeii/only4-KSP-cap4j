@@ -1,26 +1,23 @@
 package com.only4.domain.aggregates.customer;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.only4.domain.aggregates.customer.events.CustomerCreatedDomainEvent;
+import com.only4.domain.aggregates.customer.events.CustomerLevelChangedDomainEvent;
+import com.only4.domain.aggregates.customer.events.CustomerReportedDomainEvent;
+import com.only4.domain.aggregates.customer.events.CustomerSignedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
+
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 消费者
@@ -45,6 +42,84 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 public class Customer {
 
     // 【行为方法开始】
+
+    public void create() {
+        events().attach(new CustomerCreatedDomainEvent(this), this);
+    }
+
+    public void changeInfo(String newNickName, String newSignature) {
+
+    }
+
+    public void updatePassword(String newPassword) {
+
+    }
+
+    public void updatePhone(String newPhone) {
+
+    }
+
+    public void sing() {
+        events().attach(new CustomerSignedDomainEvent(this), this);
+    }
+
+    public void delete() {
+
+    }
+
+    public void ban() {
+
+    }
+
+    public void updateReport() {
+        events().attach(new CustomerReportedDomainEvent(this), this);
+    }
+
+    public void changeLevel() {
+        events().attach(new CustomerLevelChangedDomainEvent(this), this);
+    }
+
+    public void updateRoles() {
+
+    }
+
+    public void updatePermissions(Long permissionId, List<CustomerPermission> permissions) {
+
+    }
+
+    public void addPermission(Long permissionId, List<CustomerPermission> permissions) {
+
+    }
+
+    public void deletePermissions(Long permissionId) {
+
+    }
+
+    public void setSpecificPermission(List<CustomerPermission> permissions) {
+
+    }
+
+    public void updateLikes(Long num) {
+
+    }
+
+    public void updateFans(Long num) {
+
+    }
+
+    public void updateFollows(Long num) {
+
+    }
+
+    public void updateWorks(Long num) {
+
+    }
+
+    public void updateRank(Long num) {
+
+    }
+
+
 
 
 

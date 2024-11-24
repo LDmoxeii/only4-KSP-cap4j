@@ -1,21 +1,15 @@
 package com.only4.domain.aggregates.order;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 订单
@@ -41,7 +35,21 @@ public class Order {
 
     // 【行为方法开始】
 
+    public void create() {
 
+    }
+
+    public void refund() {
+
+    }
+
+    public void pay() {
+
+    }
+
+    public void cancel() {
+
+    }
 
     // 【行为方法结束】
 

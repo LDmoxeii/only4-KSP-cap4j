@@ -1,24 +1,20 @@
 package com.only4.domain.aggregates.star_comment;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.only4.domain.aggregates.star_comment.events.StarCommentCreatedDomainEvent;
+import com.only4.domain.aggregates.star_comment.events.StarCommentDeletedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.*;
+
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 星球评论
@@ -42,7 +38,21 @@ public class StarComment {
 
     // 【行为方法开始】
 
+    public void create() {
+        events().attach(new StarCommentCreatedDomainEvent(this) ,this);
+    }
 
+    public void delete() {
+        events().attach(new StarCommentDeletedDomainEvent(this), this);
+    }
+
+    public void updateLikes(Long num) {
+
+    }
+
+    public void updateReports(Long num) {
+
+    }
 
     // 【行为方法结束】
 

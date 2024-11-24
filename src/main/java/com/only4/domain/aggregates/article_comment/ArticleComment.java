@@ -1,26 +1,20 @@
 package com.only4.domain.aggregates.article_comment;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.only4.domain.aggregates.article_comment.events.ArticleCommentCreatedDomainEvent;
+import com.only4.domain.aggregates.article_comment.events.ArticleCommentDeletedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.*;
+
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 
 /**
@@ -47,7 +41,21 @@ public class ArticleComment {
 
     // 【行为方法开始】
 
+    public void create() {
+        events().attach(new ArticleCommentCreatedDomainEvent(this), this);
+    }
 
+    public void updateLikes(Long num) {
+
+    }
+
+    public void updateReport(Long num) {
+
+    }
+
+    public void delete() {
+        events().attach(new ArticleCommentDeletedDomainEvent(this), this);
+    }
 
     // 【行为方法结束】
 
