@@ -20,7 +20,8 @@ public class ArticleCommentLikeFactory implements AggregateFactory<ArticleCommen
     public ArticleCommentLike create(ArticleCommentLikePayload payload) {
 
         return ArticleCommentLike.builder()
-
+                .customerId(payload.getCustomerId())
+                .comments(payload.getCommentId())
                 .build();
     }
 }

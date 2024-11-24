@@ -5,6 +5,8 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.AggregateFactory;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+
 /**
  * StarComment聚合工厂
  *
@@ -20,7 +22,10 @@ public class StarCommentFactory implements AggregateFactory<StarCommentPayload, 
     public StarComment create(StarCommentPayload payload) {
 
         return StarComment.builder()
-
+                .articleId(payload.getArticleId())
+                .authorId(payload.getAuthorId())
+                .content(payload.getContent())
+                .starCommentStatistics(Collections.singletonList(payload.getStarCommentStatistics()))
                 .build();
     }
 }

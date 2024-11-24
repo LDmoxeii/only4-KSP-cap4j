@@ -1,6 +1,7 @@
 package com.only4.domain.aggregates.star_comment.factory;
 
 import com.only4.domain.aggregates.star_comment.StarComment;
+import com.only4.domain.aggregates.star_comment.StarCommentStatistics;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +22,9 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StarCommentPayload implements AggregatePayload<StarComment> {
-    String name;
+    Long articleId;
+    Long authorId;
+    String content;
+    StarCommentStatistics starCommentStatistics;
 
 }

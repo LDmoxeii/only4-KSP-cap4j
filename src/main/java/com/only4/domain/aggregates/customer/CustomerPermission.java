@@ -10,6 +10,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -39,7 +41,8 @@ public class CustomerPermission {
     // 【行为方法结束】
 
 
-
+    @Transient
+    final List<Long> sourceRoleIds = new ArrayList<>();
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
     /**

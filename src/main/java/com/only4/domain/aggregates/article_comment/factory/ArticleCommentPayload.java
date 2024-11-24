@@ -1,6 +1,7 @@
 package com.only4.domain.aggregates.article_comment.factory;
 
 import com.only4.domain.aggregates.article_comment.ArticleComment;
+import com.only4.domain.aggregates.article_comment.ArticleCommentStatistics;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +22,9 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArticleCommentPayload implements AggregatePayload<ArticleComment> {
-    String name;
+    Long articleId;
+    Long authorId;
+    String content;
+    ArticleCommentStatistics statistics;
 
 }

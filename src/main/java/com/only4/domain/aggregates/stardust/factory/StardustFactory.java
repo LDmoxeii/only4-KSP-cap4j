@@ -20,7 +20,8 @@ public class StardustFactory implements AggregateFactory<StardustPayload, Stardu
     public Stardust create(StardustPayload payload) {
 
         return Stardust.builder()
-
+                .starId(payload.getStarId())
+                .customerId(payload.getCustomerId())
                 .build();
     }
 }

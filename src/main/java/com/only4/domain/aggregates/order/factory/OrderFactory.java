@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 /**
  * Order聚合工厂
  *
- *
  * @author cap4j-ddd-codegen
  * @date 2024/11/24
  */
@@ -20,7 +19,12 @@ public class OrderFactory implements AggregateFactory<OrderPayload, Order> {
     public Order create(OrderPayload payload) {
 
         return Order.builder()
-
+                .serial(String.valueOf(payload.getCustomerId() + payload.getPrice() + payload.getActualPrice()))
+                .customerId(payload.getCustomerId())
+                .name(payload.getName())
+                .price(payload.getPrice())
+                .actualPrice(payload.getActualPrice())
+                .isPaid(false)
                 .build();
     }
 }

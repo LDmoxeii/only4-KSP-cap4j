@@ -21,6 +21,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StardustPayload implements AggregatePayload<Stardust> {
-    String name;
+    Long StarId;
+    Long CustomerId;
 
 }

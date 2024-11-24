@@ -41,8 +41,8 @@ public class FollowSchema {
      * 关注人ID
      * bigint
      */
-    public Schema.Field<Long> followId() {
-        return root == null ? new Schema.Field<>("followId") : new Schema.Field<>(root.get("followId"));
+    public Schema.Field<Long> followerId() {
+        return root == null ? new Schema.Field<>("followerId") : new Schema.Field<>(root.get("followerId"));
     }
 
     /**

@@ -21,6 +21,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FollowPayload implements AggregatePayload<Follow> {
-    String name;
+    Long followerId;
+    Long followedId;
 
 }

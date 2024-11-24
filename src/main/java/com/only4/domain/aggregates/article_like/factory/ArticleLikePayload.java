@@ -21,6 +21,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArticleLikePayload implements AggregatePayload<ArticleLike> {
-    String name;
+    Long CustomerId;
+    Long ArticleId;
 
 }

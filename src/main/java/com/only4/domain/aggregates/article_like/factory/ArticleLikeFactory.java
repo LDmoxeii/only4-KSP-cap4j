@@ -20,7 +20,8 @@ public class ArticleLikeFactory implements AggregateFactory<ArticleLikePayload, 
     public ArticleLike create(ArticleLikePayload payload) {
 
         return ArticleLike.builder()
-
+                .customerId(payload.getCustomerId())
+                .articleId(payload.getArticleId())
                 .build();
     }
 }

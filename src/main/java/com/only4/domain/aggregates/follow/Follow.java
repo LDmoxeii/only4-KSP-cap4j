@@ -57,8 +57,8 @@ public class Follow {
      * 关注人ID
      * bigint
      */
-    @Column(name = "`follow_id`")
-    Long followId;
+    @Column(name = "`follower_id`")
+    Long followerId;
 
     /**
      * 被关注人ID

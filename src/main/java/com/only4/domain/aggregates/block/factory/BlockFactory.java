@@ -20,7 +20,8 @@ public class BlockFactory implements AggregateFactory<BlockPayload, Block> {
     public Block create(BlockPayload payload) {
 
         return Block.builder()
-
+                .blockId(payload.getBlockId())
+                .blockedId(payload.getBlockedId())
                 .build();
     }
 }

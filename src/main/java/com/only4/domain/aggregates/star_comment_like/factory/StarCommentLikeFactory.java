@@ -20,7 +20,8 @@ public class StarCommentLikeFactory implements AggregateFactory<StarCommentLikeP
     public StarCommentLike create(StarCommentLikePayload payload) {
 
         return StarCommentLike.builder()
-
+                .customerId(payload.getCustomerId())
+                .commentId(payload.getCommentId())
                 .build();
     }
 }

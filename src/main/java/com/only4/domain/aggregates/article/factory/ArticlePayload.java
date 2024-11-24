@@ -1,6 +1,7 @@
 package com.only4.domain.aggregates.article.factory;
 
 import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.article.ArticleStatistics;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,6 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 /**
  * Article工厂负载
  *
- *
  * @author cap4j-ddd-codegen
  * @date 2024/11/24
  */
@@ -21,6 +21,11 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArticlePayload implements AggregatePayload<Article> {
-    String name;
+    Long authorId;
+    String title;
+    String description;
+    String content;
+    Long price;
+    ArticleStatistics statistics;
 
 }

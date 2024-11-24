@@ -20,7 +20,8 @@ public class FavoriteArticleFactory implements AggregateFactory<FavoriteArticleP
     public FavoriteArticle create(FavoriteArticlePayload payload) {
 
         return FavoriteArticle.builder()
-
+                .favoritesId(payload.getFavoritesId())
+                .articleId(payload.getArticleId())
                 .build();
     }
 }

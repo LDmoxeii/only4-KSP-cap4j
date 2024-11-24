@@ -20,7 +20,8 @@ public class FollowFactory implements AggregateFactory<FollowPayload, Follow> {
     public Follow create(FollowPayload payload) {
 
         return Follow.builder()
-
+                .followerId(payload.getFollowerId())
+                .followedId(payload.getFollowedId())
                 .build();
     }
 }

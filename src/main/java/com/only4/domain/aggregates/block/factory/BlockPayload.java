@@ -21,6 +21,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BlockPayload implements AggregatePayload<Block> {
-    String name;
+    Long blockId;
+    Long blockedId;
 
 }

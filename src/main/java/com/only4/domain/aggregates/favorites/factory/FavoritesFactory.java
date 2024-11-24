@@ -20,7 +20,10 @@ public class FavoritesFactory implements AggregateFactory<FavoritesPayload, Favo
     public Favorites create(FavoritesPayload payload) {
 
         return Favorites.builder()
-
+                .customerId(payload.getCustomerId())
+                .title(payload.getTitle())
+                .description(payload.getDescription())
+                .def(payload.getDef())
                 .build();
     }
 }

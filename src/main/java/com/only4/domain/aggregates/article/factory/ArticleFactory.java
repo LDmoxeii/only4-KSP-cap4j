@@ -20,7 +20,11 @@ public class ArticleFactory implements AggregateFactory<ArticlePayload, Article>
     public Article create(ArticlePayload payload) {
 
         return Article.builder()
-
+                .authorId(payload.getAuthorId())
+                .title(payload.getTitle())
+                .description(payload.getDescription())
+                .content(payload.getContent())
+                .price(payload.getPrice())
                 .build();
     }
 }

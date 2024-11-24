@@ -21,6 +21,6 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FavoriteArticlePayload implements AggregatePayload<FavoriteArticle> {
-    String name;
-
+    Long favoritesId;
+    Long articleId;
 }

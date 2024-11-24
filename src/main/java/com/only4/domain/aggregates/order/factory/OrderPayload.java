@@ -21,6 +21,9 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderPayload implements AggregatePayload<Order> {
+    Long customerId;
     String name;
+    Long price;
+    Long actualPrice;
 
 }
