@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @DynamicInsert
 @DynamicUpdate
 @SQLDelete(sql = "update admin_user set is_deleted = 1 where id = ? ")
-@Where(clause = "`is_deleted` = 0")
+@Where(clause = "`del_flag` = 0")
 
 @AllArgsConstructor
 @NoArgsConstructor

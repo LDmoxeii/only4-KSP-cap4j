@@ -1,8 +1,5 @@
 package com.only4.adapter.portal.api;
 
-import static org.netcorepal.cap4j.ddd.Mediator.commands;
-import static org.netcorepal.cap4j.ddd.Mediator.queries;
-
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.only4._share.exception.KnownException;
 import com.only4.adapter.portal.api._share.ResponseData;
@@ -19,20 +16,17 @@ import com.only4.application.queries.admin_user.GetAllAdminUserQryRequest;
 import com.only4.application.queries.role.GetAllRolesQryRequest;
 import com.only4.domain.aggregates.admin_user.AdminUserPermission;
 import com.only4.domain.aggregates.admin_user.dto.AssignAdminUserRoleDto;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import lombok.var;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static org.netcorepal.cap4j.ddd.Mediator.commands;
+import static org.netcorepal.cap4j.ddd.Mediator.queries;
 
 /**
  * @author LD_moxeii
