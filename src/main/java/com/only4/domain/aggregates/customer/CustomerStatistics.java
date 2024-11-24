@@ -1,10 +1,5 @@
 package com.only4.domain.aggregates.customer;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +8,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+
+import javax.persistence.*;
 
 /**
  *
@@ -35,7 +32,29 @@ public class CustomerStatistics {
 
     // 【行为方法开始】
 
+    public void updateRank(Long num) {
 
+    }
+
+    public void updateLikes(Long num) {
+
+    }
+
+    public void updateFans(Long num) {
+
+    }
+
+    public void updateReports(Long num) {
+
+    }
+
+    public void updateFollows(Long num) {
+
+    }
+
+    public void updateWorks(Long num) {
+
+    }
 
     // 【行为方法结束】
 

@@ -2,22 +2,23 @@ package com.only4.domain.aggregates.follow.meta;
 
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.follow.Follow;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.stream.Collectors;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * 关注
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/23
+ * @date 2024/11/24
  */
 @RequiredArgsConstructor
 public class FollowSchema {

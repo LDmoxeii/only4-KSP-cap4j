@@ -1,10 +1,5 @@
 package com.only4.domain.aggregates.star_comment;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +8,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+
+import javax.persistence.*;
 
 /**
  *
@@ -39,7 +36,13 @@ public class StarCommentStatistics {
 
     // 【行为方法结束】
 
+    public void updateLikes(Long num) {
+        this.likes += num;
+    }
 
+    public void updateReports(Long num) {
+        this.reports += num;
+    }
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
