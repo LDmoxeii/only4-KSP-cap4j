@@ -10,25 +10,6 @@
     <result column="nack_name" property="nickName"/>
     <result column="signature" property="signature"/>
     <result column="grade" property="grade"/>
-    <collection property="customerStatistics"
-      ofType="com.only4.domain.aggregates.customer.CustomerStatistics">
-      <result column="rank" property="rank"/>
-      <result column="likes" property="likes"/>
-      <result column="fans" property="fans"/>
-      <result column="reports" property="reports"/>
-      <result column="follows" property="follows"/>
-      <result column="works" property="works"/>
-    </collection>
-    <collection property="customerPermissions"
-      ofType="com.only4.domain.aggregates.customer.CustomerPermission">
-      <result column="permission_code" property="permissionCode"/>
-      <result column="permission_remark" property="permissionRemark"/>
-    </collection>
-    <collection property="customerRoles"
-      ofType="com.only4.domain.aggregates.customer.CustomerRole">
-      <result column="role_id" property="roleId"/>
-      <result column="role_name" property="roleName"/>
-    </collection>
   </resultMap>
 
   <select id="getByAccount" resultMap="customer">

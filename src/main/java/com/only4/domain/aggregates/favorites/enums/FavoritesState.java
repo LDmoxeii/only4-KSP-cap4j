@@ -1,10 +1,11 @@
 package com.only4.domain.aggregates.favorites.enums;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.persistence.AttributeConverter;
 import lombok.Getter;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+
+import javax.persistence.AttributeConverter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
@@ -12,7 +13,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "favorites", name = "FavoritesState", type = "enum", description = "")
+@Aggregate(aggregate = "Favorites", name = "FavoritesState", type = "enum", description = "")
 public enum FavoritesState {
 
     /**

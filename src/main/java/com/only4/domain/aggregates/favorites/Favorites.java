@@ -19,7 +19,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "favorites", name = "Favorites", root = true, type = Aggregate.TYPE_ENTITY, description = "收藏夹")
+@Aggregate(aggregate = "Favorites", name = "Favorites", root = true, type = Aggregate.TYPE_ENTITY, description = "收藏夹")
 @Entity
 @Table(name = "`favorites`")
 @DynamicInsert
@@ -39,8 +39,9 @@ public class Favorites {
 
     }
 
-    public void updateInfo() {
-
+    public void updateInfo(String newTitle, String newDescription) {
+        this.title = newTitle;
+        this.description = newDescription;
     }
 
     public void delete() {

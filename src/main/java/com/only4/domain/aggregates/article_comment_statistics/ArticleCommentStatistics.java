@@ -1,4 +1,4 @@
-package com.only4.domain.aggregates.customer;
+package com.only4.domain.aggregates.article_comment_statistics;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,19 +10,17 @@ import org.hibernate.annotations.GenericGenerator;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
  * @author cap4j-ddd-codegen
- * @date 2024/11/22
+ * @date 2024/11/26
  */
-@Aggregate(aggregate = "customer", name = "CustomerPermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Customer" }, description = "消费者权限表")
+@Aggregate(aggregate = "ArticleCommentStatistics", name = "ArticleCommentStatistics", root = true, type = Aggregate.TYPE_ENTITY, description = "")
 @Entity
-@Table(name = "`customer_permission`")
+@Table(name = "`article_comment_statistics`")
 @DynamicInsert
 @DynamicUpdate
 
@@ -30,19 +28,22 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
-public class CustomerPermission {
+public class ArticleCommentStatistics {
 
     // 【行为方法开始】
 
-    public void addSourceRoleId(Long roleId) {
+    public void updateLikes(Long num) {
+        likes = num;
+    }
 
+    public void updateReports(Long num) {
+        reports = num;
     }
 
     // 【行为方法结束】
 
 
-    @Transient
-    final List<Long> sourceRoleIds = new ArrayList<>();
+
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
     /**
@@ -56,18 +57,25 @@ public class CustomerPermission {
     Long id;
 
     /**
-     * 权限编码
-     * varchar(255)
+     * 文章评论ID
+     * bigint
      */
-    @Column(name = "`permission_code`")
-    String permissionCode;
+    @Column(name = "`article_comment_id`")
+    Long articleCommentId;
 
     /**
-     * 权限备注
-     * varchar(255)
+     * 点赞数
+     * bigint
      */
-    @Column(name = "`permission_remark`")
-    String permissionRemark;
+    @Column(name = "`likes`")
+    Long likes;
+
+    /**
+     * 举报数
+     * bigint
+     */
+    @Column(name = "`reports`")
+    Long reports;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

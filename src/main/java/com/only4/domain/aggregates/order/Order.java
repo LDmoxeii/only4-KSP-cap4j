@@ -1,5 +1,6 @@
 package com.only4.domain.aggregates.order;
 
+import com.only4.domain.aggregates.order.enums.OrderState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * 订单
@@ -19,7 +21,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "order", name = "Order", root = true, type = Aggregate.TYPE_ENTITY, description = "订单")
+@Aggregate(aggregate = "Order", name = "Order", root = true, type = Aggregate.TYPE_ENTITY, description = "订单")
 @Entity
 @Table(name = "`order`")
 @DynamicInsert
@@ -40,14 +42,17 @@ public class Order {
     }
 
     public void refund() {
-
+        this.state = OrderState.REFUND;
     }
 
     public void pay() {
-
+        if (this.state == OrderState.INIT) {
+            this.payTime = LocalDateTime.now();
+        }
     }
 
     public void cancel() {
+        this.state = OrderState.CANCELED;
 
     }
 
@@ -100,6 +105,8 @@ public class Order {
     /**
      * 订单状态
      * 0:INIT:INIT
+     * 1:REFUND:REFUND
+     * 2:CANCELED:CANCELED
      * int
      */
     @Convert(converter = com.only4.domain.aggregates.order.enums.OrderState.Converter.class)

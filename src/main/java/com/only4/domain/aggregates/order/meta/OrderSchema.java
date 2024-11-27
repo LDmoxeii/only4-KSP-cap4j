@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2024/11/26
  */
 @RequiredArgsConstructor
 public class OrderSchema {
@@ -73,6 +73,8 @@ public class OrderSchema {
     /**
      * 订单状态
      * 0:INIT:INIT
+     * 1:REFUND:REFUND
+     * 2:CANCELED:CANCELED
      * int
      */
     public Schema.Field<com.only4.domain.aggregates.order.enums.OrderState> state() {

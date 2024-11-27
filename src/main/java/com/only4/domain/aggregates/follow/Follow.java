@@ -19,7 +19,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "follow", name = "Follow", root = true, type = Aggregate.TYPE_ENTITY, description = "关注")
+@Aggregate(aggregate = "Follow", name = "Follow", root = true, type = Aggregate.TYPE_ENTITY, description = "关注")
 @Entity
 @Table(name = "`follow`")
 @DynamicInsert
@@ -35,7 +35,9 @@ public class Follow {
 
     // 【行为方法开始】
 
+    public void create() {}
 
+    public void delete() {}
 
     // 【行为方法结束】
 

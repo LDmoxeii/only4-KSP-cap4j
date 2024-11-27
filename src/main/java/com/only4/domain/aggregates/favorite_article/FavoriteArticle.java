@@ -22,7 +22,7 @@ import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "favorite_article", name = "FavoriteArticle", root = true, type = Aggregate.TYPE_ENTITY, description = "")
+@Aggregate(aggregate = "FavoriteArticle", name = "FavoriteArticle", root = true, type = Aggregate.TYPE_ENTITY, description = "")
 @Entity
 @Table(name = "`favorite_article`")
 @DynamicInsert

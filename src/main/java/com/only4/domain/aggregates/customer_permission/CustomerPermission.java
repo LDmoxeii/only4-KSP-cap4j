@@ -1,4 +1,4 @@
-package com.only4.domain.aggregates.star;
+package com.only4.domain.aggregates.customer_permission;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,15 +12,16 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.*;
 
 /**
+ * 消费者权限表
  *
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
  * @author cap4j-ddd-codegen
- * @date 2024/11/22
+ * @date 2024/11/26
  */
-@Aggregate(aggregate = "star", name = "StarStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Star" }, description = "")
+@Aggregate(aggregate = "CustomerPermission", name = "CustomerPermission", root = true, type = Aggregate.TYPE_ENTITY, description = "消费者权限表")
 @Entity
-@Table(name = "`star_statistics`")
+@Table(name = "`customer_permission`")
 @DynamicInsert
 @DynamicUpdate
 
@@ -28,13 +29,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
-public class StarStatistics {
+public class CustomerPermission {
 
     // 【行为方法开始】
 
-    public void updateStardust(Long num) {}
 
-    public void updateComments(Long num) {}
+
     // 【行为方法结束】
 
 
@@ -52,18 +52,25 @@ public class StarStatistics {
     Long id;
 
     /**
-     * 星尘
+     * 消费者ID
      * bigint
      */
-    @Column(name = "`stardust`")
-    Long stardust;
+    @Column(name = "`customer_id`")
+    Long customerId;
 
     /**
-     * 评论数
-     * bigint
+     * 权限编码
+     * varchar(255)
      */
-    @Column(name = "`comments`")
-    Long comments;
+    @Column(name = "`permission_code`")
+    String permissionCode;
+
+    /**
+     * 权限备注
+     * varchar(255)
+     */
+    @Column(name = "`permission_remark`")
+    String permissionRemark;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

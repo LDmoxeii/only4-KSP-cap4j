@@ -1,7 +1,7 @@
-package com.only4.domain.aggregates.star.meta;
+package com.only4.domain.aggregates.customer_permission.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.star.StarStatistics;
+import com.only4.domain.aggregates.customer_permission.CustomerPermission;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,15 +14,15 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
- *
+ * 消费者权限表
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2024/11/26
  */
 @RequiredArgsConstructor
-public class StarStatisticsSchema {
-    private final Path<StarStatistics> root;
+public class CustomerPermissionSchema {
+    private final Path<CustomerPermission> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder criteriaBuilder() {
@@ -38,19 +38,27 @@ public class StarStatisticsSchema {
     }
 
     /**
-     * 星尘
+     * 消费者ID
      * bigint
      */
-    public Schema.Field<Long> stardust() {
-        return root == null ? new Schema.Field<>("stardust") : new Schema.Field<>(root.get("stardust"));
+    public Schema.Field<Long> customerId() {
+        return root == null ? new Schema.Field<>("customerId") : new Schema.Field<>(root.get("customerId"));
     }
 
     /**
-     * 评论数
-     * bigint
+     * 权限编码
+     * varchar(255)
      */
-    public Schema.Field<Long> comments() {
-        return root == null ? new Schema.Field<>("comments") : new Schema.Field<>(root.get("comments"));
+    public Schema.Field<String> permissionCode() {
+        return root == null ? new Schema.Field<>("permissionCode") : new Schema.Field<>(root.get("permissionCode"));
+    }
+
+    /**
+     * 权限备注
+     * varchar(255)
+     */
+    public Schema.Field<String> permissionRemark() {
+        return root == null ? new Schema.Field<>("permissionRemark") : new Schema.Field<>(root.get("permissionRemark"));
     }
 
 
@@ -77,7 +85,7 @@ public class StarStatisticsSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<StarStatisticsSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<CustomerPermissionSchema> builder){
         return builder.build(this);
     }
 
@@ -88,10 +96,10 @@ public class StarStatisticsSchema {
      * @param distinct
      * @return
      */
-    public static Specification<StarStatistics> specify(Schema.PredicateBuilder<StarStatisticsSchema> builder, boolean distinct) {
+    public static Specification<CustomerPermission> specify(Schema.PredicateBuilder<CustomerPermissionSchema> builder, boolean distinct) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            StarStatisticsSchema starStatistics = new StarStatisticsSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(starStatistics));
+            CustomerPermissionSchema customerPermission = new CustomerPermissionSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(customerPermission));
             criteriaQuery.distinct(distinct);
             return null;
         };
@@ -102,10 +110,10 @@ public class StarStatisticsSchema {
      * @param builder
      * @return
      */
-    public static Specification<StarStatistics> specify(Schema.PredicateBuilder<StarStatisticsSchema> builder) {
+    public static Specification<CustomerPermission> specify(Schema.PredicateBuilder<CustomerPermissionSchema> builder) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            StarStatisticsSchema starStatistics = new StarStatisticsSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(starStatistics));
+            CustomerPermissionSchema customerPermission = new CustomerPermissionSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(customerPermission));
             return null;
         };
     }
@@ -115,7 +123,7 @@ public class StarStatisticsSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Schema.OrderBuilder<StarStatisticsSchema>... builders) {
+    public static Sort orderBy(Schema.OrderBuilder<CustomerPermissionSchema>... builders) {
         return orderBy(Arrays.asList(builders));
     }
 
@@ -125,12 +133,12 @@ public class StarStatisticsSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<StarStatisticsSchema>> builders) {
+    public static Sort orderBy(Collection<Schema.OrderBuilder<CustomerPermissionSchema>> builders) {
         if(null == builders || builders.isEmpty()) {
             return Sort.unsorted();
         }
         return Sort.by(builders.stream()
-                .map(builder -> builder.build(new StarStatisticsSchema(null, null)))
+                .map(builder -> builder.build(new CustomerPermissionSchema(null, null)))
                 .collect(Collectors.toList())
         );
     }

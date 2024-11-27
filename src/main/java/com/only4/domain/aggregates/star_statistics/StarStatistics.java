@@ -1,4 +1,4 @@
-package com.only4.domain.aggregates.star_comment;
+package com.only4.domain.aggregates.star_statistics;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,11 +16,11 @@ import javax.persistence.*;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
  * @author cap4j-ddd-codegen
- * @date 2024/11/22
+ * @date 2024/11/26
  */
-@Aggregate(aggregate = "star_comment", name = "StarCommentStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "StarComment" }, description = "")
+@Aggregate(aggregate = "StarStatistics", name = "StarStatistics", root = true, type = Aggregate.TYPE_ENTITY, description = "")
 @Entity
-@Table(name = "`star_comment_statistics`")
+@Table(name = "`star_statistics`")
 @DynamicInsert
 @DynamicUpdate
 
@@ -28,21 +28,21 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
-public class StarCommentStatistics {
+public class StarStatistics {
 
     // 【行为方法开始】
 
+    public void updateStardust(Long num) {
+        this.stardust = num;
+    }
 
+    public void updateComments(Long num) {
+        this.comments = num;
+    }
 
     // 【行为方法结束】
 
-    public void updateLikes(Long num) {
-        this.likes += num;
-    }
 
-    public void updateReports(Long num) {
-        this.reports += num;
-    }
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
@@ -57,18 +57,25 @@ public class StarCommentStatistics {
     Long id;
 
     /**
-     * 点赞数
+     * 星球ID
      * bigint
      */
-    @Column(name = "`likes`")
-    Long likes;
+    @Column(name = "`star_id`")
+    Long starId;
 
     /**
-     * 举报数
+     * 星尘
      * bigint
      */
-    @Column(name = "`reports`")
-    Long reports;
+    @Column(name = "`stardust`")
+    Long stardust;
+
+    /**
+     * 评论数
+     * bigint
+     */
+    @Column(name = "`comments`")
+    Long comments;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

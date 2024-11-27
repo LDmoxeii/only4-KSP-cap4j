@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author cap4j-ddd-codegen
  * @date 2024/11/24
  */
-@Aggregate(aggregate = "stardust", name = "StardustFactory", type = Aggregate.TYPE_FACTORY, description = "")
+@Aggregate(aggregate = "Stardust", name = "StardustFactory", type = Aggregate.TYPE_FACTORY, description = "")
 @Service
 public class StardustFactory implements AggregateFactory<StardustPayload, Stardust> {
 

@@ -5,8 +5,6 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.AggregateFactory;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-
 /**
  * Star聚合工厂
  *
@@ -14,7 +12,7 @@ import java.util.Collections;
  * @author cap4j-ddd-codegen
  * @date 2024/11/24
  */
-@Aggregate(aggregate = "star", name = "StarFactory", type = Aggregate.TYPE_FACTORY, description = "")
+@Aggregate(aggregate = "Star", name = "StarFactory", type = Aggregate.TYPE_FACTORY, description = "")
 @Service
 public class StarFactory implements AggregateFactory<StarPayload, Star> {
 
@@ -25,7 +23,6 @@ public class StarFactory implements AggregateFactory<StarPayload, Star> {
                 .masterId(payload.getMasterId())
                 .name(payload.getName())
                 .description(payload.getDescription())
-                .starStatistics(Collections.singletonList(payload.getStarStatistics()))
                 .build();
     }
 }

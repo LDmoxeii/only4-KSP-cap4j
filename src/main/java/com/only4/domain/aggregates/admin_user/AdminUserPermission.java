@@ -21,7 +21,7 @@ import java.util.List;
  * @author cap4j-ddd-codegen
  * @date 2024/11/13
  */
-@Aggregate(aggregate = "admin_user", name = "AdminUserPermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "AdminUser" }, description = "用户权限表")
+@Aggregate(aggregate = "AdminUser", name = "AdminUserPermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "AdminUser" }, description = "用户权限表")
 @Entity
 @Table(name = "`admin_user_permission`")
 @DynamicInsert

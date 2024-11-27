@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * @author cap4j-ddd-codegen
  * @date 2024/11/13
  */
-@Aggregate(aggregate = "admin_user", name = "AdminUser", root = true, type = Aggregate.TYPE_ENTITY, description = "用户表")
+@Aggregate(aggregate = "AdminUser", name = "AdminUser", root = true, type = Aggregate.TYPE_ENTITY, description = "用户表")
 @SuppressWarnings("ALL")
 @Entity
 @Table(name = "`admin_user`")

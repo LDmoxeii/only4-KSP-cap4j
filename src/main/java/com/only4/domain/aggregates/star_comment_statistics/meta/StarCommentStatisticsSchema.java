@@ -1,7 +1,7 @@
-package com.only4.domain.aggregates.customer.meta;
+package com.only4.domain.aggregates.star_comment_statistics.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.customer.CustomerPermission;
+import com.only4.domain.aggregates.star_comment_statistics.StarCommentStatistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,15 +14,15 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
- * 消费者权限表
+ *
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2024/11/26
  */
 @RequiredArgsConstructor
-public class CustomerPermissionSchema {
-    private final Path<CustomerPermission> root;
+public class StarCommentStatisticsSchema {
+    private final Path<StarCommentStatistics> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder criteriaBuilder() {
@@ -38,19 +38,27 @@ public class CustomerPermissionSchema {
     }
 
     /**
-     * 权限编码
-     * varchar(255)
+     * 星球评论ID
+     * int
      */
-    public Schema.Field<String> permissionCode() {
-        return root == null ? new Schema.Field<>("permissionCode") : new Schema.Field<>(root.get("permissionCode"));
+    public Schema.Field<Integer> starCommentId() {
+        return root == null ? new Schema.Field<>("starCommentId") : new Schema.Field<>(root.get("starCommentId"));
     }
 
     /**
-     * 权限备注
-     * varchar(255)
+     * 点赞数
+     * bigint
      */
-    public Schema.Field<String> permissionRemark() {
-        return root == null ? new Schema.Field<>("permissionRemark") : new Schema.Field<>(root.get("permissionRemark"));
+    public Schema.Field<Long> likes() {
+        return root == null ? new Schema.Field<>("likes") : new Schema.Field<>(root.get("likes"));
+    }
+
+    /**
+     * 举报数
+     * bigint
+     */
+    public Schema.Field<Long> reports() {
+        return root == null ? new Schema.Field<>("reports") : new Schema.Field<>(root.get("reports"));
     }
 
 
@@ -77,7 +85,7 @@ public class CustomerPermissionSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<CustomerPermissionSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder){
         return builder.build(this);
     }
 
@@ -88,10 +96,10 @@ public class CustomerPermissionSchema {
      * @param distinct
      * @return
      */
-    public static Specification<CustomerPermission> specify(Schema.PredicateBuilder<CustomerPermissionSchema> builder, boolean distinct) {
+    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder, boolean distinct) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            CustomerPermissionSchema customerPermission = new CustomerPermissionSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(customerPermission));
+            StarCommentStatisticsSchema starCommentStatistics = new StarCommentStatisticsSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(starCommentStatistics));
             criteriaQuery.distinct(distinct);
             return null;
         };
@@ -102,10 +110,10 @@ public class CustomerPermissionSchema {
      * @param builder
      * @return
      */
-    public static Specification<CustomerPermission> specify(Schema.PredicateBuilder<CustomerPermissionSchema> builder) {
+    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            CustomerPermissionSchema customerPermission = new CustomerPermissionSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(customerPermission));
+            StarCommentStatisticsSchema starCommentStatistics = new StarCommentStatisticsSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(starCommentStatistics));
             return null;
         };
     }
@@ -115,7 +123,7 @@ public class CustomerPermissionSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Schema.OrderBuilder<CustomerPermissionSchema>... builders) {
+    public static Sort orderBy(Schema.OrderBuilder<StarCommentStatisticsSchema>... builders) {
         return orderBy(Arrays.asList(builders));
     }
 
@@ -125,12 +133,12 @@ public class CustomerPermissionSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<CustomerPermissionSchema>> builders) {
+    public static Sort orderBy(Collection<Schema.OrderBuilder<StarCommentStatisticsSchema>> builders) {
         if(null == builders || builders.isEmpty()) {
             return Sort.unsorted();
         }
         return Sort.by(builders.stream()
-                .map(builder -> builder.build(new CustomerPermissionSchema(null, null)))
+                .map(builder -> builder.build(new StarCommentStatisticsSchema(null, null)))
                 .collect(Collectors.toList())
         );
     }

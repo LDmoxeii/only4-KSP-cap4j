@@ -1,30 +1,39 @@
 package com.only4.domain.aggregates.order.enums;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.persistence.AttributeConverter;
 import lombok.Getter;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+
+import javax.persistence.AttributeConverter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/22
+ * @date 2024/11/24
  */
-@Aggregate(aggregate = "order", name = "OrderState", type = "enum", description = "")
+@Aggregate(aggregate = "Order", name = "OrderState", type = "enum", description = "")
 public enum OrderState {
 
     /**
      * INIT
      */
     INIT(0, "INIT"),
+    /**
+     * REFUND
+     */
+    REFUND(1, "REFUND"),
+    /**
+     * CANCELED
+     */
+    CANCELED(2, "CANCELED"),
 
 ;
     @Getter
-    private final int code;
+    private int code;
     @Getter
-    private final String name;
+    private String name;
 
     OrderState(Integer code, String name){
         this.code = code;

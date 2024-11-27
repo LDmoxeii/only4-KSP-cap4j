@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 /**
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * @author cap4j-ddd-codegen
- * @date 2024/11/23
+ * @date 2024/11/26
  */
 public interface FavoritesRepository extends AggregateRepository<Favorites, Long> {
 
     @Component
-    @Aggregate(aggregate = "favorites", name = "Favorites", type = Aggregate.TYPE_REPOSITORY, description = "")
+    @Aggregate(aggregate = "Favorites", name = "Favorites", type = Aggregate.TYPE_REPOSITORY, description = "")
     public static class FavoritesJpaRepositoryAdapter extends AbstractJpaRepository<Favorites, Long>
     {
         public FavoritesJpaRepositoryAdapter(JpaSpecificationExecutor<Favorites> jpaSpecificationExecutor, JpaRepository<Favorites, Long> jpaRepository) {

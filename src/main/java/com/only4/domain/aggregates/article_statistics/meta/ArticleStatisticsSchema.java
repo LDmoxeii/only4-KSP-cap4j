@@ -1,7 +1,7 @@
-package com.only4.domain.aggregates.customer.meta;
+package com.only4.domain.aggregates.article_statistics.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.customer.CustomerRole;
+import com.only4.domain.aggregates.article_statistics.ArticleStatistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,15 +14,15 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
- *
+ * 文章统计表
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2024/11/26
  */
 @RequiredArgsConstructor
-public class CustomerRoleSchema {
-    private final Path<CustomerRole> root;
+public class ArticleStatisticsSchema {
+    private final Path<ArticleStatistics> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder criteriaBuilder() {
@@ -38,19 +38,35 @@ public class CustomerRoleSchema {
     }
 
     /**
-     * 角色ID
+     * 文章ID
      * bigint
      */
-    public Schema.Field<Long> roleId() {
-        return root == null ? new Schema.Field<>("roleId") : new Schema.Field<>(root.get("roleId"));
+    public Schema.Field<Long> articleId() {
+        return root == null ? new Schema.Field<>("articleId") : new Schema.Field<>(root.get("articleId"));
     }
 
     /**
-     * 角色名
-     * varchar(255)
+     * 点赞数
+     * bigint
      */
-    public Schema.Field<String> roleName() {
-        return root == null ? new Schema.Field<>("roleName") : new Schema.Field<>(root.get("roleName"));
+    public Schema.Field<Long> likes() {
+        return root == null ? new Schema.Field<>("likes") : new Schema.Field<>(root.get("likes"));
+    }
+
+    /**
+     * 举报数
+     * bigint
+     */
+    public Schema.Field<Long> reports() {
+        return root == null ? new Schema.Field<>("reports") : new Schema.Field<>(root.get("reports"));
+    }
+
+    /**
+     * 评论数
+     * bigint
+     */
+    public Schema.Field<Long> comments() {
+        return root == null ? new Schema.Field<>("comments") : new Schema.Field<>(root.get("comments"));
     }
 
 
@@ -77,7 +93,7 @@ public class CustomerRoleSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<CustomerRoleSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<ArticleStatisticsSchema> builder){
         return builder.build(this);
     }
 
@@ -88,10 +104,10 @@ public class CustomerRoleSchema {
      * @param distinct
      * @return
      */
-    public static Specification<CustomerRole> specify(Schema.PredicateBuilder<CustomerRoleSchema> builder, boolean distinct) {
+    public static Specification<ArticleStatistics> specify(Schema.PredicateBuilder<ArticleStatisticsSchema> builder, boolean distinct) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            CustomerRoleSchema customerRole = new CustomerRoleSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(customerRole));
+            ArticleStatisticsSchema articleStatistics = new ArticleStatisticsSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(articleStatistics));
             criteriaQuery.distinct(distinct);
             return null;
         };
@@ -102,10 +118,10 @@ public class CustomerRoleSchema {
      * @param builder
      * @return
      */
-    public static Specification<CustomerRole> specify(Schema.PredicateBuilder<CustomerRoleSchema> builder) {
+    public static Specification<ArticleStatistics> specify(Schema.PredicateBuilder<ArticleStatisticsSchema> builder) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            CustomerRoleSchema customerRole = new CustomerRoleSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(customerRole));
+            ArticleStatisticsSchema articleStatistics = new ArticleStatisticsSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(articleStatistics));
             return null;
         };
     }
@@ -115,7 +131,7 @@ public class CustomerRoleSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Schema.OrderBuilder<CustomerRoleSchema>... builders) {
+    public static Sort orderBy(Schema.OrderBuilder<ArticleStatisticsSchema>... builders) {
         return orderBy(Arrays.asList(builders));
     }
 
@@ -125,12 +141,12 @@ public class CustomerRoleSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<CustomerRoleSchema>> builders) {
+    public static Sort orderBy(Collection<Schema.OrderBuilder<ArticleStatisticsSchema>> builders) {
         if(null == builders || builders.isEmpty()) {
             return Sort.unsorted();
         }
         return Sort.by(builders.stream()
-                .map(builder -> builder.build(new CustomerRoleSchema(null, null)))
+                .map(builder -> builder.build(new ArticleStatisticsSchema(null, null)))
                 .collect(Collectors.toList())
         );
     }

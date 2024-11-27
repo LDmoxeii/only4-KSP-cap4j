@@ -1,5 +1,6 @@
 package com.only4.domain.aggregates.star;
 
+import com.only4.domain.aggregates.star.events.StarCreatedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,10 +8,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 星球
@@ -20,7 +22,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/11/23
  */
-@Aggregate(aggregate = "star", name = "Star", root = true, type = Aggregate.TYPE_ENTITY, description = "星球")
+@Aggregate(aggregate = "Star", name = "Star", root = true, type = Aggregate.TYPE_ENTITY, description = "星球")
 @Entity
 @Table(name = "`star`")
 @DynamicInsert
@@ -35,8 +37,15 @@ import javax.persistence.*;
 public class Star {
 
     // 【行为方法开始】
-    public void create() {}
-    public void updateInfo(String name, String description) {}
+    public void create() {
+        events().attach(new StarCreatedDomainEvent(this), this);
+    }
+    public void updateInfo(String newName, String newDescription, Long newPrice) {
+        this.name = newName;
+        this.description = newDescription;
+        this.price = newPrice;
+    }
+
     public void delete() {}
 
     // 【行为方法结束】
@@ -44,11 +53,6 @@ public class Star {
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`star_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.star.StarStatistics> starStatistics;
 
     /**
      * ID

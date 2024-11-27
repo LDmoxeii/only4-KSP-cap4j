@@ -4,12 +4,13 @@ import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.AdminUserPermission;
 import com.only4.domain.aggregates.admin_user.AdminUserRole;
 import com.only4.domain.aggregates.admin_user.dto.AssignAdminUserRoleDto;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import org.netcorepal.cap4j.ddd.domain.aggregate.AggregateFactory;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * AdminUser聚合工厂
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
  * @author cap4j-ddd-codegen
  * @date 2024/11/13
  */
-@Aggregate(aggregate = "admin_user", name = "AdminUserFactory", type = Aggregate.TYPE_FACTORY, description = "")
+@Aggregate(aggregate = "AdminUser", name = "AdminUserFactory", type = Aggregate.TYPE_FACTORY, description = "")
 @Service
 public class AdminUserFactory implements AggregateFactory<AdminUserPayload, AdminUser> {
 
