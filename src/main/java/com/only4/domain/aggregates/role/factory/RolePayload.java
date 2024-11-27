@@ -6,8 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.netcorepal.cap4j.ddd.domain.aggregate.AggregatePayload;
+import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author cap4j-ddd-codegen
  * @date 2024/11/13
  */
-@Aggregate(aggregate = "role", name = "RolePayload", type = Aggregate.TYPE_FACTORY_PAYLOAD, description = "")
+@Aggregate(aggregate = "Role", name = "RolePayload", type = Aggregate.TYPE_FACTORY_PAYLOAD, description = "")
 @Data
 @Builder
 @NoArgsConstructor

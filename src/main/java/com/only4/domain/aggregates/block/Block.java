@@ -19,7 +19,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "block", name = "Block", root = true, type = Aggregate.TYPE_ENTITY, description = "拉黑")
+@Aggregate(aggregate = "Block", name = "Block", root = true, type = Aggregate.TYPE_ENTITY, description = "拉黑")
 @Entity
 @Table(name = "`block`")
 @DynamicInsert
@@ -35,7 +35,13 @@ public class Block {
 
     // 【行为方法开始】
 
+    public void create() {
 
+    }
+
+    public void delete() {
+
+    }
 
     // 【行为方法结束】
 

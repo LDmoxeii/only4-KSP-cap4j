@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 /**
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * @author cap4j-ddd-codegen
- * @date 2024/11/13
+ * @date 2024/11/26
  */
 public interface AdminUserRepository extends AggregateRepository<AdminUser, Long> {
 
     @Component
-    @Aggregate(aggregate = "admin_user", name = "AdminUser", type = Aggregate.TYPE_REPOSITORY, description = "")
+    @Aggregate(aggregate = "AdminUser", name = "AdminUser", type = Aggregate.TYPE_REPOSITORY, description = "")
     public static class AdminUserJpaRepositoryAdapter extends AbstractJpaRepository<AdminUser, Long>
     {
         public AdminUserJpaRepositoryAdapter(JpaSpecificationExecutor<AdminUser> jpaSpecificationExecutor, JpaRepository<AdminUser, Long> jpaRepository) {

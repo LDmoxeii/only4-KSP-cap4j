@@ -1,7 +1,6 @@
 package com.only4.domain.aggregates.article.factory;
 
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.ArticleStatistics;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +14,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
  * @author cap4j-ddd-codegen
  * @date 2024/11/24
  */
-@Aggregate(aggregate = "article", name = "ArticlePayload", type = Aggregate.TYPE_FACTORY_PAYLOAD, description = "")
+@Aggregate(aggregate = "Article", name = "ArticlePayload", type = Aggregate.TYPE_FACTORY_PAYLOAD, description = "")
 @Data
 @Builder
 @NoArgsConstructor
@@ -26,6 +25,4 @@ public class ArticlePayload implements AggregatePayload<Article> {
     String description;
     String content;
     Long price;
-    ArticleStatistics statistics;
-
 }

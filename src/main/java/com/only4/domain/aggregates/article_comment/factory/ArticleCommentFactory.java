@@ -5,16 +5,14 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.AggregateFactory;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-
 /**
  * ArticleComment聚合工厂
  *
  *
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2024/11/26
  */
-@Aggregate(aggregate = "article_comment", name = "ArticleCommentFactory", type = Aggregate.TYPE_FACTORY, description = "")
+@Aggregate(aggregate = "ArticleComment", name = "ArticleCommentFactory", type = Aggregate.TYPE_FACTORY, description = "")
 @Service
 public class ArticleCommentFactory implements AggregateFactory<ArticleCommentPayload, ArticleComment> {
 
@@ -22,10 +20,7 @@ public class ArticleCommentFactory implements AggregateFactory<ArticleCommentPay
     public ArticleComment create(ArticleCommentPayload payload) {
 
         return ArticleComment.builder()
-                .articleId(payload.getArticleId())
-                .authorId(payload.getAuthorId())
-                .content(payload.getContent())
-                .articleCommentStatistics(Collections.singletonList(payload.getStatistics()))
+
                 .build();
     }
 }

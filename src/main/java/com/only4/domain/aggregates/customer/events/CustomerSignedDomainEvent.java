@@ -16,11 +16,12 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
  * @date 2024/11/24
  */
 @DomainEvent(persist = false)
-@Aggregate(aggregate = "customer", name = "CustomerSignedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
+@Aggregate(aggregate = "Customer", name = "CustomerSignedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerSignedDomainEvent {
     Customer entity;
+    Long num;
 }

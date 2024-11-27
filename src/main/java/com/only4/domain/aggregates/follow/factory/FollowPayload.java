@@ -15,7 +15,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
  * @author cap4j-ddd-codegen
  * @date 2024/11/24
  */
-@Aggregate(aggregate = "follow", name = "FollowPayload", type = Aggregate.TYPE_FACTORY_PAYLOAD, description = "")
+@Aggregate(aggregate = "Follow", name = "FollowPayload", type = Aggregate.TYPE_FACTORY_PAYLOAD, description = "")
 @Data
 @Builder
 @NoArgsConstructor

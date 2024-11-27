@@ -1,7 +1,7 @@
 package com.only4.domain.aggregates.article;
 
+import com.only4.domain.aggregates.article.enums.ArticleState;
 import com.only4.domain.aggregates.article.events.ArticleCreatedDomainEvent;
-import com.only4.domain.aggregates.article.events.LikesUpdatedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
@@ -25,7 +24,7 @@ import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "article", name = "Article", root = true, type = Aggregate.TYPE_ENTITY, description = "文章")
+@Aggregate(aggregate = "Article", name = "Article", root = true, type = Aggregate.TYPE_ENTITY, description = "文章")
 @Entity
 @Table(name = "`article`")
 @DynamicInsert
@@ -46,29 +45,21 @@ public class Article {
     }
 
     public void privatization() {
-
+        this.state = ArticleState.PRIVATE;
     }
 
     public void publish() {
+        this.state = ArticleState.PUBLISH;
 
     }
 
     public void changeArticleInfo(String newTitle, String newDescription) {
+        this.title = newTitle;
+        this.description = newDescription;
     }
 
     public void ban() {
-
-    }
-
-    public void updateReport(Long num) {
-
-    }
-
-    public void updateLikes(Long num) {
-        events().attach(new LikesUpdatedDomainEvent(this), this);
-    }
-
-    public void updateComments(Long num) {
+        this.state = ArticleState.BANNED;
 
     }
 
@@ -77,11 +68,6 @@ public class Article {
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`article_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.article.ArticleStatistics> articleStatistics;
 
     /**
      * ID
@@ -102,7 +88,9 @@ public class Article {
 
     /**
      * 文章状态
-     * 0:INIT:INIT
+     * 0:PRIVATE:PRIVATE
+     * 1:PUBLISH:PUBLISH
+     * 2:BANNED:BANNED
      * int
      */
     @Convert(converter = com.only4.domain.aggregates.article.enums.ArticleState.Converter.class)

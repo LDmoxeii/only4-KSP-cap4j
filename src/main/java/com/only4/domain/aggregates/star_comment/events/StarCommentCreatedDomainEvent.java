@@ -16,7 +16,7 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
  * @date 2024/11/24
  */
 @DomainEvent(persist = false)
-@Aggregate(aggregate = "star_comment", name = "StarCommentCreatedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
+@Aggregate(aggregate = "StarComment", name = "StarCommentCreatedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
 @Data
 @Builder
 @AllArgsConstructor

@@ -1,8 +1,8 @@
 package com.only4.domain.aggregates.customer;
 
+import com.only4.domain.aggregates.customer.enums.CustomerState;
 import com.only4.domain.aggregates.customer.events.CustomerCreatedDomainEvent;
 import com.only4.domain.aggregates.customer.events.CustomerLevelChangedDomainEvent;
-import com.only4.domain.aggregates.customer.events.CustomerReportedDomainEvent;
 import com.only4.domain.aggregates.customer.events.CustomerSignedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,23 +11,22 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.util.List;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 消费者
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "customer", name = "Customer", root = true, type = Aggregate.TYPE_ENTITY, description = "消费者")
+@Aggregate(aggregate = "Customer", name = "Customer", root = true, type = Aggregate.TYPE_ENTITY, description = "消费者")
 @Entity
 @Table(name = "`customer`")
 @DynamicInsert
@@ -48,19 +47,20 @@ public class Customer {
     }
 
     public void changeInfo(String newNickName, String newSignature) {
-
+        nickName = newNickName;
+        signature = newSignature;
     }
 
     public void updatePassword(String newPassword) {
-
+        password = newPassword;
     }
 
     public void updatePhone(String newPhone) {
-
+        phone = newPhone;
     }
 
-    public void sing() {
-        events().attach(new CustomerSignedDomainEvent(this), this);
+    public void sing(Long num) {
+        events().attach(new CustomerSignedDomainEvent(this, num), this);
     }
 
     public void delete() {
@@ -68,81 +68,19 @@ public class Customer {
     }
 
     public void ban() {
-
+        this.state = CustomerState.BANNED;
     }
 
-    public void updateReport() {
-        events().attach(new CustomerReportedDomainEvent(this), this);
-    }
-
-    public void changeLevel() {
+    public void changeLevel(String newGrade) {
+        grade = newGrade;
         events().attach(new CustomerLevelChangedDomainEvent(this), this);
     }
-
-    public void updateRoles() {
-
-    }
-
-    public void updatePermissions(Long permissionId, List<CustomerPermission> permissions) {
-
-    }
-
-    public void addPermission(Long permissionId, List<CustomerPermission> permissions) {
-
-    }
-
-    public void deletePermissions(Long permissionId) {
-
-    }
-
-    public void setSpecificPermission(List<CustomerPermission> permissions) {
-
-    }
-
-    public void updateLikes(Long num) {
-
-    }
-
-    public void updateFans(Long num) {
-
-    }
-
-    public void updateFollows(Long num) {
-
-    }
-
-    public void updateWorks(Long num) {
-
-    }
-
-    public void updateRank(Long num) {
-
-    }
-
-
-
 
 
     // 【行为方法结束】
 
 
-
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`customer_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.customer.CustomerStatistics> customerStatistics;
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`customer_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.customer.CustomerPermission> customerPermissions;
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`customer_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.customer.CustomerRole> customerRoles;
 
     /**
      * ID
@@ -169,11 +107,10 @@ public class Customer {
     String password;
 
     /**
-     * 余额
-     * bigint
+     * varchar(20)
      */
-    @Column(name = "`balance`")
-    Long balance;
+    @Column(name = "`phone`")
+    String phone;
 
     /**
      * 昵称
@@ -188,6 +125,23 @@ public class Customer {
      */
     @Column(name = "`signature`")
     String signature;
+
+    /**
+     * 余额
+     * bigint
+     */
+    @Column(name = "`balance`")
+    Long balance;
+
+    /**
+     * 状态
+     * 0:INIT:INIT
+     * 2:BANNED:BANNED
+     * int
+     */
+    @Convert(converter = com.only4.domain.aggregates.customer.enums.CustomerState.Converter.class)
+    @Column(name = "`state`")
+    com.only4.domain.aggregates.customer.enums.CustomerState state;
 
     /**
      * 等级

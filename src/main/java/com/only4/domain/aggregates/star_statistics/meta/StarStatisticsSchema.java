@@ -1,7 +1,7 @@
-package com.only4.domain.aggregates.star_comment.meta;
+package com.only4.domain.aggregates.star_statistics.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.star_comment.StarCommentStatistics;
+import com.only4.domain.aggregates.star_statistics.StarStatistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2024/11/26
  */
 @RequiredArgsConstructor
-public class StarCommentStatisticsSchema {
-    private final Path<StarCommentStatistics> root;
+public class StarStatisticsSchema {
+    private final Path<StarStatistics> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder criteriaBuilder() {
@@ -38,19 +38,27 @@ public class StarCommentStatisticsSchema {
     }
 
     /**
-     * 点赞数
+     * 星球ID
      * bigint
      */
-    public Schema.Field<Long> likes() {
-        return root == null ? new Schema.Field<>("likes") : new Schema.Field<>(root.get("likes"));
+    public Schema.Field<Long> starId() {
+        return root == null ? new Schema.Field<>("starId") : new Schema.Field<>(root.get("starId"));
     }
 
     /**
-     * 举报数
+     * 星尘
      * bigint
      */
-    public Schema.Field<Long> reports() {
-        return root == null ? new Schema.Field<>("reports") : new Schema.Field<>(root.get("reports"));
+    public Schema.Field<Long> stardust() {
+        return root == null ? new Schema.Field<>("stardust") : new Schema.Field<>(root.get("stardust"));
+    }
+
+    /**
+     * 评论数
+     * bigint
+     */
+    public Schema.Field<Long> comments() {
+        return root == null ? new Schema.Field<>("comments") : new Schema.Field<>(root.get("comments"));
     }
 
 
@@ -77,7 +85,7 @@ public class StarCommentStatisticsSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<StarStatisticsSchema> builder){
         return builder.build(this);
     }
 
@@ -88,10 +96,10 @@ public class StarCommentStatisticsSchema {
      * @param distinct
      * @return
      */
-    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder, boolean distinct) {
+    public static Specification<StarStatistics> specify(Schema.PredicateBuilder<StarStatisticsSchema> builder, boolean distinct) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            StarCommentStatisticsSchema starCommentStatistics = new StarCommentStatisticsSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(starCommentStatistics));
+            StarStatisticsSchema starStatistics = new StarStatisticsSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(starStatistics));
             criteriaQuery.distinct(distinct);
             return null;
         };
@@ -102,10 +110,10 @@ public class StarCommentStatisticsSchema {
      * @param builder
      * @return
      */
-    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder) {
+    public static Specification<StarStatistics> specify(Schema.PredicateBuilder<StarStatisticsSchema> builder) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            StarCommentStatisticsSchema starCommentStatistics = new StarCommentStatisticsSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(starCommentStatistics));
+            StarStatisticsSchema starStatistics = new StarStatisticsSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(starStatistics));
             return null;
         };
     }
@@ -115,7 +123,7 @@ public class StarCommentStatisticsSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Schema.OrderBuilder<StarCommentStatisticsSchema>... builders) {
+    public static Sort orderBy(Schema.OrderBuilder<StarStatisticsSchema>... builders) {
         return orderBy(Arrays.asList(builders));
     }
 
@@ -125,12 +133,12 @@ public class StarCommentStatisticsSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<StarCommentStatisticsSchema>> builders) {
+    public static Sort orderBy(Collection<Schema.OrderBuilder<StarStatisticsSchema>> builders) {
         if(null == builders || builders.isEmpty()) {
             return Sort.unsorted();
         }
         return Sort.by(builders.stream()
-                .map(builder -> builder.build(new StarCommentStatisticsSchema(null, null)))
+                .map(builder -> builder.build(new StarStatisticsSchema(null, null)))
                 .collect(Collectors.toList())
         );
     }

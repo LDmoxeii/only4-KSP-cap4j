@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 /**
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * @author cap4j-ddd-codegen
- * @date 2024/11/23
+ * @date 2024/11/26
  */
 public interface BlockRepository extends AggregateRepository<Block, Long> {
 
     @Component
-    @Aggregate(aggregate = "block", name = "Block", type = Aggregate.TYPE_REPOSITORY, description = "")
+    @Aggregate(aggregate = "Block", name = "Block", type = Aggregate.TYPE_REPOSITORY, description = "")
     public static class BlockJpaRepositoryAdapter extends AbstractJpaRepository<Block, Long>
     {
         public BlockJpaRepositoryAdapter(JpaSpecificationExecutor<Block> jpaSpecificationExecutor, JpaRepository<Block, Long> jpaRepository) {

@@ -27,7 +27,7 @@ import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport
  * @author cap4j-ddd-codegen
  * @date 2024/11/13
  */
-@Aggregate(aggregate = "role", name = "Role", root = true, type = Aggregate.TYPE_ENTITY, description = "角色表")
+@Aggregate(aggregate = "Role", name = "Role", root = true, type = Aggregate.TYPE_ENTITY, description = "角色表")
 @Entity
 @Table(name = "`role`")
 @DynamicInsert

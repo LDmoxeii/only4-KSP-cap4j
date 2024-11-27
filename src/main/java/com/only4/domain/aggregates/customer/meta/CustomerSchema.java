@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -16,7 +18,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2024/11/26
  */
 @RequiredArgsConstructor
 public class CustomerSchema {
@@ -52,11 +54,10 @@ public class CustomerSchema {
     }
 
     /**
-     * 余额
-     * bigint
+     * varchar(20)
      */
-    public Schema.Field<Long> balance() {
-        return root == null ? new Schema.Field<>("balance") : new Schema.Field<>(root.get("balance"));
+    public Schema.Field<String> phone() {
+        return root == null ? new Schema.Field<>("phone") : new Schema.Field<>(root.get("phone"));
     }
 
     /**
@@ -73,6 +74,24 @@ public class CustomerSchema {
      */
     public Schema.Field<String> signature() {
         return root == null ? new Schema.Field<>("signature") : new Schema.Field<>(root.get("signature"));
+    }
+
+    /**
+     * 余额
+     * bigint
+     */
+    public Schema.Field<Long> balance() {
+        return root == null ? new Schema.Field<>("balance") : new Schema.Field<>(root.get("balance"));
+    }
+
+    /**
+     * 状态
+     * 0:INIT:INIT
+     * 2:BANNED:BANNED
+     * int
+     */
+    public Schema.Field<com.only4.domain.aggregates.customer.enums.CustomerState> state() {
+        return root == null ? new Schema.Field<>("state") : new Schema.Field<>(root.get("state"));
     }
 
     /**
@@ -119,42 +138,6 @@ public class CustomerSchema {
         return builder.build(this);
     }
 
-    /**
-     * CustomerStatistics 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.customer.meta.CustomerStatisticsSchema joinCustomerStatistics(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Customer, com.only4.domain.aggregates.customer.CustomerStatistics> join = ((Root<Customer>) root).join("customerStatistics", type);
-        com.only4.domain.aggregates.customer.meta.CustomerStatisticsSchema schema = new com.only4.domain.aggregates.customer.meta.CustomerStatisticsSchema(join, criteriaBuilder);
-        return schema;
-    }
-    /**
-     * CustomerPermission 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.customer.meta.CustomerPermissionSchema joinCustomerPermission(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Customer, com.only4.domain.aggregates.customer.CustomerPermission> join = ((Root<Customer>) root).join("customerPermissions", type);
-        com.only4.domain.aggregates.customer.meta.CustomerPermissionSchema schema = new com.only4.domain.aggregates.customer.meta.CustomerPermissionSchema(join, criteriaBuilder);
-        return schema;
-    }
-    /**
-     * CustomerRole 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.customer.meta.CustomerRoleSchema joinCustomerRole(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Customer, com.only4.domain.aggregates.customer.CustomerRole> join = ((Root<Customer>) root).join("customerRoles", type);
-        com.only4.domain.aggregates.customer.meta.CustomerRoleSchema schema = new com.only4.domain.aggregates.customer.meta.CustomerRoleSchema(join, criteriaBuilder);
-        return schema;
-    }
 
     /**
      * 构建查询条件
@@ -170,7 +153,7 @@ public class CustomerSchema {
             return null;
         };
     }
-    
+
     /**
      * 构建查询条件
      * @param builder
@@ -183,7 +166,7 @@ public class CustomerSchema {
             return null;
         };
     }
-    
+
     /**
      * 构建排序
      * @param builders

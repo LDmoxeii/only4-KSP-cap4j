@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -16,7 +18,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2024/11/26
  */
 @RequiredArgsConstructor
 public class ArticleSchema {
@@ -45,7 +47,9 @@ public class ArticleSchema {
 
     /**
      * 文章状态
-     * 0:INIT:INIT
+     * 0:PRIVATE:PRIVATE
+     * 1:PUBLISH:PUBLISH
+     * 2:BANNED:BANNED
      * int
      */
     public Schema.Field<com.only4.domain.aggregates.article.enums.ArticleState> state() {
@@ -120,18 +124,6 @@ public class ArticleSchema {
         return builder.build(this);
     }
 
-    /**
-     * ArticleStatistics 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.article.meta.ArticleStatisticsSchema joinArticleStatistics(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Article, com.only4.domain.aggregates.article.ArticleStatistics> join = ((Root<Article>) root).join("articleStatistics", type);
-        com.only4.domain.aggregates.article.meta.ArticleStatisticsSchema schema = new com.only4.domain.aggregates.article.meta.ArticleStatisticsSchema(join, criteriaBuilder);
-        return schema;
-    }
 
     /**
      * 构建查询条件
@@ -147,7 +139,7 @@ public class ArticleSchema {
             return null;
         };
     }
-    
+
     /**
      * 构建查询条件
      * @param builder
@@ -160,7 +152,7 @@ public class ArticleSchema {
             return null;
         };
     }
-    
+
     /**
      * 构建排序
      * @param builders

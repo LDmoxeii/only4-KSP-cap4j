@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author cap4j-ddd-codegen
  * @date 2024/11/14
  */
-@Aggregate(aggregate = "admin_user", name = "AdminUserSpecification", type = Aggregate.TYPE_SPECIFICATION, description = "")
+@Aggregate(aggregate = "AdminUser", name = "AdminUserSpecification", type = Aggregate.TYPE_SPECIFICATION, description = "")
 @Service
 public class AdminUserSpecification implements Specification<AdminUser> {
     @Override

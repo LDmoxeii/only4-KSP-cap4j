@@ -1,7 +1,7 @@
-package com.only4.domain.aggregates.article_comment.meta;
+package com.only4.domain.aggregates.customer_statistics.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.article_comment.ArticleCommentStatistics;
+import com.only4.domain.aggregates.customer_statistics.CustomerStatistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2024/11/26
  */
 @RequiredArgsConstructor
-public class ArticleCommentStatisticsSchema {
-    private final Path<ArticleCommentStatistics> root;
+public class CustomerStatisticsSchema {
+    private final Path<CustomerStatistics> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder criteriaBuilder() {
@@ -38,6 +38,22 @@ public class ArticleCommentStatisticsSchema {
     }
 
     /**
+     * 消费者ID
+     * bigint
+     */
+    public Schema.Field<Long> customerId() {
+        return root == null ? new Schema.Field<>("customerId") : new Schema.Field<>(root.get("customerId"));
+    }
+
+    /**
+     * 经验
+     * bigint
+     */
+    public Schema.Field<Long> rank() {
+        return root == null ? new Schema.Field<>("rank") : new Schema.Field<>(root.get("rank"));
+    }
+
+    /**
      * 点赞数
      * bigint
      */
@@ -46,11 +62,35 @@ public class ArticleCommentStatisticsSchema {
     }
 
     /**
+     * 粉丝数
+     * bigint
+     */
+    public Schema.Field<Long> fans() {
+        return root == null ? new Schema.Field<>("fans") : new Schema.Field<>(root.get("fans"));
+    }
+
+    /**
      * 举报数
      * bigint
      */
     public Schema.Field<Long> reports() {
         return root == null ? new Schema.Field<>("reports") : new Schema.Field<>(root.get("reports"));
+    }
+
+    /**
+     * 关注数
+     * bigint
+     */
+    public Schema.Field<Long> follows() {
+        return root == null ? new Schema.Field<>("follows") : new Schema.Field<>(root.get("follows"));
+    }
+
+    /**
+     * 作品数
+     * bigint
+     */
+    public Schema.Field<Long> works() {
+        return root == null ? new Schema.Field<>("works") : new Schema.Field<>(root.get("works"));
     }
 
 
@@ -77,7 +117,7 @@ public class ArticleCommentStatisticsSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<ArticleCommentStatisticsSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<CustomerStatisticsSchema> builder){
         return builder.build(this);
     }
 
@@ -88,10 +128,10 @@ public class ArticleCommentStatisticsSchema {
      * @param distinct
      * @return
      */
-    public static Specification<ArticleCommentStatistics> specify(Schema.PredicateBuilder<ArticleCommentStatisticsSchema> builder, boolean distinct) {
+    public static Specification<CustomerStatistics> specify(Schema.PredicateBuilder<CustomerStatisticsSchema> builder, boolean distinct) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            ArticleCommentStatisticsSchema articleCommentStatistics = new ArticleCommentStatisticsSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(articleCommentStatistics));
+            CustomerStatisticsSchema customerStatistics = new CustomerStatisticsSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(customerStatistics));
             criteriaQuery.distinct(distinct);
             return null;
         };
@@ -102,10 +142,10 @@ public class ArticleCommentStatisticsSchema {
      * @param builder
      * @return
      */
-    public static Specification<ArticleCommentStatistics> specify(Schema.PredicateBuilder<ArticleCommentStatisticsSchema> builder) {
+    public static Specification<CustomerStatistics> specify(Schema.PredicateBuilder<CustomerStatisticsSchema> builder) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            ArticleCommentStatisticsSchema articleCommentStatistics = new ArticleCommentStatisticsSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(articleCommentStatistics));
+            CustomerStatisticsSchema customerStatistics = new CustomerStatisticsSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(customerStatistics));
             return null;
         };
     }
@@ -115,7 +155,7 @@ public class ArticleCommentStatisticsSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Schema.OrderBuilder<ArticleCommentStatisticsSchema>... builders) {
+    public static Sort orderBy(Schema.OrderBuilder<CustomerStatisticsSchema>... builders) {
         return orderBy(Arrays.asList(builders));
     }
 
@@ -125,12 +165,12 @@ public class ArticleCommentStatisticsSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<ArticleCommentStatisticsSchema>> builders) {
+    public static Sort orderBy(Collection<Schema.OrderBuilder<CustomerStatisticsSchema>> builders) {
         if(null == builders || builders.isEmpty()) {
             return Sort.unsorted();
         }
         return Sort.by(builders.stream()
-                .map(builder -> builder.build(new ArticleCommentStatisticsSchema(null, null)))
+                .map(builder -> builder.build(new CustomerStatisticsSchema(null, null)))
                 .collect(Collectors.toList())
         );
     }

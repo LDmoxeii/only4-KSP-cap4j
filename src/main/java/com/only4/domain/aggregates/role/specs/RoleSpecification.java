@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author cap4j-ddd-codegen
  * @date 2024/11/14
  */
-@Aggregate(aggregate = "role", name = "RoleSpecification", type = Aggregate.TYPE_SPECIFICATION, description = "")
+@Aggregate(aggregate = "Role", name = "RoleSpecification", type = Aggregate.TYPE_SPECIFICATION, description = "")
 @Service
 public class RoleSpecification implements Specification<Role> {
     @Override

@@ -1,4 +1,4 @@
-package com.only4.domain.aggregates.article_comment;
+package com.only4.domain.aggregates.article_statistics;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,17 +11,17 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import javax.persistence.*;
 
-
 /**
+ * 文章统计表
  *
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
  * @author cap4j-ddd-codegen
- * @date 2024/11/22
+ * @date 2024/11/26
  */
-@Aggregate(aggregate = "article_comment", name = "ArticleCommentStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "ArticleComment" }, description = "")
+@Aggregate(aggregate = "ArticleStatistics", name = "ArticleStatistics", root = true, type = Aggregate.TYPE_ENTITY, description = "文章统计表")
 @Entity
-@Table(name = "`article_comment_statistics`")
+@Table(name = "`article_statistics`")
 @DynamicInsert
 @DynamicUpdate
 
@@ -29,15 +29,20 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
-public class ArticleCommentStatistics {
+public class ArticleStatistics {
 
     // 【行为方法开始】
 
-    public void updateLikes(Long num) {
+    public void updateReport(Long num) {
+        this.reports = num;
     }
 
-    public void updateReports(Long num) {
+    public void updateLikes(Long num) {
+        this.likes = num;
+    }
 
+    public void updateComments(Long num) {
+        this.comments = num;
     }
 
     // 【行为方法结束】
@@ -57,6 +62,13 @@ public class ArticleCommentStatistics {
     Long id;
 
     /**
+     * 文章ID
+     * bigint
+     */
+    @Column(name = "`article_id`")
+    Long articleId;
+
+    /**
      * 点赞数
      * bigint
      */
@@ -69,6 +81,13 @@ public class ArticleCommentStatistics {
      */
     @Column(name = "`reports`")
     Long reports;
+
+    /**
+     * 评论数
+     * bigint
+     */
+    @Column(name = "`comments`")
+    Long comments;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

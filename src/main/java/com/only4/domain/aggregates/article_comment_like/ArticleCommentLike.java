@@ -22,7 +22,7 @@ import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "article_comment_like", name = "ArticleCommentLike", root = true, type = Aggregate.TYPE_ENTITY, description = "")
+@Aggregate(aggregate = "ArticleCommentLike", name = "ArticleCommentLike", root = true, type = Aggregate.TYPE_ENTITY, description = "")
 @Entity
 @Table(name = "`article_comment_like`")
 @DynamicInsert

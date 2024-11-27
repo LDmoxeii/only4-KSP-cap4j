@@ -1,0 +1,1 @@
+{"name": "moxeia", "phone": "15976781430", "password": "11111111", "rolesToBeAssigned": [{"roleId": "105305049361547264", "roleName": "admin", "permissions": [{"sourceRoleIds": [], "permissionCode": "ADMIN_USER_EDIT", "permissionRemark": "更新管理员用户信息" }]}]}

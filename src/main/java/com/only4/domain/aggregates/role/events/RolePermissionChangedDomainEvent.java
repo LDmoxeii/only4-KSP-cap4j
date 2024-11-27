@@ -16,7 +16,7 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
  * @date 2024/11/12
  */
 @DomainEvent(persist = false)
-@Aggregate(aggregate = "role", name = "RolePermissionChangedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
+@Aggregate(aggregate = "Role", name = "RolePermissionChangedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
 @Data
 @Builder
 @AllArgsConstructor

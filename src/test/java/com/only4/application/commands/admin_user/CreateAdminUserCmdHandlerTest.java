@@ -1,16 +1,9 @@
 package com.only4.application.commands.admin_user;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import cn.hutool.core.io.resource.ResourceUtil;
+import cn.hutool.json.JSONUtil;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.factory.AdminUserPayload;
-import java.util.Collections;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,49 +15,87 @@ import org.netcorepal.cap4j.ddd.Mediator;
 import org.netcorepal.cap4j.ddd.application.UnitOfWork;
 import org.netcorepal.cap4j.ddd.domain.aggregate.AggregateFactorySupervisor;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 class CreateAdminUserCmdHandlerTest {
 
-  @InjectMocks
-  private CreateAdminUserCmdHandler handler;
+    @InjectMocks
+    private CreateAdminUserCmdHandler handler;
 
-  @Mock
-  private AggregateFactorySupervisor factory;
+    @Mock
+    private AggregateFactorySupervisor factory;
 
-  @Mock
-  private UnitOfWork uow;
+    @Mock
+    private UnitOfWork uow;
 
-  @Mock
-  private AdminUser adminUser;
+    @Mock
+    private AdminUser adminUser;
 
-  @Mock
-  private CreateAdminUserCmdRequest request;
+    @Mock
+    private CreateAdminUserCmdRequest request;
 
-  @Test
-  void testExec() {
-    try (
-        MockedStatic<Mediator> mediator = mockStatic(Mediator.class);
-    ) {
-      when(request.getName()).thenReturn("testName");
-      when(request.getPhone()).thenReturn("testPhone");
-      when(request.getPassword()).thenReturn("testPassword");
-      when(request.getRolesToBeAssigned()).thenReturn(Collections.emptyList());
-      when(Mediator.factories()).thenReturn(factory);
-      when(factory.create(any(AdminUserPayload.class))).thenReturn(adminUser);
-      when(Mediator.uow()).thenReturn(uow);
+    @Test
+    void testExec() {
+        try (
+                MockedStatic<Mediator> mediator = mockStatic(Mediator.class)
+        ) {
+            when(request.getName()).thenReturn("testName");
+            when(request.getPhone()).thenReturn("testPhone");
+            when(request.getPassword()).thenReturn("testPassword");
+            when(request.getRolesToBeAssigned()).thenReturn(Collections.emptyList());
+            when(Mediator.factories()).thenReturn(factory);
+            when(factory.create(any(AdminUserPayload.class))).thenReturn(adminUser);
+            when(Mediator.uow()).thenReturn(uow);
 
-      // 执行方法
-      val actual = handler.exec(request);
+            // 执行方法
+            val actual = handler.exec(request);
 
-      mediator.verify(Mediator::factories);
-      verify(factory).create(any(AdminUserPayload.class));
-      mediator.verify(Mediator::uow, times(2));
-      verify(uow).persist(adminUser);
-      verify(uow).save();
+            mediator.verify(Mediator::factories);
+            verify(factory).create(any(AdminUserPayload.class));
+            mediator.verify(Mediator::uow, times(2));
+            verify(uow).persist(adminUser);
+            verify(uow).save();
 
-      // 验证结果
-      assertTrue(actual.isSuccess());
-      assertEquals(adminUser.getId(), actual.getId());
+            // 验证结果
+            assertTrue(actual.isSuccess());
+            assertEquals(adminUser.getId(), actual.getId());
+        }
     }
-  }
+
+    @Test
+    void exec() throws IOException {
+        BufferedReader reader = ResourceUtil.getReader("create_admin_user_cmd_request.json", StandardCharsets.UTF_8);
+        String s = reader.readLine();
+        CreateAdminUserCmdRequest createAdminUserCmdRequest = JSONUtil.toBean(s, CreateAdminUserCmdRequest.class);
+
+        try (
+                MockedStatic<Mediator> mediator = mockStatic(Mediator.class)
+        ) {
+            when(Mediator.factories()).thenReturn(factory);
+            when(factory.create(any(AdminUserPayload.class))).thenReturn(adminUser);
+            when(Mediator.uow()).thenReturn(uow);
+
+            // 执行方法
+            assert createAdminUserCmdRequest != null;
+            val actual = handler.exec(createAdminUserCmdRequest);
+
+            mediator.verify(Mediator::factories);
+            verify(factory).create(any(AdminUserPayload.class));
+            mediator.verify(Mediator::uow, times(2));
+            verify(uow).persist(adminUser);
+            verify(uow).save();
+
+            // 验证结果
+            assertTrue(actual.isSuccess());
+            assertEquals(adminUser.getId(), actual.getId());
+        }
+    }
 }

@@ -6,12 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.*;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
@@ -24,7 +23,7 @@ import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport
  * @author cap4j-ddd-codegen
  * @date 2024/11/22
  */
-@Aggregate(aggregate = "star_comment", name = "StarComment", root = true, type = Aggregate.TYPE_ENTITY, description = "星球评论")
+@Aggregate(aggregate = "StarComment", name = "StarComment", root = true, type = Aggregate.TYPE_ENTITY, description = "星球评论")
 @Entity
 @Table(name = "`star_comment`")
 @DynamicInsert
@@ -46,24 +45,11 @@ public class StarComment {
         events().attach(new StarCommentDeletedDomainEvent(this), this);
     }
 
-    public void updateLikes(Long num) {
-
-    }
-
-    public void updateReports(Long num) {
-
-    }
-
     // 【行为方法结束】
 
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`star_comment_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.star_comment.StarCommentStatistics> starCommentStatistics;
 
     /**
      * ID

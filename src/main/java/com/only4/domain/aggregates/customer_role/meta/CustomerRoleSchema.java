@@ -1,7 +1,7 @@
-package com.only4.domain.aggregates.customer.meta;
+package com.only4.domain.aggregates.customer_role.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.customer.CustomerStatistics;
+import com.only4.domain.aggregates.customer_role.CustomerRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2024/11/26
  */
 @RequiredArgsConstructor
-public class CustomerStatisticsSchema {
-    private final Path<CustomerStatistics> root;
+public class CustomerRoleSchema {
+    private final Path<CustomerRole> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder criteriaBuilder() {
@@ -38,51 +38,27 @@ public class CustomerStatisticsSchema {
     }
 
     /**
-     * 经验
+     * 消费者ID
      * bigint
      */
-    public Schema.Field<Long> rank() {
-        return root == null ? new Schema.Field<>("rank") : new Schema.Field<>(root.get("rank"));
+    public Schema.Field<Long> customerId() {
+        return root == null ? new Schema.Field<>("customerId") : new Schema.Field<>(root.get("customerId"));
     }
 
     /**
-     * 点赞数
+     * 角色ID
      * bigint
      */
-    public Schema.Field<Long> likes() {
-        return root == null ? new Schema.Field<>("likes") : new Schema.Field<>(root.get("likes"));
+    public Schema.Field<Long> roleId() {
+        return root == null ? new Schema.Field<>("roleId") : new Schema.Field<>(root.get("roleId"));
     }
 
     /**
-     * 粉丝数
-     * bigint
+     * 角色名
+     * varchar(255)
      */
-    public Schema.Field<Long> fans() {
-        return root == null ? new Schema.Field<>("fans") : new Schema.Field<>(root.get("fans"));
-    }
-
-    /**
-     * 举报数
-     * bigint
-     */
-    public Schema.Field<Long> reports() {
-        return root == null ? new Schema.Field<>("reports") : new Schema.Field<>(root.get("reports"));
-    }
-
-    /**
-     * 关注数
-     * bigint
-     */
-    public Schema.Field<Long> follows() {
-        return root == null ? new Schema.Field<>("follows") : new Schema.Field<>(root.get("follows"));
-    }
-
-    /**
-     * 作品数
-     * bigint
-     */
-    public Schema.Field<Long> works() {
-        return root == null ? new Schema.Field<>("works") : new Schema.Field<>(root.get("works"));
+    public Schema.Field<String> roleName() {
+        return root == null ? new Schema.Field<>("roleName") : new Schema.Field<>(root.get("roleName"));
     }
 
 
@@ -109,7 +85,7 @@ public class CustomerStatisticsSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<CustomerStatisticsSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<CustomerRoleSchema> builder){
         return builder.build(this);
     }
 
@@ -120,10 +96,10 @@ public class CustomerStatisticsSchema {
      * @param distinct
      * @return
      */
-    public static Specification<CustomerStatistics> specify(Schema.PredicateBuilder<CustomerStatisticsSchema> builder, boolean distinct) {
+    public static Specification<CustomerRole> specify(Schema.PredicateBuilder<CustomerRoleSchema> builder, boolean distinct) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            CustomerStatisticsSchema customerStatistics = new CustomerStatisticsSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(customerStatistics));
+            CustomerRoleSchema customerRole = new CustomerRoleSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(customerRole));
             criteriaQuery.distinct(distinct);
             return null;
         };
@@ -134,10 +110,10 @@ public class CustomerStatisticsSchema {
      * @param builder
      * @return
      */
-    public static Specification<CustomerStatistics> specify(Schema.PredicateBuilder<CustomerStatisticsSchema> builder) {
+    public static Specification<CustomerRole> specify(Schema.PredicateBuilder<CustomerRoleSchema> builder) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            CustomerStatisticsSchema customerStatistics = new CustomerStatisticsSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(customerStatistics));
+            CustomerRoleSchema customerRole = new CustomerRoleSchema(root, criteriaBuilder);
+            criteriaQuery.where(builder.build(customerRole));
             return null;
         };
     }
@@ -147,7 +123,7 @@ public class CustomerStatisticsSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Schema.OrderBuilder<CustomerStatisticsSchema>... builders) {
+    public static Sort orderBy(Schema.OrderBuilder<CustomerRoleSchema>... builders) {
         return orderBy(Arrays.asList(builders));
     }
 
@@ -157,12 +133,12 @@ public class CustomerStatisticsSchema {
      * @param builders
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<CustomerStatisticsSchema>> builders) {
+    public static Sort orderBy(Collection<Schema.OrderBuilder<CustomerRoleSchema>> builders) {
         if(null == builders || builders.isEmpty()) {
             return Sort.unsorted();
         }
         return Sort.by(builders.stream()
-                .map(builder -> builder.build(new CustomerStatisticsSchema(null, null)))
+                .map(builder -> builder.build(new CustomerRoleSchema(null, null)))
                 .collect(Collectors.toList())
         );
     }
