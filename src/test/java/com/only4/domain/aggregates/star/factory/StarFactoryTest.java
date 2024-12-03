@@ -1,7 +1,6 @@
 package com.only4.domain.aggregates.star.factory;
 
 import com.only4.domain.aggregates.star.Star;
-import com.only4.domain.aggregates.star.StarStatistics;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,9 +22,6 @@ class StarFactoryTest {
     private StarPayload mockPayload;
 
     @Mock
-    private StarStatistics starStatistics;
-
-    @Mock
     private Star star;
 
 
@@ -36,7 +32,6 @@ class StarFactoryTest {
         when(mockPayload.getMasterId()).thenReturn(1L);
         when(mockPayload.getName()).thenReturn("Test Star");
         when(mockPayload.getDescription()).thenReturn("This is a test star");
-        when(mockPayload.getStarStatistics()).thenReturn(starStatistics);
 
         // 调用 StarFactory 的 create 方法
         star = starFactory.create(mockPayload);
@@ -45,6 +40,5 @@ class StarFactoryTest {
         assertEquals(1L, star.getMasterId().longValue());
         assertEquals("Test Star", star.getName());
         assertEquals("This is a test star", star.getDescription());
-        assertEquals(Collections.singletonList(starStatistics), star.getStarStatistics());
     }
 }
