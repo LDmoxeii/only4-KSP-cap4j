@@ -1,7 +1,7 @@
 package com.only4.application.commands.admin_user;
 
 
-import com.only4.application.queries.admin_user.ExistedAdminUserByNameQryRequest;
+import com.only4.application.queries.admin_user.ExistedAdminUserByNameQry;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.dto.AssignAdminUserRoleDto;
 import com.only4.domain.aggregates.admin_user.factory.AdminUserPayload;
@@ -99,7 +99,7 @@ public class CreateAdminUserCmd {
             @Override
             public boolean isValid(String name, ConstraintValidatorContext constraintValidatorContext) {
                 var response = Mediator.queries().send(
-                        ExistedAdminUserByNameQryRequest.builder()
+                        ExistedAdminUserByNameQry.Request.builder()
                                 .name(name)
                                 .build()
                 );

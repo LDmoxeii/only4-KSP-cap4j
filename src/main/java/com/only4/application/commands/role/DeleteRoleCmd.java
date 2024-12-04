@@ -2,7 +2,7 @@ package com.only4.application.commands.role;
 
 
 import com.only4._share.exception.KnownException;
-import com.only4.application.queries.admin_user.ExistedAdminUserByRoleIdQryRequest;
+import com.only4.application.queries.admin_user.ExistedAdminUserByRoleIdQry;
 import com.only4.domain.aggregates.role.Role;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -78,7 +78,7 @@ public class DeleteRoleCmd {
             @Override
             public boolean isValid(Long roleId, ConstraintValidatorContext constraintValidatorContext) {
                 var send = Mediator.queries().send(
-                        ExistedAdminUserByRoleIdQryRequest.builder()
+                        ExistedAdminUserByRoleIdQry.Request.builder()
                                 .roleId(roleId)
                                 .build());
                 return !send.getExisted();

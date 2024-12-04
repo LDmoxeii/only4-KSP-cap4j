@@ -11,9 +11,9 @@ import com.only4.application.commands.role.CreateRoleCmd;
 import com.only4.application.commands.role.DeleteRoleCmd;
 import com.only4.application.commands.role.UpdateRoleInfoCmd;
 import com.only4.application.commands.role.UpdateRolePermissionsCmd;
-import com.only4.application.queries.role.GetAllRolesQryRequest;
-import com.only4.application.queries.role.GetRolesByConditionQryRequest;
-import com.only4.application.queries.role.GetRolesByIdQryRequest;
+import com.only4.application.queries.role.GetAllRolesQry;
+import com.only4.application.queries.role.GetRolesByConditionQry;
+import com.only4.application.queries.role.GetRolesByIdQry;
 import com.only4.domain.aggregates.permission.Permission;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.RolePermission;
@@ -61,7 +61,7 @@ public class RoleController {
 
   @GetMapping("getAllRoles")
   public ResponseData<?> getAllRoles() {
-    var send = queries().send(GetAllRolesQryRequest.builder().build());
+    var send = queries().send(GetAllRolesQry.Request.builder().build());
     List<RoleResponse> result = send.getRoles().stream()
         .map(RoleResponse::new)
         .collect(Collectors.toList());
@@ -71,7 +71,7 @@ public class RoleController {
   @PostMapping("getRolesByCondition")
   public ResponseData<?> getRolesByCondition(@RequestBody CreateRoleRequest request) {
     var send = queries().send(
-        GetRolesByConditionQryRequest.builder()
+        GetRolesByConditionQry.Request.builder()
             .name(request.getName())
             .description(request.getDescription())
             .build()
@@ -85,7 +85,7 @@ public class RoleController {
   @GetMapping("{id}")
   public ResponseData<?> getRoleById(@PathVariable("id") Long id) {
     var send = queries().send(
-        GetRolesByIdQryRequest.builder()
+        GetRolesByIdQry.Request.builder()
             .id(id)
             .build()
     );
@@ -97,7 +97,7 @@ public class RoleController {
 
   @GetMapping("getRolePermissions/{id}")
   public ResponseData<?> getRolePermissions(@PathVariable Long id) {
-    var send = queries().send(GetRolesByIdQryRequest.builder()
+    var send = queries().send(GetRolesByIdQry.Request.builder()
         .id(id)
         .build());
     Role role = Optional.ofNullable(send.getRole())

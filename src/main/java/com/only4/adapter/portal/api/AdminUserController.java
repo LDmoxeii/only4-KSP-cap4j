@@ -10,10 +10,10 @@ import com.only4.adapter.portal.api.response.AdminUserRolesResponse;
 import com.only4.application.commands.admin_user.CreateAdminUserCmd;
 import com.only4.application.commands.admin_user.DeleteAdminUserCmd;
 import com.only4.application.commands.admin_user.UpdateAdminUserPasswordCmd;
-import com.only4.application.queries.admin_user.GetAdminUserByIdQryRequest;
-import com.only4.application.queries.admin_user.GetAdminUsersByConditionQryRequest;
-import com.only4.application.queries.admin_user.GetAllAdminUserQryRequest;
-import com.only4.application.queries.role.GetAllRolesQryRequest;
+import com.only4.application.queries.admin_user.GetAdminUserByIdQry;
+import com.only4.application.queries.admin_user.GetAdminUsersByConditionQry;
+import com.only4.application.queries.admin_user.GetAllAdminUserQry;
+import com.only4.application.queries.role.GetAllRolesQry;
 import com.only4.domain.aggregates.admin_user.AdminUserPermission;
 import com.only4.domain.aggregates.admin_user.dto.AssignAdminUserRoleDto;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class AdminUserController {
   @PostMapping("createAdminUser")
   public ResponseData<?> createAdminUser(@RequestBody CreateAdminUserRequest request) {
     var send = queries().send(
-        GetAllRolesQryRequest.builder().build()
+        GetAllRolesQry.Request.builder().build()
     );
     var rolesToBeAssigned = send.getRoles().stream()
         .filter(r -> request.getRoleIds().contains(r.getId()))
@@ -71,7 +71,7 @@ public class AdminUserController {
   @GetMapping("getAllAdminUsers")
   public ResponseData<?> getAllAdminUsers() {
     var send = queries().send(
-        GetAllAdminUserQryRequest.builder().build()
+        GetAllAdminUserQry.Request.builder().build()
     );
     var result = send.getAdminUsers().stream()
         .map(AdminUserResponse::new)
@@ -83,7 +83,7 @@ public class AdminUserController {
   @PostMapping("getAdminUsersByCondition")
   public ResponseData<?> getAdminUsersByCondition(@RequestBody AdminUserQryRequest request) {
     var send = queries().send(
-        GetAdminUsersByConditionQryRequest.builder()
+        GetAdminUsersByConditionQry.Request.builder()
             .name(request.getName())
             .phone(request.getPhone())
             .build()
@@ -97,7 +97,7 @@ public class AdminUserController {
   @GetMapping("{id}")
   public ResponseData<?> getAdminUserById(@PathVariable Long id) {
     var send = queries().send(
-        GetAdminUserByIdQryRequest.builder()
+        GetAdminUserByIdQry.Request.builder()
             .id(id)
             .build()
     );
@@ -108,7 +108,7 @@ public class AdminUserController {
   @PutMapping("changeAdminUserPassword/{id}")
   public ResponseData<?> changeAdminUserPassword(@PathVariable Long id, String newPassword) {
     var AdminUserQry = queries().send(
-        GetAdminUserByIdQryRequest.builder()
+        GetAdminUserByIdQry.Request.builder()
             .id(id)
             .build()
     );
@@ -126,14 +126,14 @@ public class AdminUserController {
   @PutMapping("getAdminUserRoles/{id}")
   public ResponseData<?> getAdminUserRoles(@PathVariable Long id) {
     val adminUser = queries().send(
-        GetAdminUserByIdQryRequest.builder()
+        GetAdminUserByIdQry.Request.builder()
             .id(id)
             .build()
     ).getAdminUser();
     Optional.ofNullable(adminUser)
         .orElseThrow(() -> new KnownException("未找到用户， UserId =" + id));
     var allRoles = queries().send(
-        GetAllRolesQryRequest.builder().build()
+        GetAllRolesQry.Request.builder().build()
     ).getRoles();
     List<AdminUserRolesResponse> result = allRoles.stream()
         .map(role -> adminUser.isInRole(role.getName())

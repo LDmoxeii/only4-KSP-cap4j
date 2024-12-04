@@ -1,7 +1,7 @@
 package com.only4.application.commands.role;
 
 
-import com.only4.application.queries.role.ExistedRoleByNameQryRequest;
+import com.only4.application.queries.role.ExistedRoleByNameQry;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.RolePermission;
 import com.only4.domain.aggregates.role.factory.RolePayload;
@@ -92,7 +92,7 @@ public class CreateRoleCmd {
             @Override
             public boolean isValid(String name, ConstraintValidatorContext constraintValidatorContext) {
                 var send = Mediator.queries().send(
-                        ExistedRoleByNameQryRequest.builder()
+                        ExistedRoleByNameQry.Request.builder()
                                 .name(name)
                                 .build()
                 );

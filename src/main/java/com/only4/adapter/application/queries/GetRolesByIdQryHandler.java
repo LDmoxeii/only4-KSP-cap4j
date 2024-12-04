@@ -1,8 +1,7 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.RoleMapper;
-import com.only4.application.queries.role.GetRolesByIdQryRequest;
-import com.only4.application.queries.role.GetRolesByIdQryResponse;
+import com.only4.application.queries.role.GetRolesByIdQry;
 import com.only4.domain.aggregates.role.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +18,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GetRolesByIdQryHandler implements Query<GetRolesByIdQryRequest, GetRolesByIdQryResponse> {
+public class GetRolesByIdQryHandler implements Query<GetRolesByIdQry.Request, GetRolesByIdQry.Response> {
     private final RoleMapper roleMapper;
 
     @Override
-    public GetRolesByIdQryResponse exec(GetRolesByIdQryRequest request) {
+    public GetRolesByIdQry.Response exec(GetRolesByIdQry.Request request) {
         Role role = roleMapper.getById(request.getId());
         // mybatis / jpa 哪个顺手就用哪个吧！
-        return GetRolesByIdQryResponse.builder()
+        return GetRolesByIdQry.Response.builder()
                 .role(role)
                 .build();
     }

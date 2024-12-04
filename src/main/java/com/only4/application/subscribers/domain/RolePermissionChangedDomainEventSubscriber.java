@@ -1,7 +1,7 @@
 package com.only4.application.subscribers.domain;
 
 import com.only4.application.commands.admin_user.UpdateAdminUserRolePermissionsCmd;
-import com.only4.application.queries.admin_user.GetAdminUserByRoleIdQryRequest;
+import com.only4.application.queries.admin_user.GetAdminUserByRoleIdQry;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.AdminUserPermission;
 import com.only4.domain.aggregates.role.Role;
@@ -30,7 +30,7 @@ public class RolePermissionChangedDomainEventSubscriber {
         Role role = event.getRole();
         Long roleId = role.getId();
         var send = Mediator.queries().send(
-                GetAdminUserByRoleIdQryRequest.builder()
+                GetAdminUserByRoleIdQry.Request.builder()
                         .id(roleId)
                         .build());
         List<AdminUser> adminUsers = send.getAdminUsers();

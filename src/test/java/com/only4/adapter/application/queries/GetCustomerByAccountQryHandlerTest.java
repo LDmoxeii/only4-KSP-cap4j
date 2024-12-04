@@ -1,12 +1,7 @@
 package com.only4.adapter.application.queries;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.only4.adapter.infra.mybatis.mapper.CustomerMapper;
-import com.only4.application.queries.customer.GetCustomerByAccountQryRequest;
+import com.only4.application.queries.customer.GetCustomerByAccountQry;
 import com.only4.domain.aggregates.customer.Customer;
 import lombok.var;
 import org.junit.jupiter.api.Test;
@@ -15,13 +10,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class GetCustomerByAccountQryHandlerTest {
   @InjectMocks
   GetCustomerByAccountQryHandler handler;
 
   @Mock
-  GetCustomerByAccountQryRequest request;
+  GetCustomerByAccountQry.Request request;
 
   @Mock
   Customer customer;

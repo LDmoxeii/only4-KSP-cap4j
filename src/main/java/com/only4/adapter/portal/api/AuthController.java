@@ -8,7 +8,7 @@ import com.only4.adapter.application.distributed.clients.LoginService;
 import com.only4.adapter.portal.api._share.ResponseData;
 import com.only4.adapter.portal.api.request.LoginByAccountRequest;
 import com.only4.adapter.portal.api.response.LoginByAccountResponse;
-import com.only4.application.queries.customer.GetCustomerByAccountQryRequest;
+import com.only4.application.queries.customer.GetCustomerByAccountQry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -34,7 +34,7 @@ public class AuthController {
   public ResponseData<?> login(@RequestBody LoginByAccountRequest request) {
 
     var customer = Mediator.queries()
-        .send(GetCustomerByAccountQryRequest.builder()
+        .send(GetCustomerByAccountQry.Request.builder()
             .account(request.getAccount())
             .build())
         .getCustomer();
