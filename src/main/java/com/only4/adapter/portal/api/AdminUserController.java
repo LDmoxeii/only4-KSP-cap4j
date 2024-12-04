@@ -7,9 +7,9 @@ import com.only4.adapter.portal.api.request.AdminUserQryRequest;
 import com.only4.adapter.portal.api.request.CreateAdminUserRequest;
 import com.only4.adapter.portal.api.response.AdminUserResponse;
 import com.only4.adapter.portal.api.response.AdminUserRolesResponse;
-import com.only4.application.commands.admin_user.CreateAdminUserCmdRequest;
-import com.only4.application.commands.admin_user.DeleteAdminUserCmdRequest;
-import com.only4.application.commands.admin_user.UpdateAdminUserPasswordCmdRequest;
+import com.only4.application.commands.admin_user.CreateAdminUserCmd;
+import com.only4.application.commands.admin_user.DeleteAdminUserCmd;
+import com.only4.application.commands.admin_user.UpdateAdminUserPasswordCmd;
 import com.only4.application.queries.admin_user.GetAdminUserByIdQryRequest;
 import com.only4.application.queries.admin_user.GetAdminUsersByConditionQryRequest;
 import com.only4.application.queries.admin_user.GetAllAdminUserQryRequest;
@@ -58,12 +58,12 @@ public class AdminUserController {
         .collect(Collectors.toList());
 
     var result = commands().send(
-        CreateAdminUserCmdRequest.builder()
-            .name(request.getName())
-            .phone(request.getPhone())
-            .password(request.getPassword())
-            .rolesToBeAssigned(rolesToBeAssigned)
-            .build()
+            CreateAdminUserCmd.Request.builder()
+                    .name(request.getName())
+                    .phone(request.getPhone())
+                    .password(request.getPassword())
+                    .rolesToBeAssigned(rolesToBeAssigned)
+                    .build()
     );
     return ResponseData.success(result.getId());
   }
@@ -115,7 +115,7 @@ public class AdminUserController {
     Optional.ofNullable(AdminUserQry.getAdminUser())
         .orElseThrow(() -> new KnownException("未找到用户， UserId =" + id));
     commands().send(
-        UpdateAdminUserPasswordCmdRequest.builder()
+        UpdateAdminUserPasswordCmd.Request.builder()
             .adminUserId(id)
             .newPassword(newPassword)
             .build()
@@ -156,7 +156,7 @@ public class AdminUserController {
   @DeleteMapping("{id}")
   public ResponseData<?> deleteAdminUser(@PathVariable Long id) {
     commands().send(
-        DeleteAdminUserCmdRequest.builder()
+        DeleteAdminUserCmd.Request.builder()
             .adminUserId(id)
             .build()
     );

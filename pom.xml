@@ -263,7 +263,7 @@
         <version>${cap4j.version}</version>
         <configuration>
           <basePackage>com.only4</basePackage>
-          <archTemplate>cap4j-ddd-codegen-template.json</archTemplate>
+          <archTemplate>cap4j-ddd-codegen-template-nested.json</archTemplate>
           <archTemplateEncoding>UTF-8</archTemplateEncoding>
           <outputEncoding>UTF-8</outputEncoding>
           <designFile></designFile>

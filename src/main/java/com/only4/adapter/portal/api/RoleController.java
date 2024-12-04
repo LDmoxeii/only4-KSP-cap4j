@@ -1,8 +1,5 @@
 package com.only4.adapter.portal.api;
 
-import static org.netcorepal.cap4j.ddd.Mediator.commands;
-import static org.netcorepal.cap4j.ddd.Mediator.queries;
-
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.only4._share.exception.KnownException;
 import com.only4.adapter.portal.api._share.ResponseData;
@@ -10,29 +7,26 @@ import com.only4.adapter.portal.api.request.CreateRoleRequest;
 import com.only4.adapter.portal.api.request.UpdateRoleInfoRequest;
 import com.only4.adapter.portal.api.response.RolePermissionResponse;
 import com.only4.adapter.portal.api.response.RoleResponse;
-import com.only4.application.commands.role.CreateRoleCmdRequest;
-import com.only4.application.commands.role.DeleteRoleCmdRequest;
-import com.only4.application.commands.role.UpdateRoleInfoCmdRequest;
-import com.only4.application.commands.role.UpdateRolePermissionsCmdRequest;
+import com.only4.application.commands.role.CreateRoleCmd;
+import com.only4.application.commands.role.DeleteRoleCmd;
+import com.only4.application.commands.role.UpdateRoleInfoCmd;
+import com.only4.application.commands.role.UpdateRolePermissionsCmd;
 import com.only4.application.queries.role.GetAllRolesQryRequest;
 import com.only4.application.queries.role.GetRolesByConditionQryRequest;
 import com.only4.application.queries.role.GetRolesByIdQryRequest;
 import com.only4.domain.aggregates.permission.Permission;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.RolePermission;
+import lombok.RequiredArgsConstructor;
+import lombok.var;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import lombok.var;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import static org.netcorepal.cap4j.ddd.Mediator.commands;
+import static org.netcorepal.cap4j.ddd.Mediator.queries;
 
 /**
  * @author LD_moxeii
@@ -56,7 +50,7 @@ public class RoleController {
         )
         .collect(Collectors.toList());
     var send = commands().send(
-        CreateRoleCmdRequest.builder()
+        CreateRoleCmd.Request.builder()
             .name(request.getName())
             .description(request.getDescription())
             .permissions(permissionsToBeAssigned)
@@ -124,7 +118,7 @@ public class RoleController {
   @PutMapping("updateRoleInfo/{id}")
   public ResponseData<?> updateRoleInfo(@PathVariable Long id,
       @RequestBody UpdateRoleInfoRequest request) {
-    commands().send(UpdateRoleInfoCmdRequest.builder()
+    commands().send(UpdateRoleInfoCmd.Request.builder()
         .roleId(id)
         .name(request.getName())
         .description(request.getDescription())
@@ -146,7 +140,7 @@ public class RoleController {
                 .build()
         )
         .collect(Collectors.toList());
-    commands().send(UpdateRolePermissionsCmdRequest.builder()
+    commands().send(UpdateRolePermissionsCmd.Request.builder()
         .roleId(id)
         .permissions(permissionsToBeAssigned)
         .build());
@@ -155,7 +149,7 @@ public class RoleController {
 
   @DeleteMapping("{id}")
   public ResponseData<?> deleteRole(@PathVariable Long id) {
-    commands().send(DeleteRoleCmdRequest.builder()
+    commands().send(DeleteRoleCmd.Request.builder()
         .roleId(id)
         .build());
     return ResponseData.success("ok");
