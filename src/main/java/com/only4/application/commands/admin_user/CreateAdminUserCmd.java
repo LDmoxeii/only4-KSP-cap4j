@@ -4,7 +4,7 @@ package com.only4.application.commands.admin_user;
 import com.only4.application.queries.admin_user.ExistedAdminUserByNameQry;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.dto.AssignAdminUserRoleDto;
-import com.only4.domain.aggregates.admin_user.factory.AdminUserPayload;
+import com.only4.domain.aggregates.admin_user.factory.AdminUserFactory;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -41,7 +41,7 @@ public class CreateAdminUserCmd {
         @Override
         public Response exec(Request cmd) {
             AdminUser adminUser = Mediator.factories().create(
-                    AdminUserPayload.builder()
+                    AdminUserFactory.Payload.builder()
                             .name(cmd.getName())
                             .phone(cmd.getPhone())
                             .password(cmd.getPassword())

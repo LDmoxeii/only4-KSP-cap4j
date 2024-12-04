@@ -13,7 +13,7 @@ class ArticleCommentFactoryTest {
     private ArticleCommentFactory articleCommentFactory;
 
     @Mock
-    private ArticleCommentPayload mockPayload;
+    private ArticleCommentFactory.Payload mockPayload;
 
 
     @Test

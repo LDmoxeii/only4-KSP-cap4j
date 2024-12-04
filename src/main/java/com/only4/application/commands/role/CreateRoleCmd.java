@@ -4,7 +4,7 @@ package com.only4.application.commands.role;
 import com.only4.application.queries.role.ExistedRoleByNameQry;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.RolePermission;
-import com.only4.domain.aggregates.role.factory.RolePayload;
+import com.only4.domain.aggregates.role.factory.RoleFactory;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -41,7 +41,7 @@ public class CreateRoleCmd {
         @Override
         public Response exec(Request cmd) {
             Role role = Mediator.factories().create(
-                    RolePayload.builder()
+                    RoleFactory.Payload.builder()
                             .name(cmd.name)
                             .description(cmd.description)
                             .permissions(cmd.permissions)

@@ -17,7 +17,7 @@ class BlockFactoryTest {
     private BlockFactory blockFactory;
 
     @Mock
-    private BlockPayload mockPayload;
+    private BlockFactory.Payload mockPayload;
 
     @Test
     void create() {
