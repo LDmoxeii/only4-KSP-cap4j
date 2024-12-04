@@ -17,7 +17,7 @@ class StardustFactoryTest {
     private StardustFactory stardustFactory;
 
     @Mock
-    private StardustPayload mockPayload;
+    private StardustFactory.Payload mockPayload;
 
     @Test
     void create() {

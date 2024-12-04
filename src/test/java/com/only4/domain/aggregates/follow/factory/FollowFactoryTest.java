@@ -17,7 +17,7 @@ class FollowFactoryTest {
     private FollowFactory followFactory;
 
     @Mock
-    private FollowPayload mockPayload;
+    private FollowFactory.Payload mockPayload;
 
     @Test
     void create() {

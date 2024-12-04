@@ -17,7 +17,7 @@ class ArticleLikeFactoryTest {
     private ArticleLikeFactory articleLikeFactory;
 
     @Mock
-    private ArticleLikePayload mockPayload;
+    private ArticleLikeFactory.Payload mockPayload;
 
     @Test
     void create() {

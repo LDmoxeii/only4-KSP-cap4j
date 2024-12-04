@@ -1,7 +1,12 @@
 package com.only4.domain.aggregates.article.factory;
 
 import com.only4.domain.aggregates.article.Article;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.domain.aggregate.AggregateFactory;
+import org.netcorepal.cap4j.ddd.domain.aggregate.AggregatePayload;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +15,14 @@ import org.springframework.stereotype.Service;
  *
  *
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2024/12/04
  */
 @Aggregate(aggregate = "Article", name = "ArticleFactory", type = Aggregate.TYPE_FACTORY, description = "")
 @Service
-public class ArticleFactory implements AggregateFactory<ArticlePayload, Article> {
+public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, Article> {
 
     @Override
-    public Article create(ArticlePayload payload) {
+    public Article create(Payload payload) {
 
         return Article.builder()
                 .authorId(payload.getAuthorId())
@@ -26,5 +31,21 @@ public class ArticleFactory implements AggregateFactory<ArticlePayload, Article>
                 .content(payload.getContent())
                 .price(payload.getPrice())
                 .build();
+    }
+
+    /**
+     * Article工厂负载
+     */
+    @Aggregate(aggregate = "Article", name = "ArticlePayload", type = Aggregate.TYPE_FACTORY_PAYLOAD, description = "")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Payload implements AggregatePayload<Article> {
+        Long authorId;
+        String title;
+        String description;
+        String content;
+        Long price;
     }
 }

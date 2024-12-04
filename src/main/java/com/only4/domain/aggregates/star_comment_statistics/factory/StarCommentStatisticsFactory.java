@@ -1,26 +1,44 @@
 package com.only4.domain.aggregates.star_comment_statistics.factory;
 
 import com.only4.domain.aggregates.star_comment_statistics.StarCommentStatistics;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.domain.aggregate.AggregateFactory;
+import org.netcorepal.cap4j.ddd.domain.aggregate.AggregatePayload;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
 
 /**
  * StarCommentStatistics聚合工厂
- *
+ * 
  *
  * @author cap4j-ddd-codegen
- * @date 2024/11/26
+ * @date 2024/12/04
  */
 @Aggregate(aggregate = "StarCommentStatistics", name = "StarCommentStatisticsFactory", type = Aggregate.TYPE_FACTORY, description = "")
 @Service
-public class StarCommentStatisticsFactory implements AggregateFactory<StarCommentStatisticsPayload, StarCommentStatistics> {
+public class StarCommentStatisticsFactory implements AggregateFactory<StarCommentStatisticsFactory.Payload, StarCommentStatistics> {
 
     @Override
-    public StarCommentStatistics create(StarCommentStatisticsPayload payload) {
+    public StarCommentStatistics create(Payload payload) {
 
         return StarCommentStatistics.builder()
 
                 .build();
+    }
+    
+    /**
+     * StarCommentStatistics工厂负载
+     */
+    @Aggregate(aggregate = "StarCommentStatistics", name = "StarCommentStatisticsPayload", type = Aggregate.TYPE_FACTORY_PAYLOAD, description = "")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Payload implements AggregatePayload<StarCommentStatistics> {
+        String name;
+
     }
 }

@@ -14,7 +14,7 @@ class StarFactoryTest {
     private StarFactory starFactory;
 
     @Mock
-    private StarPayload mockPayload;
+    private StarFactory.Payload mockPayload;
 
 
     @Mock

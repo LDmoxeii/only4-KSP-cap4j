@@ -18,7 +18,7 @@ class FavoritesFactoryTest {
     private FavoritesFactory favoritesFactory;
 
     @Mock
-    private FavoritesPayload mockPayload;
+    private FavoritesFactory.Payload mockPayload;
 
     @Test
     void create() {

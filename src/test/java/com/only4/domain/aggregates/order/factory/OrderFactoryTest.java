@@ -18,7 +18,7 @@ class OrderFactoryTest {
     private OrderFactory orderFactory;
 
     @Mock
-    private OrderPayload mockPayload;
+    private OrderFactory.Payload mockPayload;
 
     @Test
     void create() {

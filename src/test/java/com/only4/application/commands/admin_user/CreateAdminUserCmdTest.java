@@ -3,7 +3,7 @@ package com.only4.application.commands.admin_user;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.json.JSONUtil;
 import com.only4.domain.aggregates.admin_user.AdminUser;
-import com.only4.domain.aggregates.admin_user.factory.AdminUserPayload;
+import com.only4.domain.aggregates.admin_user.factory.AdminUserFactory;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,14 +52,14 @@ class CreateAdminUserCmdTest {
             when(request.getPassword()).thenReturn("testPassword");
             when(request.getRolesToBeAssigned()).thenReturn(Collections.emptyList());
             when(Mediator.factories()).thenReturn(factory);
-            when(factory.create(any(AdminUserPayload.class))).thenReturn(adminUser);
+            when(factory.create(any(AdminUserFactory.Payload.class))).thenReturn(adminUser);
             when(Mediator.uow()).thenReturn(uow);
 
             // 执行方法
             val actual = handler.exec(request);
 
             mediator.verify(Mediator::factories);
-            verify(factory).create(any(AdminUserPayload.class));
+            verify(factory).create(any(AdminUserFactory.Payload.class));
             mediator.verify(Mediator::uow, times(2));
             verify(uow).persist(adminUser);
             verify(uow).save();
@@ -80,7 +80,7 @@ class CreateAdminUserCmdTest {
                 MockedStatic<Mediator> mediator = mockStatic(Mediator.class)
         ) {
             when(Mediator.factories()).thenReturn(factory);
-            when(factory.create(any(AdminUserPayload.class))).thenReturn(adminUser);
+            when(factory.create(any(AdminUserFactory.Payload.class))).thenReturn(adminUser);
             when(Mediator.uow()).thenReturn(uow);
 
             // 执行方法
@@ -88,7 +88,7 @@ class CreateAdminUserCmdTest {
             val actual = handler.exec(createAdminUserCmdRequest);
 
             mediator.verify(Mediator::factories);
-            verify(factory).create(any(AdminUserPayload.class));
+            verify(factory).create(any(AdminUserFactory.Payload.class));
             mediator.verify(Mediator::uow, times(2));
             verify(uow).persist(adminUser);
             verify(uow).save();
