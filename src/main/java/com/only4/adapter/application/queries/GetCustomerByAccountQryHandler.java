@@ -1,8 +1,7 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.CustomerMapper;
-import com.only4.application.queries.customer.GetCustomerByAccountQryRequest;
-import com.only4.application.queries.customer.GetCustomerByAccountQryResponse;
+import com.only4.application.queries.customer.GetCustomerByAccountQry;
 import com.only4.domain.aggregates.customer.Customer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,15 +18,15 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GetCustomerByAccountQryHandler implements Query<GetCustomerByAccountQryRequest, GetCustomerByAccountQryResponse> {
+public class GetCustomerByAccountQryHandler implements Query<GetCustomerByAccountQry.Request, GetCustomerByAccountQry.Response> {
     private final CustomerMapper mapper;
 
     @Override
-    public GetCustomerByAccountQryResponse exec(GetCustomerByAccountQryRequest request) {
+    public GetCustomerByAccountQry.Response exec(GetCustomerByAccountQry.Request request) {
         Customer customer =  mapper.getByAccount(request.getAccount());
 
         // mybatis / jpa 哪个顺手就用哪个吧！
-        return GetCustomerByAccountQryResponse.builder()
+        return GetCustomerByAccountQry.Response.builder()
             .customer(customer)
             .build();
     }

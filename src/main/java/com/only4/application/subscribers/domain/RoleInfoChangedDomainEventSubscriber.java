@@ -1,7 +1,7 @@
 package com.only4.application.subscribers.domain;
 
-import com.only4.application.commands.admin_user.UpdateAdminUserRoleInfoCmdRequest;
-import com.only4.application.queries.admin_user.GetAdminUserByRoleIdQryRequest;
+import com.only4.application.commands.admin_user.UpdateAdminUserRoleInfoCmd;
+import com.only4.application.queries.admin_user.GetAdminUserByRoleIdQry;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.events.RoleInfoChangedDomainEvent;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +21,10 @@ public class RoleInfoChangedDomainEventSubscriber {
   @EventListener(RoleInfoChangedDomainEvent.class)
   public void on(RoleInfoChangedDomainEvent event) {
     Role role = event.getRole();
-    var send = Mediator.queries().send(new GetAdminUserByRoleIdQryRequest(role.getId()));
+    var send = Mediator.queries().send(new GetAdminUserByRoleIdQry.Request(role.getId()));
     send.getAdminUsers().forEach(adminUser ->
         Mediator.commands()
-            .send(UpdateAdminUserRoleInfoCmdRequest.builder()
+            .send(UpdateAdminUserRoleInfoCmd.Request.builder()
                 .adminUserId(adminUser.getId())
                 .roleId(role.getId())
                 .roleName(role.getName())

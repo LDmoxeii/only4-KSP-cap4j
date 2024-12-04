@@ -1,19 +1,8 @@
 package com.only4.application.commands.admin_user;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.AppDefaultCredentials;
-import java.util.Optional;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,11 +14,17 @@ import org.netcorepal.cap4j.ddd.Mediator;
 import org.netcorepal.cap4j.ddd.application.UnitOfWork;
 import org.netcorepal.cap4j.ddd.domain.repo.RepositorySupervisor;
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 class DeleteAdminUserCmdHandlerTest {
 
   @InjectMocks
-  DeleteAdminUserCmdHandler handler;
+  DeleteAdminUserCmd.Handler handler;
 
   @Mock
   RepositorySupervisor supervisor;
@@ -37,7 +32,7 @@ class DeleteAdminUserCmdHandlerTest {
   @Mock
   UnitOfWork uow;
   @Mock
-  private DeleteAdminUserCmdRequest request;
+  private DeleteAdminUserCmd.Request request;
 
   @Mock
   private AdminUser adminUser;

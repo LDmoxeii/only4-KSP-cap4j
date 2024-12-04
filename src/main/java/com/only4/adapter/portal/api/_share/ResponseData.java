@@ -1,10 +1,10 @@
 package com.only4.adapter.portal.api._share;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.only4._share.CodeEnum;
 import com.only4._share.exception.ErrorException;
 import com.only4._share.exception.KnownException;
 import com.only4._share.exception.WarnException;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

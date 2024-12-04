@@ -3,8 +3,9 @@ package com.only4.adapter.portal.api.response;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.AdminUserPermission;
 import com.only4.domain.aggregates.admin_user.AdminUserRole;
-import java.util.List;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author LD_moxeii
