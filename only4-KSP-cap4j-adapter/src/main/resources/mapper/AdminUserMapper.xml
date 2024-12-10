@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.only4.adapter.infra.mybatis.mapper.AdminUserMapper">
+    <resultMap id="adminUser" type="com.only4.domain.aggregates.admin_user.AdminUser">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="password" property="password"/>
+        <result column="refresh_token" property="refreshToken"/>
+        <result column="login_expiry_date" property="loginExpiryDate"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="del_flag" property="delFlag"/>
+        <collection property="adminUserPermissions"
+                    ofType="com.only4.domain.aggregates.admin_user.AdminUserPermission">
+            <result column="permission_code" property="permissionCode"/>
+            <result column="permission_remark" property="permissionRemark"/>
+        </collection>
+        <collection property="adminUserRoles"
+                    ofType="com.only4.domain.aggregates.admin_user.AdminUserRole">
+            <result column="role_id" property="roleId"/>
+            <result column="role_name" property="roleName"/>
+        </collection>
+    </resultMap>
+
+    <select id="existedByName" resultType="java.lang.Long">
+        SELECT COUNT(1)
+        FROM admin_user
+        WHERE name = #{name}
+    </select>
+
+    <select id="existedByRoleId" resultType="java.lang.Long">
+        SELECT COUNT(1)
+        FROM admin_user au
+                 LEFT JOIN admin_user_role aur ON au.id = aur.admin_user_id
+        WHERE aur.role_id = #{roleId}
+    </select>
+
+    <select id="getByRoleId" resultMap="adminUser">
+        SELECT au.id                 as id,
+               au.name               as name,
+               au.phone              as phone,
+               au.password           as password,
+               au.refresh_token      as refresh_token,
+               au.login_expiry_date  as login_expiry_date,
+               au.created_at         as created_at,
+               au.del_flag           as del_flag,
+               aup.permission_code   as permission_code,
+               aup.permission_remark as permission_remark,
+               aur.role_id           as role_id,
+               aur.role_name         as role_name
+        FROM admin_user au
+                 LEFT JOIN admin_user_role aur ON au.id = aur.admin_user_id
+                 LEFT JOIN admin_user_permission aup ON au.id = aup.id
+        WHERE aur.role_id = #{roleId}
+    </select>
+
+    <select id="getAll" resultMap="adminUser">
+        SELECT au.id                 as id,
+               au.name               as name,
+               au.phone              as phone,
+               au.password           as password,
+               au.refresh_token      as refresh_token,
+               au.login_expiry_date  as login_expiry_date,
+               au.created_at         as created_at,
+               au.del_flag           as del_flag,
+               aup.permission_code   as permission_code,
+               aup.permission_remark as permission_remark,
+               aur.role_id           as role_id,
+               aur.role_name         as role_name
+        FROM admin_user au
+                 LEFT JOIN admin_user_role aur ON au.id = aur.admin_user_id
+                 LEFT JOIN admin_user_permission aup ON au.id = aup.id
+    </select>
+
+    <select id="getByCondition" resultMap="adminUser">
+        SELECT au.id as id,
+        au.name as name,
+        au.phone as phone,
+        au.password as password,
+        au.refresh_token as refresh_token,
+        au.login_expiry_date as login_expiry_date,
+        au.created_at as created_at,
+        au.del_flag as del_flag,
+        aup.permission_code as permission_code,
+        aup.permission_remark as permission_remark,
+        aur.role_id as role_id,
+        aur.role_name as role_name
+        FROM admin_user au
+        LEFT JOIN admin_user_role aur ON au.id = aur.admin_user_id
+        LEFT JOIN admin_user_permission aup ON au.id = aup.id
+        WHERE 1 = 1
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT(#{name},'%')
+        </if>
+        <if test="phone != null and phone != ''">
+            AND phone LIKE CONCAT(#{phone},'%')
+        </if>
+    </select>
+
+    <select id="getById" resultMap="adminUser">
+        SELECT au.id                 as id,
+               au.name               as name,
+               au.phone              as phone,
+               au.password           as password,
+               au.refresh_token      as refresh_token,
+               au.login_expiry_date  as login_expiry_date,
+               au.created_at         as created_at,
+               au.del_flag           as del_flag,
+               aup.permission_code   as permission_code,
+               aup.permission_remark as permission_remark,
+               aur.role_id           as role_id,
+               aur.role_name         as role_name
+        FROM admin_user au
+                 LEFT JOIN admin_user_role aur ON au.id = aur.admin_user_id
+                 LEFT JOIN admin_user_permission aup ON au.id = aup.admin_user_id
+        WHERE au.id = #{id}
+    </select>
+</mapper>
