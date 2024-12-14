@@ -1,0 +1,35 @@
+@startuml
+CreateStar                      -down-> Star
+DeleteStar                      -down-> Star
+JoinStar                        -down-> Star
+LeaveStar                       -down-> Star
+LikeStar                        -down-> Star
+UnLikeStar                      -down-> Star
+CreateStarComment               -down-> Star
+DeleteStarComment               -down-> Star
+LikeStarComment                 -down-> Star
+UnLikeStarComment               -down-> Star
+UpdateStardustInfo              -down-> Star
+UpdateStarCommentAuthorInfo     -down-> Star
+UpdateStarComments              -down-> Star
+UpdateStarCommentAuthorInfo     -down-> Star
+UpdateStarLikes                 -down-> Star
+UpdateStarCommentLikes          -down-> Star
+UpdateStardust                  -down-> Star
+
+Star -down-> CreatedStar
+Star -down-> DeletedStar
+Star -down-> JoinedStar
+Star -down-> LeftStar
+Star -down-> LikedStar
+Star -down-> UnLikedStar
+Star -down-> CreatedStarComment
+Star -down-> DeletedStarComment
+Star -down-> LikedStarComment
+Star -down-> UnLikedStarComment
+Star -down-> UpdatedStarLikes
+Star -down-> UpdatedStarCommentLikes
+Star -down-> UpdatedStarInfo
+
+
+@enduml

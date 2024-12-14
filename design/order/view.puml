@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include ..\lib_eventstorming.puml
+
+!if VIEW_COMMENT
+Comment("need") [
+    1.创建订单
+    2.退款订单
+    3.支付订单
+    4.取消订单
+]
+!endif
+
+!include command.puml
+!include domain.puml
+!include event.puml
+!include relationCDE.puml
+
+!if VIEW_QUERY
+!include query.puml
+!endif
+
+'!include ..\relationEC.puml
+@enduml

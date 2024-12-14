@@ -1,0 +1,89 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+DomainEvent("CreatedArticle") [
+    已创建文章
+    --属性--
+    作者ID
+    --监听者--
+    该文章作者
+]
+
+DomainEvent("UpdatedArticleLikes") [
+    已更新文章点赞数
+    --属性--
+    作者ID
+    点赞数
+    --监听者--
+    该文章作者
+]
+
+DomainEvent("UpdatedArticleFavorites") [
+    已更新文章收藏数
+    --属性--
+    作者ID
+    收藏数
+    --监听者--
+    该文章作者
+]
+DomainEvent("LikedArticle") [
+    已点赞文章
+    --属性--
+    作者ID
+    --监听者--
+    该文章
+    操作者
+]
+DomainEvent("UnlikedArticle") [
+    已取消点赞文章
+    --属性--
+    作者ID
+    --监听者--
+    该文章
+    操作者
+]
+DomainEvent("CreatedArticleComment") [
+    已创建文章评论
+    --属性--
+    文章ID
+    --监听者--
+    该评论文章
+]
+
+DomainEvent("DeletedArticleComment") [
+    已删除文章评论
+    --属性--
+    文章ID
+    --监听者--
+    该评论文章
+]
+
+DomainEvent("LikedArticleComment") [
+    已点赞文章评论
+    --属性--
+    文章评论ID
+    --监听者--
+    该评论文章
+    该评论作者
+    操作者
+]
+
+DomainEvent("UnlikedArticleComment") [
+    已取消点赞文章评论
+    --属性--
+    文章评论ID
+    --监听者--
+    该评论文章
+    该评论作者
+    操作者
+]
+
+DomainEvent("UpdatedArticleCommentLikes") [
+    已更新文章评论点赞数
+    --属性--
+    文章评论ID
+    点赞数
+    --监听者--
+    该评论作者
+]
+@enduml

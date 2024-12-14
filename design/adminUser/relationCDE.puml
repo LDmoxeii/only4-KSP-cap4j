@@ -1,0 +1,9 @@
+@startuml
+CreateAdminUser                -down-> AdminUser
+UpdateAdminUserRoles           -down-> AdminUser
+UpdateAdminUserRoleInfo        -down-> AdminUser
+UpdateAdminUserPassword        -down-> AdminUser
+UpdateAdminUserRefreshToken    -down-> AdminUser
+UpdateAdminUserRolePermissions -down-> AdminUser
+DeleteAdminUser                -down-> AdminUser
+@enduml

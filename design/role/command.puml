@@ -1,0 +1,49 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Command("CreateRole") [
+    创建角色
+    --触发者--
+    管理员
+    --属性--
+    角色名
+    角色描述
+    角色权限集
+    --规则--
+    1. 角色名不能为空
+    2. 角色描述不能为空
+    3. 角色名必须唯一
+]
+Command("UpdateRoleInfo") [
+    更新角色信息
+    --触发者--
+    管理员
+    --属性--
+    角色ID
+    角色名
+    角色描述
+    --规则--
+    1. 角色名不能为空
+    2. 角色必须存在
+]
+Command("UpdateRolePermissions") [
+    更新角色权限集
+    --触发者--
+    管理员
+    --属性--
+    角色ID
+    权限集
+    --规则--
+    1. 角色必须存在
+]
+Command("DeleteRole") [
+    删除角色
+    --触发者--
+    管理员
+    --属性--
+    角色ID
+    --规则--
+    1. 角色必须存在
+    2. 角色未被用户使用
+]
+@enduml

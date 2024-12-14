@@ -1,0 +1,9 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Query("TagExistsByName") [
+	根据标签名判断标签是否存在
+	--属性--
+	标签名
+]
+@enduml

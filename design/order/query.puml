@@ -1,0 +1,15 @@
+@startuml
+!include ../lib_eventstorming.puml
+
+Query("OrderExistsById") [
+    根据订单ID判断订单是否存在
+    --属性--
+    订单ID
+]
+
+Query("GetOrderById") [
+    根据订单ID获取订单
+    --属性--
+    订单ID
+]
+@enduml

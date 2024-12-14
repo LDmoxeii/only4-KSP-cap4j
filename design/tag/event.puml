@@ -1,0 +1,13 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+DomainEvent("UpdatedTagInfo") [
+    已更新标签信息
+    --属性--
+    标签名
+    标签描述
+    标签图标
+    --监听者--
+    拥有该标签的文章
+]
+@enduml

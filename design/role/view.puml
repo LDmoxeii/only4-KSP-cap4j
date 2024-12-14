@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include ..\lib_eventstorming.puml
+
+!if VIEW_COMMENT
+Comment("need")[
+1.创建角色
+2.更新角色信息
+3.更新角色权限集
+4.删除角色
+]
+!endif
+
+!include command.puml
+!include domain.puml
+!include event.puml
+!include relationCDE.puml
+
+!if VIEW_QUERY
+!include query.puml
+!endif
+
+'!include ..\relationEC.puml
+@enduml

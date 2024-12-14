@@ -1,0 +1,115 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Aggregate("Article") [
+    文章
+    --属性--
+    文章ID
+    文章名
+    文章描述
+    文章内容
+    文章状态
+    置顶状态
+    评论状态
+    文章评论列表
+    文章作者
+    文章分类
+    文章标签
+    文章封面
+    文章附件
+    --行为--
+    更新可见性为公开
+    更新可见性为私有
+    更新文章信息
+    封禁文章
+    举报文章
+    更新文章点赞数
+    更新文章收藏数
+    创建文章评论
+    删除文章评论
+    点赞文章评论
+    取消点赞文章评论
+    举报文章评论
+    删除文章
+]
+
+Aggregate("ArticleLike") [
+    文章点赞
+    --属性--
+    文章ID
+    点赞用户ID
+    点赞时间
+]
+
+Aggregate("ArticleComment") [
+    文章评论
+    --属性--
+    文章ID
+    文章评论ID
+    父评论ID
+    评论用户ID
+    评论用户名
+    评论内容
+    置顶状态
+    评论时间
+]
+
+Aggregate("ArticleCommentStatistics") [
+    文章评论统计
+    --属性--
+    文章评论ID
+    文章评论点赞数
+    评论回复数
+]
+
+Aggregate("ArticleCommentLike") [
+    文章评论点赞
+    --属性--
+    文章评论ID
+    点赞用户ID
+    点赞时间
+]
+
+Aggregate("ArticleCategory") [
+    文章分类
+    --属性--
+    文章ID
+    分类ID
+    分类名
+]
+
+Aggregate("ArticleTag") [
+    文章标签
+    --属性--
+    文章ID
+    标签ID
+    标签名
+]
+
+Aggregate("ArticleStatistics") [
+    文章统计
+    --属性--
+    文章ID
+    文章点赞数
+    文章收藏数
+    文章评论数
+    文章浏览数
+]
+
+Aggregate("ArticleAuthor") [
+    文章作者
+    --属性--
+    文章ID
+    作者ID
+    作者名
+]
+
+Article -right-> ArticleComment
+Article -right-> ArticleLike
+ArticleComment -right-> ArticleCommentLike
+ArticleComment -right-> ArticleCommentStatistics
+Article -right-> ArticleCategory
+Article -right-> ArticleTag
+Article -right-> ArticleStatistics
+Article -right-> ArticleAuthor
+@enduml

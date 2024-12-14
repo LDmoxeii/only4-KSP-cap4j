@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include ..\lib_eventstorming.puml
+
+!if VIEW_COMMENT
+Comment("need") [
+    1.创建管理员用户
+    2.管理员用户登录
+    3.更新管理员用户集
+    4.更新管理员角色信息
+    5.更新管理员密码
+    6.更新管理员刷新令牌
+    7.更新管理员角色权限集
+    8.删除管理员帐号
+]
+!endif
+
+!include command.puml
+!include domain.puml
+!include event.puml
+!include relationCDE.puml
+
+!if VIEW_QUERY
+!include query.puml
+!endif
+
+'!include ..\relationEC.puml
+@enduml

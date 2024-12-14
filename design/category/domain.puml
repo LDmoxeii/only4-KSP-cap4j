@@ -1,0 +1,14 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Aggregate("Category") [
+    文章分类
+    --属性--
+    分类ID
+    分类名
+    --行为--
+    更新分类信息
+    删除分类
+]
+
+@enduml

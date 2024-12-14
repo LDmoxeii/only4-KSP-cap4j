@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include ..\lib_eventstorming.puml
+
+!if VIEW_COMMENT
+Comment("need") [
+    1.创建文章
+    2.更新文章信息
+    3.封禁文章
+    4.举报文章
+    5.更新文章点赞数
+    6.更新文章收藏数
+    7.创建文章评论
+    8.删除文章评论
+    9.点赞文章评论
+    10.取消点赞文章评论
+    11.举报文章评论
+    12.删除文章
+    13.更新文章可见性为公开
+    14.更新文章可见性为私有
+    15.更新文章分类
+    16.更新文章标签
+    17.更新文章状态
+    18.更新文章置顶
+    19.文章评论置顶
+    20.文章评论取消置顶
+    21.文章评论回复
+    22.修改文章评论功能状态
+]
+!endif
+
+!include command.puml
+!include domain.puml
+!include event.puml
+!include relationCDE.puml
+
+!if VIEW_QUERY
+!include query.puml
+!endif
+
+!include relationEC.puml
+@enduml

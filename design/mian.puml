@@ -1,0 +1,14 @@
+@startuml
+!define VIEW_COMMENT
+!define VIEW_QUERY
+
+!include adminUser/view.puml
+!include article/view.puml
+!include category/view.puml
+!include member/view.puml
+!include order/view.puml
+!include role/view.puml
+!include star/view.puml
+!include tag/view.puml
+!include relationEC.puml
+@enduml

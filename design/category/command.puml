@@ -1,0 +1,35 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Command("CreateCategory") [
+    创建分类
+    --触发者--
+    管理员
+    --属性--
+    分类名
+    --规则--
+    1. 分类名不能为空
+    2. 分类名不重复
+]
+Command("UpdateCategoryInfo") [
+    更新分类信息
+    --触发者--
+    管理员
+    --属性--
+    分类ID
+    分类名
+    --规则--
+    1. 分类必须存在
+    2. 分类名不重复
+]
+Command("DeleteCategory") [
+    删除分类
+    --触发者--
+    管理员
+    --属性--
+    分类ID
+    --规则--
+    1. 分类必须存在
+    2. 分类下没有文章
+]
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+!include ..\lib_eventstorming.puml
+
+Query("AdminUserExistsByName") [
+    根据用户名判断管理员用户是否存在
+    --属性--
+    用户名
+]
+Query("AdminUserExistsByRoleId") [
+    根据角色ID判断管理员用户是否存在
+    --属性--
+    角色ID
+]
+Query("GetAdminUserById") [
+    根据用户ID获取管理员用户
+    --属性--
+    用户ID
+]
+Query("GetAdminUserByRoleId") [
+    根据角色ID获取管理员用户
+    --属性--
+    角色ID
+]
+Query("GetAdminUserByCondition") [
+    根据条件获取管理员用户
+    --属性--
+    用户名
+]
+Query("GetAllAdminUser") [
+    获取所有管理员用户
+]
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include ..\lib_eventstorming.puml
+
+Query("CategoryExistsByName") [
+    根据分类名判断分类是否存在
+    --属性--
+    分类名
+]
+Query("CategoryExistsById") [
+    根据分类ID判断分类是否存在
+    --属性--
+    分类ID
+]
+Query("getCategoryById") [
+    根据分类ID获取分类
+    --属性--
+    分类ID
+]
+@enduml
