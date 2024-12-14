@@ -1,0 +1,9 @@
+@startuml
+CreatedArticleComment       -down-> UpdateArticleComments
+CreatedArticleComment       -down-> UpdateArticleCommentReplies
+DeletedArticleComment       -down-> UpdateArticleComments
+LikedArticleComment         -down-> UpdateArticleCommentLikes
+UnlikedArticleComment       -down-> UpdateArticleCommentLikes
+LikedArticle                -down-> UpdateArticleLikes
+UnlikedArticle              -down-> UpdateArticleLikes
+@enduml

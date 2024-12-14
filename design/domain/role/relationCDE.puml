@@ -1,0 +1,9 @@
+@startuml
+CreateRole              -down-> Role
+UpdateRoleInfo          -down-> Role
+UpdateRolePermissions   -down-> Role
+DeleteRole              -down-> Role
+
+Role -down-> UpdatedRoleInfo
+Role -down-> UpdatedRolePermissions
+@enduml

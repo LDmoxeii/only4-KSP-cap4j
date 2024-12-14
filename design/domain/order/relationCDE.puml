@@ -1,0 +1,6 @@
+@startuml
+CreateOrder         -down-> Order
+RefundOrder         -down-> Order
+PayOrder            -down-> Order
+CancelOrder         -down-> Order
+@enduml

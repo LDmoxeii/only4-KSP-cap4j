@@ -1,0 +1,38 @@
+@startuml
+CreateArticle                   -down-> Article
+UpdateArticleState              -down-> Article
+UpdateArticleInfo               -down-> Article
+BanArticle                      -down-> Article
+ReportArticle                   -down-> Article
+UpdateArticleLikes              -down-> Article
+UpdateArticleFavorites          -down-> Article
+CreateArticleComment            -down-> Article
+ReportArticleComment            -down-> Article
+DeleteArticleComment            -down-> Article
+LikeArticleComment              -down-> Article
+UnLikeArticleComment            -down-> Article
+UpdateArticleTag                -down-> Article
+UpdateArticleCategory           -down-> Article
+UpdateArticleCategoryInfo       -down-> Article
+UpdateArticleComments           -down-> Article
+UpdateArticleCommentLikes       -down-> Article
+UpdateArticleCommentReplies     -down-> Article
+UpdateArticleCommentState       -down-> Article
+LikeArticle                     -down-> Article
+UnLikeArticle                   -down-> Article
+UpdateArticleCommentAuthorInfo  -down-> Article
+UpdateArticleAuthorInfo         -down-> Article
+UpdateArticleTagInfo            -down-> Article
+
+
+Article-down->CreatedArticle
+Article-down->UpdatedArticleLikes
+Article-down->UpdatedArticleFavorites
+Article-down->CreatedArticleComment
+Article-down->DeletedArticleComment
+Article-down->LikedArticleComment
+Article-down->UnlikedArticleComment
+Article-down->UpdatedArticleCommentLikes
+Article-down->LikedArticle
+Article-down->UnlikedArticle
+@enduml

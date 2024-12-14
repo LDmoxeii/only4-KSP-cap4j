@@ -1,0 +1,85 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Command("CreateAdminUser") [
+    创建管理员用户
+    --触发者--
+    管理员用户
+    --属性--
+    名称
+    手机号
+    密码
+    角色集
+    角色权限集
+    --规则--
+    1. 管理员用户名不能为空
+    2. 手机号不能为空
+    3. 密码不能为空
+    4. 管理员用户名必须唯一
+]
+Command("UpdateAdminUserRoles") [
+    更新管理员角色集
+    --触发者--
+    管理员用户
+    --属性--
+    用户ID
+    角色集
+    --规则--
+    1. 管理员用户必须存在
+]
+Command("UpdateAdminUserRoleInfo") [
+    更新管理员角色信息
+    --触发者--
+    已更新角色信息事件
+    --属性--
+    用户ID
+    角色ID
+    角色名
+    --规则--
+    1. 管理员用户必须存在
+    2. 角色必须存在
+]
+Command("UpdateAdminUserPassword") [
+    更新管理员密码
+    --触发者--
+    管理员用户
+    --属性--
+    用户ID
+    新密码
+    --规则--
+    1. 管理员用户必须存在
+    2. 新密码必须与旧密码不同
+]
+Command("UpdateAdminUserRefreshToken") [
+    更新管理员刷新令牌
+    --触发者--
+    自动触发
+    --属性--
+    用户ID
+    刷新令牌
+    --规则--
+    1. 管理员用户必须存在
+]
+Command("UpdateAdminUserRolePermissions") [
+    更新管理员角色权限集
+    --触发者--
+    已更新角色权限集事件
+    --属性--
+    用户ID
+    角色ID
+    权限集
+    --规则--
+    1. 管理员用户必须存在
+    2. 角色必须存在
+]
+Command("DeleteAdminUser") [
+    删除管理员帐号
+    --触发者--
+    管理员用户
+    --属性--
+    用户ID
+    --规则--
+    1. 管理员用户必须存在
+    2. 管理员用户不能为默认用户
+]
+@enduml

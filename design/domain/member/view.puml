@@ -1,0 +1,52 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include ..\lib_eventstorming.puml
+
+!if VIEW_COMMENT
+Comment("need") [
+1.通过密码方式注册用户
+2.通过手机号方式注册用户
+3.更新用户手机号
+4.更新用户密码
+5.更新用户信息
+6.签到
+7.更新用户等级分
+8.删除用户
+9.封禁用户
+10.举报用户
+11.等级提升
+12.等级提升二
+13.等级提升三
+14.等级提升四
+15.等级提升五
+16.等级提升六
+17.更新用户点赞数
+18.更新用户粉丝数
+19.更新用户作品数
+20.更新用户关注列表
+21.封禁用户
+22.取消封禁用户
+23.关注用户
+24.取消关注用户
+25.创建收藏夹
+26.更新收藏夹信息
+27.收藏文章
+28.取消收藏文章
+29.删除收藏夹
+30.文章点赞
+31.取消文章点赞
+32.更新会员星球信息
+]
+!endif
+
+!include command.puml
+!include domain.puml
+!include event.puml
+!include relationCDE.puml
+
+!if VIEW_QUERY
+!include query.puml
+!endif
+
+!include relationEC.puml
+@enduml

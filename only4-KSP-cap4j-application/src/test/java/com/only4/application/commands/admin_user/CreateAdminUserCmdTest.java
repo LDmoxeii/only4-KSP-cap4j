@@ -1,7 +1,7 @@
 package com.only4.application.commands.admin_user;
 
 import cn.hutool.core.io.resource.ResourceUtil;
-import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.factory.AdminUserFactory;
 import lombok.val;
@@ -74,7 +74,8 @@ class CreateAdminUserCmdTest {
     void exec() throws IOException {
         BufferedReader reader = ResourceUtil.getReader("create_admin_user_cmd_request.json", StandardCharsets.UTF_8);
         String s = reader.readLine();
-        CreateAdminUserCmd.Request createAdminUserCmdRequest = JSONUtil.toBean(s, CreateAdminUserCmd.Request.class);
+        val objectMapper = new ObjectMapper();
+        val createAdminUserCmdRequest = objectMapper.readValue(s, CreateAdminUserCmd.Request.class);
 
         try (
                 MockedStatic<Mediator> mediator = mockStatic(Mediator.class)

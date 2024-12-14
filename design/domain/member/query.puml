@@ -1,0 +1,46 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Query("MemberExistsByName") [
+    根据用户名判断用户是否存在
+    --属性--
+    用户名
+]
+
+Query("MemberExistsByPhone") [
+    根据手机号判断用户是否存在
+    --属性--
+    手机号
+]
+
+Query("GetMemberByName") [
+    根据用户名获取用户信息
+    --属性--
+    用户名
+]
+
+Query("GetFavoritesByMemberId") [
+    根据用户ID获取收藏夹
+    --属性--
+    用户ID
+]
+
+Query("SignInRecordExistsByDate") [
+    根据日期判断用户是否签到
+    --属性--
+    用户ID
+]
+
+Query("CountArticleFavoriteRecordByMemberIdAndDate") [
+    根据用户ID和日期统计用户收藏文章数
+    --属性--
+    用户ID
+    日期
+]
+
+Query("GetFavoritesByFavoritesId") [
+    根据收藏夹ID获取收藏夹信息
+    --属性--
+    收藏夹ID
+]
+@enduml

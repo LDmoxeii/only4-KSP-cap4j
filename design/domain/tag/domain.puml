@@ -1,0 +1,15 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Aggregate("Tag") [
+    标签
+    --属性--
+    标签ID
+    标签名
+    标签描述
+    标签图标
+    --行为--
+    更新标签信息
+    删除标签
+]
+@enduml

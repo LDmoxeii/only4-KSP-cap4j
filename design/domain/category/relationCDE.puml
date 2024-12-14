@@ -1,0 +1,7 @@
+@startuml
+CreateCategory      -down-> Category
+UpdateCategoryInfo  -down-> Category
+DeleteCategory      -down-> Category
+
+Category -down-> UpdatedCategoryInfo
+@enduml

@@ -1,0 +1,45 @@
+@startuml
+RegisterMemberByPassword            -down-> Member
+RegisterMemberByPhone               -down-> Member
+UpdateMemberPhone                   -down-> Member
+UpdateMemberPassword                -down-> Member
+UpdateMemberInfo                    -down-> Member
+SignIn                              -down-> Member
+UpdateMemberRank                    -down-> Member
+DeleteMember                        -down-> Member
+ReportMember                        -down-> Member
+LevelRaise                          -down-> Member
+UpdateMemberLikes                   -down-> Member
+UpdateMemberFans                    -down-> Member
+UpdateMemberFollowings              -down-> Member
+UpdateMemberWorks                   -down-> Member
+BanMember                           -down-> Member
+UnBanMember                         -down-> Member
+FollowMember                        -down-> Member
+UnFollowMember                      -down-> Member
+CreateFavorites                     -down-> Member
+UpdateFavoritesInfo                 -down-> Member
+FavoriteArticle                     -down-> Member
+UnFavoriteArticle                   -down-> Member
+DeleteFavorites                     -down-> Member
+CreateMemberHistory                 -down-> Member
+CalculateWillReceiveRanks           -down-> Member
+UpdateMemberFavoritesArticles       -down-> Member
+UpdateMemberStarInfo                -down-> Member
+UpdateMemberStardust                -down-> Member
+UpdateBlackMemberInfo               -down-> Member
+UpdateFollowMemberInfo              -down-> Member
+
+
+
+Member-down->UpdatedMemberInfo
+Member-down->SignedIn
+Member-down->UpdatedMemberRank
+Member-down->FollowedMember
+Member-down->UnFollowedMember
+Member-down->FavoritedArticle
+Member-down->UnFavoritedArticle
+Member-down->CalculatedWillReceiveRanks
+Member-down->RegisteredMemberByPassword
+Member-down->RegisteredMemberByPhone
+@enduml

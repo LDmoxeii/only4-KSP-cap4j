@@ -1,0 +1,112 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+DomainEvent("UpdatedMemberInfo") [
+    已更新用户信息
+    --属性--
+    用户ID
+    用户名
+    --监听者--
+    拉黑该用户的用户
+    关注该用户的用户
+    接纳该用户为星尘的星球
+    该用户的文章评论
+    该用户的星球评论
+    该用户的文章
+]
+
+DomainEvent("SignedIn") [
+    已签到
+    --属性--
+    用户ID
+    签到时间
+    --监听者--
+    该用户
+]
+
+DomainEvent("UpdatedMemberRank") [
+    已更新用户等级
+    --属性--
+    用户ID
+    等级
+    --监听者--
+    该用户
+]
+
+DomainEvent("FollowedMember") [
+    已关注用户
+    --属性--
+    用户ID
+    被关注用户ID
+    --监听者--
+    该用户
+    被关注用户
+]
+
+DomainEvent("UnFollowedMember") [
+    已取消关注用户
+    --属性--
+    用户ID
+    被关注用户ID
+    --监听者--
+    该用户
+    被关注用户
+]
+
+DomainEvent("FavoritedArticle") [
+    已收藏文章
+    --属性--
+    用户ID
+    收藏夹ID
+    文章ID
+    --监听者--
+    该用户
+    文章
+]
+
+ DomainEvent("UnFavoritedArticle") [
+    已取消收藏文章
+    --属性--
+    用户ID
+    收藏夹ID
+    文章ID
+    --监听者--
+    该用户
+    文章
+]
+
+DomainEvent("CalculatedWillReceiveRanks") [
+    已计算用户即将获得的等级分
+    --属性--
+    用户ID
+    等级分
+    --监听者--
+    该用户
+]
+
+DomainEvent("RegisteredMemberByPassword") [
+    已通过密码方式注册用户
+    --属性--
+    用户名
+    密码
+    --监听者--
+    该用户
+]
+
+DomainEvent("RegisteredMemberByPhone") [
+    已通过手机号方式注册用户
+    --属性--
+    手机号
+    --监听者--
+    该用户
+]
+
+DomainEvent("UpdatedMemberLikes") [
+    已更新用户点赞数
+    --属性--
+    用户ID
+    点赞数
+    --监听者--
+    该用户
+]
+@enduml

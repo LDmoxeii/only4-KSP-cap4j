@@ -1,0 +1,48 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Query("getArticleById") [
+    根据文章ID获取文章
+    --属性--
+    文章ID
+]
+Query("ArticleCommentExistsByArticleId") [
+    根据文章ID判断文章评论是否存在
+    --属性--
+    文章ID
+]
+Query("ArticleExistsByArticleCategoryId") [
+    根据分类ID判断文章是否存在
+    --属性--
+    分类ID
+]
+Query("ArticleExistsByTagId") [
+    根据标签ID判断文章是否存在
+    --属性--
+    标签ID
+]
+Query("ArticleCommentLikeExistsByArticleCommentIdAndMemberId") [
+    根据文章评论ID和用户ID判断文章评论点赞是否存在
+    --属性--
+    文章评论ID
+    用户ID
+]
+Query("CountArticleLikeByMemberIdAndDate") [
+    根据用户ID和日期统计文章点赞数
+    --属性--
+    用户ID
+    日期
+]
+Query("CountArticleCommentLikeByMemberIdAndDate")[
+    根据用户ID和日期统计文章评论点赞数
+    --属性--
+    用户ID
+    日期
+]
+Query("CountArticleCommentByMemberIdAndDate") [
+    根据用户ID和日期统计文章评论数
+    --属性--
+    用户ID
+    日期
+]
+@enduml

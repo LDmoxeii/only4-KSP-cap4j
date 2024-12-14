@@ -1,0 +1,17 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Aggregate("Order") [
+    订单
+    --属性--
+    订单ID
+    订单金额
+    实付金额
+    状态
+    --行为--
+    退款订单
+    支付订单
+    取消订单
+]
+
+@enduml

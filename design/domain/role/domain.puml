@@ -1,0 +1,28 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Aggregate("Role") [
+    角色
+    --属性--
+    ID
+    名称
+    描述
+    创建时间
+    权限集
+    --行为--
+    更新角色信息
+    更新角色权限集
+    删除角色
+]
+
+Aggregate("RolePermission") [
+    角色权限
+    --属性--
+    ID
+    权限码
+    权限备注
+]
+
+Role -right-> RolePermission
+
+@enduml

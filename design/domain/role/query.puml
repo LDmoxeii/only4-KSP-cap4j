@@ -1,0 +1,28 @@
+@startuml
+!include ../lib_eventstorming.puml
+
+Query("RoleExistsById") [
+    根据角色ID判断角色是否存在
+    --属性--
+    角色ID
+]
+Query("RoleExistsByName") [
+    根据角色名判断角色是否存在
+    --属性--
+    角色名
+]
+Query("GetRoleById") [
+    根据角色ID获取角色
+    --属性--
+    角色ID
+]
+Query("GetRoleByCondition") [
+    根据条件获取角色
+    --属性--
+    角色名
+    角色描述
+]
+Query("GetAllRole") [
+    获取所有角色
+]
+@enduml
