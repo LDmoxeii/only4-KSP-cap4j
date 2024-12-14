@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface AdminUserMapper {
 
-    Long existedByName(String name);
+    Boolean existedByName(String name);
 
     Long existedByRoleId(Long id);
 

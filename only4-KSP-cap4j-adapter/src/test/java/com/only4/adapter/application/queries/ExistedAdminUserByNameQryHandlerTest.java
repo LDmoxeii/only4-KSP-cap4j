@@ -29,7 +29,7 @@ class ExistedAdminUserByNameQryHandlerTest {
   @Test
   void exec_existed() {
     when(request.getName()).thenReturn("test");
-    when(mapper.existedByName("test")).thenReturn(1L);
+    when(mapper.existedByName("test")).thenReturn(true);
     ExistedAdminUserByNameQry.Response exec = handler.exec(request);
     verify(request).getName();
     verify(mapper).existedByName("test");
@@ -39,7 +39,7 @@ class ExistedAdminUserByNameQryHandlerTest {
   @Test
   void exec_not_existed() {
     when(request.getName()).thenReturn("test");
-    when(mapper.existedByName("test")).thenReturn(0L);
+    when(mapper.existedByName("test")).thenReturn(false);
     ExistedAdminUserByNameQry.Response exec = handler.exec(request);
     verify(request).getName();
     verify(mapper).existedByName(request.getName());

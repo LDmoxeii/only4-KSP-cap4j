@@ -22,10 +22,10 @@ public class ExistedAdminUserByNameQryHandler implements Query<ExistedAdminUserB
 
   @Override
   public ExistedAdminUserByNameQry.Response exec(ExistedAdminUserByNameQry.Request request) {
-    Long existed = adminUserMapper.existedByName(request.getName());
+    Boolean isExists = adminUserMapper.existedByName(request.getName());
     // mybatis / jpa 哪个顺手就用哪个吧！
     return ExistedAdminUserByNameQry.Response.builder()
-        .existed(existed != 0L)
+        .existed(isExists)
         .build();
   }
 }

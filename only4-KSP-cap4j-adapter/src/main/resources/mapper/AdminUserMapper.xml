@@ -24,10 +24,8 @@
         </collection>
     </resultMap>
 
-    <select id="existedByName" resultType="java.lang.Long">
-        SELECT COUNT(1)
-        FROM admin_user
-        WHERE name = #{name}
+    <select id="existedByName" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM admin_user WHERE name = #{name}) as is_exists
     </select>
 
     <select id="existedByRoleId" resultType="java.lang.Long">
