@@ -23,7 +23,13 @@ public class StarFactory implements AggregateFactory<StarFactory.Payload, Star> 
 
     @Override
     public Star create(Payload payload) {
-        throw new UnsupportedOperationException();
+        return Star.builder()
+                .memberId(payload.memberId)
+                .id(payload.id)
+                .name(payload.name)
+                .amount(payload.amount)
+                .description(payload.description)
+                .build();
     }
 
     /**
@@ -35,10 +41,10 @@ public class StarFactory implements AggregateFactory<StarFactory.Payload, Star> 
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<Star> {
-        Long masterId;
-
+        Long memberId;
+        Long id;
         String name;
-
+        Integer amount;
         String description;
 
     }

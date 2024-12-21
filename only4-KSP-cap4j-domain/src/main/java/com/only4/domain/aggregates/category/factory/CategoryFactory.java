@@ -25,6 +25,7 @@ public class CategoryFactory implements AggregateFactory<CategoryFactory.Payload
     public Category create(Payload payload) {
 
         return Category.builder()
+                .id(payload.id)
                 .name(payload.getName())
                 .build();
     }
@@ -39,6 +40,6 @@ public class CategoryFactory implements AggregateFactory<CategoryFactory.Payload
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<Category> {
         String name;
-
+        Long id;
     }
 }

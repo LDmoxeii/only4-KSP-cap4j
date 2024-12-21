@@ -30,6 +30,7 @@ public class RoleFactory implements AggregateFactory<RoleFactory.Payload, Role> 
 
         return Role.builder()
                 .createdAt(LocalDateTime.now())
+                .id(payload.id)
                 .name(payload.name)
                 .description(payload.description)
                 .rolePermissions(payload.permissions)
@@ -46,6 +47,8 @@ public class RoleFactory implements AggregateFactory<RoleFactory.Payload, Role> 
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<Role> {
         String name;
+
+        Long id;
 
         String description;
 
