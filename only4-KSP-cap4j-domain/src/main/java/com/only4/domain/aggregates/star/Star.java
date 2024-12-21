@@ -1,18 +1,27 @@
 package com.only4.domain.aggregates.star;
 
-import com.only4.domain.aggregates.star.events.StarCreatedDomainEvent;
+import com.only4.domain.aggregates.star.events.CreatedStarDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 
-import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
+import static
+                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 星球
@@ -38,12 +47,10 @@ public class Star {
 
     // 【行为方法开始】
     public void create() {
-        events().attach(new StarCreatedDomainEvent(this), this);
+        events().attach(new CreatedStarDomainEvent(this), this);
     }
     public void updateInfo(String newName, String newDescription, Long newPrice) {
-        this.name = newName;
-        this.description = newDescription;
-        this.price = newPrice;
+
     }
 
     public void delete() {}
@@ -53,6 +60,31 @@ public class Star {
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
+
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`star_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.star.Stardust> stardusts;
+
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`star_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.star.StarComment> starComments;
+
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`star_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.star.StarLike> starLikes;
+
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`star_id`", nullable = false)
+    @Getter(lombok.AccessLevel.PROTECTED)
+    private java.util.List<com.only4.domain.aggregates.star.StarStatistice> starStatistices;
+
+    public com.only4.domain.aggregates.star.StarStatistice getStarStatistice() {
+        return starStatistices == null || starStatistices.size() == 0 ? null : starStatistices.get(0);
+    }
 
     /**
      * ID
@@ -68,29 +100,29 @@ public class Star {
      * 星主ID
      * bigint
      */
-    @Column(name = "`master_id`")
-    Long masterId;
+    @Column(name = "`member_id`")
+    Long memberId;
 
     /**
      * 星球名
-     * varchar(20)
+     * varchar(50)
      */
     @Column(name = "`name`")
     String name;
 
     /**
-     * 描述
+     * 星球描述
      * varchar(255)
      */
     @Column(name = "`description`")
     String description;
 
     /**
-     * 价格
-     * bigint(20) unsigned zerofill
+     * 星球价格
+     * int
      */
-    @Column(name = "`price`")
-    Long price;
+    @Column(name = "`amount`")
+    Integer amount;
 
     /**
      * 逻辑删除

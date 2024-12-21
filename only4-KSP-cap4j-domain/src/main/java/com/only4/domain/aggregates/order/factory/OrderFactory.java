@@ -24,14 +24,7 @@ public class OrderFactory implements AggregateFactory<OrderFactory.Payload, Orde
     @Override
     public Order create(Payload payload) {
 
-        return Order.builder()
-                .serial(String.valueOf(payload.getCustomerId() + payload.getPrice() + payload.getActualPrice()))
-                .customerId(payload.getCustomerId())
-                .name(payload.getName())
-                .price(payload.getPrice())
-                .actualPrice(payload.getActualPrice())
-                .isPaid(false)
-                .build();
+        throw new UnsupportedOperationException();
     }
 
     /**

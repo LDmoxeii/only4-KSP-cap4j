@@ -37,11 +37,11 @@ public class Schema {
         RIGHT;
 
         public javax.persistence.criteria.JoinType toJpaJoinType(){
-            if(this == JoinType.INNER){
+            if(this == Schema.JoinType.INNER){
                 return javax.persistence.criteria.JoinType.INNER;
-            } else if(this == JoinType.LEFT){
+            } else if(this == Schema.JoinType.LEFT){
                 return javax.persistence.criteria.JoinType.LEFT;
-            } else if(this == JoinType.RIGHT){
+            } else if(this == Schema.JoinType.RIGHT){
                 return javax.persistence.criteria.JoinType.RIGHT;
             }
             return javax.persistence.criteria.JoinType.LEFT;

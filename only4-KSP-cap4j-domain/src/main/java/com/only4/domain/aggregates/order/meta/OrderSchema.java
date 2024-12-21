@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -18,7 +16,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/12/04
+ * @date 2024/12/15
  */
 @RequiredArgsConstructor
 public class OrderSchema {
@@ -38,79 +36,27 @@ public class OrderSchema {
     }
 
     /**
-     * 流水号
-     * varchar(255)
-     */
-    public Schema.Field<String> serial() {
-        return root == null ? new Schema.Field<>("serial") : new Schema.Field<>(root.get("serial"));
-    }
-
-    /**
-     * 消费者ID
-     * bigint
-     */
-    public Schema.Field<Long> customerId() {
-        return root == null ? new Schema.Field<>("customerId") : new Schema.Field<>(root.get("customerId"));
-    }
-
-    /**
-     * 名称
-     * varchar(255)
-     */
-    public Schema.Field<String> name() {
-        return root == null ? new Schema.Field<>("name") : new Schema.Field<>(root.get("name"));
-    }
-
-    /**
-     * 类型
-     * 0:INIT:INIT
+     * 订单金额
      * int
      */
-    public Schema.Field<com.only4.domain.aggregates.order.enums.OrderType> type() {
-        return root == null ? new Schema.Field<>("type") : new Schema.Field<>(root.get("type"));
+    public Schema.Field<Integer> amount() {
+        return root == null ? new Schema.Field<>("amount") : new Schema.Field<>(root.get("amount"));
     }
 
     /**
-     * 订单状态
-     * 0:INIT:INIT
-     * 1:REFUND:REFUND
-     * 2:CANCELED:CANCELED
+     * 实付金额
      * int
      */
-    public Schema.Field<com.only4.domain.aggregates.order.enums.OrderState> state() {
-        return root == null ? new Schema.Field<>("state") : new Schema.Field<>(root.get("state"));
-    }
-
-    /**
-     * 总价格
-     * bigint
-     */
-    public Schema.Field<Long> price() {
+    public Schema.Field<Integer> price() {
         return root == null ? new Schema.Field<>("price") : new Schema.Field<>(root.get("price"));
     }
 
     /**
-     * 实付价格
-     * bigint
+     * 状态
+     * int
      */
-    public Schema.Field<Long> actualPrice() {
-        return root == null ? new Schema.Field<>("actualPrice") : new Schema.Field<>(root.get("actualPrice"));
-    }
-
-    /**
-     * 支付时间
-     * timestamp
-     */
-    public Schema.Field<java.time.LocalDateTime> payTime() {
-        return root == null ? new Schema.Field<>("payTime") : new Schema.Field<>(root.get("payTime"));
-    }
-
-    /**
-     * 支付标识
-     * tinyint(1)
-     */
-    public Schema.Field<Boolean> isPaid() {
-        return root == null ? new Schema.Field<>("isPaid") : new Schema.Field<>(root.get("isPaid"));
+    public Schema.Field<Integer> state() {
+        return root == null ? new Schema.Field<>("state") : new Schema.Field<>(root.get("state"));
     }
 
     /**
@@ -164,7 +110,7 @@ public class OrderSchema {
             return null;
         };
     }
-
+    
     /**
      * 构建查询条件
      * @param builder
@@ -177,7 +123,7 @@ public class OrderSchema {
             return null;
         };
     }
-
+    
     /**
      * 构建排序
      * @param builders

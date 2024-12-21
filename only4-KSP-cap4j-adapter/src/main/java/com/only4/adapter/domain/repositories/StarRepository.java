@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 /**
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * @author cap4j-ddd-codegen
- * @date 2024/11/26
+ * @date 2024/12/15
  */
 public interface StarRepository extends AggregateRepository<Star, Long> {
 

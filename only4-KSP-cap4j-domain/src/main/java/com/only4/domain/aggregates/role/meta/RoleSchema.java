@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/12/04
+ * @date 2024/12/15
  */
 @RequiredArgsConstructor
 public class RoleSchema {
@@ -59,6 +59,14 @@ public class RoleSchema {
         return root == null ? new Schema.Field<>("createdAt") : new Schema.Field<>(root.get("createdAt"));
     }
 
+    /**
+     * 逻辑删除
+     * tinyint(1)
+     */
+    public Schema.Field<Boolean> delFlag() {
+        return root == null ? new Schema.Field<>("delFlag") : new Schema.Field<>(root.get("delFlag"));
+    }
+
 
     /**
      * 满足所有条件
@@ -93,10 +101,10 @@ public class RoleSchema {
      * @param joinType
      * @return
      */
-    public RolePermissionSchema joinRolePermission(Schema.JoinType joinType) {
+    public com.only4.domain.aggregates.role.meta.RolePermissionSchema joinRolePermission(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
         Join<Role, com.only4.domain.aggregates.role.RolePermission> join = ((Root<Role>) root).join("rolePermissions", type);
-        RolePermissionSchema schema = new RolePermissionSchema(join, criteriaBuilder);
+        com.only4.domain.aggregates.role.meta.RolePermissionSchema schema = new com.only4.domain.aggregates.role.meta.RolePermissionSchema(join, criteriaBuilder);
         return schema;
     }
 
@@ -114,7 +122,7 @@ public class RoleSchema {
             return null;
         };
     }
-
+    
     /**
      * 构建查询条件
      * @param builder
@@ -127,7 +135,7 @@ public class RoleSchema {
             return null;
         };
     }
-
+    
     /**
      * 构建排序
      * @param builders

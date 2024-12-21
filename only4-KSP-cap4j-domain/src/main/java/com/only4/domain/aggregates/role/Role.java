@@ -1,23 +1,31 @@
 package com.only4.domain.aggregates.role;
 
-import com.only4.domain.aggregates.role.events.RoleInfoChangedDomainEvent;
-import com.only4.domain.aggregates.role.events.RolePermissionChangedDomainEvent;
+import com.only4.domain.aggregates.role.events.UpdatedRoleInfoDomainEvent;
+import com.only4.domain.aggregates.role.events.UpdatedRolePermissionsDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
-import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
+import static
+                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 角色表
@@ -38,6 +46,8 @@ import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport
 @NoArgsConstructor
 @Builder
 @Getter
+@SQLDelete(sql = "update `role` set `del_flag` = 1 where `id` = ? ")
+@Where(clause = "`del_flag` = 0")
 public class Role {
 
     // 【行为方法开始】
@@ -45,7 +55,7 @@ public class Role {
     public void updateRoleInfo(String name, String description) {
         this.name = name;
         this.description = description;
-        events().attach(new RoleInfoChangedDomainEvent(this), this);
+        events().attach(new UpdatedRoleInfoDomainEvent(this), this);
     }
 
     public void updateRolePermission(List<RolePermission> newPermissions) {
@@ -59,7 +69,7 @@ public class Role {
         newPsermissionMap.keySet().stream()
                 .filter(key -> !currentPermissionMap.containsKey(key))
                 .forEach(key -> this.rolePermissions.add(newPsermissionMap.get(key)));
-        events().attach(new RolePermissionChangedDomainEvent(this), this);
+        events().attach(new UpdatedRolePermissionsDomainEvent(this), this);
     }
 
 
@@ -68,10 +78,10 @@ public class Role {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.JOIN)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`role_id`", nullable = false)
-    private List<RolePermission> rolePermissions;
+    private java.util.List<com.only4.domain.aggregates.role.RolePermission> rolePermissions;
 
     /**
      * ID
@@ -103,6 +113,13 @@ public class Role {
      */
     @Column(name = "`created_at`")
     java.time.LocalDateTime createdAt;
+
+    /**
+     * 逻辑删除
+     * tinyint(1)
+     */
+    @Column(name = "`del_flag`")
+    Boolean delFlag;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

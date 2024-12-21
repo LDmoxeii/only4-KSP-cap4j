@@ -158,12 +158,12 @@ public class AdminUser {
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`admin_user_id`", nullable = false)
-    private List<AdminUserRole> adminUserRoles;
+    private java.util.List<com.only4.domain.aggregates.admin_user.AdminUserRole> adminUserRoles;
 
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`admin_user_id`", nullable = false)
-    private List<AdminUserPermission> adminUserPermissions;
+    private java.util.List<com.only4.domain.aggregates.admin_user.AdminUserPermission> adminUserPermissions;
 
     /**
      * ID
@@ -208,14 +208,14 @@ public class AdminUser {
      * timestamp
      */
     @Column(name = "`login_expiry_date`", insertable = true, updatable = false)
-    LocalDateTime loginExpiryDate;
+    java.time.LocalDateTime loginExpiryDate;
 
     /**
      * 创建时间
      * timestamp
      */
     @Column(name = "`created_at`")
-    LocalDateTime createdAt;
+    java.time.LocalDateTime createdAt;
 
     /**
      * 逻辑删除

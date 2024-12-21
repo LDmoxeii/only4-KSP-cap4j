@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/12/04
+ * @date 2024/12/15
  */
 @RequiredArgsConstructor
 public class AdminUserSchema {
@@ -125,10 +125,10 @@ public class AdminUserSchema {
      * @param joinType
      * @return
      */
-    public AdminUserRoleSchema joinAdminUserRole(Schema.JoinType joinType) {
+    public com.only4.domain.aggregates.admin_user.meta.AdminUserRoleSchema joinAdminUserRole(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
         Join<AdminUser, com.only4.domain.aggregates.admin_user.AdminUserRole> join = ((Root<AdminUser>) root).join("adminUserRoles", type);
-        AdminUserRoleSchema schema = new AdminUserRoleSchema(join, criteriaBuilder);
+        com.only4.domain.aggregates.admin_user.meta.AdminUserRoleSchema schema = new com.only4.domain.aggregates.admin_user.meta.AdminUserRoleSchema(join, criteriaBuilder);
         return schema;
     }
     /**
@@ -137,10 +137,10 @@ public class AdminUserSchema {
      * @param joinType
      * @return
      */
-    public AdminUserPermissionSchema joinAdminUserPermission(Schema.JoinType joinType) {
+    public com.only4.domain.aggregates.admin_user.meta.AdminUserPermissionSchema joinAdminUserPermission(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
         Join<AdminUser, com.only4.domain.aggregates.admin_user.AdminUserPermission> join = ((Root<AdminUser>) root).join("adminUserPermissions", type);
-        AdminUserPermissionSchema schema = new AdminUserPermissionSchema(join, criteriaBuilder);
+        com.only4.domain.aggregates.admin_user.meta.AdminUserPermissionSchema schema = new com.only4.domain.aggregates.admin_user.meta.AdminUserPermissionSchema(join, criteriaBuilder);
         return schema;
     }
 
@@ -158,7 +158,7 @@ public class AdminUserSchema {
             return null;
         };
     }
-
+    
     /**
      * 构建查询条件
      * @param builder
@@ -171,7 +171,7 @@ public class AdminUserSchema {
             return null;
         };
     }
-
+    
     /**
      * 构建排序
      * @param builders

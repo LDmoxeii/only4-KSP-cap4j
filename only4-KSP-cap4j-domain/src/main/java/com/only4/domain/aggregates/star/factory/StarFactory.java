@@ -23,12 +23,7 @@ public class StarFactory implements AggregateFactory<StarFactory.Payload, Star> 
 
     @Override
     public Star create(Payload payload) {
-
-        return Star.builder()
-                .masterId(payload.getMasterId())
-                .name(payload.getName())
-                .description(payload.getDescription())
-                .build();
+        throw new UnsupportedOperationException();
     }
 
     /**

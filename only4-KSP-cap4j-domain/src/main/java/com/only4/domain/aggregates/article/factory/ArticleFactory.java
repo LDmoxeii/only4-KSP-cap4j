@@ -24,13 +24,7 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
     @Override
     public Article create(Payload payload) {
 
-        return Article.builder()
-                .authorId(payload.getAuthorId())
-                .title(payload.getTitle())
-                .description(payload.getDescription())
-                .content(payload.getContent())
-                .price(payload.getPrice())
-                .build();
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 
     /**

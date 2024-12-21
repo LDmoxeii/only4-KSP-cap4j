@@ -1,15 +1,15 @@
 package com.only4.adapter._share.utils;
 
-import static com.only4.adapter._share.constants.CustomerConstant.CUSTOMER_ACCOUNT_KEY;
-import static com.only4.adapter._share.constants.CustomerConstant.CUSTOMER_KEY;
-import static com.only4.adapter._share.constants.CustomerConstant.LOGIN_USER_KEY;
+import static com.only4.adapter._share.constants.MemberConstant.CUSTOMER_ACCOUNT_KEY;
+import static com.only4.adapter._share.constants.MemberConstant.CUSTOMER_KEY;
+import static com.only4.adapter._share.constants.MemberConstant.LOGIN_USER_KEY;
 
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
-import com.only4.domain.aggregates.customer.Customer;
+import com.only4.domain.aggregates.member.Member;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +21,11 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoginHelper {
 
-  public static void login(Customer loginUser) {
+  public static void login(Member loginUser) {
     login(loginUser, null);
   }
 
-  public static void login(Customer loginUser, SaLoginModel model) {
+  public static void login(Member loginUser, SaLoginModel model) {
     model = ObjectUtil.defaultIfNull(model, new SaLoginModel());
     model.setExtra(CUSTOMER_KEY, loginUser.getId());
     StpUtil.login(loginUser.getId(), model);
@@ -35,29 +35,29 @@ public class LoginHelper {
   /**
    * 获取用户(多级缓存)
    */
-  public static Customer getLoginUser() {
+  public static Member getLoginUser() {
     SaSession session = StpUtil.getTokenSession();
     if (ObjectUtil.isNull(session)) {
       return null;
     }
-    return (Customer) session.get(LOGIN_USER_KEY);
+    return (Member) session.get(LOGIN_USER_KEY);
   }
 
   /**
    * 获取用户基于token
    */
-  public static Customer getLoginUser(String token) {
+  public static Member getLoginUser(String token) {
     SaSession session = StpUtil.getTokenSessionByToken(token);
     if (ObjectUtil.isNull(session)) {
       return null;
     }
-    return (Customer) session.get(LOGIN_USER_KEY);
+    return (Member) session.get(LOGIN_USER_KEY);
   }
 
   /**
    * 获取用户id
    */
-  public static Long getCustomerId() {
+  public static Long getMemberId() {
     return Convert.toLong(getExtra(CUSTOMER_KEY));
   }
 
