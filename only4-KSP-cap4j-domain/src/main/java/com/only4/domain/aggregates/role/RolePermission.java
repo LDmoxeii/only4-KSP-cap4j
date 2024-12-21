@@ -7,7 +7,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+import static
+                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 import javax.persistence.*;
 
@@ -29,6 +33,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
+@SQLDelete(sql = "update `role_permission` set `del_flag` = 1 where `id` = ? ")
+@Where(clause = "`del_flag` = 0")
 public class RolePermission {
 
     // 【行为方法开始】
@@ -62,6 +68,13 @@ public class RolePermission {
      */
     @Column(name = "`permission_remark`")
     String permissionRemark;
+
+    /**
+     * 逻辑删除
+     * tinyint(1)
+     */
+    @Column(name = "`del_flag`")
+    Boolean delFlag;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

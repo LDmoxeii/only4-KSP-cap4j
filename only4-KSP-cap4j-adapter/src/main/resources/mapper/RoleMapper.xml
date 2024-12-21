@@ -29,13 +29,15 @@
         WHERE name = #{name}
     </select>
     <select id="getAll" resultMap="role">
-      SELECT r.id                 as id,
-             r.name               as name,
-             r.description        as description,
-             rp.permission_code   as permission_code,
-             rp.permission_remark as permission_remark
-      FROM role r
-             LEFT JOIN role_permission rp on r.id = rp.role_id
+        SELECT r.id                 as id,
+               r.name               as name,
+               r.description        as description,
+               rp.permission_code   as permission_code,
+               rp.permission_remark as permission_remark
+        FROM role r
+                 LEFT JOIN role_permission rp on r.id = rp.role_id
+        where 1 = 1
+        AND r.del_flag = 0
     </select>
     <select id="getByCondition" resultMap="role">
       SELECT r.id                 as id,

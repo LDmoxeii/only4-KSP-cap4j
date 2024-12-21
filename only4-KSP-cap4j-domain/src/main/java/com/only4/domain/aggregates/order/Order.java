@@ -1,17 +1,22 @@
 package com.only4.domain.aggregates.order;
 
-import com.only4.domain.aggregates.order.enums.OrderState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+import static
+                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 /**
  * 订单
@@ -42,17 +47,12 @@ public class Order {
     }
 
     public void refund() {
-        this.state = OrderState.REFUND;
     }
 
     public void pay() {
-        if (this.state == OrderState.INIT) {
-            this.payTime = LocalDateTime.now();
-        }
     }
 
     public void cancel() {
-        this.state = OrderState.CANCELED;
 
     }
 
@@ -73,73 +73,25 @@ public class Order {
     Long id;
 
     /**
-     * 流水号
-     * varchar(255)
-     */
-    @Column(name = "`serial`")
-    String serial;
-
-    /**
-     * 消费者ID
-     * bigint
-     */
-    @Column(name = "`customer_id`")
-    Long customerId;
-
-    /**
-     * 名称
-     * varchar(255)
-     */
-    @Column(name = "`name`")
-    String name;
-
-    /**
-     * 类型
-     * 0:INIT:INIT
+     * 订单金额
      * int
      */
-    @Convert(converter = com.only4.domain.aggregates.order.enums.OrderType.Converter.class)
-    @Column(name = "`type`")
-    com.only4.domain.aggregates.order.enums.OrderType type;
+    @Column(name = "`amount`")
+    Integer amount;
 
     /**
-     * 订单状态
-     * 0:INIT:INIT
-     * 1:REFUND:REFUND
-     * 2:CANCELED:CANCELED
+     * 实付金额
      * int
-     */
-    @Convert(converter = OrderState.Converter.class)
-    @Column(name = "`state`")
-    OrderState state;
-
-    /**
-     * 总价格
-     * bigint
      */
     @Column(name = "`price`")
-    Long price;
+    Integer price;
 
     /**
-     * 实付价格
-     * bigint
+     * 状态
+     * int
      */
-    @Column(name = "`actual_price`")
-    Long actualPrice;
-
-    /**
-     * 支付时间
-     * timestamp
-     */
-    @Column(name = "`pay_time`")
-    LocalDateTime payTime;
-
-    /**
-     * 支付标识
-     * tinyint(1)
-     */
-    @Column(name = "`is_paid`")
-    Boolean isPaid;
+    @Column(name = "`state`")
+    Integer state;
 
     /**
      * 逻辑删除

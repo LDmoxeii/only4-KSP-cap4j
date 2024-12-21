@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -18,7 +16,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/12/04
+ * @date 2024/12/15
  */
 @RequiredArgsConstructor
 public class AdminUserRoleSchema {
@@ -51,6 +49,14 @@ public class AdminUserRoleSchema {
      */
     public Schema.Field<String> roleName() {
         return root == null ? new Schema.Field<>("roleName") : new Schema.Field<>(root.get("roleName"));
+    }
+
+    /**
+     * 逻辑删除
+     * tinyint(1)
+     */
+    public Schema.Field<Boolean> delFlag() {
+        return root == null ? new Schema.Field<>("delFlag") : new Schema.Field<>(root.get("delFlag"));
     }
 
 
@@ -96,7 +102,7 @@ public class AdminUserRoleSchema {
             return null;
         };
     }
-
+    
     /**
      * 构建查询条件
      * @param builder
@@ -109,7 +115,7 @@ public class AdminUserRoleSchema {
             return null;
         };
     }
-
+    
     /**
      * 构建排序
      * @param builders

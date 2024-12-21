@@ -116,7 +116,7 @@
                     <entitySchemaOutputMode>ref</entitySchemaOutputMode>
                     <entitySchemaOutputPackage>domain._share.meta</entitySchemaOutputPackage>
                     <idGenerator>org.netcorepal.cap4j.ddd.domain.distributed.SnowflakeIdentifierGenerator</idGenerator>
-                    <fetchType>LAZY</fetchType>
+<!--                    <fetchType>LAZY</fetchType>-->
                     <enumValueField>code</enumValueField>
                     <datePackage4Java>java.time</datePackage4Java>
                     <generateDbType>true</generateDbType>

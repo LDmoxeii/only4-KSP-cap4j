@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
 
 /**
@@ -29,6 +29,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
+@SQLDelete(sql = "update `admin_user_role` set `del_flag` = 1 where `id` = ? ")
+@Where(clause = "`del_flag` = 0")
 public class AdminUserRole {
 
     // 【行为方法开始】
@@ -67,6 +69,13 @@ public class AdminUserRole {
      */
     @Column(name = "`role_name`")
     String roleName;
+
+    /**
+     * 逻辑删除
+     * tinyint(1)
+     */
+    @Column(name = "`del_flag`")
+    Boolean delFlag;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }
