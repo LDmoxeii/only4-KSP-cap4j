@@ -1,6 +1,9 @@
 package com.only4.domain.aggregates.article.factory;
 
 import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.article.ArticleAuthor;
+import com.only4.domain.aggregates.article.ArticleCategory;
+import com.only4.domain.aggregates.article.ArticleTag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +12,9 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.AggregateFactory;
 import org.netcorepal.cap4j.ddd.domain.aggregate.AggregatePayload;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Article聚合工厂
@@ -23,8 +29,18 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
 
     @Override
     public Article create(Payload payload) {
-
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return Article.builder()
+                .id(payload.authorId)
+                .title(payload.title)
+                .description(payload.description)
+                .content(payload.content)
+                .price(payload.price)
+                .cover(payload.cover)
+                .appendix(payload.appendix)
+                .state(payload.state)
+                .stickyFlag(payload.stickyFlag)
+                .commentFlag(payload.commentFlag)
+                .build();
     }
 
     /**
@@ -41,5 +57,10 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
         String description;
         String content;
         Long price;
+        String cover;
+        Integer appendix;
+        com.only4.domain.aggregates.article.enums.ArticleState state;
+        Boolean stickyFlag;
+        Boolean commentFlag;
     }
 }

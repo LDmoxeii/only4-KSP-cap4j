@@ -23,8 +23,12 @@ public class OrderFactory implements AggregateFactory<OrderFactory.Payload, Orde
 
     @Override
     public Order create(Payload payload) {
-
-        throw new UnsupportedOperationException();
+        return Order.builder()
+                .id(payload.customerId)
+                .price(payload.price)
+                .amount(payload.amount)
+                .state(payload.state)
+                .build();
     }
 
     /**
@@ -37,9 +41,9 @@ public class OrderFactory implements AggregateFactory<OrderFactory.Payload, Orde
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<Order> {
         Long customerId;
-        String name;
-        Long price;
-        Long actualPrice;
+        Integer amount;
+        Integer price;
+        Integer state;
 
     }
 }
