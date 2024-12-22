@@ -7,6 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface CategoryMapper {
     Boolean existedByName(String name);
     Boolean existedById(Long Id);
-
     Category getById(Long Id);
 }
