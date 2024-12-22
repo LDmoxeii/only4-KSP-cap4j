@@ -1,7 +1,5 @@
 package com.only4.adapter.application.queries;
 
-import com.only4.adapter.domain.repositories.RoleRepository;
-import com.only4.adapter.infra.mybatis.mapper.RoleMapper;
 import com.only4.application.queries.role.GetAllRolesQry;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.meta.RoleSchema;
@@ -24,15 +22,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class GetAllRolesQryHandler implements Query<GetAllRolesQry.Request, GetAllRolesQry.Response> {
-    private final RoleMapper roleMapper;
-    private final RoleRepository.RoleJpaRepositoryAdapter roleRepository;
 
     @Override
     public GetAllRolesQry.Response exec(GetAllRolesQry.Request request) {
-//        List<Role> roles = roleMapper.getAll();
         val roles = Mediator.repositories().find(JpaPredicate.bySpecification(
                 Role.class,
-                RoleSchema.specify(it ->it.all())
+                RoleSchema.specify(RoleSchema::all)
         ));
         return GetAllRolesQry.Response.builder()
                 .roles(roles)
