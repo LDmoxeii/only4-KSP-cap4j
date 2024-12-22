@@ -7,13 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import javax.persistence.CascadeType;
@@ -21,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 
-import static
-                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
