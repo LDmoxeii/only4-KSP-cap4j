@@ -25,7 +25,6 @@ public class CategoryFactory implements AggregateFactory<CategoryFactory.Payload
     public Category create(Payload payload) {
 
         return Category.builder()
-                .id(payload.id)
                 .name(payload.getName())
                 .build();
     }
