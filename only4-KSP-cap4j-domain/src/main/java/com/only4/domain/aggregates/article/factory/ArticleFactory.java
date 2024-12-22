@@ -1,9 +1,6 @@
 package com.only4.domain.aggregates.article.factory;
 
-import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.ArticleAuthor;
-import com.only4.domain.aggregates.article.ArticleCategory;
-import com.only4.domain.aggregates.article.ArticleTag;
+import com.only4.domain.aggregates.article.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,7 +27,7 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
     @Override
     public Article create(Payload payload) {
         return Article.builder()
-                .id(payload.authorId)
+                //创建文章
                 .title(payload.title)
                 .description(payload.description)
                 .content(payload.content)
@@ -40,6 +37,9 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
                 .state(payload.state)
                 .stickyFlag(payload.stickyFlag)
                 .commentFlag(payload.commentFlag)
+                .articleAuthors(payload.authors)
+                .articleCategories(payload.categories)
+                .articleTags(payload.tags)
                 .build();
     }
 
@@ -52,7 +52,6 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<Article> {
-        Long authorId;
         String title;
         String description;
         String content;
@@ -62,5 +61,9 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
         com.only4.domain.aggregates.article.enums.ArticleState state;
         Boolean stickyFlag;
         Boolean commentFlag;
+        List<ArticleAuthor> authors;
+        List<ArticleCategory> categories;
+        List<ArticleTag> tags;
+
     }
 }

@@ -25,16 +25,9 @@ public class MemberFactory implements AggregateFactory<MemberFactory.Payload, Me
     public Member create(Payload payload) {
 
         return Member.builder()
-                .id(payload.id)
                 .name(payload.name)
                 .password(payload.password)
                 .phone(payload.phone)
-                .nickName(payload.nickName)
-                .signature(payload.signature)
-                .level(payload.level)
-                .balance(payload.balance)
-                .banFlag(payload.banFlag)
-                .banTime(payload.banTime)
                 .build();
     }
     
@@ -47,15 +40,10 @@ public class MemberFactory implements AggregateFactory<MemberFactory.Payload, Me
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<Member> {
-        Long id;
+
         String name;
         String password;
         String phone;
-        String nickName;
-        String signature;
-        Integer level;
-        Long balance;
-        Boolean banFlag;
-        java.time.LocalDateTime banTime;
+
     }
 }

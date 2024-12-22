@@ -24,10 +24,8 @@ public class OrderFactory implements AggregateFactory<OrderFactory.Payload, Orde
     @Override
     public Order create(Payload payload) {
         return Order.builder()
-                .id(payload.customerId)
                 .price(payload.price)
                 .amount(payload.amount)
-                .state(payload.state)
                 .build();
     }
 
@@ -40,10 +38,9 @@ public class OrderFactory implements AggregateFactory<OrderFactory.Payload, Orde
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<Order> {
-        Long customerId;
+        Long id;
         Integer amount;
         Integer price;
-        Integer state;
 
     }
 }
