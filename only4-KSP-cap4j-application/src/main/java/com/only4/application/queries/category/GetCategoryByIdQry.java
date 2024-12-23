@@ -1,4 +1,4 @@
-package com.only4.application.queries.Category;
+package com.only4.application.queries.category;
 
 import com.only4.domain.aggregates.category.Category;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class GetCategoryByIdQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long Id;
+        Long id;
     }
 
     /**

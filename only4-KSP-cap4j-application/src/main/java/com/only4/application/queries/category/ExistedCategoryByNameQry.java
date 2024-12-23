@@ -1,4 +1,4 @@
-package com.only4.application.queries.Category;
+package com.only4.application.queries.category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

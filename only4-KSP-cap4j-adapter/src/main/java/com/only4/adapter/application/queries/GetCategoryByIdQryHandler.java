@@ -1,7 +1,7 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.CategoryMapper;
-import com.only4.application.queries.Category.GetCategoryByIdQry;
+import com.only4.application.queries.category.GetCategoryByIdQry;
 import com.only4.domain.aggregates.category.Category;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

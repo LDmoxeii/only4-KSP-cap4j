@@ -1,4 +1,4 @@
-package com.only4.application.queries.Category;
+package com.only4.application.queries.category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +21,7 @@ public class ExistedCategoryByIdQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        long Id;
+        Long id;
     }
 
     /**
