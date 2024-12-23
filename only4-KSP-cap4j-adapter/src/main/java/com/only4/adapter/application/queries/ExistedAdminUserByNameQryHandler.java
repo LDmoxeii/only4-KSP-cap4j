@@ -23,6 +23,12 @@ public class ExistedAdminUserByNameQryHandler implements Query<ExistedAdminUserB
   @Override
   public ExistedAdminUserByNameQry.Response exec(ExistedAdminUserByNameQry.Request request) {
     Boolean isExists = adminUserMapper.existedByName(request.getName());
+//    val isExists = Mediator.repositories().exists(JpaPredicate.bySpecification(
+//            AdminUser.class,
+//            AdminUserSchema.specify(adminUser ->
+//                    adminUser.name().eq(request.getName())
+//            )
+//    ));
     // mybatis / jpa 哪个顺手就用哪个吧！
     return ExistedAdminUserByNameQry.Response.builder()
         .existed(isExists)
