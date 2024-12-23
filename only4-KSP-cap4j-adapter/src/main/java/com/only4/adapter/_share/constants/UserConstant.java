@@ -1,6 +1,6 @@
 package com.only4.adapter._share.constants;
 
-public interface MemberConstant {
+public interface UserConstant {
 
   String LOGIN_USER_KEY = "loginUser";
   String CUSTOMER_KEY = "customerId";

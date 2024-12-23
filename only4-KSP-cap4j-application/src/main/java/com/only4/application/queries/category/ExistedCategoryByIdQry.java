@@ -1,4 +1,4 @@
-package com.only4.application.queries.Category;
+package com.only4.application.queries.category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,20 +12,20 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
  * @author cap4j-ddd-codegen
  * @date 2024/12/22
  */
-public class ExistedCategoryByNameQry {
+public class ExistedCategoryByIdQry {
     /**
-     * ExistedCategoryByNameQry查询请求参数
+     * ExistedCategoryByIdQry查询请求参数
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        String name;
+        Long id;
     }
 
     /**
-     * ExistedCategoryByNameQry查询响应
+     * ExistedCategoryByIdQry查询响应
      */
     @Data
     @Builder
