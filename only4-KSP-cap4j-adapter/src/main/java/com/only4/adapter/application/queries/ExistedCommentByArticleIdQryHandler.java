@@ -1,7 +1,7 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.ArticleMapper;
-import com.only4.application.queries.Article.ExistedArticleCommentByArticleIdQry;
+import com.only4.application.queries.Article.ExistedCommentByArticleIdQry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.application.query.Query;
@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ExistedArticleCommentByArticleIdQryHandler implements Query<ExistedArticleCommentByArticleIdQry.Request, ExistedArticleCommentByArticleIdQry.Response> {
+public class ExistedCommentByArticleIdQryHandler implements Query<ExistedCommentByArticleIdQry.Request, ExistedCommentByArticleIdQry.Response> {
     private final ArticleMapper articleMapper;
     @Override
-    public ExistedArticleCommentByArticleIdQry.Response exec(ExistedArticleCommentByArticleIdQry.Request request) {
+    public ExistedCommentByArticleIdQry.Response exec(ExistedCommentByArticleIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
         Boolean isExists = articleMapper.existedByArticleId(request.getId());
-        return ExistedArticleCommentByArticleIdQry.Response.builder()
+        return ExistedCommentByArticleIdQry.Response.builder()
                 .existed(isExists)
                 .build();
     }

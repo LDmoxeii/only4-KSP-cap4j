@@ -22,7 +22,7 @@ public class ExistedArticleByArticleCategoryIdQryHandler implements Query<Existe
     @Override
     public ExistedArticleByArticleCategoryIdQry.Response exec(ExistedArticleByArticleCategoryIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        Boolean isExists = articleMapper.existedByArticleCategoryId(request.getCategoryId());
+        Boolean isExists = articleMapper.existedByCategoryId(request.getCategoryId());
         return ExistedArticleByArticleCategoryIdQry.Response.builder()
                 .existed(isExists)
                 .build();

@@ -12,9 +12,9 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
  * @author cap4j-ddd-codegen
  * @date 2024/12/22
  */
-public class ExistedArticleCommentByArticleIdQry {
+public class ExistedCommentByArticleIdQry {
     /**
-     * ExistedArticleCommentByArticleIdQry查询请求参数
+     * ExistedCommentByArticleIdQry查询请求参数
      */
     @Data
     @Builder
@@ -25,7 +25,7 @@ public class ExistedArticleCommentByArticleIdQry {
     }
 
     /**
-     * ExistedArticleCommentByArticleIdQry查询响应
+     * ExistedCommentByArticleIdQry查询响应
      */
     @Data
     @Builder

@@ -9,5 +9,5 @@ public interface ArticleMapper {
 
     Boolean existedByArticleId(Long Id);
 
-    Boolean existedByArticleCategoryId(Long Id);
+    Boolean existedByCategoryId(Long Id);
 }
