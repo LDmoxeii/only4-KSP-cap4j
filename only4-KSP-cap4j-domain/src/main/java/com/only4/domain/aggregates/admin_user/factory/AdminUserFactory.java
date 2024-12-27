@@ -35,12 +35,15 @@ public class AdminUserFactory implements AggregateFactory<AdminUserFactory.Paylo
     public AdminUser create(Payload payload) {
         resolveParameter(payload.rolesToBeAssigned);
         return AdminUser.builder()
-                .createdAt(LocalDateTime.now())
+                .adminUserRoles(adminUserRoles)
+                .adminUserPermissions(adminUserPermissions)
                 .name(payload.name)
                 .phone(payload.phone)
                 .password(payload.password)
-                .adminUserRoles(adminUserRoles)
-                .adminUserPermissions(adminUserPermissions)
+                .refreshToken("")
+                .loginExpiryDate(LocalDateTime.MIN)
+                .createdAt(LocalDateTime.now())
+                .delFlag(false)
                 .build();
     }
 

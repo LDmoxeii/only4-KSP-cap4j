@@ -22,7 +22,7 @@ public class GetCategoryByIdQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long Id;
+        Long id;
     }
 
     /**

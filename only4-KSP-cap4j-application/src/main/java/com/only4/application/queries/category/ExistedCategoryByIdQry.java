@@ -21,7 +21,7 @@ public class ExistedCategoryByIdQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        long Id;
+        Long id;
     }
 
     /**

@@ -29,10 +29,11 @@ public class RoleFactory implements AggregateFactory<RoleFactory.Payload, Role> 
     public Role create(Payload payload) {
 
         return Role.builder()
-                .createdAt(LocalDateTime.now())
+                .rolePermissions(payload.permissions)
                 .name(payload.name)
                 .description(payload.description)
-                .rolePermissions(payload.permissions)
+                .createdAt(LocalDateTime.now())
+                .delFlag(false)
                 .build();
     }
 
