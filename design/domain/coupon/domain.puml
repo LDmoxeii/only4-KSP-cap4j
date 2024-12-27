@@ -1,0 +1,14 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Aggregate("coupon") [
+    优惠券
+    --属性--
+    优惠券ID
+    星球ID
+    用户ID
+    --行为--
+    优惠用户加入星球的价格
+]
+
+@enduml

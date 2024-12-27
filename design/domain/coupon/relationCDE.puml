@@ -1,0 +1,10 @@
+@startuml
+
+CreateCoupon -down-> Coupon
+DeleteCoupon -down-> Coupon
+updateCoupon -down-> Coupon
+
+Coupon -down-> DisableCoupon
+Coupon -down-> UseCoupon
+
+@enduml
