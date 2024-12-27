@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.only4.adapter.infra.mybatis.mapper.CategoryMapper">
+
+    <resultMap id="article" type="com.only4.domain.aggregates.article.Article">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="description" property="description"/>
+        <result column="content" property="content"/>
+        <result column="cover" property="cover"/>
+        <result column="appendix" property="appendix"/>
+        <result column="price" property="price"/>
+        <result column="state" property="state"/>
+        <result column="sticky_flag" property="stickyFlag"/>
+        <result column="comment_flag" property="commentFlag"/>
+        <result column="del_flag" property="delFlag"/>
+
+        <collection property="articleCategory"
+                    ofType="com.only4.domain.aggregates.article.ArticleCategory">
+            <result column="category_id" property="categoryId"/>
+            <result column="category_name" property="categoryName"/>
+        </collection>
+        
+        <collection property="articleComment"
+                    ofType="com.only4.domain.aggregates.article.ArticleComment">
+            <result column="parent_id" property="parentId"/>
+            <result column="author_id" property="authorId"/>
+            <result column="author_name" property="authorName"/>
+            <result column="content" property="content"/>
+            <result column="sticky_flag" property="stickyFlag"/>
+            <result column="create_at" property="createAt"/>
+        </collection>
+        
+        <collection property="articleTag"
+                    ofType="com.only4.domain.aggregates.article.ArticleTag">
+            <result column="tag_id" property="tagId"/>
+            <result column="tag_name" property="tagName"/>
+        </collection>
+        
+        <collection property="articleCommentLike"
+                    ofType="com.only4.domain.aggregates.article.ArticleCommentLike">
+            <result column="comment_id" property="commentId"/>
+            <result column="member_id" property="memberId"/>
+            <result column="create_at" property="createAt"/>
+        </collection>
+
+        <collection property="articleLike"
+                    ofType="com.only4.domain.aggregates.article.ArticleLike">
+            <result column="member_id" property="memberId"/>
+            <result column="like_time" property="likeTime"/>
+        </collection>
+    </resultMap>
+
+    <select id="existedCommentByArticleId" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1
+                      FROM article_comment arco
+                               LEFT JOIN article ar ON arco.article_id = ar.id
+                      WHERE ar.id = #{id}) as is_exists
+    </select>
+    <select id="existedByCategoryId" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1
+                      FROM article ar
+                               LEFT JOIN article_category arc ON ar.id = arc.article_id
+                      WHERE arc.id = #{id}) as is_exists
+    </select>
+    <select id="existedByTagId" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1
+                      FROM article ar
+                               LEFT JOIN article_tag art ON ar.id = art.article_id
+                      WHERE art.id = #{id}) as is_exists
+    </select>
+    <select id="existedCommentLikeByCommentIdAndMemberId" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1
+                      FROM article_comment_like arcl
+                      WHERE arcl.comment_id = #{CommentId} AND arcl.member_id = #{MemberId}) as is_exists
+    </select>
+    <select id="countArticleLikeByMemberIdAndDate" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS like_count
+        FROM article_like arl
+        where arl.member_id = #{MemberId} AND arl.like_time = #{likeTime}
+    </select>
+    <select id="countCommentLikeByMemberIdAndDate" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS like_count
+        FROM article_comment_like arcl
+        WHERE arcl.member_id = #{MemberId} AND arcl.create_at = #{createAt}
+    </select>
+    <select id="countCommentByMemberIdAndDate" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS like_count
+        FROM article_comment arc
+        WHERE arc.author_id = #{authorId} AND arc.create_at = #{createAt}
+    </select>
+</mapper>

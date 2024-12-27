@@ -10,4 +10,5 @@ public interface CategoryMapper {
     Boolean existedById(Long id);
 
     Category getById(Long id);
+
 }
