@@ -1,0 +1,25 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+DomainEvent("CreatedCoupon") [
+    已创建优惠券
+]
+DomainEvent("DisabledCoupon") [
+    已停用优惠券
+]
+DomainEvent("DeletedCoupon") [
+    已删除优惠券
+]
+DomainEvent("UpdatedCoupon") [
+    已更新优惠券
+]
+DomainEvent("CouponLated") [
+    优惠券已过期
+]
+DomainEvent("UseUpCoupon") [
+    已使用完优惠券
+]
+
+
+
+@enduml

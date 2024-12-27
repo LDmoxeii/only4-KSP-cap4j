@@ -35,7 +35,6 @@ class AdminUserLoginSuccessfullyCmdTest {
   private AdminUserLoginSuccessfullyCmd.Request request;
   @Test
   void exec() {
-
     try (MockedStatic<Mediator> mediator = mockStatic(Mediator.class)) {
       var now = LocalDateTime.now();
       when(request.getAdminUserId()).thenReturn(1L);
