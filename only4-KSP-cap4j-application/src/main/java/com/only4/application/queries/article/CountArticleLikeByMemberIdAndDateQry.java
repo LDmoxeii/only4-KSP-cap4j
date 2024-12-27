@@ -21,7 +21,7 @@ public class CountArticleLikeByMemberIdAndDateQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long MemberId;
+        Long memberId;
         java.time.LocalDateTime likeTime;
     }
 

@@ -1,9 +1,7 @@
 package com.only4.adapter.application.queries;
 
-import com.only4.adapter.infra.mybatis.mapper.ArticleMapper;
 import com.only4.application.queries.article.GetArticleByIdQry;
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.meta.ArticleSchema;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
