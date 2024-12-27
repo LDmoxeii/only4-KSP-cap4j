@@ -1,5 +1,6 @@
-package com.only4.application.queries.Article;
+package com.only4.application.queries.category;
 
+import com.only4.domain.aggregates.category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,26 +13,26 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
  * @author cap4j-ddd-codegen
  * @date 2024/12/22
  */
-public class ExistedArticleByArticleCategoryIdQry {
+public class GetCategoryByIdQry {
     /**
-     * ExistedArticleByArticleCategoryIdQry查询请求参数
+     * GetCategoryByIdQry查询请求参数
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long categoryId;
+        Long Id;
     }
 
     /**
-     * ExistedArticleByArticleCategoryIdQry查询响应
+     * GetCategoryByIdQry查询响应
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        Boolean existed;
+        Category category;
     }
 }

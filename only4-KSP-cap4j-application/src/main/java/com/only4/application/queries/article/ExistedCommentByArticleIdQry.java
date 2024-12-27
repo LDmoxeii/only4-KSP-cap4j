@@ -1,6 +1,5 @@
-package com.only4.application.queries.Article;
+package com.only4.application.queries.article;
 
-import com.only4.domain.aggregates.article.Article;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +12,9 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
  * @author cap4j-ddd-codegen
  * @date 2024/12/22
  */
-public class GetArticleByIdQry {
+public class ExistedCommentByArticleIdQry {
     /**
-     * GetArticleByIdQry查询请求参数
+     * ExistedCommentByArticleIdQry查询请求参数
      */
     @Data
     @Builder
@@ -26,13 +25,13 @@ public class GetArticleByIdQry {
     }
 
     /**
-     * GetArticleByIdQry查询响应
+     * ExistedCommentByArticleIdQry查询响应
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        Article article;
+        Boolean existed;
     }
 }

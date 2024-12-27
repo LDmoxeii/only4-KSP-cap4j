@@ -1,11 +1,15 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.ArticleMapper;
-import com.only4.application.queries.Article.GetArticleByIdQry;
+import com.only4.application.queries.article.GetArticleByIdQry;
 import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.article.meta.ArticleSchema;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.netcorepal.cap4j.ddd.Mediator;
 import org.netcorepal.cap4j.ddd.application.query.Query;
+import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,13 +23,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class GetArticleByIdQryHandler implements Query<GetArticleByIdQry.Request, GetArticleByIdQry.Response> {
-    private final ArticleMapper articleMapper;
     @Override
     public GetArticleByIdQry.Response exec(GetArticleByIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        Article article = articleMapper.getById(request.getId());
+        val article = Mediator.repositories().findOne(JpaPredicate.byId(
+                Article.class,
+                request.getId()
+        ));
         return GetArticleByIdQry.Response.builder()
-                .article(article)
+                .article(article.get())
                 .build();
     }
 }

@@ -19,7 +19,7 @@
     <select id="getById" resultMap="Category">
         SELECT ca.id                 as id,
                ca.name               as name,
-               ca.del_flag           as del_flag,
+               ca.del_flag           as del_flag
         FROM category ca WHERE ca.id = #{id}
     </select>
 </mapper>

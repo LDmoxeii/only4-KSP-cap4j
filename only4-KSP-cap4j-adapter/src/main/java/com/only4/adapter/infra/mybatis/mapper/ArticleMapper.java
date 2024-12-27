@@ -5,9 +5,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ArticleMapper {
-    Article getById(Long Id);
-
-    Boolean existedByArticleId(Long Id);
-
-    Boolean existedByCategoryId(Long Id);
+    Boolean existedCommentByArticleId(Long Id);
+    Boolean existedByCategoryId(Long categoryId);
+    Boolean existedByTagId(Long tagId);
+    Boolean existedCommentLikeByCommentIdAndMemberId(Long CommentId, Long MemberId);
+    Integer countArticleLikeByMemberIdAndDate(Long MemberId,java.time.LocalDateTime likeTime);
+    Integer countCommentLikeByMemberIdAndDate(Long MemberId,java.time.LocalDateTime createAt);
+    Integer countCommentByMemberIdAndDate(Long authorId,java.time.LocalDateTime createAt);
 }

@@ -1,29 +1,29 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.ArticleMapper;
-import com.only4.application.queries.article.ExistedCommentByArticleIdQry;
+import com.only4.application.queries.article.ExistedArticleByTagIdQry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.application.query.Query;
 import org.springframework.stereotype.Service;
 
 /**
- * ExistedArticleCommentByArticleIdQry查询请求适配实现
+ * ExistedArticleByTagIdQry查询请求适配实现
  * todo: 查询描述
  *
  * @author cap4j-ddd-codegen
- * @date 2024/12/22
+ * @date 2024/12/27
  */
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ExistedCommentByArticleIdQryHandler implements Query<ExistedCommentByArticleIdQry.Request, ExistedCommentByArticleIdQry.Response> {
+public class ExistedArticleByTagIdQryHandler implements Query<ExistedArticleByTagIdQry.Request, ExistedArticleByTagIdQry.Response> {
     private final ArticleMapper articleMapper;
     @Override
-    public ExistedCommentByArticleIdQry.Response exec(ExistedCommentByArticleIdQry.Request request) {
+    public ExistedArticleByTagIdQry.Response exec(ExistedArticleByTagIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        Boolean isExists = articleMapper.existedCommentByArticleId(request.getId());
-        return ExistedCommentByArticleIdQry.Response.builder()
+        Boolean isExists = articleMapper.existedByTagId(request.getTagId());
+        return ExistedArticleByTagIdQry.Response.builder()
                 .existed(isExists)
                 .build();
     }

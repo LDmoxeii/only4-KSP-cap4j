@@ -1,7 +1,7 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.CategoryMapper;
-import com.only4.application.queries.Category.ExistedCategoryByNameQry;
+import com.only4.application.queries.category.ExistedCategoryByNameQry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.application.query.Query;
