@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.only4.adapter.infra.mybatis.mapper.MemberMapper">
+    <resultMap id="member" type="com.only4.domain.aggregates.member.Member">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="phone" property="phone"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="signature" property="signature"/>
+        <result column="level" property="level"/>
+        <result column="balance" property="balance"/>
+        <result column="ban_flag" property="banFlag"/>
+        <result column="ban_time" property="banTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <collection property="favorite"
+                    ofType="com.only4.domain.aggregates.member.Favorite">
+            <result column="favorite_id" property="favoriteId"/>
+            <result column="member_id" property="memberId"/>
+            <result column="del_flag" property="delFlag"/>
+        </collection>
+        <collection property="signInRecord"
+                    ofType="com.only4.domain.aggregates.member.SignInRecord">
+            <result column="create_at" property="createAt"/>
+            <result column="member_id" property="memberId"/>
+            <result column="del_flag" property="delFlag"/>
+        </collection>
+        <collection property="articleFavoriteRecord"
+                    ofType="com.only4.domain.aggregates.member.ArticleFavoriteRecord">
+            <result column="create_at" property="createAt"/>
+            <result column="article_id" property="articleId"/>
+            <result column="favorite_id" property="favoriteId"/>
+            <result column="del_flag" property="delFlag"/>
+        </collection>
+    </resultMap>
+
+    <select id="existedMemberByName" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM member WHERE name = #{name}) as is_exists
+    </select>
+    <select id="existedMemberByPhone" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM member WHERE phone = #{phone}) as is_exists
+    </select>
+    <select id="getMemberByName" resultMap="member">
+        SELECT me.id        as id,
+               me.name      as name,
+               me.password  as password,
+               me.phone     as phone,
+               me.nick_name as nick_name,
+               me.signature as signature,
+               me.level     as level,
+               me.balance   as balance
+        FROM member me
+        WHERE me.name = #{name}
+    </select>
+    <select id="getFavoriteByMemberId" resultType="favorite">
+        SELECT fa.id          as id,
+               fa.favorite_id as favorite_id,
+               fa.member_id   as member_id
+        FROM favorite fa
+        WHERE fa.member_id = #{id}
+    </select>
+    <select id="existedSignInRecordByDate" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1
+                      FROM sign_in_record si
+                      WHERE si.member_id = #{id}
+                        AND TO_DAYS(si.create_at) = TO_DAYS(NOW())) as is_exists
+    </select>
+    <select id="countFavoriteRecordByMemberIdAndDate" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS favorite_count
+        FROM article_favorite_record afc
+        WHERE afc.favorite_id = #{Id} AND TO_DAYS(afc.create_at) = TO_DAYS(NOW())
+    </select>
+    <select id="getFavoritesByFavoritesId" resultType="favorite">
+        SELECT fa.id          as id,
+               fa.favorite_id as favorite_id,
+               fa.member_id   as member_id
+        FROM favorite fa
+        WHERE fa.favorite_id = #{favoriteId}
+    </select>
+</mapper>

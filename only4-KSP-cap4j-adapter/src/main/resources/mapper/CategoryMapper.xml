@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.only4.adapter.infra.mybatis.mapper.CategoryMapper">
+
+    <resultMap id="category" type="com.only4.domain.aggregates.category.Category">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="del_flag" property="delFlag"/>
+    </resultMap>
+
+    <select id="existedByName" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM category WHERE name = #{name}) as is_exists
+    </select>
+
+    <select id="existedById" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM category WHERE id = #{id}) as is_exists
+    </select>
+
+    <select id="getById" resultMap="Category">
+        SELECT ca.id                 as id,
+               ca.name               as name,
+               ca.del_flag           as del_flag
+        FROM category ca WHERE ca.id = #{id}
+    </select>
+</mapper>
