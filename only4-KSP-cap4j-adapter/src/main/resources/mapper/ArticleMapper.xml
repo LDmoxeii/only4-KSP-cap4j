@@ -77,16 +77,16 @@
     <select id="countArticleLikeByMemberIdAndDate" resultType="java.lang.Integer">
         SELECT COUNT(*) AS like_count
         FROM article_like arl
-        where arl.member_id = #{MemberId} AND arl.like_time = #{likeTime}
+        where arl.member_id = #{MemberId} AND TO_DAYS(arl.like_time) = TO_DAYS(NOW())
     </select>
     <select id="countCommentLikeByMemberIdAndDate" resultType="java.lang.Integer">
-        SELECT COUNT(*) AS like_count
+        SELECT COUNT(*) AS comment_like_count
         FROM article_comment_like arcl
-        WHERE arcl.member_id = #{MemberId} AND arcl.create_at = #{createAt}
+        WHERE arcl.member_id = #{MemberId} AND TO_DAYS(arcl.create_at) = TO_DAYS(NOW())
     </select>
     <select id="countCommentByMemberIdAndDate" resultType="java.lang.Integer">
-        SELECT COUNT(*) AS like_count
+        SELECT COUNT(*) AS comment_count
         FROM article_comment arc
-        WHERE arc.author_id = #{authorId} AND arc.create_at = #{createAt}
+        WHERE arc.author_id = #{authorId} AND TO_DAYS(arc.create_at) = TO_DAYS(NOW())
     </select>
 </mapper>
