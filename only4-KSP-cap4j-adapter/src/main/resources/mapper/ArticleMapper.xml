@@ -15,13 +15,17 @@
         <result column="comment_flag" property="commentFlag"/>
         <result column="del_flag" property="delFlag"/>
 
-        <collection property="articleCategory"
+        <collection property="articleCategories"
                     ofType="com.only4.domain.aggregates.article.ArticleCategory">
             <result column="category_id" property="categoryId"/>
             <result column="category_name" property="categoryName"/>
         </collection>
-        
-        <collection property="articleComment"
+
+        <collection property="articleAuthors"
+                    ofType="com.only4.domain.aggregates.article.ArticleAuthor">
+        </collection>
+
+        <collection property="articleComments"
                     ofType="com.only4.domain.aggregates.article.ArticleComment">
             <result column="parent_id" property="parentId"/>
             <result column="author_id" property="authorId"/>
@@ -30,21 +34,19 @@
             <result column="sticky_flag" property="stickyFlag"/>
             <result column="create_at" property="createAt"/>
         </collection>
-        
-        <collection property="articleTag"
+
+        <collection property="articleStatistics"
+                    ofType="com.only4.domain.aggregates.article.ArticleStatistics">
+
+        </collection>
+
+        <collection property="articleTags"
                     ofType="com.only4.domain.aggregates.article.ArticleTag">
             <result column="tag_id" property="tagId"/>
             <result column="tag_name" property="tagName"/>
         </collection>
-        
-        <collection property="articleCommentLike"
-                    ofType="com.only4.domain.aggregates.article.ArticleCommentLike">
-            <result column="comment_id" property="commentId"/>
-            <result column="member_id" property="memberId"/>
-            <result column="create_at" property="createAt"/>
-        </collection>
 
-        <collection property="articleLike"
+        <collection property="articleLikes"
                     ofType="com.only4.domain.aggregates.article.ArticleLike">
             <result column="member_id" property="memberId"/>
             <result column="like_time" property="likeTime"/>
@@ -72,7 +74,7 @@
     <select id="existedCommentLikeByCommentIdAndMemberId" resultType="java.lang.Boolean">
         SELECT EXISTS(SELECT 1
                       FROM article_comment_like arcl
-                      WHERE arcl.comment_id = #{CommentId} AND arcl.member_id = #{MemberId}) as is_exists
+                      WHERE arcl.article_comment_id = #{CommentId} AND arcl.member_id = #{MemberId}) as is_exists
     </select>
     <select id="countArticleLikeByMemberIdAndDate" resultType="java.lang.Integer">
         SELECT COUNT(*) AS like_count

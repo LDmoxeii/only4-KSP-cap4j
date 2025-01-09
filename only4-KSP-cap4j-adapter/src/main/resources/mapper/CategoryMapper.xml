@@ -16,7 +16,7 @@
         SELECT EXISTS(SELECT 1 FROM category WHERE id = #{id}) as is_exists
     </select>
 
-    <select id="getById" resultMap="Category">
+    <select id="getById" resultMap="category">
         SELECT ca.id                 as id,
                ca.name               as name,
                ca.del_flag           as del_flag

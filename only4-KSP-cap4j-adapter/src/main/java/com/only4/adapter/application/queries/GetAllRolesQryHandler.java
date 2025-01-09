@@ -27,7 +27,7 @@ public class GetAllRolesQryHandler implements Query<GetAllRolesQry.Request, GetA
     public GetAllRolesQry.Response exec(GetAllRolesQry.Request request) {
         val roles = Mediator.repositories().find(JpaPredicate.bySpecification(
                 Role.class,
-                RoleSchema.specify(RoleSchema::all)
+                RoleSchema.specify(role -> role.all())
         ));
         return GetAllRolesQry.Response.builder()
                 .roles(roles)

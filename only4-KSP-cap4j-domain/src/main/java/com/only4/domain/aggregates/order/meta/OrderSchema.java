@@ -3,12 +3,13 @@ package com.only4.domain.aggregates.order.meta;
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.order.Order;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -16,23 +17,60 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/01/09
  */
 @RequiredArgsConstructor
 public class OrderSchema {
+    /**
+     * 属性字段集合
+     */
+    public static class PROPERTY_NAMES {
+        
+        /**
+         * ID
+         */
+        public static final String id = "id";
+
+        /**
+         * 订单金额
+         */
+        public static final String amount = "amount";
+
+        /**
+         * 实付金额
+         */
+        public static final String price = "price";
+
+        /**
+         * 状态
+         */
+        public static final String state = "state";
+
+        /**
+         * 逻辑删除
+         */
+        public static final String delFlag = "delFlag";
+
+    }
+
     private final Path<Order> root;
     private final CriteriaBuilder criteriaBuilder;
 
-    public CriteriaBuilder criteriaBuilder() {
+    public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
+
+    public Path<Order> _root() {
+        return root;
+    }
+
 
     /**
      * ID
      * bigint
      */
     public Schema.Field<Long> id() {
-        return root == null ? new Schema.Field<>("id") : new Schema.Field<>(root.get("id"));
+        return new Schema.Field<>(root.get("id"), this.criteriaBuilder);
     }
 
     /**
@@ -40,7 +78,7 @@ public class OrderSchema {
      * int
      */
     public Schema.Field<Integer> amount() {
-        return root == null ? new Schema.Field<>("amount") : new Schema.Field<>(root.get("amount"));
+        return new Schema.Field<>(root.get("amount"), this.criteriaBuilder);
     }
 
     /**
@@ -48,7 +86,7 @@ public class OrderSchema {
      * int
      */
     public Schema.Field<Integer> price() {
-        return root == null ? new Schema.Field<>("price") : new Schema.Field<>(root.get("price"));
+        return new Schema.Field<>(root.get("price"), this.criteriaBuilder);
     }
 
     /**
@@ -56,7 +94,7 @@ public class OrderSchema {
      * int
      */
     public Schema.Field<Integer> state() {
-        return root == null ? new Schema.Field<>("state") : new Schema.Field<>(root.get("state"));
+        return new Schema.Field<>(root.get("state"), this.criteriaBuilder);
     }
 
     /**
@@ -64,7 +102,7 @@ public class OrderSchema {
      * tinyint(1)
      */
     public Schema.Field<Boolean> delFlag() {
-        return root == null ? new Schema.Field<>("delFlag") : new Schema.Field<>(root.get("delFlag"));
+        return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
     }
 
 
@@ -74,7 +112,7 @@ public class OrderSchema {
      * @return
      */
     public Predicate all(Predicate... restrictions) {
-        return criteriaBuilder().and(restrictions);
+        return this.criteriaBuilder.and(restrictions);
     }
 
     /**
@@ -83,7 +121,7 @@ public class OrderSchema {
      * @return
      */
     public Predicate any(Predicate... restrictions) {
-        return criteriaBuilder().or(restrictions);
+        return this.criteriaBuilder.or(restrictions);
     }
 
     /**
@@ -98,55 +136,198 @@ public class OrderSchema {
 
     /**
      * 构建查询条件
-     * @param builder
-     * @param distinct
-     * @return
-     */
-    public static Specification<Order> specify(Schema.PredicateBuilder<OrderSchema> builder, boolean distinct) {
-        return (root, criteriaQuery, criteriaBuilder) -> {
-            OrderSchema order = new OrderSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(order));
-            criteriaQuery.distinct(distinct);
-            return null;
-        };
-    }
-    
-    /**
-     * 构建查询条件
-     * @param builder
+     *
+     * @param builder where条件构造器
      * @return
      */
     public static Specification<Order> specify(Schema.PredicateBuilder<OrderSchema> builder) {
+        return specify(builder, false, Collections.emptyList());
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder  where条件构造器
+     * @param distinct 是否去重
+     * @return
+     */
+    public static Specification<Order> specify(Schema.PredicateBuilder<OrderSchema> builder, boolean distinct) {
+        return specify(builder, distinct, Collections.emptyList());
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Order> specify(Schema.PredicateBuilder<OrderSchema> builder, Schema.OrderBuilder<OrderSchema>... orderBuilders) {
+        return specify(builder, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Order> specify(Schema.PredicateBuilder<OrderSchema> builder, List<Schema.OrderBuilder<OrderSchema>> orderBuilders) {
+        return specify(builder, orderBuilders);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Order> specify(Schema.PredicateBuilder<OrderSchema> builder, boolean distinct, Schema.OrderBuilder<OrderSchema>... orderBuilders) {
+        return specify(builder, distinct, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Order> specify(Schema.PredicateBuilder<OrderSchema> builder, boolean distinct, List<Schema.OrderBuilder<OrderSchema>> orderBuilders) {
+        return specify((schema, criteriaQuery) -> {
+            criteriaQuery.where(builder.build(schema));
+            criteriaQuery.distinct(distinct);
+            if (orderBuilders != null && !orderBuilders.isEmpty()) {
+                criteriaQuery.orderBy(orderBuilders.stream()
+                        .map(b -> b.build(schema))
+                        .collect(Collectors.toList())
+                );
+            }
+            return null;
+        });
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static Specification<Order> specify(Schema.Specification<Order, OrderSchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
             OrderSchema order = new OrderSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(order));
-            return null;
+            return specifier.toPredicate(order, criteriaQuery);
         };
     }
-    
-    /**
-     * 构建排序
-     * @param builders
-     * @return
-     */
-    public static Sort orderBy(Schema.OrderBuilder<OrderSchema>... builders) {
-        return orderBy(Arrays.asList(builders));
-    }
 
     /**
-     * 构建排序
+     * 构建查询条件
      *
-     * @param builders
+     * @param id 主键
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<OrderSchema>> builders) {
-        if(null == builders || builders.isEmpty()) {
-            return Sort.unsorted();
-        }
-        return Sort.by(builders.stream()
-                .map(builder -> builder.build(new OrderSchema(null, null)))
-                .collect(Collectors.toList())
-        );
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Order> predicateById(Object id) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byId(Order.class, id);
     }
 
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Order> predicateByIds(Collection<Object> ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(Order.class, ids);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Order> predicateByIds(Object... ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(Order.class, Arrays.asList(ids));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Order> predicate(Schema.PredicateBuilder<OrderSchema> builder) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Order.class, specify(builder));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder  查询条件构造器
+     * @param distinct 是否去重
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Order> predicate(Schema.PredicateBuilder<OrderSchema> builder, boolean distinct) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Order.class, specify(builder, distinct));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Order> predicate(Schema.PredicateBuilder<OrderSchema> builder, List<Schema.OrderBuilder<OrderSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Order.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Order> predicate(Schema.PredicateBuilder<OrderSchema> builder, Schema.OrderBuilder<OrderSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Order.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Order> predicate(Schema.PredicateBuilder<OrderSchema> builder, boolean distinct, List<Schema.OrderBuilder<OrderSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Order.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Order> predicate(Schema.PredicateBuilder<OrderSchema> builder, boolean distinct, Schema.OrderBuilder<OrderSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Order.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Order> predicate(Schema.Specification<Order, OrderSchema> specifier) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Order.class, specify(specifier));
+    }
 }

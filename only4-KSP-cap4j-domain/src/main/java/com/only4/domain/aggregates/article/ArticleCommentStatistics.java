@@ -54,13 +54,6 @@ public class ArticleCommentStatistics {
     Long id;
 
     /**
-     * 文章评论ID
-     * bigint
-     */
-    @Column(name = "`comment_id`")
-    Long commentId;
-
-    /**
      * 点赞数
      * bigint
      */

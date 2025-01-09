@@ -20,8 +20,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 
-import static
-                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 星球

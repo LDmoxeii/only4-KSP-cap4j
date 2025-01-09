@@ -30,16 +30,13 @@
         <guava.version>31.1-jre</guava.version>
         <commons.lang3.version>3.12.0</commons.lang3.version>
         <commons.collections4.version>4.4</commons.collections4.version>
-        <fastjson.version>1.2.79</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
 
         <mysql-connector.version>5.1.46</mysql-connector.version>
         <spring-boot-druid.version>1.2.8</spring-boot-druid.version>
 
         <spring-boot.version>2.7.6</spring-boot.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
-        <!--        <spring-boot.version>2.2.13.RELEASE</spring-boot.version>-->
-        <!--        <spring-cloud.version>Hoxton.SR11</spring-cloud.version>-->
-
         <springdoc.version>1.6.14</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
         <swagger3.version>2.2.7</swagger3.version>
@@ -111,12 +108,10 @@
                     <versionField>version</versionField>
                     <deletedField>del_flag</deletedField>
                     <readonlyFields>db_created_at,db_updated_at</readonlyFields>
-                    <entityClassExtraImports>static
-                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events</entityClassExtraImports>
+                    <entityClassExtraImports>static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events</entityClassExtraImports>
                     <entitySchemaOutputMode>ref</entitySchemaOutputMode>
                     <entitySchemaOutputPackage>domain._share.meta</entitySchemaOutputPackage>
                     <idGenerator>org.netcorepal.cap4j.ddd.domain.distributed.SnowflakeIdentifierGenerator</idGenerator>
-<!--                    <fetchType>LAZY</fetchType>-->
                     <enumValueField>code</enumValueField>
                     <datePackage4Java>java.time</datePackage4Java>
                     <generateDbType>true</generateDbType>

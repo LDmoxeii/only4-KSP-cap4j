@@ -3,12 +3,13 @@ package com.only4.domain.aggregates.member.meta;
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.member.SignInRecord;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -16,23 +17,50 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/01/09
  */
 @RequiredArgsConstructor
 public class SignInRecordSchema {
+    /**
+     * 属性字段集合
+     */
+    public static class PROPERTY_NAMES {
+        
+        /**
+         * ID
+         */
+        public static final String id = "id";
+
+        /**
+         * 签到时间
+         */
+        public static final String createAt = "createAt";
+
+        /**
+         * 逻辑删除
+         */
+        public static final String delFlag = "delFlag";
+
+    }
+
     private final Path<SignInRecord> root;
     private final CriteriaBuilder criteriaBuilder;
 
-    public CriteriaBuilder criteriaBuilder() {
+    public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
+
+    public Path<SignInRecord> _root() {
+        return root;
+    }
+
 
     /**
      * ID
      * bigint
      */
     public Schema.Field<Long> id() {
-        return root == null ? new Schema.Field<>("id") : new Schema.Field<>(root.get("id"));
+        return new Schema.Field<>(root.get("id"), this.criteriaBuilder);
     }
 
     /**
@@ -40,7 +68,7 @@ public class SignInRecordSchema {
      * int
      */
     public Schema.Field<Integer> createAt() {
-        return root == null ? new Schema.Field<>("createAt") : new Schema.Field<>(root.get("createAt"));
+        return new Schema.Field<>(root.get("createAt"), this.criteriaBuilder);
     }
 
     /**
@@ -48,7 +76,7 @@ public class SignInRecordSchema {
      * tinyint(1)
      */
     public Schema.Field<Boolean> delFlag() {
-        return root == null ? new Schema.Field<>("delFlag") : new Schema.Field<>(root.get("delFlag"));
+        return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
     }
 
 
@@ -58,7 +86,7 @@ public class SignInRecordSchema {
      * @return
      */
     public Predicate all(Predicate... restrictions) {
-        return criteriaBuilder().and(restrictions);
+        return this.criteriaBuilder.and(restrictions);
     }
 
     /**
@@ -67,7 +95,7 @@ public class SignInRecordSchema {
      * @return
      */
     public Predicate any(Predicate... restrictions) {
-        return criteriaBuilder().or(restrictions);
+        return this.criteriaBuilder.or(restrictions);
     }
 
     /**
@@ -82,55 +110,92 @@ public class SignInRecordSchema {
 
     /**
      * 构建查询条件
-     * @param builder
-     * @param distinct
-     * @return
-     */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, boolean distinct) {
-        return (root, criteriaQuery, criteriaBuilder) -> {
-            SignInRecordSchema signInRecord = new SignInRecordSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(signInRecord));
-            criteriaQuery.distinct(distinct);
-            return null;
-        };
-    }
-    
-    /**
-     * 构建查询条件
-     * @param builder
+     *
+     * @param builder where条件构造器
      * @return
      */
     public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder) {
-        return (root, criteriaQuery, criteriaBuilder) -> {
-            SignInRecordSchema signInRecord = new SignInRecordSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(signInRecord));
-            return null;
-        };
-    }
-    
-    /**
-     * 构建排序
-     * @param builders
-     * @return
-     */
-    public static Sort orderBy(Schema.OrderBuilder<SignInRecordSchema>... builders) {
-        return orderBy(Arrays.asList(builders));
+        return specify(builder, false, Collections.emptyList());
     }
 
     /**
-     * 构建排序
+     * 构建查询条件
      *
-     * @param builders
+     * @param builder  where条件构造器
+     * @param distinct 是否去重
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<SignInRecordSchema>> builders) {
-        if(null == builders || builders.isEmpty()) {
-            return Sort.unsorted();
-        }
-        return Sort.by(builders.stream()
-                .map(builder -> builder.build(new SignInRecordSchema(null, null)))
-                .collect(Collectors.toList())
-        );
+    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, boolean distinct) {
+        return specify(builder, distinct, Collections.emptyList());
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, Schema.OrderBuilder<SignInRecordSchema>... orderBuilders) {
+        return specify(builder, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, List<Schema.OrderBuilder<SignInRecordSchema>> orderBuilders) {
+        return specify(builder, orderBuilders);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, boolean distinct, Schema.OrderBuilder<SignInRecordSchema>... orderBuilders) {
+        return specify(builder, distinct, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, boolean distinct, List<Schema.OrderBuilder<SignInRecordSchema>> orderBuilders) {
+        return specify((schema, criteriaQuery) -> {
+            criteriaQuery.where(builder.build(schema));
+            criteriaQuery.distinct(distinct);
+            if (orderBuilders != null && !orderBuilders.isEmpty()) {
+                criteriaQuery.orderBy(orderBuilders.stream()
+                        .map(b -> b.build(schema))
+                        .collect(Collectors.toList())
+                );
+            }
+            return null;
+        });
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static Specification<SignInRecord> specify(Schema.Specification<SignInRecord, SignInRecordSchema> specifier) {
+        return (root, criteriaQuery, criteriaBuilder) -> {
+            SignInRecordSchema signInRecord = new SignInRecordSchema(root, criteriaBuilder);
+            return specifier.toPredicate(signInRecord, criteriaQuery);
+        };
     }
 
 }
