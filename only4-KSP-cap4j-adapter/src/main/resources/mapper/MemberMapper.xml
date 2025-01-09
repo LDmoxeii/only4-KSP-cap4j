@@ -13,23 +13,62 @@
         <result column="ban_flag" property="banFlag"/>
         <result column="ban_time" property="banTime"/>
         <result column="del_flag" property="delFlag"/>
-        <collection property="favorite"
-                    ofType="com.only4.domain.aggregates.member.Favorite">
-            <result column="favorite_id" property="favoriteId"/>
-            <result column="member_id" property="memberId"/>
-            <result column="del_flag" property="delFlag"/>
+
+        <collection property="memberLikeRecords"
+                    ofType="com.only4.domain.aggregates.member.MemberLikeRecord">
+
         </collection>
-        <collection property="signInRecord"
+
+        <collection property="memberPermissions"
+                    ofType="com.only4.domain.aggregates.member.MemberPermission">
+
+        </collection>
+
+        <collection property="viewHistories"
+                    ofType="com.only4.domain.aggregates.member.ViewHistory">
+
+        </collection>
+
+        <collection property="memberStatistics"
+                    ofType="com.only4.domain.aggregates.member.MemberStatistics">
+
+        </collection>
+
+        <collection property="followMembers"
+                    ofType="com.only4.domain.aggregates.member.FollowMember">
+
+        </collection>
+
+        <collection property="blockMembers"
+                    ofType="com.only4.domain.aggregates.member.BlockMember">
+
+        </collection>
+
+        <collection property="memberStars"
+                    ofType="com.only4.domain.aggregates.member.MemberStar">
+
+        </collection>
+
+        <collection property="favorites"
+                    ofType="com.only4.domain.aggregates.member.Favorite"
+                    resultMap="favorite">
+        </collection>
+        <collection property="signInRecords"
                     ofType="com.only4.domain.aggregates.member.SignInRecord">
             <result column="create_at" property="createAt"/>
-            <result column="member_id" property="memberId"/>
             <result column="del_flag" property="delFlag"/>
         </collection>
-        <collection property="articleFavoriteRecord"
+
+    </resultMap>
+
+    <resultMap id="favorite" type="com.only4.domain.aggregates.member.Favorite">
+        <id column="id" property="id"/>
+        <result column="favorite_id" property="favoriteId"/>
+        <result column="del_flag" property="delFlag"/>
+        <collection property="articleFavoriteRecords"
                     ofType="com.only4.domain.aggregates.member.ArticleFavoriteRecord">
             <result column="create_at" property="createAt"/>
             <result column="article_id" property="articleId"/>
-            <result column="favorite_id" property="favoriteId"/>
             <result column="del_flag" property="delFlag"/>
         </collection>
     </resultMap>
@@ -52,28 +91,24 @@
         FROM member me
         WHERE me.name = #{name}
     </select>
-    <select id="getFavoriteByMemberId" resultType="favorite">
-        SELECT fa.id          as id,
-               fa.favorite_id as favorite_id,
-               fa.member_id   as member_id
+    <select id="getFavoriteByMemberId" resultMap="favorite">
+        SELECT fa.id as id, fa.favorite_id as favorite_id, fa.member_id as member_id
         FROM favorite fa
         WHERE fa.member_id = #{id}
     </select>
     <select id="existedSignInRecordByDate" resultType="java.lang.Boolean">
         SELECT EXISTS(SELECT 1
                       FROM sign_in_record si
-                      WHERE si.member_id = #{id}
-                        AND TO_DAYS(si.create_at) = TO_DAYS(NOW())) as is_exists
+                      WHERE si.member_id = #{id} AND TO_DAYS(si.create_at) = TO_DAYS(NOW())) as is_exists
     </select>
     <select id="countFavoriteRecordByMemberIdAndDate" resultType="java.lang.Integer">
         SELECT COUNT(*) AS favorite_count
         FROM article_favorite_record afc
-        WHERE afc.favorite_id = #{Id} AND TO_DAYS(afc.create_at) = TO_DAYS(NOW())
+        WHERE afc.favorite_id = #{Id}
+          AND TO_DAYS(afc.create_at) = TO_DAYS(NOW())
     </select>
-    <select id="getFavoritesByFavoritesId" resultType="favorite">
-        SELECT fa.id          as id,
-               fa.favorite_id as favorite_id,
-               fa.member_id   as member_id
+    <select id="getFavoritesByFavoritesId" resultMap="favorite">
+        SELECT fa.id as id, fa.favorite_id as favorite_id, fa.member_id as member_id
         FROM favorite fa
         WHERE fa.favorite_id = #{favoriteId}
     </select>
