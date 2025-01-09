@@ -41,7 +41,7 @@ public class AdminUserFactory implements AggregateFactory<AdminUserFactory.Paylo
                 .phone(payload.phone)
                 .password(payload.password)
                 .refreshToken("")
-                .loginExpiryDate(LocalDateTime.MIN)
+                .loginExpiryDate(LocalDateTime.now())
                 .createdAt(LocalDateTime.now())
                 .delFlag(false)
                 .build();
