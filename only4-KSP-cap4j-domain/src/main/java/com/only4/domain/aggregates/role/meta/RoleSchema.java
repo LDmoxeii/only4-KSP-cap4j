@@ -3,12 +3,13 @@ package com.only4.domain.aggregates.role.meta;
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.role.Role;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -16,23 +17,60 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/01/09
  */
 @RequiredArgsConstructor
 public class RoleSchema {
+    /**
+     * 属性字段集合
+     */
+    public static class PROPERTY_NAMES {
+        
+        /**
+         * ID
+         */
+        public static final String id = "id";
+
+        /**
+         * 角色名
+         */
+        public static final String name = "name";
+
+        /**
+         * 角色描述
+         */
+        public static final String description = "description";
+
+        /**
+         * 创建时间
+         */
+        public static final String createdAt = "createdAt";
+
+        /**
+         * 逻辑删除
+         */
+        public static final String delFlag = "delFlag";
+
+    }
+
     private final Path<Role> root;
     private final CriteriaBuilder criteriaBuilder;
 
-    public CriteriaBuilder criteriaBuilder() {
+    public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
+
+    public Path<Role> _root() {
+        return root;
+    }
+
 
     /**
      * ID
      * bigint
      */
     public Schema.Field<Long> id() {
-        return root == null ? new Schema.Field<>("id") : new Schema.Field<>(root.get("id"));
+        return new Schema.Field<>(root.get("id"), this.criteriaBuilder);
     }
 
     /**
@@ -40,7 +78,7 @@ public class RoleSchema {
      * varchar(255)
      */
     public Schema.Field<String> name() {
-        return root == null ? new Schema.Field<>("name") : new Schema.Field<>(root.get("name"));
+        return new Schema.Field<>(root.get("name"), this.criteriaBuilder);
     }
 
     /**
@@ -48,7 +86,7 @@ public class RoleSchema {
      * varchar(255)
      */
     public Schema.Field<String> description() {
-        return root == null ? new Schema.Field<>("description") : new Schema.Field<>(root.get("description"));
+        return new Schema.Field<>(root.get("description"), this.criteriaBuilder);
     }
 
     /**
@@ -56,7 +94,7 @@ public class RoleSchema {
      * timestamp
      */
     public Schema.Field<java.time.LocalDateTime> createdAt() {
-        return root == null ? new Schema.Field<>("createdAt") : new Schema.Field<>(root.get("createdAt"));
+        return new Schema.Field<>(root.get("createdAt"), this.criteriaBuilder);
     }
 
     /**
@@ -64,7 +102,7 @@ public class RoleSchema {
      * tinyint(1)
      */
     public Schema.Field<Boolean> delFlag() {
-        return root == null ? new Schema.Field<>("delFlag") : new Schema.Field<>(root.get("delFlag"));
+        return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
     }
 
 
@@ -74,7 +112,7 @@ public class RoleSchema {
      * @return
      */
     public Predicate all(Predicate... restrictions) {
-        return criteriaBuilder().and(restrictions);
+        return this.criteriaBuilder.and(restrictions);
     }
 
     /**
@@ -83,7 +121,7 @@ public class RoleSchema {
      * @return
      */
     public Predicate any(Predicate... restrictions) {
-        return criteriaBuilder().or(restrictions);
+        return this.criteriaBuilder.or(restrictions);
     }
 
     /**
@@ -103,62 +141,205 @@ public class RoleSchema {
      */
     public com.only4.domain.aggregates.role.meta.RolePermissionSchema joinRolePermission(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Role, com.only4.domain.aggregates.role.RolePermission> join = ((Root<Role>) root).join("rolePermissions", type);
-        com.only4.domain.aggregates.role.meta.RolePermissionSchema schema = new com.only4.domain.aggregates.role.meta.RolePermissionSchema(join, criteriaBuilder);
+        Join<Role, com.only4.domain.aggregates.role.RolePermission> join = ((Root<Role>) this.root).join("rolePermissions", type);
+        com.only4.domain.aggregates.role.meta.RolePermissionSchema schema = new com.only4.domain.aggregates.role.meta.RolePermissionSchema(join, this.criteriaBuilder);
         return schema;
     }
 
     /**
      * 构建查询条件
-     * @param builder
-     * @param distinct
-     * @return
-     */
-    public static Specification<Role> specify(Schema.PredicateBuilder<RoleSchema> builder, boolean distinct) {
-        return (root, criteriaQuery, criteriaBuilder) -> {
-            RoleSchema role = new RoleSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(role));
-            criteriaQuery.distinct(distinct);
-            return null;
-        };
-    }
-    
-    /**
-     * 构建查询条件
-     * @param builder
+     *
+     * @param builder where条件构造器
      * @return
      */
     public static Specification<Role> specify(Schema.PredicateBuilder<RoleSchema> builder) {
+        return specify(builder, false, Collections.emptyList());
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder  where条件构造器
+     * @param distinct 是否去重
+     * @return
+     */
+    public static Specification<Role> specify(Schema.PredicateBuilder<RoleSchema> builder, boolean distinct) {
+        return specify(builder, distinct, Collections.emptyList());
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Role> specify(Schema.PredicateBuilder<RoleSchema> builder, Schema.OrderBuilder<RoleSchema>... orderBuilders) {
+        return specify(builder, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Role> specify(Schema.PredicateBuilder<RoleSchema> builder, List<Schema.OrderBuilder<RoleSchema>> orderBuilders) {
+        return specify(builder, orderBuilders);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Role> specify(Schema.PredicateBuilder<RoleSchema> builder, boolean distinct, Schema.OrderBuilder<RoleSchema>... orderBuilders) {
+        return specify(builder, distinct, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Role> specify(Schema.PredicateBuilder<RoleSchema> builder, boolean distinct, List<Schema.OrderBuilder<RoleSchema>> orderBuilders) {
+        return specify((schema, criteriaQuery) -> {
+            criteriaQuery.where(builder.build(schema));
+            criteriaQuery.distinct(distinct);
+            if (orderBuilders != null && !orderBuilders.isEmpty()) {
+                criteriaQuery.orderBy(orderBuilders.stream()
+                        .map(b -> b.build(schema))
+                        .collect(Collectors.toList())
+                );
+            }
+            return null;
+        });
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static Specification<Role> specify(Schema.Specification<Role, RoleSchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
             RoleSchema role = new RoleSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(role));
-            return null;
+            return specifier.toPredicate(role, criteriaQuery);
         };
     }
-    
-    /**
-     * 构建排序
-     * @param builders
-     * @return
-     */
-    public static Sort orderBy(Schema.OrderBuilder<RoleSchema>... builders) {
-        return orderBy(Arrays.asList(builders));
-    }
 
     /**
-     * 构建排序
+     * 构建查询条件
      *
-     * @param builders
+     * @param id 主键
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<RoleSchema>> builders) {
-        if(null == builders || builders.isEmpty()) {
-            return Sort.unsorted();
-        }
-        return Sort.by(builders.stream()
-                .map(builder -> builder.build(new RoleSchema(null, null)))
-                .collect(Collectors.toList())
-        );
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Role> predicateById(Object id) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byId(Role.class, id);
     }
 
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Role> predicateByIds(Collection<Object> ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(Role.class, ids);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Role> predicateByIds(Object... ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(Role.class, Arrays.asList(ids));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Role> predicate(Schema.PredicateBuilder<RoleSchema> builder) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Role.class, specify(builder));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder  查询条件构造器
+     * @param distinct 是否去重
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Role> predicate(Schema.PredicateBuilder<RoleSchema> builder, boolean distinct) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Role.class, specify(builder, distinct));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Role> predicate(Schema.PredicateBuilder<RoleSchema> builder, List<Schema.OrderBuilder<RoleSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Role.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Role> predicate(Schema.PredicateBuilder<RoleSchema> builder, Schema.OrderBuilder<RoleSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Role.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Role> predicate(Schema.PredicateBuilder<RoleSchema> builder, boolean distinct, List<Schema.OrderBuilder<RoleSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Role.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Role> predicate(Schema.PredicateBuilder<RoleSchema> builder, boolean distinct, Schema.OrderBuilder<RoleSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Role.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Role> predicate(Schema.Specification<Role, RoleSchema> specifier) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Role.class, specify(specifier));
+    }
 }

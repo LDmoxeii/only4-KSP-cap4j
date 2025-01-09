@@ -3,12 +3,13 @@ package com.only4.domain.aggregates.star.meta;
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.star.Stardust;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -16,23 +17,60 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/01/09
  */
 @RequiredArgsConstructor
 public class StardustSchema {
+    /**
+     * 属性字段集合
+     */
+    public static class PROPERTY_NAMES {
+        
+        /**
+         * ID
+         */
+        public static final String id = "id";
+
+        /**
+         * 星尘名
+         */
+        public static final String name = "name";
+
+        /**
+         * 吸引时间
+         */
+        public static final String createAt = "createAt";
+
+        /**
+         * 逃逸时间
+         */
+        public static final String delAt = "delAt";
+
+        /**
+         * 逻辑删除
+         */
+        public static final String delFlag = "delFlag";
+
+    }
+
     private final Path<Stardust> root;
     private final CriteriaBuilder criteriaBuilder;
 
-    public CriteriaBuilder criteriaBuilder() {
+    public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
+
+    public Path<Stardust> _root() {
+        return root;
+    }
+
 
     /**
      * ID
      * bigint
      */
     public Schema.Field<Long> id() {
-        return root == null ? new Schema.Field<>("id") : new Schema.Field<>(root.get("id"));
+        return new Schema.Field<>(root.get("id"), this.criteriaBuilder);
     }
 
     /**
@@ -40,7 +78,7 @@ public class StardustSchema {
      * varchar(50)
      */
     public Schema.Field<String> name() {
-        return root == null ? new Schema.Field<>("name") : new Schema.Field<>(root.get("name"));
+        return new Schema.Field<>(root.get("name"), this.criteriaBuilder);
     }
 
     /**
@@ -48,7 +86,7 @@ public class StardustSchema {
      * timestamp
      */
     public Schema.Field<java.time.LocalDateTime> createAt() {
-        return root == null ? new Schema.Field<>("createAt") : new Schema.Field<>(root.get("createAt"));
+        return new Schema.Field<>(root.get("createAt"), this.criteriaBuilder);
     }
 
     /**
@@ -56,7 +94,7 @@ public class StardustSchema {
      * timestamp
      */
     public Schema.Field<java.time.LocalDateTime> delAt() {
-        return root == null ? new Schema.Field<>("delAt") : new Schema.Field<>(root.get("delAt"));
+        return new Schema.Field<>(root.get("delAt"), this.criteriaBuilder);
     }
 
     /**
@@ -64,7 +102,7 @@ public class StardustSchema {
      * tinyint(1)
      */
     public Schema.Field<Boolean> delFlag() {
-        return root == null ? new Schema.Field<>("delFlag") : new Schema.Field<>(root.get("delFlag"));
+        return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
     }
 
 
@@ -74,7 +112,7 @@ public class StardustSchema {
      * @return
      */
     public Predicate all(Predicate... restrictions) {
-        return criteriaBuilder().and(restrictions);
+        return this.criteriaBuilder.and(restrictions);
     }
 
     /**
@@ -83,7 +121,7 @@ public class StardustSchema {
      * @return
      */
     public Predicate any(Predicate... restrictions) {
-        return criteriaBuilder().or(restrictions);
+        return this.criteriaBuilder.or(restrictions);
     }
 
     /**
@@ -98,55 +136,92 @@ public class StardustSchema {
 
     /**
      * 构建查询条件
-     * @param builder
-     * @param distinct
-     * @return
-     */
-    public static Specification<Stardust> specify(Schema.PredicateBuilder<StardustSchema> builder, boolean distinct) {
-        return (root, criteriaQuery, criteriaBuilder) -> {
-            StardustSchema stardust = new StardustSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(stardust));
-            criteriaQuery.distinct(distinct);
-            return null;
-        };
-    }
-    
-    /**
-     * 构建查询条件
-     * @param builder
+     *
+     * @param builder where条件构造器
      * @return
      */
     public static Specification<Stardust> specify(Schema.PredicateBuilder<StardustSchema> builder) {
-        return (root, criteriaQuery, criteriaBuilder) -> {
-            StardustSchema stardust = new StardustSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(stardust));
-            return null;
-        };
-    }
-    
-    /**
-     * 构建排序
-     * @param builders
-     * @return
-     */
-    public static Sort orderBy(Schema.OrderBuilder<StardustSchema>... builders) {
-        return orderBy(Arrays.asList(builders));
+        return specify(builder, false, Collections.emptyList());
     }
 
     /**
-     * 构建排序
+     * 构建查询条件
      *
-     * @param builders
+     * @param builder  where条件构造器
+     * @param distinct 是否去重
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<StardustSchema>> builders) {
-        if(null == builders || builders.isEmpty()) {
-            return Sort.unsorted();
-        }
-        return Sort.by(builders.stream()
-                .map(builder -> builder.build(new StardustSchema(null, null)))
-                .collect(Collectors.toList())
-        );
+    public static Specification<Stardust> specify(Schema.PredicateBuilder<StardustSchema> builder, boolean distinct) {
+        return specify(builder, distinct, Collections.emptyList());
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Stardust> specify(Schema.PredicateBuilder<StardustSchema> builder, Schema.OrderBuilder<StardustSchema>... orderBuilders) {
+        return specify(builder, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Stardust> specify(Schema.PredicateBuilder<StardustSchema> builder, List<Schema.OrderBuilder<StardustSchema>> orderBuilders) {
+        return specify(builder, orderBuilders);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Stardust> specify(Schema.PredicateBuilder<StardustSchema> builder, boolean distinct, Schema.OrderBuilder<StardustSchema>... orderBuilders) {
+        return specify(builder, distinct, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Stardust> specify(Schema.PredicateBuilder<StardustSchema> builder, boolean distinct, List<Schema.OrderBuilder<StardustSchema>> orderBuilders) {
+        return specify((schema, criteriaQuery) -> {
+            criteriaQuery.where(builder.build(schema));
+            criteriaQuery.distinct(distinct);
+            if (orderBuilders != null && !orderBuilders.isEmpty()) {
+                criteriaQuery.orderBy(orderBuilders.stream()
+                        .map(b -> b.build(schema))
+                        .collect(Collectors.toList())
+                );
+            }
+            return null;
+        });
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static Specification<Stardust> specify(Schema.Specification<Stardust, StardustSchema> specifier) {
+        return (root, criteriaQuery, criteriaBuilder) -> {
+            StardustSchema stardust = new StardustSchema(root, criteriaBuilder);
+            return specifier.toPredicate(stardust, criteriaQuery);
+        };
     }
 
 }

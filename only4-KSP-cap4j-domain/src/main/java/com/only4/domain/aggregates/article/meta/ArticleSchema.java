@@ -3,12 +3,13 @@ package com.only4.domain.aggregates.article.meta;
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.article.Article;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -16,23 +17,85 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/01/09
  */
 @RequiredArgsConstructor
 public class ArticleSchema {
+    /**
+     * 属性字段集合
+     */
+    public static class PROPERTY_NAMES {
+        
+        /**
+         * ID
+         */
+        public static final String id = "id";
+
+        /**
+         * 标题
+         */
+        public static final String title = "title";
+
+        /**
+         * 描述
+         */
+        public static final String description = "description";
+
+        /**
+         * 内容
+         */
+        public static final String content = "content";
+
+        /**
+         * 文章封面
+         */
+        public static final String cover = "cover";
+
+        /**
+         * 文章附件
+         */
+        public static final String appendix = "appendix";
+
+        /**
+         * 文章状态
+         */
+        public static final String state = "state";
+
+        /**
+         * 置顶标识
+         */
+        public static final String stickyFlag = "stickyFlag";
+
+        /**
+         * 评论功能标识
+         */
+        public static final String commentFlag = "commentFlag";
+
+        /**
+         * 逻辑删除
+         */
+        public static final String delFlag = "delFlag";
+
+    }
+
     private final Path<Article> root;
     private final CriteriaBuilder criteriaBuilder;
 
-    public CriteriaBuilder criteriaBuilder() {
+    public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
+
+    public Path<Article> _root() {
+        return root;
+    }
+
 
     /**
      * ID
      * bigint
      */
     public Schema.Field<Long> id() {
-        return root == null ? new Schema.Field<>("id") : new Schema.Field<>(root.get("id"));
+        return new Schema.Field<>(root.get("id"), this.criteriaBuilder);
     }
 
     /**
@@ -40,7 +103,7 @@ public class ArticleSchema {
      * varchar(255)
      */
     public Schema.Field<String> title() {
-        return root == null ? new Schema.Field<>("title") : new Schema.Field<>(root.get("title"));
+        return new Schema.Field<>(root.get("title"), this.criteriaBuilder);
     }
 
     /**
@@ -48,7 +111,7 @@ public class ArticleSchema {
      * varchar(255)
      */
     public Schema.Field<String> description() {
-        return root == null ? new Schema.Field<>("description") : new Schema.Field<>(root.get("description"));
+        return new Schema.Field<>(root.get("description"), this.criteriaBuilder);
     }
 
     /**
@@ -56,7 +119,7 @@ public class ArticleSchema {
      * varchar(255)
      */
     public Schema.Field<String> content() {
-        return root == null ? new Schema.Field<>("content") : new Schema.Field<>(root.get("content"));
+        return new Schema.Field<>(root.get("content"), this.criteriaBuilder);
     }
 
     /**
@@ -64,7 +127,7 @@ public class ArticleSchema {
      * varchar(255)
      */
     public Schema.Field<String> cover() {
-        return root == null ? new Schema.Field<>("cover") : new Schema.Field<>(root.get("cover"));
+        return new Schema.Field<>(root.get("cover"), this.criteriaBuilder);
     }
 
     /**
@@ -72,7 +135,7 @@ public class ArticleSchema {
      * int
      */
     public Schema.Field<Integer> appendix() {
-        return root == null ? new Schema.Field<>("appendix") : new Schema.Field<>(root.get("appendix"));
+        return new Schema.Field<>(root.get("appendix"), this.criteriaBuilder);
     }
 
     /**
@@ -83,7 +146,7 @@ public class ArticleSchema {
      * int
      */
     public Schema.Field<com.only4.domain.aggregates.article.enums.ArticleState> state() {
-        return root == null ? new Schema.Field<>("state") : new Schema.Field<>(root.get("state"));
+        return new Schema.Field<>(root.get("state"), this.criteriaBuilder);
     }
 
     /**
@@ -91,7 +154,7 @@ public class ArticleSchema {
      * tinyint(1)
      */
     public Schema.Field<Boolean> stickyFlag() {
-        return root == null ? new Schema.Field<>("stickyFlag") : new Schema.Field<>(root.get("stickyFlag"));
+        return new Schema.Field<>(root.get("stickyFlag"), this.criteriaBuilder);
     }
 
     /**
@@ -99,7 +162,7 @@ public class ArticleSchema {
      * tinyint(1)
      */
     public Schema.Field<Boolean> commentFlag() {
-        return root == null ? new Schema.Field<>("commentFlag") : new Schema.Field<>(root.get("commentFlag"));
+        return new Schema.Field<>(root.get("commentFlag"), this.criteriaBuilder);
     }
 
     /**
@@ -107,7 +170,7 @@ public class ArticleSchema {
      * tinyint(1)
      */
     public Schema.Field<Boolean> delFlag() {
-        return root == null ? new Schema.Field<>("delFlag") : new Schema.Field<>(root.get("delFlag"));
+        return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
     }
 
 
@@ -117,7 +180,7 @@ public class ArticleSchema {
      * @return
      */
     public Predicate all(Predicate... restrictions) {
-        return criteriaBuilder().and(restrictions);
+        return this.criteriaBuilder.and(restrictions);
     }
 
     /**
@@ -126,7 +189,7 @@ public class ArticleSchema {
      * @return
      */
     public Predicate any(Predicate... restrictions) {
-        return criteriaBuilder().or(restrictions);
+        return this.criteriaBuilder.or(restrictions);
     }
 
     /**
@@ -146,8 +209,8 @@ public class ArticleSchema {
      */
     public com.only4.domain.aggregates.article.meta.ArticleCategorySchema joinArticleCategory(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Article, com.only4.domain.aggregates.article.ArticleCategory> join = ((Root<Article>) root).join("articleCategories", type);
-        com.only4.domain.aggregates.article.meta.ArticleCategorySchema schema = new com.only4.domain.aggregates.article.meta.ArticleCategorySchema(join, criteriaBuilder);
+        Join<Article, com.only4.domain.aggregates.article.ArticleCategory> join = ((Root<Article>) this.root).join("articleCategories", type);
+        com.only4.domain.aggregates.article.meta.ArticleCategorySchema schema = new com.only4.domain.aggregates.article.meta.ArticleCategorySchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -158,8 +221,8 @@ public class ArticleSchema {
      */
     public com.only4.domain.aggregates.article.meta.ArticleAuthorSchema joinArticleAuthor(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Article, com.only4.domain.aggregates.article.ArticleAuthor> join = ((Root<Article>) root).join("articleAuthors", type);
-        com.only4.domain.aggregates.article.meta.ArticleAuthorSchema schema = new com.only4.domain.aggregates.article.meta.ArticleAuthorSchema(join, criteriaBuilder);
+        Join<Article, com.only4.domain.aggregates.article.ArticleAuthor> join = ((Root<Article>) this.root).join("articleAuthors", type);
+        com.only4.domain.aggregates.article.meta.ArticleAuthorSchema schema = new com.only4.domain.aggregates.article.meta.ArticleAuthorSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -170,8 +233,8 @@ public class ArticleSchema {
      */
     public com.only4.domain.aggregates.article.meta.ArticleCommentSchema joinArticleComment(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Article, com.only4.domain.aggregates.article.ArticleComment> join = ((Root<Article>) root).join("articleComments", type);
-        com.only4.domain.aggregates.article.meta.ArticleCommentSchema schema = new com.only4.domain.aggregates.article.meta.ArticleCommentSchema(join, criteriaBuilder);
+        Join<Article, com.only4.domain.aggregates.article.ArticleComment> join = ((Root<Article>) this.root).join("articleComments", type);
+        com.only4.domain.aggregates.article.meta.ArticleCommentSchema schema = new com.only4.domain.aggregates.article.meta.ArticleCommentSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -182,8 +245,8 @@ public class ArticleSchema {
      */
     public com.only4.domain.aggregates.article.meta.ArticleStatisticsSchema joinArticleStatistics(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Article, com.only4.domain.aggregates.article.ArticleStatistics> join = ((Root<Article>) root).join("articleStatistics", type);
-        com.only4.domain.aggregates.article.meta.ArticleStatisticsSchema schema = new com.only4.domain.aggregates.article.meta.ArticleStatisticsSchema(join, criteriaBuilder);
+        Join<Article, com.only4.domain.aggregates.article.ArticleStatistics> join = ((Root<Article>) this.root).join("articleStatistics", type);
+        com.only4.domain.aggregates.article.meta.ArticleStatisticsSchema schema = new com.only4.domain.aggregates.article.meta.ArticleStatisticsSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -194,8 +257,8 @@ public class ArticleSchema {
      */
     public com.only4.domain.aggregates.article.meta.ArticleTagSchema joinArticleTag(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Article, com.only4.domain.aggregates.article.ArticleTag> join = ((Root<Article>) root).join("articleTags", type);
-        com.only4.domain.aggregates.article.meta.ArticleTagSchema schema = new com.only4.domain.aggregates.article.meta.ArticleTagSchema(join, criteriaBuilder);
+        Join<Article, com.only4.domain.aggregates.article.ArticleTag> join = ((Root<Article>) this.root).join("articleTags", type);
+        com.only4.domain.aggregates.article.meta.ArticleTagSchema schema = new com.only4.domain.aggregates.article.meta.ArticleTagSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -206,62 +269,205 @@ public class ArticleSchema {
      */
     public com.only4.domain.aggregates.article.meta.ArticleLikeSchema joinArticleLike(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Article, com.only4.domain.aggregates.article.ArticleLike> join = ((Root<Article>) root).join("articleLikes", type);
-        com.only4.domain.aggregates.article.meta.ArticleLikeSchema schema = new com.only4.domain.aggregates.article.meta.ArticleLikeSchema(join, criteriaBuilder);
+        Join<Article, com.only4.domain.aggregates.article.ArticleLike> join = ((Root<Article>) this.root).join("articleLikes", type);
+        com.only4.domain.aggregates.article.meta.ArticleLikeSchema schema = new com.only4.domain.aggregates.article.meta.ArticleLikeSchema(join, this.criteriaBuilder);
         return schema;
     }
 
     /**
      * 构建查询条件
-     * @param builder
-     * @param distinct
-     * @return
-     */
-    public static Specification<Article> specify(Schema.PredicateBuilder<ArticleSchema> builder, boolean distinct) {
-        return (root, criteriaQuery, criteriaBuilder) -> {
-            ArticleSchema article = new ArticleSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(article));
-            criteriaQuery.distinct(distinct);
-            return null;
-        };
-    }
-    
-    /**
-     * 构建查询条件
-     * @param builder
+     *
+     * @param builder where条件构造器
      * @return
      */
     public static Specification<Article> specify(Schema.PredicateBuilder<ArticleSchema> builder) {
+        return specify(builder, false, Collections.emptyList());
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder  where条件构造器
+     * @param distinct 是否去重
+     * @return
+     */
+    public static Specification<Article> specify(Schema.PredicateBuilder<ArticleSchema> builder, boolean distinct) {
+        return specify(builder, distinct, Collections.emptyList());
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Article> specify(Schema.PredicateBuilder<ArticleSchema> builder, Schema.OrderBuilder<ArticleSchema>... orderBuilders) {
+        return specify(builder, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Article> specify(Schema.PredicateBuilder<ArticleSchema> builder, List<Schema.OrderBuilder<ArticleSchema>> orderBuilders) {
+        return specify(builder, orderBuilders);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Article> specify(Schema.PredicateBuilder<ArticleSchema> builder, boolean distinct, Schema.OrderBuilder<ArticleSchema>... orderBuilders) {
+        return specify(builder, distinct, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Article> specify(Schema.PredicateBuilder<ArticleSchema> builder, boolean distinct, List<Schema.OrderBuilder<ArticleSchema>> orderBuilders) {
+        return specify((schema, criteriaQuery) -> {
+            criteriaQuery.where(builder.build(schema));
+            criteriaQuery.distinct(distinct);
+            if (orderBuilders != null && !orderBuilders.isEmpty()) {
+                criteriaQuery.orderBy(orderBuilders.stream()
+                        .map(b -> b.build(schema))
+                        .collect(Collectors.toList())
+                );
+            }
+            return null;
+        });
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static Specification<Article> specify(Schema.Specification<Article, ArticleSchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
             ArticleSchema article = new ArticleSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(article));
-            return null;
+            return specifier.toPredicate(article, criteriaQuery);
         };
     }
-    
-    /**
-     * 构建排序
-     * @param builders
-     * @return
-     */
-    public static Sort orderBy(Schema.OrderBuilder<ArticleSchema>... builders) {
-        return orderBy(Arrays.asList(builders));
-    }
 
     /**
-     * 构建排序
+     * 构建查询条件
      *
-     * @param builders
+     * @param id 主键
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<ArticleSchema>> builders) {
-        if(null == builders || builders.isEmpty()) {
-            return Sort.unsorted();
-        }
-        return Sort.by(builders.stream()
-                .map(builder -> builder.build(new ArticleSchema(null, null)))
-                .collect(Collectors.toList())
-        );
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Article> predicateById(Object id) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byId(Article.class, id);
     }
 
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Article> predicateByIds(Collection<Object> ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(Article.class, ids);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Article> predicateByIds(Object... ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(Article.class, Arrays.asList(ids));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Article> predicate(Schema.PredicateBuilder<ArticleSchema> builder) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Article.class, specify(builder));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder  查询条件构造器
+     * @param distinct 是否去重
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Article> predicate(Schema.PredicateBuilder<ArticleSchema> builder, boolean distinct) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Article.class, specify(builder, distinct));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Article> predicate(Schema.PredicateBuilder<ArticleSchema> builder, List<Schema.OrderBuilder<ArticleSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Article.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Article> predicate(Schema.PredicateBuilder<ArticleSchema> builder, Schema.OrderBuilder<ArticleSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Article.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Article> predicate(Schema.PredicateBuilder<ArticleSchema> builder, boolean distinct, List<Schema.OrderBuilder<ArticleSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Article.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Article> predicate(Schema.PredicateBuilder<ArticleSchema> builder, boolean distinct, Schema.OrderBuilder<ArticleSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Article.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Article> predicate(Schema.Specification<Article, ArticleSchema> specifier) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Article.class, specify(specifier));
+    }
 }

@@ -3,12 +3,13 @@ package com.only4.domain.aggregates.member.meta;
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.member.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -16,23 +17,90 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/01/09
  */
 @RequiredArgsConstructor
 public class MemberSchema {
+    /**
+     * 属性字段集合
+     */
+    public static class PROPERTY_NAMES {
+        
+        /**
+         * ID
+         */
+        public static final String id = "id";
+
+        /**
+         * 帐号
+         */
+        public static final String name = "name";
+
+        /**
+         * 密码
+         */
+        public static final String password = "password";
+
+        /**
+         * 手机号
+         */
+        public static final String phone = "phone";
+
+        /**
+         * 昵称
+         */
+        public static final String nickName = "nickName";
+
+        /**
+         * 个性签名
+         */
+        public static final String signature = "signature";
+
+        /**
+         * 等级
+         */
+        public static final String level = "level";
+
+        /**
+         * 余额
+         */
+        public static final String balance = "balance";
+
+        /**
+         * 封禁标识
+         */
+        public static final String banFlag = "banFlag";
+
+        /**
+         * 封禁时间
+         */
+        public static final String banTime = "banTime";
+
+        /**
+         * 逻辑删除
+         */
+        public static final String delFlag = "delFlag";
+
+    }
+
     private final Path<Member> root;
     private final CriteriaBuilder criteriaBuilder;
 
-    public CriteriaBuilder criteriaBuilder() {
+    public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
+
+    public Path<Member> _root() {
+        return root;
+    }
+
 
     /**
      * ID
      * bigint
      */
     public Schema.Field<Long> id() {
-        return root == null ? new Schema.Field<>("id") : new Schema.Field<>(root.get("id"));
+        return new Schema.Field<>(root.get("id"), this.criteriaBuilder);
     }
 
     /**
@@ -40,7 +108,7 @@ public class MemberSchema {
      * varchar(50)
      */
     public Schema.Field<String> name() {
-        return root == null ? new Schema.Field<>("name") : new Schema.Field<>(root.get("name"));
+        return new Schema.Field<>(root.get("name"), this.criteriaBuilder);
     }
 
     /**
@@ -48,7 +116,7 @@ public class MemberSchema {
      * varchar(50)
      */
     public Schema.Field<String> password() {
-        return root == null ? new Schema.Field<>("password") : new Schema.Field<>(root.get("password"));
+        return new Schema.Field<>(root.get("password"), this.criteriaBuilder);
     }
 
     /**
@@ -56,7 +124,7 @@ public class MemberSchema {
      * varchar(20)
      */
     public Schema.Field<String> phone() {
-        return root == null ? new Schema.Field<>("phone") : new Schema.Field<>(root.get("phone"));
+        return new Schema.Field<>(root.get("phone"), this.criteriaBuilder);
     }
 
     /**
@@ -64,7 +132,7 @@ public class MemberSchema {
      * varchar(255)
      */
     public Schema.Field<String> nickName() {
-        return root == null ? new Schema.Field<>("nickName") : new Schema.Field<>(root.get("nickName"));
+        return new Schema.Field<>(root.get("nickName"), this.criteriaBuilder);
     }
 
     /**
@@ -72,7 +140,7 @@ public class MemberSchema {
      * varchar(255)
      */
     public Schema.Field<String> signature() {
-        return root == null ? new Schema.Field<>("signature") : new Schema.Field<>(root.get("signature"));
+        return new Schema.Field<>(root.get("signature"), this.criteriaBuilder);
     }
 
     /**
@@ -80,7 +148,7 @@ public class MemberSchema {
      * int
      */
     public Schema.Field<Integer> level() {
-        return root == null ? new Schema.Field<>("level") : new Schema.Field<>(root.get("level"));
+        return new Schema.Field<>(root.get("level"), this.criteriaBuilder);
     }
 
     /**
@@ -88,7 +156,7 @@ public class MemberSchema {
      * bigint
      */
     public Schema.Field<Long> balance() {
-        return root == null ? new Schema.Field<>("balance") : new Schema.Field<>(root.get("balance"));
+        return new Schema.Field<>(root.get("balance"), this.criteriaBuilder);
     }
 
     /**
@@ -96,7 +164,7 @@ public class MemberSchema {
      * tinyint(1)
      */
     public Schema.Field<Boolean> banFlag() {
-        return root == null ? new Schema.Field<>("banFlag") : new Schema.Field<>(root.get("banFlag"));
+        return new Schema.Field<>(root.get("banFlag"), this.criteriaBuilder);
     }
 
     /**
@@ -104,7 +172,7 @@ public class MemberSchema {
      * timestamp
      */
     public Schema.Field<java.time.LocalDateTime> banTime() {
-        return root == null ? new Schema.Field<>("banTime") : new Schema.Field<>(root.get("banTime"));
+        return new Schema.Field<>(root.get("banTime"), this.criteriaBuilder);
     }
 
     /**
@@ -112,7 +180,7 @@ public class MemberSchema {
      * tinyint(1)
      */
     public Schema.Field<Boolean> delFlag() {
-        return root == null ? new Schema.Field<>("delFlag") : new Schema.Field<>(root.get("delFlag"));
+        return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
     }
 
 
@@ -122,7 +190,7 @@ public class MemberSchema {
      * @return
      */
     public Predicate all(Predicate... restrictions) {
-        return criteriaBuilder().and(restrictions);
+        return this.criteriaBuilder.and(restrictions);
     }
 
     /**
@@ -131,7 +199,7 @@ public class MemberSchema {
      * @return
      */
     public Predicate any(Predicate... restrictions) {
-        return criteriaBuilder().or(restrictions);
+        return this.criteriaBuilder.or(restrictions);
     }
 
     /**
@@ -151,8 +219,8 @@ public class MemberSchema {
      */
     public com.only4.domain.aggregates.member.meta.MemberLikeRecordSchema joinMemberLikeRecord(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.MemberLikeRecord> join = ((Root<Member>) root).join("memberLikeRecords", type);
-        com.only4.domain.aggregates.member.meta.MemberLikeRecordSchema schema = new com.only4.domain.aggregates.member.meta.MemberLikeRecordSchema(join, criteriaBuilder);
+        Join<Member, com.only4.domain.aggregates.member.MemberLikeRecord> join = ((Root<Member>) this.root).join("memberLikeRecords", type);
+        com.only4.domain.aggregates.member.meta.MemberLikeRecordSchema schema = new com.only4.domain.aggregates.member.meta.MemberLikeRecordSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -163,8 +231,8 @@ public class MemberSchema {
      */
     public com.only4.domain.aggregates.member.meta.MemberPermissionSchema joinMemberPermission(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.MemberPermission> join = ((Root<Member>) root).join("memberPermissions", type);
-        com.only4.domain.aggregates.member.meta.MemberPermissionSchema schema = new com.only4.domain.aggregates.member.meta.MemberPermissionSchema(join, criteriaBuilder);
+        Join<Member, com.only4.domain.aggregates.member.MemberPermission> join = ((Root<Member>) this.root).join("memberPermissions", type);
+        com.only4.domain.aggregates.member.meta.MemberPermissionSchema schema = new com.only4.domain.aggregates.member.meta.MemberPermissionSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -175,8 +243,8 @@ public class MemberSchema {
      */
     public com.only4.domain.aggregates.member.meta.ViewHistorySchema joinViewHistory(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.ViewHistory> join = ((Root<Member>) root).join("viewHistories", type);
-        com.only4.domain.aggregates.member.meta.ViewHistorySchema schema = new com.only4.domain.aggregates.member.meta.ViewHistorySchema(join, criteriaBuilder);
+        Join<Member, com.only4.domain.aggregates.member.ViewHistory> join = ((Root<Member>) this.root).join("viewHistories", type);
+        com.only4.domain.aggregates.member.meta.ViewHistorySchema schema = new com.only4.domain.aggregates.member.meta.ViewHistorySchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -187,8 +255,8 @@ public class MemberSchema {
      */
     public com.only4.domain.aggregates.member.meta.MemberStatisticsSchema joinMemberStatistics(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.MemberStatistics> join = ((Root<Member>) root).join("memberStatistics", type);
-        com.only4.domain.aggregates.member.meta.MemberStatisticsSchema schema = new com.only4.domain.aggregates.member.meta.MemberStatisticsSchema(join, criteriaBuilder);
+        Join<Member, com.only4.domain.aggregates.member.MemberStatistics> join = ((Root<Member>) this.root).join("memberStatistics", type);
+        com.only4.domain.aggregates.member.meta.MemberStatisticsSchema schema = new com.only4.domain.aggregates.member.meta.MemberStatisticsSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -199,8 +267,8 @@ public class MemberSchema {
      */
     public com.only4.domain.aggregates.member.meta.FollowMemberSchema joinFollowMember(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.FollowMember> join = ((Root<Member>) root).join("followMembers", type);
-        com.only4.domain.aggregates.member.meta.FollowMemberSchema schema = new com.only4.domain.aggregates.member.meta.FollowMemberSchema(join, criteriaBuilder);
+        Join<Member, com.only4.domain.aggregates.member.FollowMember> join = ((Root<Member>) this.root).join("followMembers", type);
+        com.only4.domain.aggregates.member.meta.FollowMemberSchema schema = new com.only4.domain.aggregates.member.meta.FollowMemberSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -211,8 +279,8 @@ public class MemberSchema {
      */
     public com.only4.domain.aggregates.member.meta.BlockMemberSchema joinBlockMember(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.BlockMember> join = ((Root<Member>) root).join("blockMembers", type);
-        com.only4.domain.aggregates.member.meta.BlockMemberSchema schema = new com.only4.domain.aggregates.member.meta.BlockMemberSchema(join, criteriaBuilder);
+        Join<Member, com.only4.domain.aggregates.member.BlockMember> join = ((Root<Member>) this.root).join("blockMembers", type);
+        com.only4.domain.aggregates.member.meta.BlockMemberSchema schema = new com.only4.domain.aggregates.member.meta.BlockMemberSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -223,8 +291,8 @@ public class MemberSchema {
      */
     public com.only4.domain.aggregates.member.meta.MemberStarSchema joinMemberStar(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.MemberStar> join = ((Root<Member>) root).join("memberStars", type);
-        com.only4.domain.aggregates.member.meta.MemberStarSchema schema = new com.only4.domain.aggregates.member.meta.MemberStarSchema(join, criteriaBuilder);
+        Join<Member, com.only4.domain.aggregates.member.MemberStar> join = ((Root<Member>) this.root).join("memberStars", type);
+        com.only4.domain.aggregates.member.meta.MemberStarSchema schema = new com.only4.domain.aggregates.member.meta.MemberStarSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -235,8 +303,8 @@ public class MemberSchema {
      */
     public com.only4.domain.aggregates.member.meta.FavoriteSchema joinFavorite(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.Favorite> join = ((Root<Member>) root).join("favorites", type);
-        com.only4.domain.aggregates.member.meta.FavoriteSchema schema = new com.only4.domain.aggregates.member.meta.FavoriteSchema(join, criteriaBuilder);
+        Join<Member, com.only4.domain.aggregates.member.Favorite> join = ((Root<Member>) this.root).join("favorites", type);
+        com.only4.domain.aggregates.member.meta.FavoriteSchema schema = new com.only4.domain.aggregates.member.meta.FavoriteSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -247,62 +315,205 @@ public class MemberSchema {
      */
     public com.only4.domain.aggregates.member.meta.SignInRecordSchema joinSignInRecord(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.SignInRecord> join = ((Root<Member>) root).join("signInRecords", type);
-        com.only4.domain.aggregates.member.meta.SignInRecordSchema schema = new com.only4.domain.aggregates.member.meta.SignInRecordSchema(join, criteriaBuilder);
+        Join<Member, com.only4.domain.aggregates.member.SignInRecord> join = ((Root<Member>) this.root).join("signInRecords", type);
+        com.only4.domain.aggregates.member.meta.SignInRecordSchema schema = new com.only4.domain.aggregates.member.meta.SignInRecordSchema(join, this.criteriaBuilder);
         return schema;
     }
 
     /**
      * 构建查询条件
-     * @param builder
-     * @param distinct
-     * @return
-     */
-    public static Specification<Member> specify(Schema.PredicateBuilder<MemberSchema> builder, boolean distinct) {
-        return (root, criteriaQuery, criteriaBuilder) -> {
-            MemberSchema member = new MemberSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(member));
-            criteriaQuery.distinct(distinct);
-            return null;
-        };
-    }
-    
-    /**
-     * 构建查询条件
-     * @param builder
+     *
+     * @param builder where条件构造器
      * @return
      */
     public static Specification<Member> specify(Schema.PredicateBuilder<MemberSchema> builder) {
+        return specify(builder, false, Collections.emptyList());
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder  where条件构造器
+     * @param distinct 是否去重
+     * @return
+     */
+    public static Specification<Member> specify(Schema.PredicateBuilder<MemberSchema> builder, boolean distinct) {
+        return specify(builder, distinct, Collections.emptyList());
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Member> specify(Schema.PredicateBuilder<MemberSchema> builder, Schema.OrderBuilder<MemberSchema>... orderBuilders) {
+        return specify(builder, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Member> specify(Schema.PredicateBuilder<MemberSchema> builder, List<Schema.OrderBuilder<MemberSchema>> orderBuilders) {
+        return specify(builder, orderBuilders);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Member> specify(Schema.PredicateBuilder<MemberSchema> builder, boolean distinct, Schema.OrderBuilder<MemberSchema>... orderBuilders) {
+        return specify(builder, distinct, Arrays.asList(orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       where条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序条件构造器
+     * @return
+     */
+    public static Specification<Member> specify(Schema.PredicateBuilder<MemberSchema> builder, boolean distinct, List<Schema.OrderBuilder<MemberSchema>> orderBuilders) {
+        return specify((schema, criteriaQuery) -> {
+            criteriaQuery.where(builder.build(schema));
+            criteriaQuery.distinct(distinct);
+            if (orderBuilders != null && !orderBuilders.isEmpty()) {
+                criteriaQuery.orderBy(orderBuilders.stream()
+                        .map(b -> b.build(schema))
+                        .collect(Collectors.toList())
+                );
+            }
+            return null;
+        });
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static Specification<Member> specify(Schema.Specification<Member, MemberSchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
             MemberSchema member = new MemberSchema(root, criteriaBuilder);
-            criteriaQuery.where(builder.build(member));
-            return null;
+            return specifier.toPredicate(member, criteriaQuery);
         };
     }
-    
-    /**
-     * 构建排序
-     * @param builders
-     * @return
-     */
-    public static Sort orderBy(Schema.OrderBuilder<MemberSchema>... builders) {
-        return orderBy(Arrays.asList(builders));
-    }
 
     /**
-     * 构建排序
+     * 构建查询条件
      *
-     * @param builders
+     * @param id 主键
      * @return
      */
-    public static Sort orderBy(Collection<Schema.OrderBuilder<MemberSchema>> builders) {
-        if(null == builders || builders.isEmpty()) {
-            return Sort.unsorted();
-        }
-        return Sort.by(builders.stream()
-                .map(builder -> builder.build(new MemberSchema(null, null)))
-                .collect(Collectors.toList())
-        );
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Member> predicateById(Object id) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byId(Member.class, id);
     }
 
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Member> predicateByIds(Collection<Object> ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(Member.class, ids);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Member> predicateByIds(Object... ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(Member.class, Arrays.asList(ids));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Member> predicate(Schema.PredicateBuilder<MemberSchema> builder) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Member.class, specify(builder));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder  查询条件构造器
+     * @param distinct 是否去重
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Member> predicate(Schema.PredicateBuilder<MemberSchema> builder, boolean distinct) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Member.class, specify(builder, distinct));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Member> predicate(Schema.PredicateBuilder<MemberSchema> builder, List<Schema.OrderBuilder<MemberSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Member.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Member> predicate(Schema.PredicateBuilder<MemberSchema> builder, Schema.OrderBuilder<MemberSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Member.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Member> predicate(Schema.PredicateBuilder<MemberSchema> builder, boolean distinct, List<Schema.OrderBuilder<MemberSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Member.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Member> predicate(Schema.PredicateBuilder<MemberSchema> builder, boolean distinct, Schema.OrderBuilder<MemberSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Member.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<Member> predicate(Schema.Specification<Member, MemberSchema> specifier) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(Member.class, specify(specifier));
+    }
 }

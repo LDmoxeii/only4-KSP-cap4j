@@ -1,17 +1,14 @@
 package com.only4.domain._share.meta;
 
 import com.google.common.collect.Lists;
+import org.hibernate.query.criteria.internal.OrderImpl;
 import org.hibernate.query.criteria.internal.path.SingularAttributePath;
-import org.springframework.data.domain.Sort;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.*;
 import java.util.Collection;
 
 /**
- * Schema
+ * 实体结构基类
  *
  * @author cap4j-ddd-codegen
  */
@@ -24,11 +21,15 @@ public class Schema {
         public Predicate build(S schema);
     }
 
+    public static interface Specification<E, S> {
+        public Predicate toPredicate(S schema, CriteriaQuery<?> criteriaQuery);
+    }
+
     /**
      * 排序构建器
      */
     public static interface OrderBuilder<S> {
-        public Sort.Order build(S schema);
+        public Order build(S schema);
     }
 
     public enum JoinType {
@@ -55,104 +56,102 @@ public class Schema {
      */
     public static class Field<T> {
         private String name;
-        private SingularAttributePath<T> path;
+        private Path<T> path;
+        private CriteriaBuilder criteriaBuilder;
 
-        public Field(Path<T> path) {
-            this.path = new SingularAttributePath<>(((SingularAttributePath<T>) path).criteriaBuilder(), ((SingularAttributePath<T>) path).getJavaType(), ((SingularAttributePath<T>) path).getPathSource(), ((SingularAttributePath<T>) path).getAttribute());
-            this.name = this.path.getAttribute().getName();
+        public Field(Path<T> path, CriteriaBuilder criteriaBuilder) {
+            this.path = path;
+            this.name = ((SingularAttributePath<T>) path).getAttribute().getName();
+            this.criteriaBuilder = ((SingularAttributePath<T>) path).criteriaBuilder();
         }
 
-        public Field(String name) {
-            this.name = name;
+        protected CriteriaBuilder _criteriaBuilder() {
+            return this.criteriaBuilder;
         }
 
-        protected CriteriaBuilder criteriaBuilder() {
-            return path == null ? null : path.criteriaBuilder();
-        }
-
-        public Path<T> path(){
+        public Path<T> path() {
             return path;
         }
 
-        public Sort.Order asc() {
-            return Sort.Order.asc(this.name);
+        public Order asc() {
+            return new OrderImpl(path, true);
         }
 
-        public Sort.Order desc() {
-            return Sort.Order.desc(this.name);
+        public Order desc() {
+            return new OrderImpl(path, false);
         }
 
         public Predicate isTrue() {
-            return criteriaBuilder().isTrue((Expression<Boolean>) this.path);
+            return this.criteriaBuilder.isTrue((Expression<Boolean>) this.path);
         }
 
         public Predicate isFalse() {
-            return criteriaBuilder().isTrue((Expression<Boolean>) this.path);
+            return this.criteriaBuilder.isTrue((Expression<Boolean>) this.path);
 
         }
 
         public Predicate equal(Object val) {
-            return criteriaBuilder().equal(this.path, val);
+            return this.criteriaBuilder.equal(this.path, val);
         }
 
         public Predicate equal(Expression<?> val) {
-            return criteriaBuilder().equal(this.path, val);
+            return this.criteriaBuilder.equal(this.path, val);
         }
 
         public Predicate notEqual(Object val) {
-            return criteriaBuilder().notEqual(this.path, val);
+            return this.criteriaBuilder.notEqual(this.path, val);
         }
 
         public Predicate notEqual(Expression<?> val) {
-            return criteriaBuilder().notEqual(this.path, val);
+            return this.criteriaBuilder.notEqual(this.path, val);
         }
 
         public Predicate isNull() {
-            return criteriaBuilder().isNull(this.path);
+            return this.criteriaBuilder.isNull(this.path);
         }
 
         public Predicate isNotNull() {
-            return criteriaBuilder().isNotNull(this.path);
+            return this.criteriaBuilder.isNotNull(this.path);
         }
 
         public <Y extends Comparable<? super Y>> Predicate greaterThan(Y val) {
-            return criteriaBuilder().greaterThan((Expression<Y>) this.path, val);
+            return this.criteriaBuilder.greaterThan((Expression<Y>) this.path, val);
         }
 
         public <Y extends Comparable<? super Y>> Predicate greaterThan(Expression<? extends Y> val) {
-            return criteriaBuilder().greaterThan((Expression<Y>) this.path, val);
+            return this.criteriaBuilder.greaterThan((Expression<Y>) this.path, val);
         }
 
         public <Y extends Comparable<? super Y>> Predicate greaterThanOrEqualTo(Y val) {
-            return criteriaBuilder().greaterThan((Expression<Y>) this.path, val);
+            return this.criteriaBuilder.greaterThan((Expression<Y>) this.path, val);
         }
 
         public <Y extends Comparable<? super Y>> Predicate greaterThanOrEqualTo(Expression<? extends Y> val) {
-            return criteriaBuilder().greaterThanOrEqualTo((Expression<Y>) this.path, val);
+            return this.criteriaBuilder.greaterThanOrEqualTo((Expression<Y>) this.path, val);
         }
 
         public <Y extends Comparable<? super Y>> Predicate lessThan(Y val) {
-            return criteriaBuilder().lessThan((Expression<Y>) this.path, val);
+            return this.criteriaBuilder.lessThan((Expression<Y>) this.path, val);
         }
 
         public <Y extends Comparable<? super Y>> Predicate lessThan(Expression<? extends Y> val) {
-            return criteriaBuilder().lessThan((Expression<Y>) this.path, val);
+            return this.criteriaBuilder.lessThan((Expression<Y>) this.path, val);
         }
 
         public <Y extends Comparable<? super Y>> Predicate lessThanOrEqualTo(Y val) {
-            return criteriaBuilder().lessThanOrEqualTo((Expression<Y>) this.path, val);
+            return this.criteriaBuilder.lessThanOrEqualTo((Expression<Y>) this.path, val);
         }
 
         public <Y extends Comparable<? super Y>> Predicate lessThanOrEqualTo(Expression<? extends Y> val) {
-            return criteriaBuilder().lessThanOrEqualTo((Expression<Y>) this.path, val);
+            return this.criteriaBuilder.lessThanOrEqualTo((Expression<Y>) this.path, val);
         }
 
         public <Y extends Comparable<? super Y>> Predicate between(Y val1, Y val2) {
-            return criteriaBuilder().between((Expression<Y>) this.path, val1, val2);
+            return this.criteriaBuilder.between((Expression<Y>) this.path, val1, val2);
         }
 
         public <Y extends Comparable<? super Y>> Predicate between(Expression<? extends Y> val1, Expression<? extends Y> val2) {
-            return criteriaBuilder().between((Expression<Y>) this.path, val1, val2);
+            return this.criteriaBuilder.between((Expression<Y>) this.path, val1, val2);
         }
 
         public Predicate in(Object... vals) {
@@ -160,7 +159,7 @@ public class Schema {
         }
 
         public Predicate in(Collection<Object> vals) {
-            CriteriaBuilder.In predicate = criteriaBuilder().in(this.path);
+            CriteriaBuilder.In predicate = criteriaBuilder.in(this.path);
             for (Object o : vals) {
                 predicate.value(o);
             }
@@ -172,24 +171,24 @@ public class Schema {
         }
 
         public Predicate notIn(Collection<Object> vals) {
-            return criteriaBuilder().not(in(vals));
+            return this.criteriaBuilder.not(in(vals));
         }
 
 
         public Predicate like(String val) {
-            return criteriaBuilder().like((Expression<String>) this.path, val);
+            return this.criteriaBuilder.like((Expression<String>) this.path, val);
         }
 
         public Predicate like(Expression<String> val) {
-            return criteriaBuilder().like((Expression<String>) this.path, val);
+            return this.criteriaBuilder.like((Expression<String>) this.path, val);
         }
 
         public Predicate notLike(String val) {
-            return criteriaBuilder().notLike((Expression<String>) this.path, val);
+            return this.criteriaBuilder.notLike((Expression<String>) this.path, val);
         }
 
         public Predicate notLike(Expression<String> val) {
-            return criteriaBuilder().notLike((Expression<String>) this.path, val);
+            return this.criteriaBuilder.notLike((Expression<String>) this.path, val);
         }
 
 
