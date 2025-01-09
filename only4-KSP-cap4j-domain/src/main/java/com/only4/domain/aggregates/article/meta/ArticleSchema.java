@@ -57,6 +57,11 @@ public class ArticleSchema {
         public static final String appendix = "appendix";
 
         /**
+         * 文章价格
+         */
+        public static final String price = "price";
+
+        /**
          * 文章状态
          */
         public static final String state = "state";
@@ -136,6 +141,14 @@ public class ArticleSchema {
      */
     public Schema.Field<Integer> appendix() {
         return new Schema.Field<>(root.get("appendix"), this.criteriaBuilder);
+    }
+
+    /**
+     * 文章价格
+     * bigint
+     */
+    public Schema.Field<Long> price() {
+        return new Schema.Field<>(root.get("price"), this.criteriaBuilder);
     }
 
     /**

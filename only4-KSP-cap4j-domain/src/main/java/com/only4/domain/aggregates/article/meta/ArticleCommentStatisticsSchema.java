@@ -32,11 +32,6 @@ public class ArticleCommentStatisticsSchema {
         public static final String id = "id";
 
         /**
-         * 文章评论ID
-         */
-        public static final String commentId = "commentId";
-
-        /**
          * 点赞数
          */
         public static final String likes = "likes";
@@ -71,14 +66,6 @@ public class ArticleCommentStatisticsSchema {
      */
     public Schema.Field<Long> id() {
         return new Schema.Field<>(root.get("id"), this.criteriaBuilder);
-    }
-
-    /**
-     * 文章评论ID
-     * bigint
-     */
-    public Schema.Field<Long> commentId() {
-        return new Schema.Field<>(root.get("commentId"), this.criteriaBuilder);
     }
 
     /**

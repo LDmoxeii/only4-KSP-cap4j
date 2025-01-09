@@ -146,6 +146,18 @@ public class StarCommentSchema {
         return builder.build(this);
     }
 
+    /**
+     * StarCommentLike 关联查询条件定义
+     *
+     * @param joinType
+     * @return
+     */
+    public com.only4.domain.aggregates.star.meta.StarCommentLikeSchema joinStarCommentLike(Schema.JoinType joinType) {
+        JoinType type = joinType.toJpaJoinType();
+        Join<StarComment, com.only4.domain.aggregates.star.StarCommentLike> join = ((Root<StarComment>) this.root).join("starCommentLikes", type);
+        com.only4.domain.aggregates.star.meta.StarCommentLikeSchema schema = new com.only4.domain.aggregates.star.meta.StarCommentLikeSchema(join, this.criteriaBuilder);
+        return schema;
+    }
 
     /**
      * 构建查询条件

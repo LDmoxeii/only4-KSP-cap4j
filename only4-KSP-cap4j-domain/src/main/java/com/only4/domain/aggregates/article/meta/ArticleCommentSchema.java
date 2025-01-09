@@ -172,6 +172,30 @@ public class ArticleCommentSchema {
         return builder.build(this);
     }
 
+    /**
+     * ArticleCommentStatistics 关联查询条件定义
+     *
+     * @param joinType
+     * @return
+     */
+    public com.only4.domain.aggregates.article.meta.ArticleCommentStatisticsSchema joinArticleCommentStatistics(Schema.JoinType joinType) {
+        JoinType type = joinType.toJpaJoinType();
+        Join<ArticleComment, com.only4.domain.aggregates.article.ArticleCommentStatistics> join = ((Root<ArticleComment>) this.root).join("articleCommentStatistics", type);
+        com.only4.domain.aggregates.article.meta.ArticleCommentStatisticsSchema schema = new com.only4.domain.aggregates.article.meta.ArticleCommentStatisticsSchema(join, this.criteriaBuilder);
+        return schema;
+    }
+    /**
+     * ArticleCommentLike 关联查询条件定义
+     *
+     * @param joinType
+     * @return
+     */
+    public com.only4.domain.aggregates.article.meta.ArticleCommentLikeSchema joinArticleCommentLike(Schema.JoinType joinType) {
+        JoinType type = joinType.toJpaJoinType();
+        Join<ArticleComment, com.only4.domain.aggregates.article.ArticleCommentLike> join = ((Root<ArticleComment>) this.root).join("articleCommentLikes", type);
+        com.only4.domain.aggregates.article.meta.ArticleCommentLikeSchema schema = new com.only4.domain.aggregates.article.meta.ArticleCommentLikeSchema(join, this.criteriaBuilder);
+        return schema;
+    }
 
     /**
      * 构建查询条件

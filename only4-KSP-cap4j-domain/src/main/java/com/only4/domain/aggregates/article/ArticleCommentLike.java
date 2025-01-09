@@ -54,13 +54,6 @@ public class ArticleCommentLike {
     Long id;
 
     /**
-     * 评论ID
-     * bigint
-     */
-    @Column(name = "`comment_id`")
-    Long commentId;
-
-    /**
      * 点赞用户ID
      * bigint
      */

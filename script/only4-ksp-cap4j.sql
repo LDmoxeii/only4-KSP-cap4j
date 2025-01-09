@@ -11,7 +11,7 @@
  Target Server Version : 80033
  File Encoding         : 65001
 
- Date: 21/12/2024 14:48:05
+ Date: 09/01/2025 20:34:56
 */
 
 SET NAMES utf8mb4;
@@ -178,7 +178,7 @@ CREATE TABLE `__locker`  (
 -- ----------------------------
 -- Records of __locker
 -- ----------------------------
-INSERT INTO `__locker` VALUES (1, 'saga_compense[only4-KSP-cap4j]', 'ShRxtmAb', '2024-12-15 21:03:00', '2024-12-15 21:03:00', 0, '2024-11-17 04:55:00', '2024-12-15 13:03:00');
+INSERT INTO `__locker` VALUES (1, 'saga_compense[only4-KSP-cap4j]', 'YaigiROX', '2024-12-22 21:11:00', '2024-12-22 21:11:00', 0, '2024-11-17 04:55:00', '2024-12-22 13:11:00');
 
 -- ----------------------------
 -- Table structure for __saga
@@ -312,12 +312,13 @@ CREATE TABLE `article`  (
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
   `cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文章封面',
   `appendix` int(0) NULL DEFAULT NULL COMMENT '文章附件',
+  `price` bigint(0) NOT NULL COMMENT '文章价格',
   `state` int(0) NOT NULL COMMENT '文章状态@T=ArticleState;@E=0:PRIVATE|1:PUBLISH|2:BANNED;',
   `sticky_flag` tinyint(1) NOT NULL COMMENT '置顶标识',
   `comment_flag` tinyint(1) NOT NULL COMMENT '评论功能标识',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章\n @Fac;\n @DE=CreatedArticle|UpdatedArticleLikes|UpdatedArticleFavorites|LikedArticle|UnlikedArticle|CreatedArticleComment|DeletedArticleComment|LikedArticleComment|UnlikedArticleComment|UpdatedArticleCommentLikes;' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章\r\n @Fac;\r\n @DE=CreatedArticle|UpdatedArticleLikes|UpdatedArticleFavorites|LikedArticle|UnlikedArticle|CreatedArticleComment|DeletedArticleComment|LikedArticleComment|UnlikedArticleComment|UpdatedArticleCommentLikes;' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article
@@ -384,7 +385,7 @@ CREATE TABLE `article_comment`  (
 DROP TABLE IF EXISTS `article_comment_like`;
 CREATE TABLE `article_comment_like`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
-  `comment_id` bigint(0) NOT NULL COMMENT '评论ID',
+  `article_comment_id` bigint(0) NOT NULL COMMENT '评论ID',
   `member_id` bigint(0) NOT NULL COMMENT '点赞用户ID',
   `create_at` timestamp(0) NOT NULL COMMENT '点赞时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
@@ -401,7 +402,7 @@ CREATE TABLE `article_comment_like`  (
 DROP TABLE IF EXISTS `article_comment_statistics`;
 CREATE TABLE `article_comment_statistics`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
-  `comment_id` bigint(0) NOT NULL COMMENT '文章评论ID',
+  `article_comment_id` bigint(0) NOT NULL COMMENT '文章评论ID',
   `likes` bigint(0) NOT NULL COMMENT '点赞数',
   `comment_replies` int(0) NOT NULL COMMENT '评论回复数',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
@@ -706,6 +707,7 @@ CREATE TABLE `role`  (
 -- Records of role
 -- ----------------------------
 INSERT INTO `role` VALUES (115514853904351232, 'normal', '普通', '2024-12-15 18:14:47', 1);
+INSERT INTO `role` VALUES (118093699417636864, 'norm', '普通', '2024-12-22 21:02:12', 0);
 
 -- ----------------------------
 -- Table structure for role_permission
@@ -729,6 +731,7 @@ INSERT INTO `role_permission` VALUES (115518729898426368, 115514853904351232, 'A
 INSERT INTO `role_permission` VALUES (115518729902620672, 115514853904351232, 'ADMIN_USER_UPDATE_PASSWORD', '更新管理员用户密码', 1);
 INSERT INTO `role_permission` VALUES (115518729902620673, 115514853904351232, 'ADMIN_USER_DELETE', '删除管理员用户', 1);
 INSERT INTO `role_permission` VALUES (115518729902620674, 115514853904351232, 'ADMIN_USER_CREATE', '创建管理员用户', 1);
+INSERT INTO `role_permission` VALUES (118093699535077376, 118093699417636864, 'ADMIN_USER_EDIT', '更新管理员用户信息', 0);
 
 -- ----------------------------
 -- Table structure for sign_in_record
@@ -789,6 +792,7 @@ CREATE TABLE `star_comment`  (
 DROP TABLE IF EXISTS `star_comment_like`;
 CREATE TABLE `star_comment_like`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
+  `star_comment_id` bigint(0) NOT NULL COMMENT '星球评论ID',
   `star_id` bigint(0) NOT NULL COMMENT '星球ID',
   `stardust_id` bigint(0) NOT NULL COMMENT '星尘ID',
   `create_at` timestamp(0) NOT NULL COMMENT '点赞时间',
