@@ -13,7 +13,7 @@
     <select id="existedById" resultType="java.lang.Boolean">
         SELECT EXISTS(SELECT 1 FROM `order` WHERE id = #{id}) as is_exists
     </select>
-    <select id="getOrderById" resultType="order">
+    <select id="getOrderById" resultMap="order">
         SELECT ord.id       as id,
                ord.amount   as amount,
                ord.price    as price,
