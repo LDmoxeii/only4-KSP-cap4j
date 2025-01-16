@@ -1,7 +1,7 @@
 package com.only4.domain.aggregates.star.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.star.StarCommentLike;
+import com.only4.domain.aggregates.star.StarStatistic;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 星球评论点赞
+ * 星球统计
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
  * @date 2025/01/16
  */
 @RequiredArgsConstructor
-public class StarCommentLikeSchema {
+public class StarStatisticSchema {
     /**
      * 属性字段集合
      */
@@ -32,19 +32,19 @@ public class StarCommentLikeSchema {
         public static final String id = "id";
 
         /**
-         * 星球ID
+         * 星球点赞数
          */
-        public static final String starId = "starId";
+        public static final String likes = "likes";
 
         /**
-         * 星尘ID
+         * 星球评论数
          */
-        public static final String stardustId = "stardustId";
+        public static final String comments = "comments";
 
         /**
-         * 点赞时间
+         * 星尘数
          */
-        public static final String createAt = "createAt";
+        public static final String stardust = "stardust";
 
         /**
          * 逻辑删除
@@ -53,14 +53,14 @@ public class StarCommentLikeSchema {
 
     }
 
-    private final Path<StarCommentLike> root;
+    private final Path<StarStatistic> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
 
-    public Path<StarCommentLike> _root() {
+    public Path<StarStatistic> _root() {
         return root;
     }
 
@@ -74,27 +74,27 @@ public class StarCommentLikeSchema {
     }
 
     /**
-     * 星球ID
-     * bigint
+     * 星球点赞数
+     * int
      */
-    public Schema.Field<Long> starId() {
-        return new Schema.Field<>(root.get("starId"), this.criteriaBuilder);
+    public Schema.Field<Integer> likes() {
+        return new Schema.Field<>(root.get("likes"), this.criteriaBuilder);
     }
 
     /**
-     * 星尘ID
-     * bigint
+     * 星球评论数
+     * int
      */
-    public Schema.Field<Long> stardustId() {
-        return new Schema.Field<>(root.get("stardustId"), this.criteriaBuilder);
+    public Schema.Field<Integer> comments() {
+        return new Schema.Field<>(root.get("comments"), this.criteriaBuilder);
     }
 
     /**
-     * 点赞时间
-     * timestamp
+     * 星尘数
+     * int
      */
-    public Schema.Field<java.time.LocalDateTime> createAt() {
-        return new Schema.Field<>(root.get("createAt"), this.criteriaBuilder);
+    public Schema.Field<Integer> stardust() {
+        return new Schema.Field<>(root.get("stardust"), this.criteriaBuilder);
     }
 
     /**
@@ -129,7 +129,7 @@ public class StarCommentLikeSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<StarCommentLikeSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<StarStatisticSchema> builder){
         return builder.build(this);
     }
 
@@ -140,7 +140,7 @@ public class StarCommentLikeSchema {
      * @param builder where条件构造器
      * @return
      */
-    public static Specification<StarCommentLike> specify(Schema.PredicateBuilder<StarCommentLikeSchema> builder) {
+    public static Specification<StarStatistic> specify(Schema.PredicateBuilder<StarStatisticSchema> builder) {
         return specify(builder, false, Collections.emptyList());
     }
 
@@ -151,7 +151,7 @@ public class StarCommentLikeSchema {
      * @param distinct 是否去重
      * @return
      */
-    public static Specification<StarCommentLike> specify(Schema.PredicateBuilder<StarCommentLikeSchema> builder, boolean distinct) {
+    public static Specification<StarStatistic> specify(Schema.PredicateBuilder<StarStatisticSchema> builder, boolean distinct) {
         return specify(builder, distinct, Collections.emptyList());
     }
 
@@ -162,7 +162,7 @@ public class StarCommentLikeSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<StarCommentLike> specify(Schema.PredicateBuilder<StarCommentLikeSchema> builder, Schema.OrderBuilder<StarCommentLikeSchema>... orderBuilders) {
+    public static Specification<StarStatistic> specify(Schema.PredicateBuilder<StarStatisticSchema> builder, Schema.OrderBuilder<StarStatisticSchema>... orderBuilders) {
         return specify(builder, Arrays.asList(orderBuilders));
     }
 
@@ -173,7 +173,7 @@ public class StarCommentLikeSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<StarCommentLike> specify(Schema.PredicateBuilder<StarCommentLikeSchema> builder, List<Schema.OrderBuilder<StarCommentLikeSchema>> orderBuilders) {
+    public static Specification<StarStatistic> specify(Schema.PredicateBuilder<StarStatisticSchema> builder, List<Schema.OrderBuilder<StarStatisticSchema>> orderBuilders) {
         return specify(builder, orderBuilders);
     }
 
@@ -185,7 +185,7 @@ public class StarCommentLikeSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<StarCommentLike> specify(Schema.PredicateBuilder<StarCommentLikeSchema> builder, boolean distinct, Schema.OrderBuilder<StarCommentLikeSchema>... orderBuilders) {
+    public static Specification<StarStatistic> specify(Schema.PredicateBuilder<StarStatisticSchema> builder, boolean distinct, Schema.OrderBuilder<StarStatisticSchema>... orderBuilders) {
         return specify(builder, distinct, Arrays.asList(orderBuilders));
     }
 
@@ -197,7 +197,7 @@ public class StarCommentLikeSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<StarCommentLike> specify(Schema.PredicateBuilder<StarCommentLikeSchema> builder, boolean distinct, List<Schema.OrderBuilder<StarCommentLikeSchema>> orderBuilders) {
+    public static Specification<StarStatistic> specify(Schema.PredicateBuilder<StarStatisticSchema> builder, boolean distinct, List<Schema.OrderBuilder<StarStatisticSchema>> orderBuilders) {
         return specify((schema, criteriaQuery) -> {
             criteriaQuery.where(builder.build(schema));
             criteriaQuery.distinct(distinct);
@@ -217,10 +217,10 @@ public class StarCommentLikeSchema {
      * @param specifier 查询条件构造器
      * @return
      */
-    public static Specification<StarCommentLike> specify(Schema.Specification<StarCommentLike, StarCommentLikeSchema> specifier) {
+    public static Specification<StarStatistic> specify(Schema.Specification<StarStatistic, StarStatisticSchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            StarCommentLikeSchema starCommentLike = new StarCommentLikeSchema(root, criteriaBuilder);
-            return specifier.toPredicate(starCommentLike, criteriaQuery);
+            StarStatisticSchema starStatistic = new StarStatisticSchema(root, criteriaBuilder);
+            return specifier.toPredicate(starStatistic, criteriaQuery);
         };
     }
 

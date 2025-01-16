@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/01/09
+ * @date 2025/01/16
  */
 @RequiredArgsConstructor
 public class StarSchema {
@@ -171,6 +171,18 @@ public class StarSchema {
         return schema;
     }
     /**
+     * StarStatistic 关联查询条件定义
+     *
+     * @param joinType
+     * @return
+     */
+    public com.only4.domain.aggregates.star.meta.StarStatisticSchema joinStarStatistic(Schema.JoinType joinType) {
+        JoinType type = joinType.toJpaJoinType();
+        Join<Star, com.only4.domain.aggregates.star.StarStatistic> join = ((Root<Star>) this.root).join("starStatistics", type);
+        com.only4.domain.aggregates.star.meta.StarStatisticSchema schema = new com.only4.domain.aggregates.star.meta.StarStatisticSchema(join, this.criteriaBuilder);
+        return schema;
+    }
+    /**
      * StarLike 关联查询条件定义
      *
      * @param joinType
@@ -180,18 +192,6 @@ public class StarSchema {
         JoinType type = joinType.toJpaJoinType();
         Join<Star, com.only4.domain.aggregates.star.StarLike> join = ((Root<Star>) this.root).join("starLikes", type);
         com.only4.domain.aggregates.star.meta.StarLikeSchema schema = new com.only4.domain.aggregates.star.meta.StarLikeSchema(join, this.criteriaBuilder);
-        return schema;
-    }
-    /**
-     * StarStatistice 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.star.meta.StarStatisticeSchema joinStarStatistice(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Star, com.only4.domain.aggregates.star.StarStatistice> join = ((Root<Star>) this.root).join("starStatistices", type);
-        com.only4.domain.aggregates.star.meta.StarStatisticeSchema schema = new com.only4.domain.aggregates.star.meta.StarStatisticeSchema(join, this.criteriaBuilder);
         return schema;
     }
 
