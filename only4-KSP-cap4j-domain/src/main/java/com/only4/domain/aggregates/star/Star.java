@@ -6,13 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import javax.persistence.CascadeType;
@@ -73,17 +66,17 @@ public class Star {
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`star_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.star.StarLike> starLikes;
+    @Getter(lombok.AccessLevel.PROTECTED)
+    private java.util.List<com.only4.domain.aggregates.star.StarStatistic> starStatistics;
+
+    public com.only4.domain.aggregates.star.StarStatistic getStarStatistic() {
+        return starStatistics == null || starStatistics.size() == 0 ? null : starStatistics.get(0);
+    }
 
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`star_id`", nullable = false)
-    @Getter(lombok.AccessLevel.PROTECTED)
-    private java.util.List<com.only4.domain.aggregates.star.StarStatistice> starStatistices;
-
-    public com.only4.domain.aggregates.star.StarStatistice getStarStatistice() {
-        return starStatistices == null || starStatistices.size() == 0 ? null : starStatistices.get(0);
-    }
+    private java.util.List<com.only4.domain.aggregates.star.StarLike> starLikes;
 
     /**
      * ID
