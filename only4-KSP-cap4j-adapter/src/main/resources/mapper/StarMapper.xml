@@ -13,17 +13,20 @@
         <collection property="starStatistics"
                     ofType="com.only4.domain.aggregates.star.StarStatistic"
                     resultMap="starStatistic">
-            <result column="likes" property="likes"/>
-            <result column="comments" property="comments"/>
-            <result column="stardust" property="stardust"/>
         </collection>
 
-        <collection property="stardust"
+        <collection property="stardusts"
                     ofType="com.only4.domain.aggregates.star.Stardust"
                     resultMap="stardust">
             <result column="name" property="name"/>
             <result column="create_at" property="createAt"/>
             <result column="del_at" property="delAt"/>
+        </collection>
+
+        <collection property="starLikes"
+                    ofType="com.only4.domain.aggregates.star.StarLike">
+            <result column="stardust_id" property="stardustId"/>
+            <result column="create_at" property="createAt"/>
         </collection>
     </resultMap>
     
@@ -33,11 +36,12 @@
         <result column="create_at" property="createAt"/>
         <result column="del_at" property="delAt"/>
         <result column="del_flag" property="delFlag"/>
-        <collection property="starLikes"
-                    ofType="com.only4.domain.aggregates.star.StarLike">
-            <result column="stardust_id" property="stardustId"/>
-            <result column="create_at" property="createAt"/>
-        </collection>
+    </resultMap>
+
+    <resultMap id="starStatistic" type="com.only4.domain.aggregates.star.StarStatistic">
+        <result column="likes" property="likes"/>
+        <result column="comments" property="comments"/>
+        <result column="stardust" property="stardust"/>
     </resultMap>
 
     <select id="existedByName" resultType="java.lang.Boolean">
