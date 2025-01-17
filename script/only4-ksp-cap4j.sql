@@ -824,8 +824,8 @@ CREATE TABLE `star_like`  (
 -- ----------------------------
 -- Table structure for star_statistice
 -- ----------------------------
-DROP TABLE IF EXISTS `star_statistice`;
-CREATE TABLE `star_statistice`  (
+DROP TABLE IF EXISTS `star_statistic`;
+CREATE TABLE `star_statistic`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
   `star_id` bigint(0) NOT NULL COMMENT '星球ID',
   `likes` int(0) NOT NULL COMMENT '星球点赞数',

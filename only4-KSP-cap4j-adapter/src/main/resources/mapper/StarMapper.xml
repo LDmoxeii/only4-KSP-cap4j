@@ -9,7 +9,7 @@
         <result column="description" property="description"/>
         <result column="amount" property="amount"/>
         <result column="del_flag" property="delFlag"/>
-        
+
         <collection property="starStatistics"
                     ofType="com.only4.domain.aggregates.star.StarStatistic"
                     resultMap="starStatistic">
@@ -29,7 +29,7 @@
             <result column="create_at" property="createAt"/>
         </collection>
     </resultMap>
-    
+
     <resultMap id="stardust" type="com.only4.domain.aggregates.star.Stardust">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
@@ -60,7 +60,7 @@
         SELECT ss.likes    as likes,
                ss.comments as comments,
                ss.stardust as stardust
-        FROM star_statistice ss
+        FROM star_statistic ss
                  LEFT JOIN star s ON ss.star_id = s.id
         WHERE s.member_id = #{memberId}
     </select>
