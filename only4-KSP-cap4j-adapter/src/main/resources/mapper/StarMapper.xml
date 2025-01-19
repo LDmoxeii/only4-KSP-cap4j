@@ -44,7 +44,7 @@
         <result column="stardust" property="stardust"/>
     </resultMap>
 
-    <select id="existedByName" resultType="java.lang.Boolean">
+    <select id="existedStarByName" resultType="java.lang.Boolean">
         SELECT EXISTS(SELECT 1 FROM star WHERE name = #{name}) as is_exists
     </select>
     <select id="getByMemberId" resultMap="star">

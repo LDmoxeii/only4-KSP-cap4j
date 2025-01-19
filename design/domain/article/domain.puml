@@ -1,4 +1,4 @@
-@startuml
+W@startuml
 !include ..\lib_eventstorming.puml
 
 Aggregate("Article") [
