@@ -13,7 +13,7 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
  */
-public class GetFavoritesByFavoritesIdQry {
+public class GetFavoriteByFavoritesIdQry {
     /**
      * GetFavoritesByFavoritesIdQry查询请求参数
      */
