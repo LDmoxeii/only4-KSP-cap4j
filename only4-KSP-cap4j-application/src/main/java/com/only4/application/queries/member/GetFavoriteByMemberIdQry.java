@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.application.RequestParam;
 
+import java.util.List;
+
 /**
  * todo: 查询描述
  *
@@ -33,6 +35,6 @@ public class GetFavoriteByMemberIdQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        Favorite favorite;
+        List<Favorite> favorite;
     }
 }

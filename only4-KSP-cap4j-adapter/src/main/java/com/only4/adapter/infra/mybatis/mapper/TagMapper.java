@@ -4,5 +4,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface TagMapper {
-    Boolean existedByName(String name);
+    Boolean existedTagByName(String name);
 }

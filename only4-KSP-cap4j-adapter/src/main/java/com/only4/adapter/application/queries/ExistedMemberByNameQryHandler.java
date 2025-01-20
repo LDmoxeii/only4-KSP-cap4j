@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * ExistedMemberByNameQry查询请求适配实现
- * todo: 查询描述
+ * todo: 查询描述：根据 用户名 判断用户是否存在,返回一个Boolean
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19

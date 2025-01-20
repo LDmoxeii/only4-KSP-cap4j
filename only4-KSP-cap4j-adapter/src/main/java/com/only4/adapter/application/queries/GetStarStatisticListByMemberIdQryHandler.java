@@ -8,9 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.application.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * GetStarStatisticByMemberIdQry查询请求适配实现
- * todo: 查询描述
+ * todo: 查询描述：根据 MemberId 获取星球统计
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
@@ -18,14 +20,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GetStarStatisticByMemberIdQryHandler implements Query<GetStarStatisticByMemberIdQry.Request, GetStarStatisticByMemberIdQry.Response> {
+public class GetStarStatisticListByMemberIdQryHandler implements Query<GetStarStatisticByMemberIdQry.Request, GetStarStatisticByMemberIdQry.Response> {
     private final StarMapper starMapper;
     @Override
     public GetStarStatisticByMemberIdQry.Response exec(GetStarStatisticByMemberIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        StarStatistic starStatistic = starMapper.getStarStatisticByMemberId(request.getMemberId());
+        List<StarStatistic> starStatistics = starMapper.getStarStatisticByMemberId(request.getMemberId());
         return GetStarStatisticByMemberIdQry.Response.builder()
-                .starStatistic(starStatistic)
+                .starStatistics(starStatistics)
                 .build();
     }
 }

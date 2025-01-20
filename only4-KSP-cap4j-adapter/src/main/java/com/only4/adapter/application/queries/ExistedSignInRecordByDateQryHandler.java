@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * ExistedSignInRecordByDateQry查询请求适配实现
- * todo: 查询描述
+ * todo: 查询描述：根据 日期 判断用户 当天 是否签到，返回一个Boolean
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19

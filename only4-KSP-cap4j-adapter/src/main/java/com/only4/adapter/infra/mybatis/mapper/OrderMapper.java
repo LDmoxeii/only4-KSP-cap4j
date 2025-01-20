@@ -5,6 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface OrderMapper {
-    Boolean existedById(Long id);
+    Boolean existedOrderById(Long id);
     Order getOrderById(Long id);
 }

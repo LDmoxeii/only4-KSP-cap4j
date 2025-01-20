@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * GetMemberByNameQry查询请求适配实现
- * todo: 查询描述
+ * todo: 查询描述：根据 用户名 获取用户信息,命令规约规定了该查询属性为唯一值,所以返回一个单一类 Member
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19

@@ -22,5 +22,5 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdatedTagInfoDomainEvent {
-    Tag tag;
+    Tag entity;
 }

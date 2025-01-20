@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * ExistedStarLikeByStardustIdQry查询请求适配实现
- * todo: 查询描述
+ * todo: 查询描述：根据 星尘ID 判断星球点赞是否存在
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
