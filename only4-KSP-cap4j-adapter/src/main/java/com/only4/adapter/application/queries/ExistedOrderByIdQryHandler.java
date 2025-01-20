@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * ExistedByIdQry查询请求适配实现
- * todo: 查询描述
+ * todo: 查询描述：根据 订单ID 判断订单是否存在，返回一个Boolean
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
@@ -17,12 +17,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ExistedByIdQryHandler implements Query<ExistedByIdQry.Request, ExistedByIdQry.Response> {
+public class ExistedOrderByIdQryHandler implements Query<ExistedByIdQry.Request, ExistedByIdQry.Response> {
     private final OrderMapper orderMapper;
     @Override
     public ExistedByIdQry.Response exec(ExistedByIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        Boolean isExists = orderMapper.existedById(request.getId());
+        Boolean isExists = orderMapper.existedOrderById(request.getId());
         return ExistedByIdQry.Response.builder()
                 .existed(isExists)
                 .build();

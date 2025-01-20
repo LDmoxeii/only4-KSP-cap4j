@@ -8,9 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.application.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
- * GetFavoriteByMemberIdQry查询请求适配实现
- * todo: 查询描述
+ * GetFavoriteListByMemberIdQryHandler查询请求适配实现
+ * todo: 查询描述:根据 用户ID 获取收藏夹列表，返回 List<Favorite>
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
@@ -18,14 +20,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GetFavoriteByMemberIdQryHandler implements Query<GetFavoriteByMemberIdQry.Request, GetFavoriteByMemberIdQry.Response> {
+public class GetFavoriteListByMemberIdQryHandler implements Query<GetFavoriteByMemberIdQry.Request, GetFavoriteByMemberIdQry.Response> {
     private final MemberMapper memberMapper;
     @Override
     public GetFavoriteByMemberIdQry.Response exec(GetFavoriteByMemberIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        Favorite favorite = memberMapper.getFavoriteByMemberId(request.getMemberId());
+        List<Favorite> favorites = memberMapper.getFavoriteByMemberId(request.getMemberId());
         return GetFavoriteByMemberIdQry.Response.builder()
-                .favorite(favorite)
+                .favorite(favorites)
                 .build();
     }
 }

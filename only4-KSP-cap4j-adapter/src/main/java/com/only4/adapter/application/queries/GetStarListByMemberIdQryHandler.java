@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * GetByMemberIdQry查询请求适配实现
- * todo: 查询描述
+ * todo: 查询描述：根据 MemberID 获取 星球列表——List<Star>
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GetByMemberIdQryHandler implements Query<GetByMemberIdQry.Request, GetByMemberIdQry.Response> {
+public class GetStarListByMemberIdQryHandler implements Query<GetByMemberIdQry.Request, GetByMemberIdQry.Response> {
     private final StarMapper starMapper;
     @Override
     public GetByMemberIdQry.Response exec(GetByMemberIdQry.Request request) {

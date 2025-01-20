@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface StarMapper {
     Boolean existedStarByName(String name);
     List<Star> getByMemberId(String memberId);
-    StarStatistic getStarStatisticByMemberId(String memberId);
+    List<StarStatistic> getStarStatisticByMemberId(String memberId);
     Boolean existedStardustByStardustId(Long id);
     Boolean existedStarLikeByStardustId(Long stardustId);
     Stardust getStardustByStardustId(Long id);

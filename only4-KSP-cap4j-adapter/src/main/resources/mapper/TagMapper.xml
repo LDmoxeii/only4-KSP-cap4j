@@ -10,7 +10,7 @@
         <result column="del_flag" property="delFlag"/>
     </resultMap>
 
-    <select id="existedByName" resultType="java.lang.Boolean">
+    <select id="existedTagByName" resultType="java.lang.Boolean">
         SELECT EXISTS(SELECT 1 FROM tag WHERE name = #{name}) as is_exists
     </select>
 </mapper>
