@@ -9,8 +9,8 @@ import org.netcorepal.cap4j.ddd.application.query.Query;
 import org.springframework.stereotype.Service;
 
 /**
- * GetFavoritesByFavoritesIdQry查询请求适配实现
- * todo: 查询描述
+ * GetFavoritesByFavoritesIdQry查询请求适配实现 </br>
+ * 根据 收藏夹ID 获取 收藏夹信息
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
@@ -23,7 +23,7 @@ public class GetFavoriteByFavoriteIdQryHandler implements Query<GetFavoriteByFav
     @Override
     public GetFavoriteByFavoritesIdQry.Response exec(GetFavoriteByFavoritesIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        Favorite favorite = memberMapper.getFavoritesByFavoritesId(request.getFavoritesId());
+        Favorite favorite = memberMapper.getFavoritesByFavoritesId(request.getFavoriteId());
         return GetFavoriteByFavoritesIdQry.Response.builder()
                 .favorite(favorite)
                 .build();
