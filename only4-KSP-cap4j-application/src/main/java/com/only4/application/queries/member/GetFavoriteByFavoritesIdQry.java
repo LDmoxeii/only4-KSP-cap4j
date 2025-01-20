@@ -22,7 +22,7 @@ public class GetFavoriteByFavoritesIdQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long FavoritesId;
+        Long FavoriteId;
     }
 
     /**
