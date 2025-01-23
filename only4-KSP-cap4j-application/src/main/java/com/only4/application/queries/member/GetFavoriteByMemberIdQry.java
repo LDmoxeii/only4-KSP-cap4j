@@ -35,6 +35,6 @@ public class GetFavoriteByMemberIdQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        List<Favorite> favorite;
+        List<Favorite> favorites;
     }
 }

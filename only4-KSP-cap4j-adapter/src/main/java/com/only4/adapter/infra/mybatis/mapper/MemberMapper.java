@@ -11,8 +11,8 @@ public interface MemberMapper {
     Boolean existedMemberByName(String name);
     Boolean existedMemberByPhone(String phone);
     Member getMemberByName(String name);
-    List<Favorite> getFavoriteByMemberId(Long id);
+    List<Favorite> getFavoritesByMemberId(Long id);
     Boolean existedSignInRecordByDate(Long id);
     Integer countFavoriteRecordByMemberIdAndDate(Long id);
-    Favorite getFavoritesByFavoritesId(Long favoriteId);
+    Favorite getFavoriteByFavoriteId(Long favoriteId);
 }

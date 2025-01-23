@@ -20,12 +20,12 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GetStarStatisticListByMemberIdQryHandler implements Query<GetStarStatisticByMemberIdQry.Request, GetStarStatisticByMemberIdQry.Response> {
+public class GetStarStatisticsByMemberIdQryHandler implements Query<GetStarStatisticByMemberIdQry.Request, GetStarStatisticByMemberIdQry.Response> {
     private final StarMapper starMapper;
     @Override
     public GetStarStatisticByMemberIdQry.Response exec(GetStarStatisticByMemberIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        List<StarStatistic> starStatistics = starMapper.getStarStatisticByMemberId(request.getMemberId());
+        List<StarStatistic> starStatistics = starMapper.getStarStatisticListByMemberId(request.getMemberId());
         return GetStarStatisticByMemberIdQry.Response.builder()
                 .starStatistics(starStatistics)
                 .build();
