@@ -27,7 +27,7 @@ public class GetFavoriteListByMemberIdQryHandler implements Query<GetFavoriteByM
         // mybatis / jpa 哪个顺手就用哪个吧！
         List<Favorite> favorites = memberMapper.getFavoritesByMemberId(request.getMemberId());
         return GetFavoriteByMemberIdQry.Response.builder()
-                .favorite(favorites)
+                .favorites(favorites)
                 .build();
     }
 }
