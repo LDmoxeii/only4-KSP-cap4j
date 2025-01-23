@@ -8,8 +8,8 @@ import org.netcorepal.cap4j.ddd.application.query.Query;
 import org.springframework.stereotype.Service;
 
 /**
- * ExistedByNameQry查询请求适配实现
- * todo: 查询描述：根据 标签名 判断标签是否存在
+ * ExistedByNameQry查询请求适配实现 </br>
+ * 根据 标签名 判断标签是否存在
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19

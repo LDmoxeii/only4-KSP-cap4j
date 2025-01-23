@@ -8,8 +8,8 @@ import org.netcorepal.cap4j.ddd.application.query.Query;
 import org.springframework.stereotype.Service;
 
 /**
- * ExistedByIdQry查询请求适配实现
- * todo: 查询描述：根据 订单ID 判断订单是否存在，返回一个Boolean
+ * ExistedByIdQry查询请求适配实现 </br>
+ * 根据 订单ID 判断订单是否存在，返回一个Boolean
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19

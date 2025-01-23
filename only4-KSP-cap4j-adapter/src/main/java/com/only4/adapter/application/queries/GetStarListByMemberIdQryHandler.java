@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * GetByMemberIdQry查询请求适配实现
- * todo: 查询描述：根据 MemberID 获取 星球列表——List<Star>
+ * GetByMemberIdQry查询请求适配实现 </br>
+ * 根据 MemberID 获取 星球列表——List<Star>
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19

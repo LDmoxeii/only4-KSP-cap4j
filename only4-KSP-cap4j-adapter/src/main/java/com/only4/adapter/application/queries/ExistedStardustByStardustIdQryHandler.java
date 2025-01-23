@@ -8,8 +8,8 @@ import org.netcorepal.cap4j.ddd.application.query.Query;
 import org.springframework.stereotype.Service;
 
 /**
- * ExistedStardustByStardustIdQry查询请求适配实现
- * todo: 查询描述：根据 星尘ID 判断星尘是否存在
+ * ExistedStardustByStardustIdQry查询请求适配实现 </br>
+ * 根据 星尘ID 判断星尘是否存在
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19

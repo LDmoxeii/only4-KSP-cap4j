@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * GetFavoriteListByMemberIdQryHandler查询请求适配实现
- * todo: 查询描述:根据 用户ID 获取收藏夹列表，返回 List<Favorite>
+ * GetFavoriteListByMemberIdQryHandler查询请求适配实现 </br>
+ * 根据 用户ID 获取收藏夹列表，返回 List<Favorite>
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
