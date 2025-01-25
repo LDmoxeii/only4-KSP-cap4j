@@ -7,13 +7,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.application.RequestParam;
 
+import java.util.List;
+
 /**
  * todo: 查询描述
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
  */
-public class GetFavoriteByMemberIdQry {
+public class GetFavoritesByMemberIdQry {
     /**
      * GetFavoriteByMemberIdQry查询请求参数
      */
@@ -33,6 +35,6 @@ public class GetFavoriteByMemberIdQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        Favorite favorite;
+        List<Favorite> favorites;
     }
 }

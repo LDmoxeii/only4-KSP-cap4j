@@ -1,4 +1,4 @@
-package com.only4.application.queries.order;
+package com.only4.application.queries.tag;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,20 +12,20 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
  */
-public class ExistedByIdQry {
+public class ExistedTagByNameQry {
     /**
-     * ExistedByIdQry查询请求参数
+     * ExistedByNameQry查询请求参数
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long id;
+        String name;
     }
 
     /**
-     * ExistedByIdQry查询响应
+     * ExistedByNameQry查询响应
      */
     @Data
     @Builder

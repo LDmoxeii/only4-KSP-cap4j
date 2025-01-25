@@ -47,7 +47,7 @@
     <select id="existedStarByName" resultType="java.lang.Boolean">
         SELECT EXISTS(SELECT 1 FROM star WHERE name = #{name}) as is_exists
     </select>
-    <select id="getByMemberId" resultMap="star">
+    <select id="GetStarListByMemberIdQry" resultMap="star">
         SELECT s.id          as id,
                s.name        as name,
                s.member_id   as member_id,
@@ -56,7 +56,7 @@
         FROM star s
         WHERE s.member_id = #{memberId}
     </select>
-    <select id="getStarStatisticByMemberId" resultMap="starStatistic">
+    <select id="getStarStatisticsByMemberId" resultMap="starStatistic">
         SELECT ss.likes    as likes,
                ss.comments as comments,
                ss.stardust as stardust

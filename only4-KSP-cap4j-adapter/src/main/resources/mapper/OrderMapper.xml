@@ -10,7 +10,7 @@
         <result column="del_flag" property="delFlag"/>
     </resultMap>
 
-    <select id="existedById" resultType="java.lang.Boolean">
+    <select id="existedOrderByOrderId" resultType="java.lang.Boolean">
         SELECT EXISTS(SELECT 1 FROM `order` WHERE id = #{id}) as is_exists
     </select>
     <select id="getOrderById" resultMap="order">

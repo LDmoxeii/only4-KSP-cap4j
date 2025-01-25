@@ -9,8 +9,8 @@ import org.netcorepal.cap4j.ddd.application.query.Query;
 import org.springframework.stereotype.Service;
 
 /**
- * GetStardustByStardustIdQry查询请求适配实现
- * todo: 查询描述
+ * GetStardustByStardustIdQry查询请求适配实现 </br>
+ * 根据 星尘ID 获取星尘
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19

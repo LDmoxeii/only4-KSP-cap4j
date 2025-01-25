@@ -1,7 +1,7 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.MemberMapper;
-import com.only4.application.queries.member.GetFavoriteByFavoritesIdQry;
+import com.only4.application.queries.member.GetFavoriteByFavoriteIdQry;
 import com.only4.domain.aggregates.member.Favorite;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +18,13 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GetFavoriteByFavoriteIdQryHandler implements Query<GetFavoriteByFavoritesIdQry.Request, GetFavoriteByFavoritesIdQry.Response> {
+public class GetFavoriteByFavoriteIdQryHandler implements Query<GetFavoriteByFavoriteIdQry.Request, GetFavoriteByFavoriteIdQry.Response> {
     private final MemberMapper memberMapper;
     @Override
-    public GetFavoriteByFavoritesIdQry.Response exec(GetFavoriteByFavoritesIdQry.Request request) {
+    public GetFavoriteByFavoriteIdQry.Response exec(GetFavoriteByFavoriteIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        Favorite favorite = memberMapper.getFavoritesByFavoritesId(request.getFavoriteId());
-        return GetFavoriteByFavoritesIdQry.Response.builder()
+        Favorite favorite = memberMapper.getFavoriteByFavoriteId(request.getFavoriteId());
+        return GetFavoriteByFavoriteIdQry.Response.builder()
                 .favorite(favorite)
                 .build();
     }

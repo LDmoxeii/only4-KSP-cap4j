@@ -8,8 +8,8 @@ import org.netcorepal.cap4j.ddd.application.query.Query;
 import org.springframework.stereotype.Service;
 
 /**
- * CountFavoriteRecordByMemberIdAndDateQry查询请求适配实现
- * todo: 查询描述
+ * CountFavoriteRecordByMemberIdAndDateQry查询请求适配实现 </br>
+ * 根据 用户ID 统计用户 当天 的收藏文章数
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19

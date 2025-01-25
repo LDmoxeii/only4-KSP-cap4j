@@ -1,6 +1,5 @@
-package com.only4.application.queries.star;
+package com.only4.application.queries.order;
 
-import com.only4.domain.aggregates.star.StarStatistic;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,26 +12,26 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
  */
-public class GetStarStatisticByMemberIdQry {
+public class ExistedOrderByOrderIdQry {
     /**
-     * GetStarStatisticByMemberIdQry查询请求参数
+     * ExistedByIdQry查询请求参数
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        String memberId;
+        Long id;
     }
 
     /**
-     * GetStarStatisticByMemberIdQry查询响应
+     * ExistedByIdQry查询响应
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        StarStatistic starStatistic;
+        Boolean existed;
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
  */
-public class GetByMemberIdQry {
+public class GetStarListByMemberIdQry {
     /**
      * GetByMemberIdQry查询请求参数
      */

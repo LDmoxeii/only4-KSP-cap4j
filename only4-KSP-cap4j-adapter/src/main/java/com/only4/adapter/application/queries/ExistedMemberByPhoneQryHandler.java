@@ -9,8 +9,8 @@ import org.netcorepal.cap4j.ddd.application.query.Query;
 import org.springframework.stereotype.Service;
 
 /**
- * ExistedMemberByPhoneQry查询请求适配实现
- * todo: 查询描述
+ * ExistedMemberByPhoneQry查询请求适配实现 </br>
+ * 根据 手机号 判断用户是否存在,返回一个Boolean
  *
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
