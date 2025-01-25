@@ -1,6 +1,6 @@
 package com.only4.application.queries.star;
 
-import com.only4.domain.aggregates.star.StarStatistic;
+import com.only4.domain.aggregates.star.Star;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,9 +15,9 @@ import java.util.List;
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
  */
-public class GetStarStatisticByMemberIdQry {
+public class GetStarListByMemberIdQry {
     /**
-     * GetStarStatisticByMemberIdQry查询请求参数
+     * GetByMemberIdQry查询请求参数
      */
     @Data
     @Builder
@@ -28,13 +28,13 @@ public class GetStarStatisticByMemberIdQry {
     }
 
     /**
-     * GetStarStatisticByMemberIdQry查询响应
+     * GetByMemberIdQry查询响应
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        List<StarStatistic> starStatistics;
+        List<Star> stars;
     }
 }

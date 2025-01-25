@@ -1,7 +1,7 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.StarMapper;
-import com.only4.application.queries.star.GetByMemberIdQry;
+import com.only4.application.queries.star.GetStarListByMemberIdQry;
 import com.only4.domain.aggregates.star.Star;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +20,12 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GetStarListByMemberIdQryHandler implements Query<GetByMemberIdQry.Request, GetByMemberIdQry.Response> {
+public class GetStarListByMemberIdQryHandler implements Query<GetStarListByMemberIdQry.Request, GetStarListByMemberIdQry.Response> {
     private final StarMapper starMapper;
     @Override
-    public GetByMemberIdQry.Response exec(GetByMemberIdQry.Request request) {
+    public GetStarListByMemberIdQry.Response exec(GetStarListByMemberIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        List<Star> stars = starMapper.getByMemberId(request.getMemberId());
-        return GetByMemberIdQry.Response.builder().stars(stars).build();
+        List<Star> stars = starMapper.GetStarListByMemberIdQry(request.getMemberId());
+        return GetStarListByMemberIdQry.Response.builder().stars(stars).build();
     }
 }

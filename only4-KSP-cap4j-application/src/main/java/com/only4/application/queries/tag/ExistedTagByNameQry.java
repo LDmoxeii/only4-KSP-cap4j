@@ -1,13 +1,10 @@
-package com.only4.application.queries.star;
+package com.only4.application.queries.tag;
 
-import com.only4.domain.aggregates.star.Star;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.application.RequestParam;
-
-import java.util.List;
 
 /**
  * todo: 查询描述
@@ -15,26 +12,26 @@ import java.util.List;
  * @author cap4j-ddd-codegen
  * @date 2025/01/19
  */
-public class GetByMemberIdQry {
+public class ExistedTagByNameQry {
     /**
-     * GetByMemberIdQry查询请求参数
+     * ExistedByNameQry查询请求参数
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        String memberId;
+        String name;
     }
 
     /**
-     * GetByMemberIdQry查询响应
+     * ExistedByNameQry查询响应
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        List<Star> stars;
+        Boolean existed;
     }
 }

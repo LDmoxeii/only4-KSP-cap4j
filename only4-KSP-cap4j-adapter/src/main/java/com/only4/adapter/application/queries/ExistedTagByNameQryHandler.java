@@ -1,7 +1,7 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.TagMapper;
-import com.only4.application.queries.tag.ExistedByNameQry;
+import com.only4.application.queries.tag.ExistedTagByNameQry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.application.query.Query;
@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ExistedTagByNameQryHandler implements Query<ExistedByNameQry.Request, ExistedByNameQry.Response> {
+public class ExistedTagByNameQryHandler implements Query<ExistedTagByNameQry.Request, ExistedTagByNameQry.Response> {
     private final TagMapper tagMapper;
     @Override
-    public ExistedByNameQry.Response exec(ExistedByNameQry.Request request) {
+    public ExistedTagByNameQry.Response exec(ExistedTagByNameQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
         Boolean isExists = tagMapper.existedTagByName(request.getName());
-        return ExistedByNameQry.Response.builder()
+        return ExistedTagByNameQry.Response.builder()
                 .existed(isExists)
                 .build();
     }

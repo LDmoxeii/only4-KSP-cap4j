@@ -1,7 +1,7 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.MemberMapper;
-import com.only4.application.queries.member.GetFavoriteByMemberIdQry;
+import com.only4.application.queries.member.GetFavoriteListByMemberIdQry;
 import com.only4.domain.aggregates.member.Favorite;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +20,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GetFavoriteListByMemberIdQryHandler implements Query<GetFavoriteByMemberIdQry.Request, GetFavoriteByMemberIdQry.Response> {
+public class GetFavoriteListByMemberIdQryHandler implements Query<GetFavoriteListByMemberIdQry.Request, GetFavoriteListByMemberIdQry.Response> {
     private final MemberMapper memberMapper;
     @Override
-    public GetFavoriteByMemberIdQry.Response exec(GetFavoriteByMemberIdQry.Request request) {
+    public GetFavoriteListByMemberIdQry.Response exec(GetFavoriteListByMemberIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
         List<Favorite> favorites = memberMapper.getFavoritesByMemberId(request.getMemberId());
-        return GetFavoriteByMemberIdQry.Response.builder()
+        return GetFavoriteListByMemberIdQry.Response.builder()
                 .favorites(favorites)
                 .build();
     }
