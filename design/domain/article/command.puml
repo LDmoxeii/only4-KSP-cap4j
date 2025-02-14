@@ -72,7 +72,7 @@ Command("ReportArticle") [
     --规则--
     1. 文章必须存在
 ]
-Command("UpdateArticleLikes") [
+Command("UpdateArticleLikeCount") [
     更新文章点赞数
     --触发者--
     已点赞文章事件
@@ -83,7 +83,7 @@ Command("UpdateArticleLikes") [
     --规则--
     1. 文章必须存在
 ]
-Command("UpdateArticleFavorites") [
+Command("UpdateArticleFavoriteCount") [
     更新文章收藏数
     --触发者--
     已收藏文章事件
@@ -114,7 +114,7 @@ Command("UpdateArticleCommentAuthorInfo") [
     --触发者--
     已更新用户信息事件
     --属性--
-    用户ID
+    文章ID
     用户名
     --规则--
     1. 文章评论必须存在
@@ -154,7 +154,7 @@ Command("LikeArticle") [
     1. 文章必须存在
     2. 未点赞
 ]
-Command("UnLikeArticle") [
+Command("UnlikeArticle") [
     取消点赞文章
     --触发者--
     用户
@@ -176,7 +176,7 @@ Command("LikeArticleComment") [
     1. 文章评论必须存在
     2. 未点赞
 ]
-Command("UnLikeArticleComment") [
+Command("UnlikeArticleComment") [
     取消点赞文章评论
     --触发者--
     用户
@@ -214,6 +214,7 @@ Command("UpdateArticleTagInfo") [
     --触发者--
     已更新标签信息事件
     --属性--
+    文章ID
     标签ID
     标签名
     --规则--
@@ -239,7 +240,7 @@ Command("UpdateArticleCategoryInfo") [
     --规则--
     1. 分类必须存在
 ]
-Command("UpdateArticleComments") [
+Command("UpdateArticleCommentCount") [
     更新文章评论数
     --触发者--
     已创建文章评论事件
@@ -250,7 +251,7 @@ Command("UpdateArticleComments") [
     --规则--
     1. 文章必须存在
 ]
-Command("UpdateArticleCommentLikes") [
+Command("UpdateArticleCommentLikeCount") [
     更新文章评论点赞数
     --触发者--
     已点赞文章评论事件
@@ -261,7 +262,7 @@ Command("UpdateArticleCommentLikes") [
     --规则--
     1. 文章评论必须存在
 ]
-Command("UpdateArticleCommentReplies") [
+Command("UpdateArticleCommentReplyCount") [
     更新文章评论回复数
     --触发者--
     已创建文章评论事件
