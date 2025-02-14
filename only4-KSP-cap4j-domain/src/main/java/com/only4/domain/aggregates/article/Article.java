@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 
+import java.util.Objects;
+
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
@@ -51,7 +53,6 @@ public class Article {
 
     public void publish() {
         this.state = ArticleState.PUBLISH;
-
     }
 
     public void changeArticleInfo(String newTitle, String newDescription) {
@@ -61,7 +62,48 @@ public class Article {
 
     public void ban() {
         this.state = ArticleState.BANNED;
+    }
 
+    public void updateArticleLikes(Long num) {
+        this.getArticleStatistics().likes = num;
+    }
+
+    public void updateArticleFavorites(Integer num) {
+        this.getArticleStatistics().favorites = num;
+    }
+
+    public void createArticleCommon(ArticleComment newComment) {
+        this.articleComments.add(newComment);
+    }
+
+    public void deleteArticleCommon(Long commentId) {
+        this.getArticleComments().stream()
+                .filter(c -> Objects.equals(c.getId(), commentId))
+                .findFirst()
+                .ifPresent(comment -> this.getArticleComments().remove(comment));
+    }
+
+    public void likeArticleComment(ArticleLike newArticleLike) {
+        this.getArticleLikes().add(newArticleLike);
+    }
+
+    public void unLikeArticleComment(Long articleLikeId) {
+        this.getArticleLikes().stream()
+                .filter(l -> Objects.equals(l.getId(), articleLikeId))
+                .findFirst()
+                .ifPresent(like -> this.getArticleLikes().remove(like));
+    }
+
+    /**
+     * 暂未设计
+     *
+     */
+    public void reportArticleComment() {
+       throw new UnsupportedOperationException("未实现");
+    }
+
+    public void deleteArmticle() {
+        this.delFlag = true;
     }
 
     // 【行为方法结束】
