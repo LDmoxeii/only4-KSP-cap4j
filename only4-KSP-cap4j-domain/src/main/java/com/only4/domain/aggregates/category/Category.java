@@ -46,6 +46,10 @@ public class Category {
         events().attach(new UpdatedCategoryInfoDomainEvent(this), this);
     }
 
+    public void deleteCategory() {
+        this.delFlag = true;
+    }
+
     // 【行为方法结束】
 
 
