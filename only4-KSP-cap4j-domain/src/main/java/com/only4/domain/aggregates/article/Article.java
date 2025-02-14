@@ -43,7 +43,7 @@ public class Article {
     // 【行为方法开始】
 
     public void create() {
-        events().attach(new CreatedArticleDomainEvent(this), this);
+        events().attach(new ArticleCreatedDomainEvent(this), this);
     }
 
     public void privatization() {
@@ -63,20 +63,20 @@ public class Article {
         this.state = ArticleState.BANNED;
     }
 
-    public void updateArticleLikes(Long num) {
+    public void updateArticleLikeCount(Long num) {
         this.getArticleStatistics().likes = num;
-        events().attach(new UpdatedArticleLikesDomainEvent(this), this);
+        events().attach(new ArticleLikeCountUpdatedDomainEvent(this), this);
     }
 
-    public void updateArticleFavorites(Integer num) {
+    public void updateArticleFavoriteCount(Integer num) {
         this.getArticleStatistics().favorites = num;
-        events().attach(new UpdatedArticleFavoritesDomainEvent(this), this);
+        events().attach(new ArticleFavoriteCountUpdatedDomainEvent(this), this);
     }
 
     public void likeArticle(ArticleLike newArticleLike) {
         this.getArticleLikes().add(newArticleLike);
-        this.updateArticleLikes(1L);
-        events().attach(new LikedArticleDomainEvent(this), this);
+        this.updateArticleLikeCount(1L);
+        events().attach(new ArticleLikedDomainEvent(this), this);
     }
 
     public void unlikeArticle(Long articleLikeId) {
@@ -84,21 +84,21 @@ public class Article {
                 .filter(al -> Objects.equals(al.getId(), articleLikeId))
                 .findFirst()
                 .ifPresent(articleLike -> this.getArticleLikes().remove(articleLike));
-        updateArticleLikes(-1L);
-        events().attach(new UnlikedArticleDomainEvent(this), this);
+        this.updateArticleLikeCount(-1L);
+        events().attach(new ArticleUnlikedDomainEvent(this), this);
     }
 
-    public void createArticleCommon(ArticleComment newComment) {
+    public void createArticleComment(ArticleComment newComment) {
         this.articleComments.add(newComment);
-        events().attach(new CreatedArticleCommentDomainEvent(this), this);
+        events().attach(new ArticleCommentCreatedDomainEvent(this), this);
     }
 
-    public void deleteArticleCommon(Long commentId) {
+    public void deleteArticleComment(Long commentId) {
         this.getArticleComments().stream()
                 .filter(c -> Objects.equals(c.getId(), commentId))
                 .findFirst()
                 .ifPresent(comment -> this.getArticleComments().remove(comment));
-        events().attach(new DeletedArticleCommentDomainEvent(this), this);
+        events().attach(new ArticleCommentDeletedDomainEvent(this), this);
     }
 
     public void likeArticleComment(Long articleCommentId, ArticleCommentLike newArticleCommentLike) {
@@ -106,8 +106,8 @@ public class Article {
                 .filter(ac -> Objects.equals(ac.getId(), articleCommentId))
                 .findFirst()
                 .ifPresent(articleComment -> articleComment.likeArticleComment(newArticleCommentLike));
-        events().attach(new LikedArticleCommentDomainEvent(this), this);
-        events().attach(new UpdatedArticleCommentLikesDomainEvent(this), this);
+        events().attach(new ArticleCommentLikedDomainEvent(this), this);
+        events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
     }
 
     public void unLikeArticleComment(Long articleCommentId, Long articleCommentLikeId) {
@@ -115,8 +115,8 @@ public class Article {
                 .filter(ac -> Objects.equals(ac.getId(), articleCommentId))
                 .findFirst()
                 .ifPresent(articleComment -> articleComment.unlikeArticleComment(articleCommentLikeId));
-        events().attach(new UnlikedArticleCommentDomainEvent(this), this);
-        events().attach(new UpdatedArticleCommentLikesDomainEvent(this), this);
+        events().attach(new ArticleCommentUnlikedDomainEvent(this), this);
+        events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
     }
 
     /**
