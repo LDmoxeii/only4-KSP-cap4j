@@ -15,6 +15,15 @@ Aggregate("Star") [
     更新星球评论数
     更新星球点赞数
     更新星球星尘数
+    加入星球
+    退出星球
+    点赞星球
+    取消点赞星球
+    创建星球评论
+    删除星球评论
+    点赞星球评论
+    取消点赞星球评论
+    更新星球评论点赞数
 ]
 
 Aggregate("Stardust") [
@@ -36,6 +45,14 @@ Aggregate("StarComment") [
     星尘名
     评论内容
     评论时间
+]
+
+Aggregate("StarCommentStatistics") [
+    星球评论统计
+    --属性--
+    星球评论ID
+    星球评论点赞数
+    星球评论子评论数
 ]
 
 Aggregate("StarStatistics") [
