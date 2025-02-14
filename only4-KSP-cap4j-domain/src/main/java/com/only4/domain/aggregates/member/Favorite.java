@@ -14,6 +14,8 @@ import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import javax.persistence.*;
+import java.util.Objects;
+
 import static
                         org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
@@ -41,6 +43,19 @@ public class Favorite {
 
     // 【行为方法开始】
 
+    protected void favoriteArticle(ArticleFavoriteRecord newRecord) {
+        this.getArticleFavoriteRecords().add(newRecord);
+        this.getArticleFavoriteStatistics().articles++;
+    }
+
+
+    protected void unFavoriteArticle(Long recordId) {
+        this.getArticleFavoriteRecords().stream()
+                .filter(r -> Objects.equals(r.getId(), recordId))
+                .findFirst()
+                .ifPresent(record -> this.getArticleFavoriteRecords().remove(record));
+        this.getArticleFavoriteStatistics().articles--;
+    }
 
 
     // 【行为方法结束】
