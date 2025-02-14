@@ -31,7 +31,7 @@ public class AdminUserLoginSuccessfullyCmd {
         @Override
         public Response exec(Request cmd) {
             var adminUser = Mediator.repositories()
-                    .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
+                    .findOne(JpaPredicate.byId(AdminUser.class, cmd.adminUserId))
                     .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
             adminUser.loginSuccessful(cmd.getRefreshToken(), cmd.getLoginExpiryDate());
             return Response.builder()

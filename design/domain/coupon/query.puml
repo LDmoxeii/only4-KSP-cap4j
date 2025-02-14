@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include ..\lib_eventstorming.puml
+
+Query("CouponEffectiveByStarId") [
+    根据星球ID判断星球是否有有效的优惠券
+    --属性--
+    星球ID
+]
+Query("GetStatusByCouponID") [
+    根据优惠券ID查询优惠券状态
+    --属性--
+    星球ID
+]
+Query("GetNumbersByCouponID") [
+    根据优惠券ID查询优惠券使用次数
+    --属性--
+    星球ID
+]
+Query("GetDurationByCouponID") [
+    根据优惠券ID查询优惠券有效期
+    --属性--
+    星球ID
+]
+@enduml
