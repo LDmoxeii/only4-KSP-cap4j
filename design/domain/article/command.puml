@@ -162,7 +162,7 @@ Command("UpdateArticleCommentInfo") [
     --触发者--
     已更新用户信息事件
     --属性--
-    用户ID
+    文章ID
     用户名
     --规则--
     1. 文章评论必须存在
@@ -201,7 +201,7 @@ Command("LikeArticleComment") [
     1. 文章评论必须存在
     2. 未点赞
 ]
-Command("UnLikeArticleComment") [
+Command("UnlikeArticleComment") [
     取消点赞文章评论
     --触发者--
     用户
