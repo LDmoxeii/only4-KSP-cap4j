@@ -37,12 +37,12 @@ public class ArticleComment {
 
     // 【行为方法开始】
 
-    public void likeArticleComment(ArticleCommentLike newArticleCommentLike) {
+    protected void likeArticleComment(ArticleCommentLike newArticleCommentLike) {
         this.getArticleCommentLikes().add(newArticleCommentLike);
         this.getArticleCommentStatistics().likes++;
     }
 
-    public void unlikeArticleComment(Long articleCommentLikeId) {
+    protected void unlikeArticleComment(Long articleCommentLikeId) {
         this.getArticleCommentLikes().stream()
                 .filter(cl -> Objects.equals(cl.getId(), articleCommentLikeId))
                 .findFirst()
