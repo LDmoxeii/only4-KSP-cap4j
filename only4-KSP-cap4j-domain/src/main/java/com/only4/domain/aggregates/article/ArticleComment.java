@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * 文章评论
@@ -35,6 +36,19 @@ import javax.persistence.*;
 public class ArticleComment {
 
     // 【行为方法开始】
+
+    public void likeArticleComment(ArticleCommentLike newArticleCommentLike) {
+        this.getArticleCommentLikes().add(newArticleCommentLike);
+        this.getArticleCommentStatistics().likes++;
+    }
+
+    public void unlikeArticleComment(Long articleCommentLikeId) {
+        this.getArticleCommentLikes().stream()
+                .filter(cl -> Objects.equals(cl.getId(), articleCommentLikeId))
+                .findFirst()
+                .ifPresent(commentLike -> this.getArticleCommentLikes().remove(commentLike));
+        this.getArticleCommentStatistics().likes--;
+    }
 
 
 
