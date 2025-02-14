@@ -5,14 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
-import static
-                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -47,13 +40,15 @@ public class Order {
     }
 
     public void refund() {
+        this.state = -1;
     }
 
     public void pay() {
+        this.state = 1;
     }
 
     public void cancel() {
-
+        this.state = -2;
     }
 
     // 【行为方法结束】
