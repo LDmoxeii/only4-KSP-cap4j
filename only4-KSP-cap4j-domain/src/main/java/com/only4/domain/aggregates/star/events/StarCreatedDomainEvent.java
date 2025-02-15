@@ -9,18 +9,18 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 
 /**
- * Star.CreatedStarCommentDomainEvent领域事件
+ * Star.StarCreatedDomainEvent领域事件
  * todo: 领域事件说明
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/14
  */
 @DomainEvent(persist = false)
-@Aggregate(aggregate = "Star", name = "CreatedStarCommentDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
+@Aggregate(aggregate = "Star", name = "StarCreatedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreatedStarCommentDomainEvent {
+public class StarCreatedDomainEvent {
     Star entity;
 }

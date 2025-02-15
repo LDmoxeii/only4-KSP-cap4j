@@ -1,7 +1,7 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
-DomainEvent("CreatedStar") [
+DomainEvent("StarCreated") [
     已创建星球
     --属性--
     星球ID
@@ -9,7 +9,7 @@ DomainEvent("CreatedStar") [
     --监听者--
     星主
 ]
-DomainEvent("DeletedStar") [
+DomainEvent("StarDeleted") [
     已删除星球
     --属性--
     星球ID
@@ -33,7 +33,7 @@ DomainEvent("LeftStar")[
     --监听者--
     星球
 ]
-DomainEvent("LikedStar")[
+DomainEvent("StarLiked")[
     已点赞星球
     --属性--
     星球ID
@@ -42,7 +42,7 @@ DomainEvent("LikedStar")[
     星球
     操作者
 ]
-DomainEvent("UnLikedStar")[
+DomainEvent("StarUnliked")[
     已取消点赞星球
     --属性--
     星球ID
@@ -51,21 +51,21 @@ DomainEvent("UnLikedStar")[
     星球
     操作者
 ]
-DomainEvent("CreatedStarComment")[
+DomainEvent("StarCommentCreated")[
     已创建星球评论
     --属性--
     星球ID
     --监听者--
     星球
 ]
-DomainEvent("DeletedStarComment")[
+DomainEvent("StarCommentDeleted")[
     已删除星球评论
     --属性--
     星球ID
     --监听者--
     星球
 ]
-DomainEvent("LikedStarComment")[
+DomainEvent("StarCommentLiked")[
     已点赞星球评论
     --属性--
     星球ID
@@ -73,7 +73,7 @@ DomainEvent("LikedStarComment")[
     星球
     操作者
 ]
-DomainEvent("UnLikedStarComment")[
+DomainEvent("StarCommentUnliked")[
     已取消点赞星球评论
     --属性--
     星球ID
@@ -81,7 +81,7 @@ DomainEvent("UnLikedStarComment")[
     星球
     操作者
 ]
-DomainEvent("UpdatedStarLikes") [
+DomainEvent("StarLikeCountUpdated") [
     已更新星球点赞数
     --属性--
     星球ID
@@ -89,7 +89,7 @@ DomainEvent("UpdatedStarLikes") [
     --监听者--
     星主
 ]
-DomainEvent("UpdatedStarCommentLikes") [
+DomainEvent("StarCommentLikeCountUpdated") [
     已更新星球评论点赞数
     --属性--
     星球评论ID
@@ -97,7 +97,7 @@ DomainEvent("UpdatedStarCommentLikes") [
     --监听者--
     星球评论作者
 ]
-DomainEvent("UpdatedStarInfo") [
+DomainEvent("StarInfoUpdated") [
     已更新星球信息
     --属性--
     星球ID
