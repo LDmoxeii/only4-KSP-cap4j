@@ -31,9 +31,14 @@ Aggregate("Member") [
     更新粉丝数
     更新关注数
     更新作品数
+    收藏文章
+    取消收藏文章
+    关注用户
+    取消关注用户
+    计算等级分
 ]
 
-Aggregate("MemberPermission") [
+取消Aggregate("MemberPermission") [
     会员权限
     --属性--
     会员ID

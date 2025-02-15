@@ -1,7 +1,7 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
-DomainEvent("UpdatedMemberInfo") [
+DomainEvent("MemberInfoUpdated") [
     已更新用户信息
     --属性--
     用户ID
@@ -15,7 +15,7 @@ DomainEvent("UpdatedMemberInfo") [
     该用户的文章
 ]
 
-DomainEvent("SignedIn") [
+DomainEvent("MemberCheckedIn") [
     已签到
     --属性--
     用户ID
@@ -24,7 +24,7 @@ DomainEvent("SignedIn") [
     该用户
 ]
 
-DomainEvent("UpdatedMemberRank") [
+DomainEvent("MemberRankUpdated") [
     已更新用户等级
     --属性--
     用户ID
@@ -33,7 +33,7 @@ DomainEvent("UpdatedMemberRank") [
     该用户
 ]
 
-DomainEvent("FollowedMember") [
+DomainEvent("MemberFollowed") [
     已关注用户
     --属性--
     用户ID
@@ -43,7 +43,7 @@ DomainEvent("FollowedMember") [
     被关注用户
 ]
 
-DomainEvent("UnFollowedMember") [
+DomainEvent("MemberUnfollowed") [
     已取消关注用户
     --属性--
     用户ID
@@ -53,7 +53,7 @@ DomainEvent("UnFollowedMember") [
     被关注用户
 ]
 
-DomainEvent("FavoritedArticle") [
+DomainEvent("ArticleAddedToFavorites") [
     已收藏文章
     --属性--
     用户ID
@@ -64,7 +64,7 @@ DomainEvent("FavoritedArticle") [
     文章
 ]
 
- DomainEvent("UnFavoritedArticle") [
+ DomainEvent("ArticleRemovedFromFavorites") [
     已取消收藏文章
     --属性--
     用户ID
@@ -75,7 +75,8 @@ DomainEvent("FavoritedArticle") [
     文章
 ]
 
-DomainEvent("CalculatedWillReceiveRanks") [
+' 好像不用 暂时不写
+DomainEvent("RanksCalculated") [
     已计算用户即将获得的等级分
     --属性--
     用户ID
@@ -84,7 +85,7 @@ DomainEvent("CalculatedWillReceiveRanks") [
     该用户
 ]
 
-DomainEvent("RegisteredMemberByPassword") [
+DomainEvent("MemberRegisteredWithPassword") [
     已通过密码方式注册用户
     --属性--
     用户名
@@ -93,7 +94,7 @@ DomainEvent("RegisteredMemberByPassword") [
     该用户
 ]
 
-DomainEvent("RegisteredMemberByPhone") [
+DomainEvent("MemberRegisteredWithPhone") [
     已通过手机号方式注册用户
     --属性--
     手机号
@@ -101,7 +102,7 @@ DomainEvent("RegisteredMemberByPhone") [
     该用户
 ]
 
-DomainEvent("UpdatedMemberLikes") [
+DomainEvent("MemberLikeCountUpdated") [
     已更新用户点赞数
     --属性--
     用户ID

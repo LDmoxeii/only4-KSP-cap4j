@@ -1,27 +1,28 @@
 package com.only4.domain.aggregates.member;
 
+import com.only4.domain.aggregates.member.events.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
-import static
-                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
+import java.util.List;
+import java.util.Objects;
+
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 会员
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
@@ -41,30 +42,139 @@ public class Member {
 
     // 【行为方法开始】
 
+    public void registerWhitPassword() {
+        events().attach(new MemberRegisteredWithPasswordDomainEvent(this), this);
+    }
 
+    public void registerWhitPhone() {
+        events().attach(new MemberRegisteredWithPhoneDomainEvent(this), this);
+    }
+
+    public void updateMemberInfo(Member newMemberInfo) {
+        this.name = newMemberInfo.name;
+        this.nickName = newMemberInfo.nickName;
+        this.signature = newMemberInfo.signature;
+        events().attach(new MemberInfoUpdatedDomainEvent(this), this);
+    }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
+
+    public void updatePhone(String newPhone) {
+        this.phone = newPhone;
+    }
+
+    /**
+     *
+     */
+    public void checkIn() {
+        events().attach(new MemberCheckedInDomainEvent(this), this);
+    }
+
+    public void delete() {
+        this.delFlag = true;
+    }
+
+    public void ban() {
+        this.banFlag = true;
+    }
+
+    public void report() {
+        this.getMemberStatistics().reports++;
+    }
+
+    public void updateMemberRank(Integer newRank) {
+        this.getMemberStatistics().rank += newRank;
+        events().attach(new MemberRankUpdatedDomainEvent(this), this);
+    }
+
+    public void upLevel(Integer newLevel) {
+        this.level = newLevel;
+    }
+
+    public void updateLevelPermission(List<MemberPermission> newMemberPermissions) {
+        this.memberPermissions = newMemberPermissions;
+    }
+
+    public void addPermission(MemberPermission newMemberPermission) {
+        this.getMemberPermissions().add(newMemberPermission);
+    }
+
+    public void deletePermission(Long memberPermissionId) {
+        this.getMemberPermissions().stream()
+                .filter(mp -> Objects.equals(mp.getId(), memberPermissionId))
+                .findFirst()
+                .ifPresent(memberPermission -> this.getMemberPermissions().remove(memberPermission));
+    }
+
+    public void updateMemberLikeCount(Integer newMemberLikes) {
+        this.getMemberStatistics().likes = newMemberLikes;
+        events().attach(new MemberLikeCountUpdatedDomainEvent(this), this);
+    }
+
+    public void updateFans(Integer newFans) {
+        this.getMemberStatistics().fans = newFans;
+    }
+
+    public void updateFollowings(Integer newFollowings) {
+        this.getMemberStatistics().followings = newFollowings;
+    }
+
+    public void updateWorks(Integer newWorks) {
+        this.getMemberStatistics().works = newWorks;
+    }
+
+    public void addToFavorites(Long favoritesId, ArticleFavoriteRecord newRecord) {
+        this.getFavorites().stream()
+                .filter(f -> Objects.equals(f.getId(), favoritesId))
+                .findFirst()
+                .ifPresent(favorite -> favorite.favoriteArticle(newRecord));
+        events().attach(new ArticleAddedToFavoritesDomainEvent(this), this);
+    }
+
+    public void removeFromFavorites(Long favoritesId, Long recordId) {
+        this.getFavorites().stream()
+                .filter(f -> Objects.equals(f.getId(), favoritesId))
+                .findFirst()
+                .ifPresent(favorite -> favorite.unFavoriteArticle(recordId));
+        events().attach(new ArticleRemovedFromFavoritesDomainEvent(this), this);
+    }
+
+    public void followMember(FollowMember newFollowMember) {
+        this.getFollowMembers().add(newFollowMember);
+        events().attach(new MemberFollowedDomainEvent(this), this);
+    }
+
+    public void unfollowMember(Long followMemberId) {
+        this.getFollowMembers().stream()
+                .filter(fm -> Objects.equals(fm.getId(), followMemberId))
+                .findFirst()
+                .ifPresent(followMember -> this.getFollowMembers().remove(followMember));
+        events().attach(new MemberUnfollowedDomainEvent(this), this);
+    }
 
     // 【行为方法结束】
 
 
-
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.MemberLikeRecord> memberLikeRecords;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.MemberPermission> memberPermissions;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.ViewHistory> viewHistories;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -74,27 +184,27 @@ public class Member {
         return memberStatistics == null || memberStatistics.size() == 0 ? null : memberStatistics.get(0);
     }
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.FollowMember> followMembers;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.BlockMember> blockMembers;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.MemberStar> memberStars;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.Favorite> favorites;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.SignInRecord> signInRecords;
