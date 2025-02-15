@@ -1,10 +1,8 @@
 package com.only4.application.commands.article;
 
 
-import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.article.ArticleComment;
-import com.only4.domain.aggregates.article.enums.ArticleState;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -19,10 +17,10 @@ import org.springframework.stereotype.Service;
  * @author cap4j-ddd-codegen
  * @date 2025/02/14
  */
-public class UpdateArticleCommentStateCmd {
+public class UpdateArticleCommentInfoCmd {
 
     /**
-     * UpdateArticleCommentStateCmd命令请求实现
+     * UpdateArticleCommentAuthorInfoCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -33,7 +31,7 @@ public class UpdateArticleCommentStateCmd {
             Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
-                        article.updateCommentState(cmd.getCommentFlag());
+                        article.updateCommentInfo(cmd.getCommentId(), cmd.getMemberName());
                         Mediator.uow().persist(article);
                     });
             Mediator.uow().save();
@@ -45,7 +43,7 @@ public class UpdateArticleCommentStateCmd {
     }
 
     /**
-     * UpdateArticleCommentStateCmd命令请求参数
+     * UpdateArticleCommentAuthorInfoCmd命令请求参数
      */
     @Data
     @Builder
@@ -53,11 +51,12 @@ public class UpdateArticleCommentStateCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
         Long articleId;
-        Boolean commentFlag;
+        Long commentId;
+        String memberName;
     }
 
     /**
-     * UpdateArticleCommentStateCmd命令响应
+     * UpdateArticleCommentAuthorInfoCmd命令响应
      */
     @Data
     @Builder

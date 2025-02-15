@@ -2,7 +2,7 @@ package com.only4.application.commands.article;
 
 
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.ArticleLike;
+import com.only4.domain.aggregates.article.enums.CommentVisibility;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -11,18 +11,16 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 /**
  * todo: 命令描述
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/14
  */
-public class LikeArticleCmd {
+public class UpdateArticleCommentVisibilityCmd {
 
     /**
-     * LikeArticleCmd命令请求实现
+     * UpdateArticleCommentStateCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -33,7 +31,7 @@ public class LikeArticleCmd {
             Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
-                        article.like(cmd.getMemberId(), LocalDateTime.now());
+                        article.updateCommentVisibility(cmd.getCommentId(),cmd.getVisibility());
                         Mediator.uow().persist(article);
                     });
             Mediator.uow().save();
@@ -45,19 +43,20 @@ public class LikeArticleCmd {
     }
 
     /**
-     * LikeArticleCmd命令请求参数
+     * UpdateArticleCommentStateCmd命令请求参数
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long memberId;
         Long articleId;
+        Long commentId;
+        CommentVisibility visibility;
     }
 
     /**
-     * LikeArticleCmd命令响应
+     * UpdateArticleCommentStateCmd命令响应
      */
     @Data
     @Builder

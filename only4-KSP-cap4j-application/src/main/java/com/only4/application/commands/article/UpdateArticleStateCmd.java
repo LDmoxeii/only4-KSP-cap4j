@@ -1,9 +1,8 @@
 package com.only4.application.commands.article;
 
 
-import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.enums.ArticleState;
+import com.only4.domain.aggregates.article.enums.ArticleVisibility;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -32,7 +31,7 @@ public class UpdateArticleStateCmd {
             Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getId()))
                     .ifPresent(article -> {
-                        article.updateState(cmd.getState(), cmd.getStickyFlag(), cmd.getCommentFlag());
+                        article.updateVisibility(cmd.getVisibility(), cmd.getStickyFlag(), cmd.getCommentFlag());
                         Mediator.uow().persist(article);
                     });
             Mediator.uow().save();
@@ -52,7 +51,7 @@ public class UpdateArticleStateCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
         Long id;
-        ArticleState state;
+        ArticleVisibility visibility;
         Boolean stickyFlag;
         Boolean commentFlag;
     }

@@ -1,7 +1,6 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
-' ArticleCommand-Start
 Command("CreateArticle") [
     创建文章
     --触发者--
@@ -84,7 +83,7 @@ Command("LikeArticle") [
     1. 文章必须存在
     2. 未点赞
 ]
-Command("UnLikeArticle") [
+Command("UnlikeArticle") [
     取消点赞文章
     --触发者--
     用户
@@ -115,9 +114,6 @@ Command("UpdateArticleCategory") [
     --规则--
     1. 文章必须存在
 ]
-' ArticleCommand-End
-
-' ArticleStatisticsCommand-Start
 Command("UpdateArticleLikeCount") [
     更新文章点赞数
     --触发者--
@@ -140,9 +136,6 @@ Command("UpdateArticleFavoriteCount") [
     --规则--
     1. 文章必须存在
 ]
-' ArticleStatisticsCommand-End
-
-' ArticleCommentCommand-Start
 Command("CreateArticleComment") [
     创建文章评论
     --触发者--
@@ -163,6 +156,7 @@ Command("UpdateArticleCommentInfo") [
     已更新用户信息事件
     --属性--
     文章ID
+    评论ID
     用户名
     --规则--
     1. 文章评论必须存在
@@ -172,6 +166,7 @@ Command("ReportArticleComment") [
     --触发者--
    用户
    --属性--
+    文章ID
     文章评论ID
     --规则--
     1. 文章评论必须存在
@@ -212,20 +207,29 @@ Command("UnlikeArticleComment") [
     1. 文章评论必须存在
     2. 已点赞
 ]
-Command("UpdateArticleCommentState") [
-    更新文章评论状态
+Command("UpdateArticleCommentSticky") [
+    更新文章评论置顶
+    --触发者--
+    作者
+    管理员
+    --属性--
+    文章ID
+    文章评论ID
+    文章置顶标识
+    --规则--
+    1. 文章评论必须存在
+]
+Command("UpdateArticleCommentVisibility") [
+    更新文章评论可见性
     --触发者--
     作者
     管理员
     --属性--
     文章评论ID
-    评论置顶状态
+    评论可见性
     --规则--
     1. 文章评论必须存在
 ]
-' ArticleCommentCommand-End
-
-' ArticleCommentStatisticsCommand-Start
 Command("UpdateArticleCommentCount") [
     更新文章评论数
     --触发者--
@@ -258,22 +262,17 @@ Command("UpdateArticleCommentReplyCount") [
     --规则--
     1. 文章评论必须存在
 ]
-' ArticleCommentStatisticsCommand-End
-
-' ArticleAuthorCommand-Start
 Command("UpdateArticleAuthorInfo")[
     更新文章作者信息
     --触发者--
     已更新用户信息事件
     --属性--
     文章ID
+    用户ID
     作者名
     --规则--
     1. 文章必须存在
 ]
-' ArticleAuthorCommand-End
-
-' ArticleTagCommand-Start
 Command("UpdateArticleTagInfo") [
     更新文章标签信息
     --触发者--
@@ -284,9 +283,6 @@ Command("UpdateArticleTagInfo") [
     --规则--
     1. 标签必须存在
 ]
-' ArticleTagCommand-End
-
-' ArticleCategoryCommand-Start
 Command("UpdateArticleCategoryInfo") [
     更新文章分类信息
     --触发者--
@@ -297,5 +293,4 @@ Command("UpdateArticleCategoryInfo") [
     --规则--
     1. 分类必须存在
 ]
-' ArticleCategoryCommand-End
 @enduml

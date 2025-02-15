@@ -10,6 +10,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * 文章评论点赞
@@ -35,7 +36,10 @@ public class ArticleCommentLike {
 
     // 【行为方法开始】
 
-
+    protected ArticleCommentLike(Long memberId, LocalDateTime now) {
+        this.memberId = memberId;
+        this.createAt = now;
+    }
 
     // 【行为方法结束】
 

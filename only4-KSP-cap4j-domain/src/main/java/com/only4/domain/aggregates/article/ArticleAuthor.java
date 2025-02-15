@@ -35,6 +35,9 @@ public class ArticleAuthor {
 
     // 【行为方法开始】
 
+    protected void updateInfo(String memberName) {
+        this.authorName = memberName;
+    }
 
 
     // 【行为方法结束】

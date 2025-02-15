@@ -10,8 +10,8 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
 
 /**
  * todo: 命令描述
@@ -33,7 +33,7 @@ public class BanArticleCmd {
             Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getId()))
                     .ifPresent(article -> {
-                        article.ban(cmd.getCurrently(), cmd.getDuration());
+                        article.ban(cmd.getBanDuration(), cmd.getBannedAt());
                         Mediator.uow().persist(article);
                     });
             Mediator.uow().save();
@@ -53,10 +53,11 @@ public class BanArticleCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
         Long id;
-        java.time.LocalDateTime currently;
 
         @Positive(message = "封禁时长必须大于0")
-        Long duration;
+        Integer banDuration;
+
+        LocalDateTime bannedAt;
     }
 
     /**

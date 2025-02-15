@@ -1,6 +1,7 @@
 package com.only4.application.commands.article;
 
 
+import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.article.ArticleComment;
 import com.only4.domain.aggregates.article.ArticleCommentLike;
 import lombok.*;
@@ -31,10 +32,10 @@ public class LikeArticleCommentCmd {
         @Override
         public Response exec(Request cmd) {
             Mediator.repositories()
-                    .findOne(JpaPredicate.byId(ArticleComment.class, cmd.getCommentId()))
-                    .ifPresent(articleComment -> {
-                        articleComment.likeComment(new ArticleCommentLike(cmd.getMemberId(), LocalDateTime.now()));
-                        Mediator.uow().persist(articleComment);
+                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+                    .ifPresent(article -> {
+                        article.likeComment(cmd.getCommentId(), cmd.getMemberId(), LocalDateTime.now());
+                        Mediator.uow().persist(article);
                     });
             Mediator.uow().save();
 
@@ -52,6 +53,7 @@ public class LikeArticleCommentCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+        Long articleId;
         Long memberId;
         Long commentId;
     }

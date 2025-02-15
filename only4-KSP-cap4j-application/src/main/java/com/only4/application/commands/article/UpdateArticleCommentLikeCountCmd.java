@@ -1,7 +1,7 @@
 package com.only4.application.commands.article;
 
 
-import com.only4.domain.aggregates.article.ArticleComment;
+import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -28,10 +28,10 @@ public class UpdateArticleCommentLikeCountCmd {
         @Override
         public Response exec(Request cmd) {
             Mediator.repositories()
-                    .findOne(JpaPredicate.byId(ArticleComment.class, cmd.getCommentId()))
-                    .ifPresent(articleComment -> {
-                        articleComment.updateLikeCount(cmd.getCount());
-                        Mediator.uow().persist(articleComment);
+                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+                    .ifPresent(article -> {
+                        article.updateCommentLikeCount(cmd.getCommentId(), cmd.getLikeCount());
+                        Mediator.uow().persist(article);
                     });
             Mediator.uow().save();
 
@@ -49,8 +49,9 @@ public class UpdateArticleCommentLikeCountCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+        Long articleId;
         Long commentId;
-        Integer count;
+        Long likeCount;
     }
 
     /**

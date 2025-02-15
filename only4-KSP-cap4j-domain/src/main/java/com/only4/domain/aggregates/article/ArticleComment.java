@@ -1,16 +1,24 @@
 package com.only4.domain.aggregates.article;
 
+import com.only4.domain.aggregates.article.enums.CommentVisibility;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -35,22 +43,50 @@ import java.util.Objects;
 @Getter
 public class ArticleComment {
 
-    // 【行为方法开始】
 
-    protected void likeArticleComment(ArticleCommentLike newArticleCommentLike) {
-        this.getArticleCommentLikes().add(newArticleCommentLike);
-        this.getArticleCommentStatistics().likes++;
+    // 【行为方法开始】
+    protected ArticleComment(Long memberId, String memberName, String content, LocalDateTime createAt) {
+        this.authorId = memberId;
+        this.authorName = memberName;
+        this.content = content;
+        this.createAt = createAt;
     }
 
-    protected void unlikeArticleComment(Long articleCommentLikeId) {
+    protected void like(ArticleCommentLike newArticleCommentLike) {
+        this.getArticleCommentLikes().add(newArticleCommentLike);
+    }
+
+    protected void unlike(Long memberId) {
         this.getArticleCommentLikes().stream()
-                .filter(cl -> Objects.equals(cl.getId(), articleCommentLikeId))
+                .filter(cl -> Objects.equals(cl.getMemberId(), memberId))
                 .findFirst()
                 .ifPresent(commentLike -> this.getArticleCommentLikes().remove(commentLike));
-        this.getArticleCommentStatistics().likes--;
     }
 
+    protected void updateLikeCount(Long likeCount) {
+        this.getArticleCommentStatistics().likes = likeCount;
+    }
 
+    protected void updateVisibility(CommentVisibility visibility) {
+        this.visibility = visibility;
+    }
+
+    protected void updateSticky(Boolean sticky) {
+        this.stickyFlag = sticky;
+
+    }
+
+    protected void updateReplyCount(Integer replyCount) {
+        this.getArticleCommentStatistics().commentReplies = replyCount;
+    }
+
+    protected void updateInfo(String memberName) {
+        this.authorName = memberName;
+    }
+
+    protected void report() {
+
+    }
 
     // 【行为方法结束】
 
@@ -117,6 +153,17 @@ public class ArticleComment {
      */
     @Column(name = "`sticky_flag`")
     Boolean stickyFlag;
+
+    /**
+     * 可见性
+     * 0:PRIVATE:PRIVATE
+     * 1:PUBLISH:PUBLISH
+     * 2:BANNED:BANNED
+     * tinyint
+     */
+    @Convert(converter = com.only4.domain.aggregates.article.enums.CommentVisibility.Converter.class)
+    @Column(name = "`visibility`")
+    com.only4.domain.aggregates.article.enums.CommentVisibility visibility;
 
     /**
      * 评论时间

@@ -4,10 +4,8 @@ package com.only4.application.commands.article;
 import com.only4.domain.aggregates.article.ArticleAuthor;
 import com.only4.domain.aggregates.article.ArticleCategory;
 import com.only4.domain.aggregates.article.ArticleTag;
-import com.only4.domain.aggregates.article.enums.ArticleState;
+import com.only4.domain.aggregates.article.enums.ArticleVisibility;
 import com.only4.domain.aggregates.article.factory.ArticleFactory;
-import com.only4.domain.aggregates.category.Category;
-import com.only4.domain.aggregates.tag.Tag;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -37,17 +35,17 @@ public class CreateArticleCmd {
         public Response exec(Request cmd) {
             val article = Mediator.factories().create(ArticleFactory.Payload
                     .builder()
-                    .title(cmd.title)
-                    .description(cmd.description)
-                    .state(cmd.status)
-                    .stickyFlag(cmd.stickyFlag)
-                    .commentFlag(cmd.commentFlag)
-                    .cover(cmd.cover)
-                    .appendix(cmd.appendix)
-                    .authors(cmd.authors)
-                    .categories(cmd.categories)
-                    .price(cmd.price)
-                    .tags(cmd.tags)
+                    .title(cmd.getTitle())
+                    .description(cmd.getDescription())
+                    .visibility(cmd.visibility())
+                    .stickyFlag(cmd.getStickyFlag())
+                    .commentFlag(cmd.getCommentFlag())
+                    .cover(cmd.getCover())
+                    .appendix(cmd.getAppendix())
+                    .authors(cmd.getAuthors())
+                    .categories(cmd.getCategories())
+                    .price(cmd.getPrice())
+                    .tags(cmd.getTags())
                     .build());
             article.create();
             Mediator.uow().persist(article);
@@ -76,7 +74,7 @@ public class CreateArticleCmd {
         @NotEmpty
         String content;
 
-        ArticleState status;
+        ArticleVisibility visibility;
         Boolean stickyFlag;
         Boolean commentFlag;
         String cover;
@@ -89,6 +87,9 @@ public class CreateArticleCmd {
         Long price;
         List<ArticleTag> tags;
 
+        protected ArticleVisibility visibility() {
+            return visibility == null ? ArticleVisibility.PRIVATE : visibility;
+        }
     }
 
     /**

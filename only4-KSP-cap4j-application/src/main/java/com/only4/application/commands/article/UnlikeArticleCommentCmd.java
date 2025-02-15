@@ -1,6 +1,7 @@
 package com.only4.application.commands.article;
 
 
+import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.article.ArticleComment;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -28,10 +29,10 @@ public class UnlikeArticleCommentCmd {
         @Override
         public Response exec(Request cmd) {
             Mediator.repositories()
-                    .findOne(JpaPredicate.byId(ArticleComment.class, cmd.getCommentId()))
-                    .ifPresent(articleComment -> {
-                        articleComment.unlike(cmd.getMemberId());
-                        Mediator.uow().persist(articleComment);
+                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+                    .ifPresent(article -> {
+                        article.unlikeComment(cmd.getCommentId(), cmd.getMemberId());
+                        Mediator.uow().persist(article);
                     });
             Mediator.uow().save();
 
@@ -49,6 +50,7 @@ public class UnlikeArticleCommentCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+        Long articleId;
         Long memberId;
         Long commentId;
     }

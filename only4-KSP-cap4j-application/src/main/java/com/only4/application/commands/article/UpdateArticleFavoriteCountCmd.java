@@ -28,9 +28,9 @@ public class UpdateArticleFavoriteCountCmd {
         @Override
         public Response exec(Request cmd) {
             Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Article.class, cmd.getId()))
+                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
-                        article.updateArticleFavorites(cmd.getCount());
+                        article.updateFavoriteCount(cmd.getFavoriteCount());
                         Mediator.uow().persist(article);
                     });
             Mediator.uow().save();
@@ -49,8 +49,8 @@ public class UpdateArticleFavoriteCountCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long id;
-        Integer count;
+        Long articleId;
+        Integer FavoriteCount;
     }
 
     /**

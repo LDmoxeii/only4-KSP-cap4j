@@ -35,10 +35,7 @@ public class UpdateArticleCategoryCmd {
             Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
-                        val categories = cmd.getCategories().stream()
-                                .map(category -> new ArticleCategory(category.getId(), category.getName()))
-                                .collect(Collectors.toList());
-                        article.updateCategory(categories);
+                        article.updateCategory(cmd.getCategories());
                         Mediator.uow().persist(article);
                     });
             Mediator.uow().save();

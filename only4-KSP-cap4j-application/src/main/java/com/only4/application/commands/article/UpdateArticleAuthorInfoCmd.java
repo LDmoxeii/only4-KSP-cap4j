@@ -30,7 +30,7 @@ public class UpdateArticleAuthorInfoCmd {
             Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
-                        article.updateAuthorInfo(cmd.getMemberName());
+                        article.updateAuthorInfo(cmd.getMemberId(), cmd.getMemberName());
                         Mediator.uow().persist(article);
                     });
             Mediator.uow().save();
@@ -50,6 +50,7 @@ public class UpdateArticleAuthorInfoCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
         Long articleId;
+        Long memberId;
         String memberName;
     }
 

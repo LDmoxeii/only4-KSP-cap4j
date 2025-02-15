@@ -33,7 +33,7 @@ public class CreateArticleCommentCmd {
             Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
-                        article.createArticleComment(
+                        article.createComment(
                                 cmd.getMemberId(),
                                 cmd.getMemberName(),
                                 cmd.getContent(),

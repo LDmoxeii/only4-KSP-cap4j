@@ -30,7 +30,7 @@ public class UpdateArticleCommentCountCmd {
             Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
-                        article.updateCommentCount(cmd.getCount());
+                        article.updateCommentCount(cmd.getCommentCount());
                         Mediator.uow().persist(article);
                     });
             Mediator.uow().save();
@@ -50,7 +50,7 @@ public class UpdateArticleCommentCountCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
         Long articleId;
-        Integer count;
+        Long CommentCount;
     }
 
     /**

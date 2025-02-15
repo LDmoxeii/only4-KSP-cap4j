@@ -2,7 +2,6 @@ package com.only4.application.commands.article;
 
 
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.ArticleLike;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author cap4j-ddd-codegen
  * @date 2025/02/14
  */
-public class UnLikeArticleCmd {
+public class UnlikeArticleCmd {
 
     /**
      * UnLikeArticleCmd命令请求实现
@@ -31,7 +30,7 @@ public class UnLikeArticleCmd {
             Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
-                        article.unLike(cmd.getMemberId());
+                        article.unlike(cmd.getMemberId());
                         Mediator.uow().persist(article);
                     });
             Mediator.uow().save();
