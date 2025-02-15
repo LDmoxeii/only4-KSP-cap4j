@@ -1,9 +1,9 @@
 @startuml
-CreatedArticleComment       -down-> UpdateArticleComments
-CreatedArticleComment       -down-> UpdateArticleCommentReplies
-DeletedArticleComment       -down-> UpdateArticleComments
-LikedArticleComment         -down-> UpdateArticleCommentLikes
-UnlikedArticleComment       -down-> UpdateArticleCommentLikes
-LikedArticle                -down-> UpdateArticleLikes
-UnlikedArticle              -down-> UpdateArticleLikes
+ArticleCommentCreated       -down-> UpdateArticleCommentCount
+ArticleCommentCreated       -down-> UpdateArticleCommentReplyCount
+ArticleCommentDeleted       -down-> UpdateArticleCommentCount
+ArticleCommentLiked         -down-> UpdateArticleCommentLikeCount
+ArticleCommentUnliked       -down-> UpdateArticleCommentLikeCount
+ArticleLiked                -down-> UpdateArticleLikeCount
+ArticleUnliked              -down-> UpdateArticleLikeCount
 @enduml

@@ -63,19 +63,9 @@ public class Article {
         this.state = ArticleState.BANNED;
     }
 
-    public void updateArticleLikeCount(Long num) {
-        this.getArticleStatistics().likes = num;
-        events().attach(new ArticleLikeCountUpdatedDomainEvent(this), this);
-    }
-
-    public void updateArticleFavoriteCount(Integer num) {
-        this.getArticleStatistics().favorites = num;
-        events().attach(new ArticleFavoriteCountUpdatedDomainEvent(this), this);
-    }
-
     public void likeArticle(ArticleLike newArticleLike) {
         this.getArticleLikes().add(newArticleLike);
-        this.updateArticleLikeCount(1L);
+        this.getArticleStatistics().updateArticleLikeCount(1L);
         events().attach(new ArticleLikedDomainEvent(this), this);
     }
 
@@ -84,7 +74,7 @@ public class Article {
                 .filter(al -> Objects.equals(al.getId(), articleLikeId))
                 .findFirst()
                 .ifPresent(articleLike -> this.getArticleLikes().remove(articleLike));
-        this.updateArticleLikeCount(-1L);
+        this.getArticleStatistics().updateArticleLikeCount(-1L);
         events().attach(new ArticleUnlikedDomainEvent(this), this);
     }
 
@@ -127,7 +117,7 @@ public class Article {
        throw new UnsupportedOperationException("未实现");
     }
 
-    public void deleteArmticle() {
+    public void deleteArticle() {
         this.delFlag = true;
     }
 

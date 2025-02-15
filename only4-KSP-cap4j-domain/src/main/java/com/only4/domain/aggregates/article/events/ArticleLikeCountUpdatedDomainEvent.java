@@ -1,6 +1,7 @@
 package com.only4.domain.aggregates.article.events;
 
 import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.article.ArticleStatistics;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +23,5 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ArticleLikeCountUpdatedDomainEvent {
-    Article entity;
+    ArticleStatistics entity;
 }
