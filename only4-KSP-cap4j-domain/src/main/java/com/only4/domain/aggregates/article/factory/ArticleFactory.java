@@ -1,6 +1,9 @@
 package com.only4.domain.aggregates.article.factory;
 
-import com.only4.domain.aggregates.article.*;
+import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.article.ArticleAuthor;
+import com.only4.domain.aggregates.article.ArticleCategory;
+import com.only4.domain.aggregates.article.ArticleTag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +17,6 @@ import java.util.List;
 
 /**
  * Article聚合工厂
- *
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04
@@ -33,7 +35,7 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
                 .price(payload.price)
                 .cover(payload.cover)
                 .appendix(payload.appendix)
-                .state(payload.visibility)
+                .visibility(payload.visibility)
                 .stickyFlag(payload.stickyFlag)
                 .commentFlag(payload.commentFlag)
                 .articleAuthors(payload.authors)

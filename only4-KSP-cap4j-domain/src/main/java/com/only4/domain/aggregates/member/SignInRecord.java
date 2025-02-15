@@ -4,22 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
-import static
-                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
+
 
 /**
  * 会员签到记录
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
@@ -40,9 +38,7 @@ public class SignInRecord {
     // 【行为方法开始】
 
 
-
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
@@ -59,10 +55,10 @@ public class SignInRecord {
 
     /**
      * 签到时间
-     * int
+     * timestamp
      */
     @Column(name = "`create_at`")
-    Integer createAt;
+    java.time.LocalDateTime createAt;
 
     /**
      * 逻辑删除

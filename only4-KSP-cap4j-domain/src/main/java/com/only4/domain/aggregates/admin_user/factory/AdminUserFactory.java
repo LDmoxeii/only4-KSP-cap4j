@@ -20,7 +20,6 @@ import java.util.List;
 /**
  * AdminUser聚合工厂
  *
- *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04
  */

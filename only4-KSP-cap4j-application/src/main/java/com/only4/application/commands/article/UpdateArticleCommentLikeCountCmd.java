@@ -51,7 +51,7 @@ public class UpdateArticleCommentLikeCountCmd {
     public static class Request implements RequestParam<Response> {
         Long articleId;
         Long commentId;
-        Long likeCount;
+        Integer likeCount;
     }
 
     /**

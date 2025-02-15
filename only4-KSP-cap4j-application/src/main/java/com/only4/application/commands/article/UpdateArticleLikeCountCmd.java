@@ -50,7 +50,7 @@ public class UpdateArticleLikeCountCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
         Long articleId;
-        Long likeCount;
+        Integer likeCount;
     }
 
     /**

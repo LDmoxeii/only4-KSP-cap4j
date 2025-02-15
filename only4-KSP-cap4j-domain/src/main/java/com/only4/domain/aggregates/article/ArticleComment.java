@@ -5,13 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import javax.persistence.CascadeType;
@@ -23,9 +17,10 @@ import java.util.Objects;
 
 /**
  * 文章评论
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
@@ -63,8 +58,8 @@ public class ArticleComment {
                 .ifPresent(commentLike -> this.getArticleCommentLikes().remove(commentLike));
     }
 
-    protected void updateLikeCount(Long likeCount) {
-        this.getArticleCommentStatistics().likes = likeCount;
+    protected void updateLikeCount(Integer likeCount) {
+        this.getArticleCommentStatistics().likeCount = likeCount;
     }
 
     protected void updateVisibility(CommentVisibility visibility) {
@@ -77,7 +72,7 @@ public class ArticleComment {
     }
 
     protected void updateReplyCount(Integer replyCount) {
-        this.getArticleCommentStatistics().commentReplies = replyCount;
+        this.getArticleCommentStatistics().replyCount = replyCount;
     }
 
     protected void updateInfo(String memberName) {
@@ -89,7 +84,6 @@ public class ArticleComment {
     }
 
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动

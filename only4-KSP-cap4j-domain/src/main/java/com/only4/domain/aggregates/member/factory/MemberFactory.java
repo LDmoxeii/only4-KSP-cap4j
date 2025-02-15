@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * Member聚合工厂
- * 
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
@@ -30,7 +29,7 @@ public class MemberFactory implements AggregateFactory<MemberFactory.Payload, Me
                 .phone(payload.phone)
                 .build();
     }
-    
+
     /**
      * Member工厂负载
      */

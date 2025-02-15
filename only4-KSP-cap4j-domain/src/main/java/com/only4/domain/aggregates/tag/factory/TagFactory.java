@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * Tag聚合工厂
- * 
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
@@ -30,7 +29,7 @@ public class TagFactory implements AggregateFactory<TagFactory.Payload, Tag> {
                 .icon(payload.icon)
                 .build();
     }
-    
+
     /**
      * Tag工厂负载
      */

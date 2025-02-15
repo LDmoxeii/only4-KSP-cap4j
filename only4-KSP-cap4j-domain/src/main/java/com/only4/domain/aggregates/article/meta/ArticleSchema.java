@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/01/09
+ * @date 2025/02/15
  */
 @RequiredArgsConstructor
 public class ArticleSchema {
@@ -64,7 +64,7 @@ public class ArticleSchema {
         /**
          * 文章状态
          */
-        public static final String state = "state";
+        public static final String visibility = "visibility";
 
         /**
          * 置顶标识
@@ -80,6 +80,16 @@ public class ArticleSchema {
          * 逻辑删除
          */
         public static final String delFlag = "delFlag";
+
+        /**
+         * 封禁时间
+         */
+        public static final String bannedAt = "bannedAt";
+
+        /**
+         * 封禁时间
+         */
+        public static final String banDuration = "banDuration";
 
     }
 
@@ -156,10 +166,10 @@ public class ArticleSchema {
      * 0:PRIVATE:PRIVATE
      * 1:PUBLISH:PUBLISH
      * 2:BANNED:BANNED
-     * int
+     * tinyint
      */
-    public Schema.Field<com.only4.domain.aggregates.article.enums.ArticleState> state() {
-        return new Schema.Field<>(root.get("state"), this.criteriaBuilder);
+    public Schema.Field<com.only4.domain.aggregates.article.enums.ArticleVisibility> visibility() {
+        return new Schema.Field<>(root.get("visibility"), this.criteriaBuilder);
     }
 
     /**
@@ -184,6 +194,22 @@ public class ArticleSchema {
      */
     public Schema.Field<Boolean> delFlag() {
         return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
+    }
+
+    /**
+     * 封禁时间
+     * timestamp
+     */
+    public Schema.Field<java.time.LocalDateTime> bannedAt() {
+        return new Schema.Field<>(root.get("bannedAt"), this.criteriaBuilder);
+    }
+
+    /**
+     * 封禁时间
+     * int
+     */
+    public Schema.Field<Integer> banDuration() {
+        return new Schema.Field<>(root.get("banDuration"), this.criteriaBuilder);
     }
 
 

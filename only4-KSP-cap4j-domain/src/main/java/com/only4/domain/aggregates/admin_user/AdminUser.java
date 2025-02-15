@@ -44,114 +44,114 @@ import java.util.stream.Collectors;
 @Getter
 public class AdminUser {
 
-  // 【行为方法开始】
-  public void updatePassword(String password) {
-    this.password = password;
-  }
-
-  public void updateRoleInfo(Long roleId, String roleName) {
-    this.getAdminUserRoles().stream()
-        .filter(r -> Objects.equals(r.getRoleId(), roleId))
-        .findFirst()
-        .orElseThrow(() -> new KnownException("角色不存在, roleId=" + roleId))
-        .updateRoleInfo(roleName);
-  }
-
-  public void updateRoles(List<AssignAdminUserRoleDto> rolesToBeAssigned) {
-    Map<Long, AdminUserRole> currentRoleMap = this.getAdminUserRoles().stream()
-        .collect(Collectors.toMap(r -> r.getRoleId(), r -> r));
-    Map<Long, AssignAdminUserRoleDto> targetRoleMap = rolesToBeAssigned.stream()
-        .collect(Collectors.toMap(AssignAdminUserRoleDto::getRoleId, r -> r));
-
-    currentRoleMap.keySet().stream()
-        .filter(roleId -> !targetRoleMap.containsKey(roleId))
-        .forEach(roleId -> {
-          this.adminUserRoles.remove(currentRoleMap.get(roleId));
-          removeRolePermissions(roleId);
-        });
-    targetRoleMap.keySet().stream()
-        .filter(roleId -> !currentRoleMap.containsKey(roleId))
-        .forEach(roleId -> {
-          AssignAdminUserRoleDto targetRole = targetRoleMap.get(roleId);
-          this.adminUserRoles.add(
-              AdminUserRole.builder()
-                  .roleId(roleId)
-                  .roleName(targetRole.getRoleName())
-                  .build()
-          );
-          addRolePermissions(roleId, targetRole.getPermissions());
-        });
-
-  }
-
-  private void addRolePermissions(Long roleId, List<AdminUserPermission> newPermissions) {
-    newPermissions.forEach(permission -> {
-      Optional<AdminUserPermission> existingPermission = this.getAdminUserPermissions().stream()
-          .filter(p -> Objects.equals(p.permissionCode, permission.getPermissionCode()))
-          .findFirst();
-      existingPermission
-          .ifPresent(p -> p.addSourceRoleId(roleId));
-      if (!existingPermission.isPresent()) {
-        permission.addSourceRoleId(roleId);
-        this.adminUserPermissions.add(permission);
-      }
-    });
-  }
-
-  public void updateRolePermissions(Long roleId, List<AdminUserPermission> newPermissions) {
-    removeRolePermissions(roleId);
-    addRolePermissions(roleId, newPermissions);
-  }
-
-  private void removeRolePermissions(Long roleId) {
-    this.getAdminUserPermissions().stream()
-        .filter(p -> p.getSourceRoleIds().remove(roleId)
-            && p.getSourceRoleIds().isEmpty())
-        .forEach(permission -> this.adminUserPermissions.remove(permission));
-  }
-
-  public void setSpecificPermissions(List<AdminUserPermission> permissionsToBeAssigned) {
-    Map<String, AdminUserPermission> currentSpecificPermissionMap = this.getAdminUserPermissions().stream()
-        .collect(Collectors.toMap(AdminUserPermission::getPermissionCode, p -> p));
-    Map<String, AdminUserPermission> newSpecificPermissionMap = permissionsToBeAssigned.stream()
-        .collect(Collectors.toMap(AdminUserPermission::getPermissionCode, p -> p));
-    currentSpecificPermissionMap.keySet().stream()
-        .filter(permissionCode -> !newSpecificPermissionMap.containsKey(permissionCode))
-        .forEach(permissionCode -> this.adminUserPermissions.remove(
-            currentSpecificPermissionMap.get(permissionCode)));
-
-    newSpecificPermissionMap.keySet().stream()
-        .filter(permissionCode -> !currentSpecificPermissionMap.containsKey(permissionCode))
-        .forEach(permissionCode -> {
-          if (this.getAdminUserPermissions().stream()
-              .anyMatch(p -> Objects.equals(p.getPermissionCode(), permissionCode))) {
-            throw new KnownException("权限重复！");
-          }
-          this.adminUserPermissions.add(newSpecificPermissionMap.get(permissionCode));
-        });
-  }
-
-  public void delete() {
-    if (delFlag) {
-      throw new KnownException("用户已经被删除！");
+    // 【行为方法开始】
+    public void updatePassword(String password) {
+        this.password = password;
     }
-    this.delFlag = true;
-  }
 
-  public boolean isInRole(String roleName) {
-    return this.getAdminUserRoles().stream().anyMatch(r -> Objects.equals(r.roleName, roleName));
-  }
+    public void updateRoleInfo(Long roleId, String roleName) {
+        this.getAdminUserRoles().stream()
+                .filter(r -> Objects.equals(r.getRoleId(), roleId))
+                .findFirst()
+                .orElseThrow(() -> new KnownException("角色不存在, roleId=" + roleId))
+                .updateRoleInfo(roleName);
+    }
 
-  public void loginSuccessful(String refreshToken, LocalDateTime loginExpiryDate) {
-    this.refreshToken = refreshToken;
-    this.loginExpiryDate = loginExpiryDate;
-  }
+    public void updateRoles(List<AssignAdminUserRoleDto> rolesToBeAssigned) {
+        Map<Long, AdminUserRole> currentRoleMap = this.getAdminUserRoles().stream()
+                .collect(Collectors.toMap(r -> r.getRoleId(), r -> r));
+        Map<Long, AssignAdminUserRoleDto> targetRoleMap = rolesToBeAssigned.stream()
+                .collect(Collectors.toMap(AssignAdminUserRoleDto::getRoleId, r -> r));
 
-  public void updateRefreshToken(String token) {
-    this.refreshToken = token;
-  }
+        currentRoleMap.keySet().stream()
+                .filter(roleId -> !targetRoleMap.containsKey(roleId))
+                .forEach(roleId -> {
+                    this.adminUserRoles.remove(currentRoleMap.get(roleId));
+                    removeRolePermissions(roleId);
+                });
+        targetRoleMap.keySet().stream()
+                .filter(roleId -> !currentRoleMap.containsKey(roleId))
+                .forEach(roleId -> {
+                    AssignAdminUserRoleDto targetRole = targetRoleMap.get(roleId);
+                    this.adminUserRoles.add(
+                            AdminUserRole.builder()
+                                    .roleId(roleId)
+                                    .roleName(targetRole.getRoleName())
+                                    .build()
+                    );
+                    addRolePermissions(roleId, targetRole.getPermissions());
+                });
 
-  // 【行为方法结束】
+    }
+
+    private void addRolePermissions(Long roleId, List<AdminUserPermission> newPermissions) {
+        newPermissions.forEach(permission -> {
+            Optional<AdminUserPermission> existingPermission = this.getAdminUserPermissions().stream()
+                    .filter(p -> Objects.equals(p.permissionCode, permission.getPermissionCode()))
+                    .findFirst();
+            existingPermission
+                    .ifPresent(p -> p.addSourceRoleId(roleId));
+            if (!existingPermission.isPresent()) {
+                permission.addSourceRoleId(roleId);
+                this.adminUserPermissions.add(permission);
+            }
+        });
+    }
+
+    public void updateRolePermissions(Long roleId, List<AdminUserPermission> newPermissions) {
+        removeRolePermissions(roleId);
+        addRolePermissions(roleId, newPermissions);
+    }
+
+    private void removeRolePermissions(Long roleId) {
+        this.getAdminUserPermissions().stream()
+                .filter(p -> p.getSourceRoleIds().remove(roleId)
+                        && p.getSourceRoleIds().isEmpty())
+                .forEach(permission -> this.adminUserPermissions.remove(permission));
+    }
+
+    public void setSpecificPermissions(List<AdminUserPermission> permissionsToBeAssigned) {
+        Map<String, AdminUserPermission> currentSpecificPermissionMap = this.getAdminUserPermissions().stream()
+                .collect(Collectors.toMap(AdminUserPermission::getPermissionCode, p -> p));
+        Map<String, AdminUserPermission> newSpecificPermissionMap = permissionsToBeAssigned.stream()
+                .collect(Collectors.toMap(AdminUserPermission::getPermissionCode, p -> p));
+        currentSpecificPermissionMap.keySet().stream()
+                .filter(permissionCode -> !newSpecificPermissionMap.containsKey(permissionCode))
+                .forEach(permissionCode -> this.adminUserPermissions.remove(
+                        currentSpecificPermissionMap.get(permissionCode)));
+
+        newSpecificPermissionMap.keySet().stream()
+                .filter(permissionCode -> !currentSpecificPermissionMap.containsKey(permissionCode))
+                .forEach(permissionCode -> {
+                    if (this.getAdminUserPermissions().stream()
+                            .anyMatch(p -> Objects.equals(p.getPermissionCode(), permissionCode))) {
+                        throw new KnownException("权限重复！");
+                    }
+                    this.adminUserPermissions.add(newSpecificPermissionMap.get(permissionCode));
+                });
+    }
+
+    public void delete() {
+        if (delFlag) {
+            throw new KnownException("用户已经被删除！");
+        }
+        this.delFlag = true;
+    }
+
+    public boolean isInRole(String roleName) {
+        return this.getAdminUserRoles().stream().anyMatch(r -> Objects.equals(r.roleName, roleName));
+    }
+
+    public void loginSuccessful(String refreshToken, LocalDateTime loginExpiryDate) {
+        this.refreshToken = refreshToken;
+        this.loginExpiryDate = loginExpiryDate;
+    }
+
+    public void updateRefreshToken(String token) {
+        this.refreshToken = token;
+    }
+
+    // 【行为方法结束】
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 

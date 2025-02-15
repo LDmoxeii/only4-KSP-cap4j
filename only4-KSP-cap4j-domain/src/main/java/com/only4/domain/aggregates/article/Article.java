@@ -9,13 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import javax.persistence.CascadeType;
@@ -80,7 +74,7 @@ public class Article {
 
     public void like(Long memberId, LocalDateTime now) {
         this.getArticleLikes().add(new ArticleLike(memberId, now));
-        this.getArticleStatistics().updateLikeCount(1L);
+        this.getArticleStatistics().updateLikeCount(1);
         events().attach(new ArticleLikedDomainEvent(this), this);
     }
 
@@ -89,7 +83,7 @@ public class Article {
                 .filter(al -> Objects.equals(al.getId(), articleLikeId))
                 .findFirst()
                 .ifPresent(articleLike -> this.getArticleLikes().remove(articleLike));
-        this.getArticleStatistics().updateLikeCount(-1L);
+        this.getArticleStatistics().updateLikeCount(-1);
         events().attach(new ArticleUnlikedDomainEvent(this), this);
     }
 
@@ -105,7 +99,7 @@ public class Article {
                 .collect(Collectors.toList());
     }
 
-    public void updateLikeCount(Long likeCount) {
+    public void updateLikeCount(Integer likeCount) {
         this.getArticleStatistics().updateLikeCount(likeCount);
         events().attach(new ArticleLikeCountUpdatedDomainEvent(this), this);
     }
@@ -129,7 +123,7 @@ public class Article {
 
     public void reportComment(Long commentId) {
         this.getArticleComments().stream()
-                .filter(c-> Objects.equals(c.getId(), commentId))
+                .filter(c -> Objects.equals(c.getId(), commentId))
                 .findFirst()
                 .ifPresent(ArticleComment::report);
     }
@@ -158,7 +152,7 @@ public class Article {
         events().attach(new ArticleCommentUnlikedDomainEvent(this), this);
     }
 
-    public void updateCommentLikeCount(Long commentId, Long likeCount) {
+    public void updateCommentLikeCount(Long commentId, Integer likeCount) {
         this.getArticleComments().stream()
                 .filter(ac -> Objects.equals(ac.getId(), commentId))
                 .findFirst()
@@ -180,7 +174,7 @@ public class Article {
                 .ifPresent(articleComment -> articleComment.updateSticky(sticky));
     }
 
-    public void updateCommentCount(Long commentCount) {
+    public void updateCommentCount(Integer commentCount) {
         this.getArticleStatistics().updateCommentCount(commentCount);
     }
 
