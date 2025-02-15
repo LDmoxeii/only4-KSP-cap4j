@@ -35,11 +35,16 @@ public class ArticleTag {
 
     // 【行为方法开始】
 
+    protected ArticleTag(Long tagId, String tagName) {
+        this.tagId = tagId;
+        this.tagName = tagName;
+    }
 
+    protected void updateInfo(String tagName) {
+        this.tagName = tagName;
+    }
 
     // 【行为方法结束】
-
-
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 

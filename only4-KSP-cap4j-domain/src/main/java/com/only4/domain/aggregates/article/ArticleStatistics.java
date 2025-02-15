@@ -39,14 +39,16 @@ public class ArticleStatistics {
 
     // 【行为方法开始】
 
-    public void updateArticleLikeCount(Long num) {
+    protected void updateLikeCount(Long num) {
         this.likes = num;
-        events().attach(new ArticleLikeCountUpdatedDomainEvent(this), this);
     }
 
-    public void updateArticleFavoriteCount(Integer num) {
+    protected void updateArticleFavoriteCount(Integer num) {
         this.favorites = num;
-        events().attach(new ArticleFavoriteCountUpdatedDomainEvent(this), this);
+    }
+
+    public void updateCommentCount(Long commentCount) {
+        this.comments = commentCount;
     }
 
     // 【行为方法结束】

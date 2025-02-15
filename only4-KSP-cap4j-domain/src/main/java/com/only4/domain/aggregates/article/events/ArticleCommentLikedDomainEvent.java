@@ -13,7 +13,7 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
  * todo: 领域事件说明
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/14
+ * @date 2025/02/15
  */
 @DomainEvent(persist = false)
 @Aggregate(aggregate = "Article", name = "ArticleCommentLikedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")

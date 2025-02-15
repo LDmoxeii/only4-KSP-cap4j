@@ -3,7 +3,7 @@ package com.only4.domain.aggregates.article.enums;
 import lombok.Getter;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
-import javax.persistence.AttributeConverter;
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,10 +11,10 @@ import java.util.Map;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2024/11/24
+ * @date 2025/02/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleState", type = "enum", description = "")
-public enum ArticleState {
+@Aggregate(aggregate = "Article", name = "ArticleVisibility", type = "enum", description = "")
+public enum ArticleVisibility {
 
     /**
      * PRIVATE
@@ -31,43 +31,43 @@ public enum ArticleState {
 
 ;
     @Getter
-    private final int code;
+    private int code;
     @Getter
-    private final String name;
+    private String name;
 
-    ArticleState(Integer code, String name){
+    ArticleVisibility(Integer code, String name){
         this.code = code;
         this.name = name;
     }
 
 
-    private static Map<Integer, ArticleState> enums = null;
-    public static ArticleState valueOf(Integer code) {
+    private static Map<Integer, ArticleVisibility> enums = null;
+    public static ArticleVisibility valueOf(Integer code) {
         if(enums == null) {
             enums = new HashMap<>();
-            for (ArticleState val : ArticleState.values()) {
+            for (ArticleVisibility val : ArticleVisibility.values()) {
                 enums.put(val.code, val);
             }
         }
         if(enums.containsKey(code)){
             return enums.get(code);
         }
-        throw new RuntimeException("枚举类型ArticleState枚举值转换异常，不存在的值" + code);
+        throw new RuntimeException("枚举类型ArticleVisibility枚举值转换异常，不存在的值" + code);
     }
 
     /**
      * JPA转换器
      */
-    public static class Converter implements AttributeConverter<ArticleState, Integer>{
+    public static class Converter implements AttributeConverter<ArticleVisibility, Integer>{
 
         @Override
-        public Integer convertToDatabaseColumn(ArticleState  val) {
+        public Integer convertToDatabaseColumn(ArticleVisibility  val) {
             return val.code;
         }
 
         @Override
-        public ArticleState convertToEntityAttribute(Integer code) {
-            return ArticleState.valueOf(code);
+        public ArticleVisibility convertToEntityAttribute(Integer code) {
+            return ArticleVisibility.valueOf(code);
         }
     }
 }

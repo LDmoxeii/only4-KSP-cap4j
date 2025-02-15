@@ -10,7 +10,6 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.AggregatePayload;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -34,7 +33,7 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
                 .price(payload.price)
                 .cover(payload.cover)
                 .appendix(payload.appendix)
-                .state(payload.state)
+                .state(payload.visibility)
                 .stickyFlag(payload.stickyFlag)
                 .commentFlag(payload.commentFlag)
                 .articleAuthors(payload.authors)
@@ -58,7 +57,7 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
         Long price;
         String cover;
         Integer appendix;
-        com.only4.domain.aggregates.article.enums.ArticleState state;
+        com.only4.domain.aggregates.article.enums.ArticleVisibility visibility;
         Boolean stickyFlag;
         Boolean commentFlag;
         List<ArticleAuthor> authors;

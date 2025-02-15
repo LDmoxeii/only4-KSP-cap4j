@@ -34,6 +34,14 @@ import javax.persistence.*;
 public class ArticleCategory {
 
     // 【行为方法开始】
+    protected ArticleCategory(Long categoryId, String categoryName) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+    }
+
+    protected void updateInfo(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
 
 
@@ -73,6 +81,7 @@ public class ArticleCategory {
      */
     @Column(name = "`del_flag`")
     Boolean delFlag;
+
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }
