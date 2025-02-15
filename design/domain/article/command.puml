@@ -1,6 +1,7 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
+' ArticleCommand-Start
 Command("CreateArticle") [
     创建文章
     --触发者--
@@ -72,7 +73,52 @@ Command("ReportArticle") [
     --规则--
     1. 文章必须存在
 ]
-Command("UpdateArticleLikes") [
+Command("LikeArticle") [
+    点赞文章
+    --触发者--
+    用户
+    --属性--
+    用户ID
+    文章ID
+    --规则--
+    1. 文章必须存在
+    2. 未点赞
+]
+Command("UnLikeArticle") [
+    取消点赞文章
+    --触发者--
+    用户
+    --属性--
+    用户ID
+    文章ID
+    --规则--
+    1. 文章必须存在
+    2. 已点赞
+]
+Command("UpdateArticleTag") [
+    更新文章标签
+    --触发者--
+    作者
+    --属性--
+    文章ID
+    标签
+    --规则--
+    1. 文章必须存在
+]
+Command("UpdateArticleCategory") [
+    更新文章分类
+    --触发者--
+    作者
+    --属性--
+    文章ID
+    分类
+    --规则--
+    1. 文章必须存在
+]
+' ArticleCommand-End
+
+' ArticleStatisticsCommand-Start
+Command("UpdateArticleLikeCount") [
     更新文章点赞数
     --触发者--
     已点赞文章事件
@@ -83,7 +129,7 @@ Command("UpdateArticleLikes") [
     --规则--
     1. 文章必须存在
 ]
-Command("UpdateArticleFavorites") [
+Command("UpdateArticleFavoriteCount") [
     更新文章收藏数
     --触发者--
     已收藏文章事件
@@ -94,7 +140,9 @@ Command("UpdateArticleFavorites") [
     --规则--
     1. 文章必须存在
 ]
+' ArticleStatisticsCommand-End
 
+' ArticleCommentCommand-Start
 Command("CreateArticleComment") [
     创建文章评论
     --触发者--
@@ -109,8 +157,8 @@ Command("CreateArticleComment") [
     1. 文章必须存在
     2. 评论内容不能为空
 ]
-Command("UpdateArticleCommentAuthorInfo") [
-    更新文章评论作者信息
+Command("UpdateArticleCommentInfo") [
+    更新文章评论信息
     --触发者--
     已更新用户信息事件
     --属性--
@@ -119,7 +167,6 @@ Command("UpdateArticleCommentAuthorInfo") [
     --规则--
     1. 文章评论必须存在
 ]
-
 Command("ReportArticleComment") [
     举报文章评论
     --触发者--
@@ -143,28 +190,6 @@ Command("DeleteArticleComment") [
     2. 该用户为评论者或管理员
     3. 该评论属于该文章
 ]
-Command("LikeArticle") [
-    点赞文章
-    --触发者--
-    用户
-    --属性--
-    用户ID
-    文章ID
-    --规则--
-    1. 文章必须存在
-    2. 未点赞
-]
-Command("UnLikeArticle") [
-    取消点赞文章
-    --触发者--
-    用户
-    --属性--
-    用户ID
-    文章ID
-    --规则--
-    1. 文章必须存在
-    2. 已点赞
-]
 Command("LikeArticleComment") [
     点赞文章评论
     --触发者--
@@ -187,90 +212,6 @@ Command("UnLikeArticleComment") [
     1. 文章评论必须存在
     2. 已点赞
 ]
-
-Command("UpdateArticleAuthorInfo")[
-    更新文章作者信息
-    --触发者--
-    已更新用户信息事件
-    --属性--
-    文章ID
-    作者名
-    --规则--
-    1. 文章必须存在
-]
-
-Command("UpdateArticleTag") [
-    更新文章标签
-    --触发者--
-    作者
-    --属性--
-    文章ID
-    标签
-    --规则--
-    1. 文章必须存在
-]
-Command("UpdateArticleTagInfo") [
-    更新文章标签信息
-    --触发者--
-    已更新标签信息事件
-    --属性--
-    标签ID
-    标签名
-    --规则--
-    1. 标签必须存在
-]
-Command("UpdateArticleCategory") [
-    更新文章分类
-    --触发者--
-    作者
-    --属性--
-    文章ID
-    分类
-    --规则--
-    1. 文章必须存在
-]
-Command("UpdateArticleCategoryInfo") [
-    更新文章分类信息
-    --触发者--
-    已更新分类信息事件
-    --属性--
-    分类ID
-    分类名
-    --规则--
-    1. 分类必须存在
-]
-Command("UpdateArticleComments") [
-    更新文章评论数
-    --触发者--
-    已创建文章评论事件
-    已删除文章评论事件
-    --属性--
-    文章ID
-    评论数
-    --规则--
-    1. 文章必须存在
-]
-Command("UpdateArticleCommentLikes") [
-    更新文章评论点赞数
-    --触发者--
-    已点赞文章评论事件
-    已取消点赞文章评论事件
-    --属性--
-    文章评论ID
-    点赞数
-    --规则--
-    1. 文章评论必须存在
-]
-Command("UpdateArticleCommentReplies") [
-    更新文章评论回复数
-    --触发者--
-    已创建文章评论事件
-    --属性--
-    文章评论ID
-    回复数
-    --规则--
-    1. 文章评论必须存在
-]
 Command("UpdateArticleCommentState") [
     更新文章评论状态
     --触发者--
@@ -282,4 +223,79 @@ Command("UpdateArticleCommentState") [
     --规则--
     1. 文章评论必须存在
 ]
+' ArticleCommentCommand-End
+
+' ArticleCommentStatisticsCommand-Start
+Command("UpdateArticleCommentCount") [
+    更新文章评论数
+    --触发者--
+    已创建文章评论事件
+    已删除文章评论事件
+    --属性--
+    文章ID
+    评论数
+    --规则--
+    1. 文章必须存在
+]
+Command("UpdateArticleCommentLikeCount") [
+    更新文章评论点赞数
+    --触发者--
+    已点赞文章评论事件
+    已取消点赞文章评论事件
+    --属性--
+    文章评论ID
+    点赞数
+    --规则--
+    1. 文章评论必须存在
+]
+Command("UpdateArticleCommentReplyCount") [
+    更新文章评论回复数
+    --触发者--
+    已创建文章评论事件
+    --属性--
+    文章评论ID
+    回复数
+    --规则--
+    1. 文章评论必须存在
+]
+' ArticleCommentStatisticsCommand-End
+
+' ArticleAuthorCommand-Start
+Command("UpdateArticleAuthorInfo")[
+    更新文章作者信息
+    --触发者--
+    已更新用户信息事件
+    --属性--
+    文章ID
+    作者名
+    --规则--
+    1. 文章必须存在
+]
+' ArticleAuthorCommand-End
+
+' ArticleTagCommand-Start
+Command("UpdateArticleTagInfo") [
+    更新文章标签信息
+    --触发者--
+    已更新标签信息事件
+    --属性--
+    标签ID
+    标签名
+    --规则--
+    1. 标签必须存在
+]
+' ArticleTagCommand-End
+
+' ArticleCategoryCommand-Start
+Command("UpdateArticleCategoryInfo") [
+    更新文章分类信息
+    --触发者--
+    已更新分类信息事件
+    --属性--
+    分类ID
+    分类名
+    --规则--
+    1. 分类必须存在
+]
+' ArticleCategoryCommand-End
 @enduml

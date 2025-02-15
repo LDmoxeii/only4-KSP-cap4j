@@ -1,5 +1,7 @@
 package com.only4.domain.aggregates.article;
 
+import com.only4.domain.aggregates.article.events.ArticleFavoriteCountUpdatedDomainEvent;
+import com.only4.domain.aggregates.article.events.ArticleLikeCountUpdatedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +12,8 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 文章统计
@@ -35,7 +39,15 @@ public class ArticleStatistics {
 
     // 【行为方法开始】
 
+    public void updateArticleLikeCount(Long num) {
+        this.likes = num;
+        events().attach(new ArticleLikeCountUpdatedDomainEvent(this), this);
+    }
 
+    public void updateArticleFavoriteCount(Integer num) {
+        this.favorites = num;
+        events().attach(new ArticleFavoriteCountUpdatedDomainEvent(this), this);
+    }
 
     // 【行为方法结束】
 

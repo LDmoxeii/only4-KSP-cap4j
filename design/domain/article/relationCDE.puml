@@ -1,38 +1,50 @@
 @startuml
+
+' ArticleCommand
 CreateArticle                   -down-> Article
 UpdateArticleState              -down-> Article
 UpdateArticleInfo               -down-> Article
 BanArticle                      -down-> Article
 ReportArticle                   -down-> Article
-UpdateArticleLikes              -down-> Article
-UpdateArticleFavorites          -down-> Article
-CreateArticleComment            -down-> Article
-ReportArticleComment            -down-> Article
-DeleteArticleComment            -down-> Article
-LikeArticleComment              -down-> Article
-UnLikeArticleComment            -down-> Article
+UpdateArticleLikeCount          -down-> Article
+UpdateArticleFavoriteCount      -down-> Article
 UpdateArticleTag                -down-> Article
 UpdateArticleCategory           -down-> Article
-UpdateArticleCategoryInfo       -down-> Article
-UpdateArticleComments           -down-> Article
-UpdateArticleCommentLikes       -down-> Article
-UpdateArticleCommentReplies     -down-> Article
-UpdateArticleCommentState       -down-> Article
 LikeArticle                     -down-> Article
 UnLikeArticle                   -down-> Article
-UpdateArticleCommentAuthorInfo  -down-> Article
-UpdateArticleAuthorInfo         -down-> Article
-UpdateArticleTagInfo            -down-> Article
 
+' ArticleCommentCommand
+CreateArticleComment            -down-> ArticleComment
+ReportArticleComment            -down-> ArticleComment
+DeleteArticleComment            -down-> ArticleComment
+LikeArticleComment              -down-> ArticleComment
+UnLikeArticleComment            -down-> ArticleComment
+UpdateArticleCommentCount       -down-> ArticleComment
+UpdateArticleCommentLikeCount   -down-> ArticleComment
+UpdateArticleCommentReplyCount  -down-> ArticleComment
+UpdateArticleCommentState       -down-> ArticleComment
+UpdateArticleCommentInfo  -down-> ArticleComment
 
-Article-down->CreatedArticle
-Article-down->UpdatedArticleLikes
-Article-down->UpdatedArticleFavorites
-Article-down->CreatedArticleComment
-Article-down->DeletedArticleComment
-Article-down->LikedArticleComment
-Article-down->UnlikedArticleComment
-Article-down->UpdatedArticleCommentLikes
-Article-down->LikedArticle
-Article-down->UnlikedArticle
+' ArticleCategoryCommand
+UpdateArticleCategoryInfo       -down-> ArticleCategory
+
+' ArticleAuthorCommand
+UpdateArticleAuthorInfo         -down-> ArticleAuthor
+
+' ArticleTagCommand
+UpdateArticleTagInfo            -down-> ArticleTag
+
+' ArticleEvent
+Article-down->ArticleCreated
+Article-down->ArticleLikeCountUpdated
+Article-down->ArticleFavoriteCountUpdated
+Article-down->ArticleLiked
+Article-down->ArticleUnliked
+
+' ArticleCommentEvent
+ArticleComment-down->ArticleCommentCreated
+ArticleComment-down->ArticleCommentDeleted
+ArticleComment-down->ArticleCommentLiked
+ArticleComment-down->ArticleCommentUnliked
+ArticleComment-down->ArticleCommentLikeCountUpdated
 @enduml
