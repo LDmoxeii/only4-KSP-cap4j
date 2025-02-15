@@ -1,7 +1,7 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
-DomainEvent("UpdatedCategoryInfo") [
+DomainEvent("CategoryInfoUpdated") [
     已更新分类
     --属性--
     分类ID

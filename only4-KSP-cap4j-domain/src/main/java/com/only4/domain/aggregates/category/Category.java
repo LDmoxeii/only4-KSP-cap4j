@@ -1,5 +1,6 @@
 package com.only4.domain.aggregates.category;
 
+import com.only4.domain.aggregates.category.events.CategoryInfoUpdatedDomainEvent;
 import com.only4.domain.aggregates.category.events.UpdatedCategoryInfoDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,7 +43,11 @@ public class Category {
     public void updateCategoryInfo(Long categoryId, String categoryName) {
         this.id = categoryId;
         this.name = categoryName;
-        events().attach(new UpdatedCategoryInfoDomainEvent(this), this);
+        events().attach(new CategoryInfoUpdatedDomainEvent(this), this);
+    }
+
+    public void deleteCategory() {
+        this.delFlag = true;
     }
 
     // 【行为方法结束】
