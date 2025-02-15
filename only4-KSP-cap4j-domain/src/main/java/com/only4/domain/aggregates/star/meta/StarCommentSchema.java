@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/01/16
+ * @date 2025/02/15
  */
 @RequiredArgsConstructor
 public class StarCommentSchema {
@@ -146,6 +146,18 @@ public class StarCommentSchema {
         return builder.build(this);
     }
 
+    /**
+     * StarCommentStatistics 关联查询条件定义
+     *
+     * @param joinType
+     * @return
+     */
+    public com.only4.domain.aggregates.star.meta.StarCommentStatisticsSchema joinStarCommentStatistics(Schema.JoinType joinType) {
+        JoinType type = joinType.toJpaJoinType();
+        Join<StarComment, com.only4.domain.aggregates.star.StarCommentStatistics> join = ((Root<StarComment>) this.root).join("starCommentStatistics", type);
+        com.only4.domain.aggregates.star.meta.StarCommentStatisticsSchema schema = new com.only4.domain.aggregates.star.meta.StarCommentStatisticsSchema(join, this.criteriaBuilder);
+        return schema;
+    }
     /**
      * StarCommentLike 关联查询条件定义
      *

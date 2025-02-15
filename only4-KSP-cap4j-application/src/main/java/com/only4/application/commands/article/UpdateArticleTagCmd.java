@@ -35,9 +35,7 @@ public class UpdateArticleTagCmd {
             Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
-
-
-                        article.updateTags(tags);
+                        article.updateTags(cmd.tags);
                         Mediator.uow().persist(article);
                     });
             Mediator.uow().save();

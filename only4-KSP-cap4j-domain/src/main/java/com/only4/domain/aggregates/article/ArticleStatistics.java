@@ -1,7 +1,5 @@
 package com.only4.domain.aggregates.article;
 
-import com.only4.domain.aggregates.article.events.ArticleFavoriteCountUpdatedDomainEvent;
-import com.only4.domain.aggregates.article.events.ArticleLikeCountUpdatedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,13 +11,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 
-import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
-
 /**
  * 文章统计
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
@@ -39,20 +36,19 @@ public class ArticleStatistics {
 
     // 【行为方法开始】
 
-    protected void updateLikeCount(Long num) {
-        this.likes = num;
+    protected void updateLikeCount(Integer num) {
+        this.likeCount = num;
     }
 
     protected void updateArticleFavoriteCount(Integer num) {
-        this.favorites = num;
+        this.favoriteCount = num;
     }
 
-    public void updateCommentCount(Long commentCount) {
-        this.comments = commentCount;
+    public void updateCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
     }
 
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
@@ -69,31 +65,31 @@ public class ArticleStatistics {
 
     /**
      * 点赞数
-     * bigint
+     * int
      */
-    @Column(name = "`likes`")
-    Long likes;
+    @Column(name = "`like_count`")
+    Integer likeCount;
 
     /**
      * 文章收藏数
      * int
      */
-    @Column(name = "`favorites`")
-    Integer favorites;
+    @Column(name = "`favorite_count`")
+    Integer favoriteCount;
 
     /**
      * 评论数
-     * bigint
+     * int
      */
-    @Column(name = "`comments`")
-    Long comments;
+    @Column(name = "`comment_count`")
+    Integer commentCount;
 
     /**
      * 文章浏览量
      * int
      */
-    @Column(name = "`views`")
-    Integer views;
+    @Column(name = "`view_count`")
+    Integer viewCount;
 
     /**
      * 逻辑删除

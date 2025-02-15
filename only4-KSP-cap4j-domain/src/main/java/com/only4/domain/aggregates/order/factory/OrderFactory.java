@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 /**
  * Order聚合工厂
  *
- *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04
  */

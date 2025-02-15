@@ -1,7 +1,7 @@
-package com.only4.domain.aggregates.member.meta;
+package com.only4.domain.aggregates.star.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.member.SignInRecord;
+import com.only4.domain.aggregates.star.StarCommentStatistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 会员签到记录
+ * 星球评论统计
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
  * @date 2025/02/15
  */
 @RequiredArgsConstructor
-public class SignInRecordSchema {
+public class StarCommentStatisticsSchema {
     /**
      * 属性字段集合
      */
@@ -32,9 +32,14 @@ public class SignInRecordSchema {
         public static final String id = "id";
 
         /**
-         * 签到时间
+         * 点赞数
          */
-        public static final String createAt = "createAt";
+        public static final String likeCount = "likeCount";
+
+        /**
+         * 子评论数
+         */
+        public static final String commentCount = "commentCount";
 
         /**
          * 逻辑删除
@@ -43,14 +48,14 @@ public class SignInRecordSchema {
 
     }
 
-    private final Path<SignInRecord> root;
+    private final Path<StarCommentStatistics> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
 
-    public Path<SignInRecord> _root() {
+    public Path<StarCommentStatistics> _root() {
         return root;
     }
 
@@ -64,11 +69,19 @@ public class SignInRecordSchema {
     }
 
     /**
-     * 签到时间
-     * timestamp
+     * 点赞数
+     * int
      */
-    public Schema.Field<java.time.LocalDateTime> createAt() {
-        return new Schema.Field<>(root.get("createAt"), this.criteriaBuilder);
+    public Schema.Field<Integer> likeCount() {
+        return new Schema.Field<>(root.get("likeCount"), this.criteriaBuilder);
+    }
+
+    /**
+     * 子评论数
+     * int
+     */
+    public Schema.Field<Integer> commentCount() {
+        return new Schema.Field<>(root.get("commentCount"), this.criteriaBuilder);
     }
 
     /**
@@ -103,7 +116,7 @@ public class SignInRecordSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<SignInRecordSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder){
         return builder.build(this);
     }
 
@@ -114,7 +127,7 @@ public class SignInRecordSchema {
      * @param builder where条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder) {
+    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder) {
         return specify(builder, false, Collections.emptyList());
     }
 
@@ -125,7 +138,7 @@ public class SignInRecordSchema {
      * @param distinct 是否去重
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, boolean distinct) {
+    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder, boolean distinct) {
         return specify(builder, distinct, Collections.emptyList());
     }
 
@@ -136,7 +149,7 @@ public class SignInRecordSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, Schema.OrderBuilder<SignInRecordSchema>... orderBuilders) {
+    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder, Schema.OrderBuilder<StarCommentStatisticsSchema>... orderBuilders) {
         return specify(builder, Arrays.asList(orderBuilders));
     }
 
@@ -147,7 +160,7 @@ public class SignInRecordSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, List<Schema.OrderBuilder<SignInRecordSchema>> orderBuilders) {
+    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder, List<Schema.OrderBuilder<StarCommentStatisticsSchema>> orderBuilders) {
         return specify(builder, orderBuilders);
     }
 
@@ -159,7 +172,7 @@ public class SignInRecordSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, boolean distinct, Schema.OrderBuilder<SignInRecordSchema>... orderBuilders) {
+    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder, boolean distinct, Schema.OrderBuilder<StarCommentStatisticsSchema>... orderBuilders) {
         return specify(builder, distinct, Arrays.asList(orderBuilders));
     }
 
@@ -171,7 +184,7 @@ public class SignInRecordSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, boolean distinct, List<Schema.OrderBuilder<SignInRecordSchema>> orderBuilders) {
+    public static Specification<StarCommentStatistics> specify(Schema.PredicateBuilder<StarCommentStatisticsSchema> builder, boolean distinct, List<Schema.OrderBuilder<StarCommentStatisticsSchema>> orderBuilders) {
         return specify((schema, criteriaQuery) -> {
             criteriaQuery.where(builder.build(schema));
             criteriaQuery.distinct(distinct);
@@ -191,10 +204,10 @@ public class SignInRecordSchema {
      * @param specifier 查询条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.Specification<SignInRecord, SignInRecordSchema> specifier) {
+    public static Specification<StarCommentStatistics> specify(Schema.Specification<StarCommentStatistics, StarCommentStatisticsSchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            SignInRecordSchema signInRecord = new SignInRecordSchema(root, criteriaBuilder);
-            return specifier.toPredicate(signInRecord, criteriaQuery);
+            StarCommentStatisticsSchema starCommentStatistics = new StarCommentStatisticsSchema(root, criteriaBuilder);
+            return specifier.toPredicate(starCommentStatistics, criteriaQuery);
         };
     }
 

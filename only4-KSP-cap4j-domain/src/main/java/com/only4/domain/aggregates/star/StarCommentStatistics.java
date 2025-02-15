@@ -12,27 +12,27 @@ import javax.persistence.Table;
 import javax.persistence.*;
 
 /**
- * 星球点赞
+ * 星球评论统计
  * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
  *
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/02/15
  */
-@Aggregate(aggregate = "Star", name = "StarLike", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Star"}, description = "星球点赞")
+@Aggregate(aggregate = "Star", name = "StarCommentStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "StarComment" }, description = "星球评论统计")
 @Entity
-@Table(name = "`star_like`")
+@Table(name = "`star_comment_statistics`")
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "update `star_like` set `del_flag` = 1 where `id` = ? ")
-@Where(clause = "`del_flag` = 0")
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-public class StarLike {
+@SQLDelete(sql = "update `star_comment_statistics` set `del_flag` = 1 where `id` = ? ")
+@Where(clause = "`del_flag` = 0")
+public class StarCommentStatistics {
 
     // 【行为方法开始】
 
@@ -53,18 +53,18 @@ public class StarLike {
     Long id;
 
     /**
-     * 星尘ID
-     * bigint
+     * 点赞数
+     * int
      */
-    @Column(name = "`stardust_id`")
-    Long stardustId;
+    @Column(name = "`like_count`")
+    Integer likeCount;
 
     /**
-     * 点赞时间
-     * timestamp
+     * 子评论数
+     * int
      */
-    @Column(name = "`create_at`")
-    java.time.LocalDateTime createAt;
+    @Column(name = "`comment_count`")
+    Integer commentCount;
 
     /**
      * 逻辑删除

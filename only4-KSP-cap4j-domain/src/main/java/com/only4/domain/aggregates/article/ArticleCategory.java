@@ -13,9 +13,10 @@ import javax.persistence.*;
 
 /**
  * 文章分类
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
@@ -44,9 +45,7 @@ public class ArticleCategory {
     }
 
 
-
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
@@ -81,7 +80,6 @@ public class ArticleCategory {
      */
     @Column(name = "`del_flag`")
     Boolean delFlag;
-
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 /**
  * Role规格约束
  *
- *
  * @author cap4j-ddd-codegen
  * @date 2024/11/14
  */

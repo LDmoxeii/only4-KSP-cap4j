@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/01/16
+ * @date 2025/02/15
  */
 @RequiredArgsConstructor
 public class StarSchema {
@@ -104,9 +104,9 @@ public class StarSchema {
 
     /**
      * 星球价格
-     * int
+     * bigint
      */
-    public Schema.Field<Integer> amount() {
+    public Schema.Field<Long> amount() {
         return new Schema.Field<>(root.get("amount"), this.criteriaBuilder);
     }
 
