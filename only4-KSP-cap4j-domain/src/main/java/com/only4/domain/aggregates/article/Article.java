@@ -1,7 +1,7 @@
 package com.only4.domain.aggregates.article;
 
 import com.only4.domain.aggregates.article.enums.ArticleState;
-import com.only4.domain.aggregates.article.events.CreatedArticleDomainEvent;
+import com.only4.domain.aggregates.article.events.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-
 import java.util.Objects;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
@@ -44,7 +43,7 @@ public class Article {
     // 【行为方法开始】
 
     public void create() {
-        events().attach(new CreatedArticleDomainEvent(this), this);
+        events().attach(new ArticleCreatedDomainEvent(this), this);
     }
 
     public void privatization() {
@@ -64,34 +63,60 @@ public class Article {
         this.state = ArticleState.BANNED;
     }
 
-    public void updateArticleLikes(Long num) {
+    public void updateArticleLikeCount(Long num) {
         this.getArticleStatistics().likes = num;
+        events().attach(new ArticleLikeCountUpdatedDomainEvent(this), this);
     }
 
-    public void updateArticleFavorites(Integer num) {
+    public void updateArticleFavoriteCount(Integer num) {
         this.getArticleStatistics().favorites = num;
+        events().attach(new ArticleFavoriteCountUpdatedDomainEvent(this), this);
     }
 
-    public void createArticleCommon(ArticleComment newComment) {
+    public void likeArticle(ArticleLike newArticleLike) {
+        this.getArticleLikes().add(newArticleLike);
+        this.updateArticleLikeCount(1L);
+        events().attach(new ArticleLikedDomainEvent(this), this);
+    }
+
+    public void unlikeArticle(Long articleLikeId) {
+        this.getArticleLikes().stream()
+                .filter(al -> Objects.equals(al.getId(), articleLikeId))
+                .findFirst()
+                .ifPresent(articleLike -> this.getArticleLikes().remove(articleLike));
+        this.updateArticleLikeCount(-1L);
+        events().attach(new ArticleUnlikedDomainEvent(this), this);
+    }
+
+    public void createArticleComment(ArticleComment newComment) {
         this.articleComments.add(newComment);
+        events().attach(new ArticleCommentCreatedDomainEvent(this), this);
     }
 
-    public void deleteArticleCommon(Long commentId) {
+    public void deleteArticleComment(Long commentId) {
         this.getArticleComments().stream()
                 .filter(c -> Objects.equals(c.getId(), commentId))
                 .findFirst()
                 .ifPresent(comment -> this.getArticleComments().remove(comment));
+        events().attach(new ArticleCommentDeletedDomainEvent(this), this);
     }
 
-    public void likeArticleComment(ArticleLike newArticleLike) {
-        this.getArticleLikes().add(newArticleLike);
-    }
-
-    public void unLikeArticleComment(Long articleLikeId) {
-        this.getArticleLikes().stream()
-                .filter(l -> Objects.equals(l.getId(), articleLikeId))
+    public void likeArticleComment(Long articleCommentId, ArticleCommentLike newArticleCommentLike) {
+        this.getArticleComments().stream()
+                .filter(ac -> Objects.equals(ac.getId(), articleCommentId))
                 .findFirst()
-                .ifPresent(like -> this.getArticleLikes().remove(like));
+                .ifPresent(articleComment -> articleComment.likeArticleComment(newArticleCommentLike));
+        events().attach(new ArticleCommentLikedDomainEvent(this), this);
+        events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
+    }
+
+    public void unLikeArticleComment(Long articleCommentId, Long articleCommentLikeId) {
+        this.getArticleComments().stream()
+                .filter(ac -> Objects.equals(ac.getId(), articleCommentId))
+                .findFirst()
+                .ifPresent(articleComment -> articleComment.unlikeArticleComment(articleCommentLikeId));
+        events().attach(new ArticleCommentUnlikedDomainEvent(this), this);
+        events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
     }
 
     /**
