@@ -104,7 +104,7 @@ Command("UpdateArticleTag") [
     --规则--
     1. 文章必须存在
 ]
-Command("UpdateArticleCategory") [
+Command("UpdateArticleCategories") [
     更新文章分类
     --触发者--
     作者

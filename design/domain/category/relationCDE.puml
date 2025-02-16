@@ -1,7 +1,8 @@
 @startuml
-CreateCategory      -down-> Category
-UpdateCategoryInfo  -down-> Category
-DeleteCategory      -down-> Category
+CreateCategory          -down-> Category
+UpdateCategoryInfo      -down-> Category
+UpdateCategoryRefCount  -down-> Category
+DeleteCategory          -down-> Category
 
 Category -down-> CategoryInfoUpdated
 @enduml

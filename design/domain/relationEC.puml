@@ -2,6 +2,8 @@
 'Article
 CreatedArticle              -down-> UpdateMemberWorks
 UpdatedArticleLikes         -down-> UpdateMemberLikes
+UpdatedArticleCategories    -down-> UpdateCategoryRefCount
+ArticleTagsUpdated          -down-> UpdateTagRefCount
 LikedArticle                -down-> CalculateWillReceiveRanks
 UnlikedArticle              -down-> CalculateWillReceiveRanks
 LikedArticleComment         -down-> CalculateWillReceiveRanks

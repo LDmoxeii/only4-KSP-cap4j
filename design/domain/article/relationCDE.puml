@@ -8,7 +8,7 @@ ReportArticle                   -down-> Article
 UpdateArticleLikeCount          -down-> Article
 UpdateArticleFavoriteCount      -down-> Article
 UpdateArticleTag                -down-> Article
-UpdateArticleCategory           -down-> Article
+UpdateArticleCategories         -down-> Article
 LikeArticle                     -down-> Article
 UnlikeArticle                   -down-> Article
 CreateArticleComment            -down-> Article
@@ -36,4 +36,6 @@ Article-down->ArticleCommentDeleted
 Article-down->ArticleCommentLiked
 Article-down->ArticleCommentUnliked
 Article-down->ArticleCommentLikeCountUpdated
+Article-down->ArticleCategoriesUpdated
+Article-down->ArticleTagsUpdated
 @enduml

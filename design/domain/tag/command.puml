@@ -28,7 +28,16 @@ Command("UpdateTagInfo") [
     1. 标签名不能为空
     2. 标签必须存在
 ]
-
+Command("UpdateTagRefCount") [
+    更新标签引用次数
+    --触发者--
+    已更新文章标签集事件
+    --属性--
+    标签ID
+    引用次数
+    --规则--
+    1. 标签必须存在
+]
 Command("DeleteTag") [
     删除标签
     --触发者--

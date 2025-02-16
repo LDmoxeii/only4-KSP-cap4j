@@ -79,4 +79,22 @@ DomainEvent("ArticleCommentLikeCountUpdated") [
     --监听者--
     该评论作者
 ]
+DomainEvent("ArticleCategoriesUpdated") [
+    已更新文章分类集
+    --属性--
+    文章ID
+    分类ID
+    --监听者--
+    该文章
+    该分类
+]
+DomainEvent("ArticleTagsUpdated") [
+已更新文章标签集
+    --属性--
+    文章ID
+    标签ID
+    --监听者--
+    该文章
+    该标签
+]
 @enduml
