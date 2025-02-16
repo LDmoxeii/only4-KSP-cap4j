@@ -1,6 +1,7 @@
 package com.only4.application.commands.article;
 
 
+import com.only4.application.validater.article.ArticleExists;
 import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.category.Category;
 import lombok.*;
@@ -30,18 +31,18 @@ public class UpdateArticleCategoriesCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            Mediator.repositories()
+            return Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
-                    .ifPresent(article -> {
+                    .map(article -> {
                         article.updateCategory(cmd.getCategories());
                         Mediator.uow().persist(article);
-                    });
 
-            Mediator.uow().save();
+                        Mediator.uow().save();
 
-            return Response.builder()
-                    .success(true)
-                    .build();
+                        return Response.builder()
+                                .success(true)
+                                .build();
+                    }).orElseThrow(RuntimeException::new);
         }
     }
 
@@ -53,7 +54,10 @@ public class UpdateArticleCategoriesCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
+        @ArticleExists
         Long articleId;
+
         List<Category> categories;
     }
 

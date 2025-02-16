@@ -6,9 +6,8 @@ import com.only4.application.commands.article.CreateArticleCmd;
 import com.only4.application.commands.article.CreateArticleCommentCmd;
 import com.only4.application.commands.article.DeleteArticleCommentCmd;
 import com.only4.domain.aggregates.article.ArticleAuthor;
-import com.only4.domain.aggregates.article.enums.ArticleVisibility;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.netcorepal.cap4j.ddd.Mediator;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,26 +29,20 @@ public class ArticleController {
 
     @GetMapping("createArticleTest")
     public ResponseData<?> createArticle() {
-        Optional.ofNullable(CreateArticleCmd.Request.builder()
+        return Optional.of(CreateArticleCmd.Request.builder()
                         .title("Test Title")
                         .description("Test Description")
                         .content("Test Content")
-                        .visibility(ArticleVisibility.PUBLISH)
-                        .stickyFlag(true)
-                        .commentFlag(false)
-                        .cover("cover.jpg")
-                        .appendix("appendix.pdf")
                         .authors(Collections.singletonList(ArticleAuthor.builder()
                                 .authorId(1L)
                                 .authorName("Author")
                                 .build())
                         )
-                        .categories(Collections.emptyList())
-                        .price(99L)
-                        .tags(Collections.emptyList())
                         .build())
-                .ifPresent(Mediator.commands()::send);
-        return null;
+                .map(request -> {
+                    val response = Mediator.commands().send(request);
+                    return ResponseData.success(response);
+                }).orElse(ResponseData.fail("创建文章失败"));
     }
 
     @GetMapping("createArticleCommentTest")
@@ -58,9 +51,8 @@ public class ArticleController {
                         .parentId(0L)
                         .memberId(1L)
                         .memberName("Author")
-                        .articleId(138048748285591552L)
+                        .articleId(138370173508780032L)
                         .content("Test Comment")
-                        .createAt(LocalDateTime.now())
                         .build())
                 .ifPresent(Mediator.commands()::send);
         return null;

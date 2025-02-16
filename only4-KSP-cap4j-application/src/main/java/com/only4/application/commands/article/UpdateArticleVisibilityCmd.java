@@ -1,8 +1,9 @@
 package com.only4.application.commands.article;
 
 
-import com.only4.application.validater.article.ArticleLiked;
+import com.only4.application.validater.article.ArticleExists;
 import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.article.enums.ArticleVisibility;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -11,16 +12,18 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * todo: 命令描述
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/14
+ * @date 2025/02/16
  */
-public class UnlikeArticleCmd {
+public class UpdateArticleVisibilityCmd {
 
     /**
-     * UnLikeArticleCmd命令请求实现
+     * UpdateArticleVisibilityCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -31,9 +34,9 @@ public class UnlikeArticleCmd {
             return Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .map(article -> {
-                        article.unlike(cmd.getMemberId());
+                        article.updateVisibility(cmd.getVisibility());
                         Mediator.uow().persist(article);
-
+                        
                         Mediator.uow().save();
 
                         return Response.builder()
@@ -44,22 +47,27 @@ public class UnlikeArticleCmd {
     }
 
     /**
-     * UnlikeArticleCmd命令请求参数
+     * UpdateArticleVisibilityCmd命令请求参数
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @ArticleLiked
     public static class Request implements RequestParam<Response> {
 
+        @ArticleExists
         Long articleId;
 
-        Long memberId;
+        ArticleVisibility visibility;
+
+        ArticleVisibility getVisibility() {
+            return Optional.ofNullable(visibility)
+                    .orElse(ArticleVisibility.PRIVATE);
+        }
     }
 
     /**
-     * UnLikeArticleCmd命令响应
+     * UpdateArticleVisibilityCmd命令响应
      */
     @Data
     @Builder

@@ -1,6 +1,7 @@
 package com.only4.application.commands.article;
 
 
+import com.only4.application.validater.article.ArticleNotLiked;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,6 @@ import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 /**
  * todo: 命令描述
@@ -30,16 +30,18 @@ public class LikeArticleCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            cmd.getArticle().ifPresent(article -> {
-                article.like(cmd.getMemberId(), LocalDateTime.now());
-                Mediator.uow().persist(article);
-            });
+            return Mediator.repositories()
+                    .findOne(JpaPredicate.byId(Article.class, cmd.articleId))
+                    .map(article -> {
+                        article.like(cmd.getMemberId(), LocalDateTime.now());
+                        Mediator.uow().persist(article);
 
-            Mediator.uow().save();
+                        Mediator.uow().save();
 
-            return Response.builder()
-                    .success(true)
-                    .build();
+                        return Response.builder()
+                                .success(true)
+                                .build();
+                    }).orElseThrow(RuntimeException::new);
         }
     }
 
@@ -50,33 +52,12 @@ public class LikeArticleCmd {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @ArticleNotLiked
     public static class Request implements RequestParam<Response> {
-        Long memberId;
+
         Long articleId;
 
-        {
-            validateExists();
-            validateNotLike();
-        }
-
-        void validateNotLike() {
-            getArticle().flatMap(article -> article.getArticleLikes().stream()
-                    .filter(articleLike -> articleLike.getMemberId().equals(memberId))
-                    .findFirst()).ifPresent(articleLike -> {
-                throw new IllegalArgumentException("您已经点赞过该文章");
-            });
-        }
-
-        Optional<Article> getArticle() {
-            return Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Article.class, articleId));
-        }
-
-        void validateExists() {
-            if (!Mediator.repositories().exists(JpaPredicate.byId(Article.class, articleId))) {
-                throw new IllegalArgumentException("文章不存在");
-            }
-        }
+        Long memberId;
     }
 
     /**

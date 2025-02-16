@@ -1,6 +1,7 @@
 package com.only4.application.commands.article;
 
 
+import com.only4.application.validater.article.ArticleExists;
 import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.tag.Tag;
 import lombok.*;
@@ -11,7 +12,9 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * todo: 命令描述
@@ -30,18 +33,18 @@ public class UpdateArticleTagsCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            Mediator.repositories()
+            return Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
-                    .ifPresent(article -> {
-                        article.updateTags(cmd.tags);
+                    .map(article -> {
+                        article.updateTags(cmd.getTags());
                         Mediator.uow().persist(article);
-                    });
+                        
+                        Mediator.uow().save();
 
-            Mediator.uow().save();
-
-            return Response.builder()
-                    .success(true)
-                    .build();
+                        return Response.builder()
+                                .success(true)
+                                .build();
+                    }).orElseThrow(RuntimeException::new);
         }
     }
 
@@ -53,8 +56,16 @@ public class UpdateArticleTagsCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
+        @ArticleExists
         Long articleId;
+
         List<Tag> tags;
+
+        List<Tag> getTags() {
+            return Optional.ofNullable(tags)
+                    .orElse(Collections.emptyList());
+        }
     }
 
     /**

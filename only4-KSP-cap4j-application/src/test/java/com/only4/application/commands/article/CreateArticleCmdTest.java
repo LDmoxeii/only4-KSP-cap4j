@@ -43,19 +43,11 @@ class CreateArticleCmdTest {
                 .title("Test Title")
                 .description("Test Description")
                 .content("Test Content")
-                .visibility(ArticleVisibility.PUBLISH)
-                .stickyFlag(true)
-                .commentFlag(false)
-                .cover("cover.jpg")
-                .appendix("appendix.pdf")
                 .authors(Collections.singletonList(ArticleAuthor.builder()
                         .authorId(1L)
                         .authorName("Author")
                         .build())
                 )
-                .categories(Collections.emptyList())
-                .price(99L)
-                .tags(Collections.emptyList())
                 .build();
 
         try (
@@ -82,15 +74,7 @@ class CreateArticleCmdTest {
                     () -> assertEquals(request.getTitle(), payload.getTitle()),
                     () -> assertEquals(request.getDescription(), payload.getDescription()),
                     () -> assertEquals(request.getContent(), payload.getContent()),
-                    () -> assertEquals(request.getVisibility(), payload.getVisibility()),
-                    () -> assertEquals(request.getStickyFlag(), payload.getStickyFlag()),
-                    () -> assertEquals(request.getCommentFlag(), payload.getCommentFlag()),
-                    () -> assertEquals(request.getCover(), payload.getCover()),
-                    () -> assertEquals(request.getAppendix(), payload.getAppendix()),
-                    () -> assertEquals(request.getAuthors(), payload.getAuthors()),
-                    () -> assertEquals(request.getCategories(), payload.getCategories()),
-                    () -> assertEquals(request.getPrice(), payload.getPrice()),
-                    () -> assertEquals(request.getTags(), payload.getTags())
+                    () -> assertEquals(request.getAuthors(), payload.getAuthors())
             );
 
             // 验证领域操作

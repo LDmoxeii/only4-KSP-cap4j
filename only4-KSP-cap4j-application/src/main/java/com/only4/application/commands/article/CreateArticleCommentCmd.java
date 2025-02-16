@@ -1,6 +1,7 @@
 package com.only4.application.commands.article;
 
 
+import com.only4.application.validater.article.ArticleExists;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * todo: 命令描述
@@ -30,24 +32,24 @@ public class CreateArticleCommentCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            Mediator.repositories()
+            return Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
-                    .ifPresent(article -> {
+                    .map(article -> {
                         article.createComment(
                                 cmd.parentId(),
                                 cmd.getMemberId(),
                                 cmd.getMemberName(),
                                 cmd.getContent(),
-                                cmd.getCreateAt()
+                                LocalDateTime.now()
                         );
                         Mediator.uow().persist(article);
-                    });
 
-            Mediator.uow().save();
+                        Mediator.uow().save();
 
-            return Response.builder()
-                    .success(true)
-                    .build();
+                        return Response.builder()
+                                .success(true)
+                                .build();
+                    }).orElseThrow(RuntimeException::new);
         }
     }
 
@@ -59,18 +61,22 @@ public class CreateArticleCommentCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long parentId;
-        Long memberId;
-        String memberName;
+
+        @ArticleExists
         Long articleId;
+
+        Long parentId;
+
+        Long memberId;
+
+        String memberName;
 
         @NotEmpty(message = "评论内容不能为空")
         String content;
 
-        LocalDateTime createAt;
-
         private Long parentId() {
-            return parentId == null ? 0L : parentId;
+            return Optional.ofNullable(parentId)
+                    .orElse(0L);
         }
     }
 

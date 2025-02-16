@@ -53,10 +53,8 @@ public class Article {
         events().attach(new ArticleCreatedDomainEvent(this), this);
     }
 
-    public void updateVisibility(ArticleVisibility newVisibility, Boolean newStickyFlag, Boolean newCommentFlag) {
+    public void updateVisibility(ArticleVisibility newVisibility) {
         this.visibility = newVisibility;
-        this.stickyFlag = newStickyFlag;
-        this.commentFlag = newCommentFlag;
     }
 
     public void updateInfo(String newTitle, String newDescription) {
@@ -87,12 +85,14 @@ public class Article {
     }
 
     public void updateTags(List<Tag> tags) {
+        this.articleCategories.clear();
         this.articleTags = tags.stream()
                 .map(tag -> new ArticleTag(tag.getId(), tag.getName()))
                 .collect(Collectors.toList());
     }
 
     public void updateCategory(List<Category> categories) {
+        this.articleCategories.clear();
         this.articleCategories = categories.stream()
                 .map(category -> new ArticleCategory(category.getId(), category.getName()))
                 .collect(Collectors.toList());
@@ -221,6 +221,18 @@ public class Article {
                 .ifPresent(articleCategory -> articleCategory.updateInfo(categoryName));
     }
 
+    public void updateCommentFlag(Boolean commentFlag) {
+        this.commentFlag = commentFlag;
+    }
+
+    public void updatePrice(Long price) {
+        this.price = price;
+    }
+
+    public void updateSticky(Boolean sticky) {
+        this.stickyFlag = sticky;
+    }
+
     /**
      * 暂未设计
      */
@@ -237,22 +249,22 @@ public class Article {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleCategory> articleCategories;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleAuthor> articleAuthors;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleComment> articleComments;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -262,12 +274,12 @@ public class Article {
         return articleStatistics == null || articleStatistics.size() == 0 ? null : articleStatistics.get(0);
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleTag> articleTags;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleLike> articleLikes;

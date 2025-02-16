@@ -1,6 +1,7 @@
 package com.only4.application.commands.article;
 
 
+import com.only4.application.validater.article.ArticleExists;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -29,18 +30,18 @@ public class UpdateArticleInfoCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            Mediator.repositories()
+            return Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
-                    .ifPresent(article -> {
+                    .map(article -> {
                         article.updateInfo(cmd.getTitle(), cmd.getDescription());
                         Mediator.uow().persist(article);
-                    });
+                        
+                        Mediator.uow().save();
 
-            Mediator.uow().save();
-
-            return Response.builder()
-                    .success(true)
-                    .build();
+                        return Response.builder()
+                                .success(true)
+                                .build();
+                    }).orElseThrow(RuntimeException::new);
         }
     }
 
@@ -52,6 +53,8 @@ public class UpdateArticleInfoCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
+        @ArticleExists
         Long articleId;
 
         @NotEmpty(message = "文章标题不能为空")
@@ -60,15 +63,6 @@ public class UpdateArticleInfoCmd {
         @NotEmpty(message = "文章描述不能为空")
         String description;
 
-        {
-            validateExists();
-        }
-
-        private void validateExists() {
-            if (!Mediator.repositories().exists(JpaPredicate.byId(Article.class, articleId))) {
-                throw new IllegalArgumentException("文章不存在");
-            }
-        }
     }
 
     /**
