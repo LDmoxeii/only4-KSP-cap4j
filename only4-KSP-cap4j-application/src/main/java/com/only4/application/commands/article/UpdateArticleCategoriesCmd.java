@@ -1,8 +1,9 @@
 package com.only4.application.commands.article;
 
 
-import com.only4.application.validater.article.ArticleLiked;
+import com.only4.application.validater.article.ArticleExists;
 import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.category.Category;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -11,16 +12,18 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * todo: 命令描述
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/14
  */
-public class UnlikeArticleCmd {
+public class UpdateArticleCategoriesCmd {
 
     /**
-     * UnLikeArticleCmd命令请求实现
+     * UpdateArticleCategoryCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -31,7 +34,7 @@ public class UnlikeArticleCmd {
             return Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .map(article -> {
-                        article.unlike(cmd.getMemberId());
+                        article.updateCategory(cmd.getCategories());
                         Mediator.uow().persist(article);
 
                         Mediator.uow().save();
@@ -44,22 +47,22 @@ public class UnlikeArticleCmd {
     }
 
     /**
-     * UnlikeArticleCmd命令请求参数
+     * UpdateArticleCategoryCmd命令请求参数
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @ArticleLiked
     public static class Request implements RequestParam<Response> {
 
+        @ArticleExists
         Long articleId;
 
-        Long memberId;
+        List<Category> categories;
     }
 
     /**
-     * UnLikeArticleCmd命令响应
+     * UpdateArticleCategoryCmd命令响应
      */
     @Data
     @Builder

@@ -1,14 +1,15 @@
 @startuml
 'Article
-CreatedArticle              -down-> UpdateMemberWorks
-UpdatedArticleLikes         -down-> UpdateMemberLikes
-UpdatedArticleCategories    -down-> UpdateCategoryRefCount
-ArticleTagsUpdated          -down-> UpdateTagRefCount
-LikedArticle                -down-> CalculateWillReceiveRanks
-UnlikedArticle              -down-> CalculateWillReceiveRanks
-LikedArticleComment         -down-> CalculateWillReceiveRanks
-UnlikedArticleComment       -down-> CalculateWillReceiveRanks
-UpdatedArticleCommentLikes  -down-> UpdateMemberLikes
+ArticleCreated                  -down-> UpdateMemberWorks
+ArticleLikeCountUpdated         -down-> UpdateMemberLikes
+ArticleCategoriesUpdated        -down-> UpdateCategoryRefCount
+ArticleTagsUpdated              -down-> UpdateTagRefCount
+ArticleLiked                    -down-> CalculateWillReceiveRanks
+ArticleUnliked                  -down-> CalculateWillReceiveRanks
+ArticleCommentLiked             -down-> CalculateWillReceiveRanks
+ArticleCommentUnliked           -down-> CalculateWillReceiveRanks
+ArticleCommentLikeCountUpdated  -down-> UpdateMemberLikes
+
 
 'category
 UpdatedCategoryInfo -down-> UpdateArticleCategoryInfo

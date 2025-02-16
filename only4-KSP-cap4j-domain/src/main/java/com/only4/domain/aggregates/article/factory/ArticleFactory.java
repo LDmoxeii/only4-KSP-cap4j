@@ -1,6 +1,7 @@
 package com.only4.domain.aggregates.article.factory;
 
 import com.only4.domain.aggregates.article.*;
+import com.only4.domain.aggregates.article.enums.ArticleVisibility;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Article聚合工厂
@@ -27,18 +29,16 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
     public Article create(Payload payload) {
         return Article.builder()
                 //创建文章
-                .title(payload.title)
-                .description(payload.description)
-                .content(payload.content)
-                .price(payload.price)
-                .cover(payload.cover)
-                .appendix(payload.appendix)
-                .visibility(payload.visibility)
-                .stickyFlag(payload.stickyFlag)
-                .commentFlag(payload.commentFlag)
-                .articleAuthors(payload.authors)
-                .articleCategories(payload.categories)
-                .articleTags(payload.tags)
+                .title(payload.getTitle())
+                .description(payload.getDescription())
+                .content(payload.getContent())
+                .cover("")
+                .appendix("")
+                .price(0L)
+                .visibility(ArticleVisibility.PRIVATE)
+                .stickyFlag(false)
+                .commentFlag(true)
+                .articleAuthors(payload.getAuthors())
                 .articleStatistics(Collections.singletonList(new ArticleStatistics()))
                 .build();
     }
@@ -52,18 +52,28 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<Article> {
+
         String title;
+
         String description;
+
         String content;
-        Long price;
+
         String cover;
+
         String appendix;
-        com.only4.domain.aggregates.article.enums.ArticleVisibility visibility;
-        Boolean stickyFlag;
-        Boolean commentFlag;
+
         List<ArticleAuthor> authors;
-        List<ArticleCategory> categories;
-        List<ArticleTag> tags;
+
+        String getCover() {
+            return Optional.ofNullable(cover)
+                    .orElse("");
+        }
+
+        String getAppendix() {
+            return Optional.ofNullable(appendix)
+                    .orElse("");
+        }
 
     }
 }

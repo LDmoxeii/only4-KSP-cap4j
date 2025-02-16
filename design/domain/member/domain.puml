@@ -38,7 +38,7 @@ Aggregate("Member") [
     计算等级分
 ]
 
-取消Aggregate("MemberPermission") [
+Aggregate("MemberPermission") [
     会员权限
     --属性--
     会员ID

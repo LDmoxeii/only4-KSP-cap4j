@@ -1,8 +1,8 @@
 package com.only4.application.commands.article;
 
 
+import com.only4.application.validater.article.ArticleCommentLiked;
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.ArticleComment;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -28,18 +28,18 @@ public class UnlikeArticleCommentCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            Mediator.repositories()
+            return Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
-                    .ifPresent(article -> {
+                    .map(article -> {
                         article.unlikeComment(cmd.getCommentId(), cmd.getMemberId());
                         Mediator.uow().persist(article);
-                    });
+                        
+                        Mediator.uow().save();
 
-            Mediator.uow().save();
-
-            return Response.builder()
-                    .success(true)
-                    .build();
+                        return Response.builder()
+                                .success(true)
+                                .build();
+                    }).orElseThrow(RuntimeException::new);
         }
     }
 
@@ -50,10 +50,14 @@ public class UnlikeArticleCommentCmd {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    @ArticleCommentLiked
     public static class Request implements RequestParam<Response> {
+
         Long articleId;
-        Long memberId;
+
         Long commentId;
+
+        Long memberId;
     }
 
     /**

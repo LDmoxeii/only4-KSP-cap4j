@@ -80,8 +80,7 @@ Command("LikeArticle") [
     用户ID
     文章ID
     --规则--
-    1. 文章必须存在
-    2. 未点赞
+    1. 未点赞
 ]
 Command("UnlikeArticle") [
     取消点赞文章
@@ -124,6 +123,7 @@ Command("UpdateArticleLikeCount") [
     点赞数
     --规则--
     1. 文章必须存在
+    2. 点赞数为正
 ]
 Command("UpdateArticleFavoriteCount") [
     更新文章收藏数
@@ -135,6 +135,7 @@ Command("UpdateArticleFavoriteCount") [
     收藏数
     --规则--
     1. 文章必须存在
+    2. 收藏数为正
 ]
 Command("CreateArticleComment") [
     创建文章评论
@@ -160,6 +161,7 @@ Command("UpdateArticleCommentInfo") [
     用户名
     --规则--
     1. 文章评论必须存在
+    2.用户名不能为空
 ]
 Command("ReportArticleComment") [
     举报文章评论
@@ -182,8 +184,6 @@ Command("DeleteArticleComment") [
     文章评论ID
     --规则--
     1. 文章评论必须存在
-    2. 该用户为评论者或管理员
-    3. 该评论属于该文章
 ]
 Command("LikeArticleComment") [
     点赞文章评论
@@ -193,8 +193,7 @@ Command("LikeArticleComment") [
     用户ID
     文章评论ID
     --规则--
-    1. 文章评论必须存在
-    2. 未点赞
+    1. 未点赞
 ]
 Command("UnlikeArticleComment") [
     取消点赞文章评论
@@ -251,6 +250,7 @@ Command("UpdateArticleCommentLikeCount") [
     点赞数
     --规则--
     1. 文章评论必须存在
+    2. 点赞数大于等于0
 ]
 Command("UpdateArticleCommentReplyCount") [
     更新文章评论回复数
@@ -291,6 +291,52 @@ Command("UpdateArticleCategoryInfo") [
     分类ID
     分类名
     --规则--
-    1. 分类必须存在
+    1. 文章必须存在
+    2. 分类必须存在
+]
+Command("UpdateArticleVisibility") [
+    更新文章可见性
+    --触发者--
+    作者
+    管理员
+    --属性--
+    文章ID
+    文章可见性
+    --规则--
+    1. 文章必须存在
+]
+Command("UpdateArticleSticky") [
+    更新文章置顶
+    --触发者--
+    作者
+    管理员
+    --属性--
+    文章ID
+    文章置顶标识
+    --规则--
+    1. 文章必须存在
+]
+Command("UpdateArticleCommentFlag") [
+    更新文章评论标识
+    --触发者--
+    作者
+    管理员
+    --属性--
+    文章ID
+    文章评论标识
+    --规则--
+    1. 文章必须存在
+]
+Command("UpdateArticlePrice") [
+    更新文章价格
+    --触发者--
+    作者
+    管理员
+    --属性--
+    文章ID
+    价格
+    --规则--
+    1. 文章必须存在
+    2. 价格必须大于等于0
 ]
 @enduml

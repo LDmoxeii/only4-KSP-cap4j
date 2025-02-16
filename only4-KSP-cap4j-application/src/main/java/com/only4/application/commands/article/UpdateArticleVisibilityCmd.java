@@ -1,9 +1,9 @@
 package com.only4.application.commands.article;
 
 
+import com.only4.application.validater.article.ArticleExists;
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.ArticleCategory;
-import com.only4.domain.aggregates.category.Category;
+import com.only4.domain.aggregates.article.enums.ArticleVisibility;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -12,19 +12,18 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 /**
  * todo: 命令描述
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/14
+ * @date 2025/02/16
  */
-public class UpdateArticleCategoryCmd {
+public class UpdateArticleVisibilityCmd {
 
     /**
-     * UpdateArticleCategoryCmd命令请求实现
+     * UpdateArticleVisibilityCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -32,35 +31,43 @@ public class UpdateArticleCategoryCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            Mediator.repositories()
+            return Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
-                    .ifPresent(article -> {
-                        article.updateCategory(cmd.getCategories());
+                    .map(article -> {
+                        article.updateVisibility(cmd.getVisibility());
                         Mediator.uow().persist(article);
-                    });
+                        
+                        Mediator.uow().save();
 
-            Mediator.uow().save();
-
-            return Response.builder()
-                    .success(true)
-                    .build();
+                        return Response.builder()
+                                .success(true)
+                                .build();
+                    }).orElseThrow(RuntimeException::new);
         }
     }
 
     /**
-     * UpdateArticleCategoryCmd命令请求参数
+     * UpdateArticleVisibilityCmd命令请求参数
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
+        @ArticleExists
         Long articleId;
-        List<Category> categories;
+
+        ArticleVisibility visibility;
+
+        ArticleVisibility getVisibility() {
+            return Optional.ofNullable(visibility)
+                    .orElse(ArticleVisibility.PRIVATE);
+        }
     }
 
     /**
-     * UpdateArticleCategoryCmd命令响应
+     * UpdateArticleVisibilityCmd命令响应
      */
     @Data
     @Builder

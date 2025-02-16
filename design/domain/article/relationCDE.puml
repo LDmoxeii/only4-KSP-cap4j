@@ -25,6 +25,10 @@ UpdateArticleCommentInfo        -down-> Article
 UpdateArticleCategoryInfo       -down-> Article
 UpdateArticleAuthorInfo         -down-> Article
 UpdateArticleTagInfo            -down-> Article
+UpdateArticleVisibility         -down-> Article
+UpdateArticleSticky             -down-> Article
+UpdateArticleCommentFlag        -down-> Article
+UpdateArticlePrice              -down-> Article
 
 Article-down->ArticleCreated
 Article-down->ArticleLikeCountUpdated
