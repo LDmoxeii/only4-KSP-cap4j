@@ -1,7 +1,8 @@
 @startuml
-CreateTag       -down-> Tag
-UpdateTagInfo   -down-> Tag
-DeleteTag       -down-> Tag
+CreateTag           -down-> Tag
+UpdateTagInfo       -down-> Tag
+UpdateTagRefCount   -down-> Tag
+DeleteTag           -down-> Tag
 
 Tag -down-> UpdatedTagInfo
 @enduml
