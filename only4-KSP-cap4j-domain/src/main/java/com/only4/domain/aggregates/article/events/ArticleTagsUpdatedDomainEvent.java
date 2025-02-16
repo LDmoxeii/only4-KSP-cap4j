@@ -9,8 +9,8 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 
 /**
- * Article.ArticleTagsUpdatedDomainEvent领域事件
- * todo: 领域事件说明
+ * Article.ArticleTagsUpdatedDomainEvent领域事件<br/>
+ * 文章标签更新领域事件
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/16

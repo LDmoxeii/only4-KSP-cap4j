@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 /**
- * todo: 命令描述
+ * 更新文章置顶
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/16
@@ -35,7 +35,7 @@ public class UpdateArticleStickyCmd {
                     .map(article -> {
                         article.updateSticky(cmd.getSticky());
                         Mediator.uow().persist(article);
-                        
+
                         Mediator.uow().save();
 
                         return Response.builder()
