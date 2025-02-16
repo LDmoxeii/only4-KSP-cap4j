@@ -3,5 +3,5 @@ CreateCategory      -down-> Category
 UpdateCategoryInfo  -down-> Category
 DeleteCategory      -down-> Category
 
-Category -down-> UpdatedCategoryInfo
+Category -down-> CategoryInfoUpdated
 @enduml
