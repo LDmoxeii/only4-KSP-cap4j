@@ -2,8 +2,7 @@ package com.only4.application.commands.article;
 
 
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.ArticleTag;
-import com.only4.domain.aggregates.tag.Tag;
+import com.only4.domain.aggregates.category.Category;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -13,7 +12,6 @@ import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * todo: 命令描述
@@ -21,10 +19,10 @@ import java.util.stream.Collectors;
  * @author cap4j-ddd-codegen
  * @date 2025/02/14
  */
-public class UpdateArticleTagCmd {
+public class UpdateArticleCategoriesCmd {
 
     /**
-     * UpdateArticleTagCmd命令请求实现
+     * UpdateArticleCategoryCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -35,7 +33,7 @@ public class UpdateArticleTagCmd {
             Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
-                        article.updateTags(cmd.tags);
+                        article.updateCategory(cmd.getCategories());
                         Mediator.uow().persist(article);
                     });
 
@@ -48,7 +46,7 @@ public class UpdateArticleTagCmd {
     }
 
     /**
-     * UpdateArticleTagCmd命令请求参数
+     * UpdateArticleCategoryCmd命令请求参数
      */
     @Data
     @Builder
@@ -56,11 +54,11 @@ public class UpdateArticleTagCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
         Long articleId;
-        List<Tag> tags;
+        List<Category> categories;
     }
 
     /**
-     * UpdateArticleTagCmd命令响应
+     * UpdateArticleCategoryCmd命令响应
      */
     @Data
     @Builder
