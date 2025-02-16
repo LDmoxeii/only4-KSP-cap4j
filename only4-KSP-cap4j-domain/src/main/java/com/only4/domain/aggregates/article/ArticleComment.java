@@ -12,7 +12,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -24,7 +23,7 @@ import java.util.Objects;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleComment", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "文章评论")
+@Aggregate(aggregate = "Article", name = "ArticleComment", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Article"}, description = "文章评论")
 @Entity
 @Table(name = "`article_comment`")
 @DynamicInsert
@@ -40,46 +39,39 @@ public class ArticleComment {
 
 
     // 【行为方法开始】
-    protected ArticleComment(Long memberId, String memberName, String content, LocalDateTime createAt) {
-        this.authorId = memberId;
-        this.authorName = memberName;
-        this.content = content;
-        this.createAt = createAt;
-    }
-
-    protected void like(ArticleCommentLike newArticleCommentLike) {
+    void like(ArticleCommentLike newArticleCommentLike) {
         this.getArticleCommentLikes().add(newArticleCommentLike);
     }
 
-    protected void unlike(Long memberId) {
+    void unlike(Long memberId) {
         this.getArticleCommentLikes().stream()
                 .filter(cl -> Objects.equals(cl.getMemberId(), memberId))
                 .findFirst()
                 .ifPresent(commentLike -> this.getArticleCommentLikes().remove(commentLike));
     }
 
-    protected void updateLikeCount(Integer likeCount) {
+    void updateLikeCount(Integer likeCount) {
         this.getArticleCommentStatistics().likeCount = likeCount;
     }
 
-    protected void updateVisibility(CommentVisibility visibility) {
+    void updateVisibility(CommentVisibility visibility) {
         this.visibility = visibility;
     }
 
-    protected void updateSticky(Boolean sticky) {
+    void updateSticky(Boolean sticky) {
         this.stickyFlag = sticky;
 
     }
 
-    protected void updateReplyCount(Integer replyCount) {
+    void updateReplyCount(Integer replyCount) {
         this.getArticleCommentStatistics().replyCount = replyCount;
     }
 
-    protected void updateInfo(String memberName) {
+    void updateInfo(String memberName) {
         this.authorName = memberName;
     }
 
-    protected void report() {
+    void report() {
 
     }
 
@@ -88,7 +80,7 @@ public class ArticleComment {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_comment_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -98,7 +90,7 @@ public class ArticleComment {
         return articleCommentStatistics == null || articleCommentStatistics.size() == 0 ? null : articleCommentStatistics.get(0);
     }
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_comment_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleCommentLike> articleCommentLikes;

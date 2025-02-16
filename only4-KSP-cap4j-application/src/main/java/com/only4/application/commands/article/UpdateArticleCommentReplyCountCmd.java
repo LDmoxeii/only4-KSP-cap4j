@@ -34,6 +34,7 @@ public class UpdateArticleCommentReplyCountCmd {
                         article.updateCommentReplyCount(cmd.getCommentId(), cmd.getReplyCount());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

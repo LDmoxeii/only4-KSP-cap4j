@@ -38,6 +38,7 @@ public class UpdateArticleTagCmd {
                         article.updateTags(cmd.tags);
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

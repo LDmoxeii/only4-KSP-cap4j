@@ -33,6 +33,7 @@ public class UpdateArticleCommentLikeCountCmd {
                         article.updateCommentLikeCount(cmd.getCommentId(), cmd.getLikeCount());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

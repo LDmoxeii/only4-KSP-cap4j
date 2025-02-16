@@ -38,6 +38,7 @@ public class UpdateArticleCategoryCmd {
                         article.updateCategory(cmd.getCategories());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

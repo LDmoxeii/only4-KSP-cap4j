@@ -2,6 +2,7 @@
 ArticleCommentCreated       -down-> UpdateArticleCommentCount
 ArticleCommentCreated       -down-> UpdateArticleCommentReplyCount
 ArticleCommentDeleted       -down-> UpdateArticleCommentCount
+ArticleCommentDeleted       -down-> UpdateArticleCommentReplyCount
 ArticleCommentLiked         -down-> UpdateArticleCommentLikeCount
 ArticleCommentUnliked       -down-> UpdateArticleCommentLikeCount
 ArticleLiked                -down-> UpdateArticleLikeCount

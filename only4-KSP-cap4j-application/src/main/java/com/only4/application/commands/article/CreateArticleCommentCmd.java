@@ -34,6 +34,7 @@ public class CreateArticleCommentCmd {
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
                         article.createComment(
+                                cmd.parentId(),
                                 cmd.getMemberId(),
                                 cmd.getMemberName(),
                                 cmd.getContent(),
@@ -41,6 +42,7 @@ public class CreateArticleCommentCmd {
                         );
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()
@@ -57,6 +59,7 @@ public class CreateArticleCommentCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+        Long parentId;
         Long memberId;
         String memberName;
         Long articleId;
@@ -65,6 +68,10 @@ public class CreateArticleCommentCmd {
         String content;
 
         LocalDateTime createAt;
+
+        private Long parentId() {
+            return parentId == null ? 0L : parentId;
+        }
     }
 
     /**

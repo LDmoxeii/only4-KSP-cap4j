@@ -30,11 +30,12 @@ public class UpdateArticleInfoCmd {
         @Override
         public Response exec(Request cmd) {
             Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Article.class, cmd.getId()))
+                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
                         article.updateInfo(cmd.getTitle(), cmd.getDescription());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()
@@ -51,13 +52,23 @@ public class UpdateArticleInfoCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long id;
+        Long articleId;
 
         @NotEmpty(message = "文章标题不能为空")
         String title;
 
         @NotEmpty(message = "文章描述不能为空")
         String description;
+
+        {
+            validateExists();
+        }
+
+        private void validateExists() {
+            if (!Mediator.repositories().exists(JpaPredicate.byId(Article.class, articleId))) {
+                throw new IllegalArgumentException("文章不存在");
+            }
+        }
     }
 
     /**

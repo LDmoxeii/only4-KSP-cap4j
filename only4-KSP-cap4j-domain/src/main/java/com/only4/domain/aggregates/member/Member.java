@@ -44,22 +44,22 @@ public class Member {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.MemberLikeRecord> memberLikeRecords;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.MemberPermission> memberPermissions;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.ViewHistory> viewHistories;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -69,27 +69,27 @@ public class Member {
         return memberStatistics == null || memberStatistics.size() == 0 ? null : memberStatistics.get(0);
     }
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.FollowMember> followMembers;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.BlockMember> blockMembers;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.MemberStar> memberStars;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.Favorite> favorites;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.SignInRecord> signInRecords;
@@ -164,8 +164,15 @@ public class Member {
      * 封禁时间
      * timestamp
      */
-    @Column(name = "`ban_time`")
-    java.time.LocalDateTime banTime;
+    @Column(name = "`banned_at`")
+    java.time.LocalDateTime bannedAt;
+
+    /**
+     * 封禁时长
+     * int
+     */
+    @Column(name = "`ban_duration`")
+    Integer banDuration;
 
     /**
      * 逻辑删除

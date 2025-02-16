@@ -34,6 +34,7 @@ public class UpdateArticleCommentInfoCmd {
                         article.updateCommentInfo(cmd.getCommentId(), cmd.getMemberName());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()
