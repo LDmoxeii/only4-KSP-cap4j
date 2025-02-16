@@ -1,8 +1,8 @@
 package com.only4.application.commands.category;
 
 
-import com.only4.domain.aggregates.article.ArticleCategory;
-import com.only4.domain.aggregates.article.meta.ArticleCategorySchema;
+import com.only4.application.validater.category.CategoryExists;
+import com.only4.application.validater.category.CategoryNotRef;
 import com.only4.domain.aggregates.category.Category;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -52,28 +52,10 @@ public class DeleteCategoryCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
+        @CategoryExists
+        @CategoryNotRef
         Long categoryId;
-
-        {
-            validateCategoryExists();
-            validateCategoryHasNoArticles();
-        }
-
-        private void validateCategoryExists() {
-            if (!Mediator.repositories().exists(JpaPredicate.byId(Category.class, categoryId))) {
-                throw new IllegalArgumentException("分类不存在");
-            }
-        }
-
-        private void validateCategoryHasNoArticles() {
-            if (Mediator.repositories().exists(JpaPredicate.bySpecification(ArticleCategory.class,
-                    ArticleCategorySchema.specify(articleCategory ->
-                            articleCategory.categoryId().eq(categoryId)
-                    ))
-            )) {
-                throw new IllegalArgumentException("分类下存在文章，无法删除");
-            }
-        }
     }
 
     /**

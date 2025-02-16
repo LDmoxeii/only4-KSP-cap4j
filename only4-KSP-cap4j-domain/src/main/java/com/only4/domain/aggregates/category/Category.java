@@ -75,6 +75,13 @@ public class Category {
     String name;
 
     /**
+     * 引用次数
+     * int
+     */
+    @Column(name = "`ref_count`")
+    Integer refCount;
+
+    /**
      * 逻辑删除
      * tinyint(1)
      */

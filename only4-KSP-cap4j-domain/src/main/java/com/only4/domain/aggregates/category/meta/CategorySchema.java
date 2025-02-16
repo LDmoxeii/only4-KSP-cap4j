@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/15
+ * @date 2025/02/16
  */
 @RequiredArgsConstructor
 public class CategorySchema {
@@ -35,6 +35,11 @@ public class CategorySchema {
          * 分类名
          */
         public static final String name = "name";
+
+        /**
+         * 引用次数
+         */
+        public static final String refCount = "refCount";
 
         /**
          * 逻辑删除
@@ -69,6 +74,14 @@ public class CategorySchema {
      */
     public Schema.Field<String> name() {
         return new Schema.Field<>(root.get("name"), this.criteriaBuilder);
+    }
+
+    /**
+     * 引用次数
+     * int
+     */
+    public Schema.Field<Integer> refCount() {
+        return new Schema.Field<>(root.get("refCount"), this.criteriaBuilder);
     }
 
     /**

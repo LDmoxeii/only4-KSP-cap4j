@@ -1,8 +1,9 @@
 package com.only4.application.commands.category;
 
 
+import com.only4.application.validater.category.CategoryExists;
+import com.only4.application.validater.category.CategoryNotExistsWithName;
 import com.only4.domain.aggregates.category.Category;
-import com.only4.domain.aggregates.category.meta.CategorySchema;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -51,28 +52,12 @@ public class UpdateCategoryInfoCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
+        @CategoryExists
         Long categoryId;
+
+        @CategoryNotExistsWithName
         String categoryName;
-
-        {
-            validateCategoryExists();
-            validateCategoryNameNotExists();
-        }
-
-        private void validateCategoryExists() {
-            if (!Mediator.repositories().exists(JpaPredicate.byId(Category.class, categoryId))) {
-                throw new IllegalArgumentException("分类不存在");
-            }
-        }
-
-        private void validateCategoryNameNotExists() {
-            if (Mediator.repositories().exists(JpaPredicate.bySpecification(Category.class,
-                    CategorySchema.specify(category -> category.name().equal(categoryName)
-                    ))
-            )) {
-                throw new IllegalArgumentException("分类名称已存在");
-            }
-        }
     }
 
     /**
