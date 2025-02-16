@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/01/16
+ * @date 2025/02/15
  */
 @RequiredArgsConstructor
 public class StarStatisticSchema {
@@ -34,17 +34,17 @@ public class StarStatisticSchema {
         /**
          * 星球点赞数
          */
-        public static final String likes = "likes";
+        public static final String likeCount = "likeCount";
 
         /**
          * 星球评论数
          */
-        public static final String comments = "comments";
+        public static final String commentCount = "commentCount";
 
         /**
          * 星尘数
          */
-        public static final String stardust = "stardust";
+        public static final String stardustCount = "stardustCount";
 
         /**
          * 逻辑删除
@@ -77,24 +77,24 @@ public class StarStatisticSchema {
      * 星球点赞数
      * int
      */
-    public Schema.Field<Integer> likes() {
-        return new Schema.Field<>(root.get("likes"), this.criteriaBuilder);
+    public Schema.Field<Integer> likeCount() {
+        return new Schema.Field<>(root.get("likeCount"), this.criteriaBuilder);
     }
 
     /**
      * 星球评论数
      * int
      */
-    public Schema.Field<Integer> comments() {
-        return new Schema.Field<>(root.get("comments"), this.criteriaBuilder);
+    public Schema.Field<Integer> commentCount() {
+        return new Schema.Field<>(root.get("commentCount"), this.criteriaBuilder);
     }
 
     /**
      * 星尘数
      * int
      */
-    public Schema.Field<Integer> stardust() {
-        return new Schema.Field<>(root.get("stardust"), this.criteriaBuilder);
+    public Schema.Field<Integer> stardustCount() {
+        return new Schema.Field<>(root.get("stardustCount"), this.criteriaBuilder);
     }
 
     /**

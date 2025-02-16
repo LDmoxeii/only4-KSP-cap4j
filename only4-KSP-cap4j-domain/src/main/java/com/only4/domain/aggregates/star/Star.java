@@ -17,9 +17,10 @@ import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport
 
 /**
  * 星球
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/11/23
  */
@@ -41,29 +42,30 @@ public class Star {
     public void create() {
         events().attach(new CreatedStarDomainEvent(this), this);
     }
+
     public void updateInfo(String newName, String newDescription, Long newPrice) {
 
     }
 
-    public void delete() {}
+    public void delete() {
+    }
 
     // 【行为方法结束】
 
 
-
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`star_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.star.Stardust> stardusts;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`star_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.star.StarComment> starComments;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`star_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -73,7 +75,7 @@ public class Star {
         return starStatistics == null || starStatistics.size() == 0 ? null : starStatistics.get(0);
     }
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`star_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.star.StarLike> starLikes;
@@ -111,10 +113,10 @@ public class Star {
 
     /**
      * 星球价格
-     * int
+     * bigint
      */
     @Column(name = "`amount`")
-    Integer amount;
+    Long amount;
 
     /**
      * 逻辑删除

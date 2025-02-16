@@ -13,13 +13,14 @@ import javax.persistence.*;
 
 /**
  * 文章评论
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleCommentStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "ArticleComment" }, description = "文章评论")
+@Aggregate(aggregate = "Article", name = "ArticleCommentStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"ArticleComment"}, description = "文章评论")
 @Entity
 @Table(name = "`article_comment_statistics`")
 @DynamicInsert
@@ -36,9 +37,7 @@ public class ArticleCommentStatistics {
     // 【行为方法开始】
 
 
-
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
@@ -55,17 +54,17 @@ public class ArticleCommentStatistics {
 
     /**
      * 点赞数
-     * bigint
+     * int
      */
-    @Column(name = "`likes`")
-    Long likes;
+    @Column(name = "`like_count`")
+    Integer likeCount;
 
     /**
      * 评论回复数
      * int
      */
-    @Column(name = "`comment_replies`")
-    Integer commentReplies;
+    @Column(name = "`reply_count`")
+    Integer replyCount;
 
     /**
      * 逻辑删除

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/01/09
+ * @date 2025/02/15
  */
 @RequiredArgsConstructor
 public class MemberStatisticsSchema {
@@ -39,27 +39,27 @@ public class MemberStatisticsSchema {
         /**
          * 点赞数
          */
-        public static final String likes = "likes";
+        public static final String likeCount = "likeCount";
 
         /**
          * 粉丝数
          */
-        public static final String fans = "fans";
+        public static final String fanCount = "fanCount";
 
         /**
          * 举报数
          */
-        public static final String reports = "reports";
+        public static final String reportCount = "reportCount";
 
         /**
          * 关注数
          */
-        public static final String followings = "followings";
+        public static final String followingCount = "followingCount";
 
         /**
          * 作品数
          */
-        public static final String works = "works";
+        public static final String workCount = "workCount";
 
         /**
          * 逻辑删除
@@ -100,40 +100,40 @@ public class MemberStatisticsSchema {
      * 点赞数
      * int
      */
-    public Schema.Field<Integer> likes() {
-        return new Schema.Field<>(root.get("likes"), this.criteriaBuilder);
+    public Schema.Field<Integer> likeCount() {
+        return new Schema.Field<>(root.get("likeCount"), this.criteriaBuilder);
     }
 
     /**
      * 粉丝数
      * int
      */
-    public Schema.Field<Integer> fans() {
-        return new Schema.Field<>(root.get("fans"), this.criteriaBuilder);
+    public Schema.Field<Integer> fanCount() {
+        return new Schema.Field<>(root.get("fanCount"), this.criteriaBuilder);
     }
 
     /**
      * 举报数
      * int
      */
-    public Schema.Field<Integer> reports() {
-        return new Schema.Field<>(root.get("reports"), this.criteriaBuilder);
+    public Schema.Field<Integer> reportCount() {
+        return new Schema.Field<>(root.get("reportCount"), this.criteriaBuilder);
     }
 
     /**
      * 关注数
      * int
      */
-    public Schema.Field<Integer> followings() {
-        return new Schema.Field<>(root.get("followings"), this.criteriaBuilder);
+    public Schema.Field<Integer> followingCount() {
+        return new Schema.Field<>(root.get("followingCount"), this.criteriaBuilder);
     }
 
     /**
      * 作品数
      * int
      */
-    public Schema.Field<Integer> works() {
-        return new Schema.Field<>(root.get("works"), this.criteriaBuilder);
+    public Schema.Field<Integer> workCount() {
+        return new Schema.Field<>(root.get("workCount"), this.criteriaBuilder);
     }
 
     /**

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/01/09
+ * @date 2025/02/15
  */
 @RequiredArgsConstructor
 public class ArticleStatisticsSchema {
@@ -34,22 +34,22 @@ public class ArticleStatisticsSchema {
         /**
          * 点赞数
          */
-        public static final String likes = "likes";
+        public static final String likeCount = "likeCount";
 
         /**
          * 文章收藏数
          */
-        public static final String favorites = "favorites";
+        public static final String favoriteCount = "favoriteCount";
 
         /**
          * 评论数
          */
-        public static final String comments = "comments";
+        public static final String commentCount = "commentCount";
 
         /**
          * 文章浏览量
          */
-        public static final String views = "views";
+        public static final String viewCount = "viewCount";
 
         /**
          * 逻辑删除
@@ -80,34 +80,34 @@ public class ArticleStatisticsSchema {
 
     /**
      * 点赞数
-     * bigint
+     * int
      */
-    public Schema.Field<Long> likes() {
-        return new Schema.Field<>(root.get("likes"), this.criteriaBuilder);
+    public Schema.Field<Integer> likeCount() {
+        return new Schema.Field<>(root.get("likeCount"), this.criteriaBuilder);
     }
 
     /**
      * 文章收藏数
      * int
      */
-    public Schema.Field<Integer> favorites() {
-        return new Schema.Field<>(root.get("favorites"), this.criteriaBuilder);
+    public Schema.Field<Integer> favoriteCount() {
+        return new Schema.Field<>(root.get("favoriteCount"), this.criteriaBuilder);
     }
 
     /**
      * 评论数
-     * bigint
+     * int
      */
-    public Schema.Field<Long> comments() {
-        return new Schema.Field<>(root.get("comments"), this.criteriaBuilder);
+    public Schema.Field<Integer> commentCount() {
+        return new Schema.Field<>(root.get("commentCount"), this.criteriaBuilder);
     }
 
     /**
      * 文章浏览量
      * int
      */
-    public Schema.Field<Integer> views() {
-        return new Schema.Field<>(root.get("views"), this.criteriaBuilder);
+    public Schema.Field<Integer> viewCount() {
+        return new Schema.Field<>(root.get("viewCount"), this.criteriaBuilder);
     }
 
     /**

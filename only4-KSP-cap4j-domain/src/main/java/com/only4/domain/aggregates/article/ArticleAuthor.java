@@ -13,13 +13,14 @@ import javax.persistence.*;
 
 /**
  * 文章作者
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleAuthor", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "文章作者")
+@Aggregate(aggregate = "Article", name = "ArticleAuthor", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Article"}, description = "文章作者")
 @Entity
 @Table(name = "`article_author`")
 @DynamicInsert
@@ -35,10 +36,12 @@ public class ArticleAuthor {
 
     // 【行为方法开始】
 
+    void updateInfo(String memberName) {
+        this.authorName = memberName;
+    }
 
 
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动

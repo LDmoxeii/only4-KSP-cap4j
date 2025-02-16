@@ -13,13 +13,14 @@ import javax.persistence.*;
 
 /**
  * 文章统计
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "文章统计")
+@Aggregate(aggregate = "Article", name = "ArticleStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Article"}, description = "文章统计")
 @Entity
 @Table(name = "`article_statistics`")
 @DynamicInsert
@@ -35,10 +36,19 @@ public class ArticleStatistics {
 
     // 【行为方法开始】
 
+    void updateLikeCount(Integer num) {
+        this.likeCount = num;
+    }
 
+    void updateArticleFavoriteCount(Integer num) {
+        this.favoriteCount = num;
+    }
+
+    void updateCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
 
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
@@ -55,31 +65,31 @@ public class ArticleStatistics {
 
     /**
      * 点赞数
-     * bigint
+     * int
      */
-    @Column(name = "`likes`")
-    Long likes;
+    @Column(name = "`like_count`")
+    Integer likeCount;
 
     /**
      * 文章收藏数
      * int
      */
-    @Column(name = "`favorites`")
-    Integer favorites;
+    @Column(name = "`favorite_count`")
+    Integer favoriteCount;
 
     /**
      * 评论数
-     * bigint
+     * int
      */
-    @Column(name = "`comments`")
-    Long comments;
+    @Column(name = "`comment_count`")
+    Integer commentCount;
 
     /**
      * 文章浏览量
      * int
      */
-    @Column(name = "`views`")
-    Integer views;
+    @Column(name = "`view_count`")
+    Integer viewCount;
 
     /**
      * 逻辑删除

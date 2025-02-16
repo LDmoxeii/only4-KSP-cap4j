@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/01/09
+ * @date 2025/02/15
  */
 @RequiredArgsConstructor
 public class ArticleCommentStatisticsSchema {
@@ -34,12 +34,12 @@ public class ArticleCommentStatisticsSchema {
         /**
          * 点赞数
          */
-        public static final String likes = "likes";
+        public static final String likeCount = "likeCount";
 
         /**
          * 评论回复数
          */
-        public static final String commentReplies = "commentReplies";
+        public static final String replyCount = "replyCount";
 
         /**
          * 逻辑删除
@@ -70,18 +70,18 @@ public class ArticleCommentStatisticsSchema {
 
     /**
      * 点赞数
-     * bigint
+     * int
      */
-    public Schema.Field<Long> likes() {
-        return new Schema.Field<>(root.get("likes"), this.criteriaBuilder);
+    public Schema.Field<Integer> likeCount() {
+        return new Schema.Field<>(root.get("likeCount"), this.criteriaBuilder);
     }
 
     /**
      * 评论回复数
      * int
      */
-    public Schema.Field<Integer> commentReplies() {
-        return new Schema.Field<>(root.get("commentReplies"), this.criteriaBuilder);
+    public Schema.Field<Integer> replyCount() {
+        return new Schema.Field<>(root.get("replyCount"), this.criteriaBuilder);
     }
 
     /**

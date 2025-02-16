@@ -72,7 +72,49 @@ Command("ReportArticle") [
     --规则--
     1. 文章必须存在
 ]
-Command("UpdateArticleLikes") [
+Command("LikeArticle") [
+    点赞文章
+    --触发者--
+    用户
+    --属性--
+    用户ID
+    文章ID
+    --规则--
+    1. 文章必须存在
+    2. 未点赞
+]
+Command("UnlikeArticle") [
+    取消点赞文章
+    --触发者--
+    用户
+    --属性--
+    用户ID
+    文章ID
+    --规则--
+    1. 文章必须存在
+    2. 已点赞
+]
+Command("UpdateArticleTag") [
+    更新文章标签
+    --触发者--
+    作者
+    --属性--
+    文章ID
+    标签
+    --规则--
+    1. 文章必须存在
+]
+Command("UpdateArticleCategory") [
+    更新文章分类
+    --触发者--
+    作者
+    --属性--
+    文章ID
+    分类
+    --规则--
+    1. 文章必须存在
+]
+Command("UpdateArticleLikeCount") [
     更新文章点赞数
     --触发者--
     已点赞文章事件
@@ -83,7 +125,7 @@ Command("UpdateArticleLikes") [
     --规则--
     1. 文章必须存在
 ]
-Command("UpdateArticleFavorites") [
+Command("UpdateArticleFavoriteCount") [
     更新文章收藏数
     --触发者--
     已收藏文章事件
@@ -94,7 +136,6 @@ Command("UpdateArticleFavorites") [
     --规则--
     1. 文章必须存在
 ]
-
 Command("CreateArticleComment") [
     创建文章评论
     --触发者--
@@ -109,22 +150,23 @@ Command("CreateArticleComment") [
     1. 文章必须存在
     2. 评论内容不能为空
 ]
-Command("UpdateArticleCommentAuthorInfo") [
-    更新文章评论作者信息
+Command("UpdateArticleCommentInfo") [
+    更新文章评论信息
     --触发者--
     已更新用户信息事件
     --属性--
-    用户ID
+    文章ID
+    评论ID
     用户名
     --规则--
     1. 文章评论必须存在
 ]
-
 Command("ReportArticleComment") [
     举报文章评论
     --触发者--
    用户
    --属性--
+    文章ID
     文章评论ID
     --规则--
     1. 文章评论必须存在
@@ -143,28 +185,6 @@ Command("DeleteArticleComment") [
     2. 该用户为评论者或管理员
     3. 该评论属于该文章
 ]
-Command("LikeArticle") [
-    点赞文章
-    --触发者--
-    用户
-    --属性--
-    用户ID
-    文章ID
-    --规则--
-    1. 文章必须存在
-    2. 未点赞
-]
-Command("UnLikeArticle") [
-    取消点赞文章
-    --触发者--
-    用户
-    --属性--
-    用户ID
-    文章ID
-    --规则--
-    1. 文章必须存在
-    2. 已点赞
-]
 Command("LikeArticleComment") [
     点赞文章评论
     --触发者--
@@ -176,7 +196,7 @@ Command("LikeArticleComment") [
     1. 文章评论必须存在
     2. 未点赞
 ]
-Command("UnLikeArticleComment") [
+Command("UnlikeArticleComment") [
     取消点赞文章评论
     --触发者--
     用户
@@ -187,25 +207,69 @@ Command("UnLikeArticleComment") [
     1. 文章评论必须存在
     2. 已点赞
 ]
-
+Command("UpdateArticleCommentSticky") [
+    更新文章评论置顶
+    --触发者--
+    作者
+    管理员
+    --属性--
+    文章ID
+    文章评论ID
+    文章置顶标识
+    --规则--
+    1. 文章评论必须存在
+]
+Command("UpdateArticleCommentVisibility") [
+    更新文章评论可见性
+    --触发者--
+    作者
+    管理员
+    --属性--
+    文章评论ID
+    评论可见性
+    --规则--
+    1. 文章评论必须存在
+]
+Command("UpdateArticleCommentCount") [
+    更新文章评论数
+    --触发者--
+    已创建文章评论事件
+    已删除文章评论事件
+    --属性--
+    文章ID
+    评论数
+    --规则--
+    1. 文章必须存在
+]
+Command("UpdateArticleCommentLikeCount") [
+    更新文章评论点赞数
+    --触发者--
+    已点赞文章评论事件
+    已取消点赞文章评论事件
+    --属性--
+    文章评论ID
+    点赞数
+    --规则--
+    1. 文章评论必须存在
+]
+Command("UpdateArticleCommentReplyCount") [
+    更新文章评论回复数
+    --触发者--
+    已创建文章评论事件
+    --属性--
+    文章评论ID
+    回复数
+    --规则--
+    1. 文章评论必须存在
+]
 Command("UpdateArticleAuthorInfo")[
     更新文章作者信息
     --触发者--
     已更新用户信息事件
     --属性--
     文章ID
+    用户ID
     作者名
-    --规则--
-    1. 文章必须存在
-]
-
-Command("UpdateArticleTag") [
-    更新文章标签
-    --触发者--
-    作者
-    --属性--
-    文章ID
-    标签
     --规则--
     1. 文章必须存在
 ]
@@ -219,16 +283,6 @@ Command("UpdateArticleTagInfo") [
     --规则--
     1. 标签必须存在
 ]
-Command("UpdateArticleCategory") [
-    更新文章分类
-    --触发者--
-    作者
-    --属性--
-    文章ID
-    分类
-    --规则--
-    1. 文章必须存在
-]
 Command("UpdateArticleCategoryInfo") [
     更新文章分类信息
     --触发者--
@@ -238,48 +292,5 @@ Command("UpdateArticleCategoryInfo") [
     分类名
     --规则--
     1. 分类必须存在
-]
-Command("UpdateArticleComments") [
-    更新文章评论数
-    --触发者--
-    已创建文章评论事件
-    已删除文章评论事件
-    --属性--
-    文章ID
-    评论数
-    --规则--
-    1. 文章必须存在
-]
-Command("UpdateArticleCommentLikes") [
-    更新文章评论点赞数
-    --触发者--
-    已点赞文章评论事件
-    已取消点赞文章评论事件
-    --属性--
-    文章评论ID
-    点赞数
-    --规则--
-    1. 文章评论必须存在
-]
-Command("UpdateArticleCommentReplies") [
-    更新文章评论回复数
-    --触发者--
-    已创建文章评论事件
-    --属性--
-    文章评论ID
-    回复数
-    --规则--
-    1. 文章评论必须存在
-]
-Command("UpdateArticleCommentState") [
-    更新文章评论状态
-    --触发者--
-    作者
-    管理员
-    --属性--
-    文章评论ID
-    评论置顶状态
-    --规则--
-    1. 文章评论必须存在
 ]
 @enduml

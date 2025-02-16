@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/01/09
+ * @date 2025/02/15
  */
 @RequiredArgsConstructor
 public class MemberSchema {
@@ -74,7 +74,12 @@ public class MemberSchema {
         /**
          * 封禁时间
          */
-        public static final String banTime = "banTime";
+        public static final String bannedAt = "bannedAt";
+
+        /**
+         * 封禁时长
+         */
+        public static final String banDuration = "banDuration";
 
         /**
          * 逻辑删除
@@ -145,9 +150,9 @@ public class MemberSchema {
 
     /**
      * 等级
-     * int
+     * tinyint
      */
-    public Schema.Field<Integer> level() {
+    public Schema.Field<Byte> level() {
         return new Schema.Field<>(root.get("level"), this.criteriaBuilder);
     }
 
@@ -171,8 +176,16 @@ public class MemberSchema {
      * 封禁时间
      * timestamp
      */
-    public Schema.Field<java.time.LocalDateTime> banTime() {
-        return new Schema.Field<>(root.get("banTime"), this.criteriaBuilder);
+    public Schema.Field<java.time.LocalDateTime> bannedAt() {
+        return new Schema.Field<>(root.get("bannedAt"), this.criteriaBuilder);
+    }
+
+    /**
+     * 封禁时长
+     * int
+     */
+    public Schema.Field<Integer> banDuration() {
+        return new Schema.Field<>(root.get("banDuration"), this.criteriaBuilder);
     }
 
     /**

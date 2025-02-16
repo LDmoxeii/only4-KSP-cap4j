@@ -8,17 +8,20 @@ Aggregate("Article") [
     文章名
     文章描述
     文章内容
-    文章状态
+    文章可见性
     置顶状态
     评论状态
     文章封面
     文章附件
+    封禁时间
+    封禁时长
     --行为--
-    更新可见性为公开
-    更新可见性为私有
+    更新文章状态
     更新文章信息
     封禁文章
     举报文章
+    点赞文章
+    取消点赞文章
     更新文章点赞数
     更新文章收藏数
     创建文章评论
@@ -101,10 +104,11 @@ Aggregate("ArticleAuthor") [
 
 Article -right-> ArticleComment
 Article -right-> ArticleLike
-ArticleComment -right-> ArticleCommentLike
-ArticleComment -right-> ArticleCommentStatistics
 Article -right-> ArticleCategory
 Article -right-> ArticleTag
 Article -right-> ArticleStatistics
 Article -right-> ArticleAuthor
+
+ArticleComment -right-> ArticleCommentLike
+ArticleComment -right-> ArticleCommentStatistics
 @enduml

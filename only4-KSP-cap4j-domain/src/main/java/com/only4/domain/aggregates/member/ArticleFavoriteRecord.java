@@ -13,13 +13,14 @@ import javax.persistence.*;
 
 /**
  * 会员收藏记录
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Member", name = "ArticleFavoriteRecord", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Favorite" }, description = "会员收藏记录")
+@Aggregate(aggregate = "Member", name = "ArticleFavoriteRecord", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Favorite"}, description = "会员收藏记录")
 @Entity
 @Table(name = "`article_favorite_record`")
 @DynamicInsert
@@ -36,9 +37,7 @@ public class ArticleFavoriteRecord {
     // 【行为方法开始】
 
 
-
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动

@@ -4,26 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
-import static
-                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
 
 /**
  * 角色权限表
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/11/13
  */
-@Aggregate(aggregate = "Role", name = "RolePermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Role" }, description = "角色权限表")
+@Aggregate(aggregate = "Role", name = "RolePermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Role"}, description = "角色权限表")
 @Entity
 @Table(name = "`role_permission`")
 @DynamicInsert
@@ -40,7 +37,6 @@ public class RolePermission {
     // 【行为方法开始】
 
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动

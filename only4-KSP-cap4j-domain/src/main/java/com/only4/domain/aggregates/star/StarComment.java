@@ -14,13 +14,14 @@ import javax.persistence.*;
 
 /**
  * 星球评论
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Star", name = "StarComment", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Star" }, description = "星球评论")
+@Aggregate(aggregate = "Star", name = "StarComment", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Star"}, description = "星球评论")
 @Entity
 @Table(name = "`star_comment`")
 @DynamicInsert
@@ -37,14 +38,22 @@ public class StarComment {
     // 【行为方法开始】
 
 
-
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`star_comment_id`", nullable = false)
+    @Getter(lombok.AccessLevel.PROTECTED)
+    private java.util.List<com.only4.domain.aggregates.star.StarCommentStatistics> starCommentStatistics;
+
+    public com.only4.domain.aggregates.star.StarCommentStatistics getStarCommentStatistics() {
+        return starCommentStatistics == null || starCommentStatistics.size() == 0 ? null : starCommentStatistics.get(0);
+    }
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`star_comment_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.star.StarCommentLike> starCommentLikes;

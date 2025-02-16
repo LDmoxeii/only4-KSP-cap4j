@@ -4,28 +4,25 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
-import static
-                        org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
+
 
 /**
  * 会员收藏夹
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Member", name = "Favorite", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Member" }, description = "会员收藏夹")
+@Aggregate(aggregate = "Member", name = "Favorite", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Member"}, description = "会员收藏夹")
 @Entity
 @Table(name = "`favorite`")
 @DynamicInsert
@@ -42,14 +39,12 @@ public class Favorite {
     // 【行为方法开始】
 
 
-
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`favorite_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -59,7 +54,7 @@ public class Favorite {
         return articleFavoriteStatistics == null || articleFavoriteStatistics.size() == 0 ? null : articleFavoriteStatistics.get(0);
     }
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`favorite_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.ArticleFavoriteRecord> articleFavoriteRecords;

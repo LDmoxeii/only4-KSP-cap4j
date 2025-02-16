@@ -13,13 +13,14 @@ import javax.persistence.*;
 
 /**
  * 文章标签
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleTag", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "文章标签")
+@Aggregate(aggregate = "Article", name = "ArticleTag", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Article"}, description = "文章标签")
 @Entity
 @Table(name = "`article_tag`")
 @DynamicInsert
@@ -35,11 +36,16 @@ public class ArticleTag {
 
     // 【行为方法开始】
 
+    ArticleTag(Long tagId, String tagName) {
+        this.tagId = tagId;
+        this.tagName = tagName;
+    }
 
+    void updateInfo(String tagName) {
+        this.tagName = tagName;
+    }
 
     // 【行为方法结束】
-
-
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 

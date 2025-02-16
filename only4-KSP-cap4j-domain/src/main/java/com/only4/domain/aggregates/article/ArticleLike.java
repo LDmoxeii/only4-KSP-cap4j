@@ -10,16 +10,18 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * 文章点赞
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleLike", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "文章点赞")
+@Aggregate(aggregate = "Article", name = "ArticleLike", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Article"}, description = "文章点赞")
 @Entity
 @Table(name = "`article_like`")
 @DynamicInsert
@@ -35,10 +37,13 @@ public class ArticleLike {
 
     // 【行为方法开始】
 
+    ArticleLike(Long memberId, LocalDateTime now) {
+        this.memberId = memberId;
+        this.likeTime = now;
+    }
 
 
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动

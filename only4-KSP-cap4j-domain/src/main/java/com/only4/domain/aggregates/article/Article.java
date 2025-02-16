@@ -1,7 +1,10 @@
 package com.only4.domain.aggregates.article;
 
-import com.only4.domain.aggregates.article.enums.ArticleState;
-import com.only4.domain.aggregates.article.events.CreatedArticleDomainEvent;
+import com.only4.domain.aggregates.article.enums.ArticleVisibility;
+import com.only4.domain.aggregates.article.enums.CommentVisibility;
+import com.only4.domain.aggregates.article.events.*;
+import com.only4.domain.aggregates.category.Category;
+import com.only4.domain.aggregates.tag.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,8 +16,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
@@ -44,65 +50,185 @@ public class Article {
     // 【行为方法开始】
 
     public void create() {
-        events().attach(new CreatedArticleDomainEvent(this), this);
+        events().attach(new ArticleCreatedDomainEvent(this), this);
     }
 
-    public void privatization() {
-        this.state = ArticleState.PRIVATE;
+    public void updateVisibility(ArticleVisibility newVisibility, Boolean newStickyFlag, Boolean newCommentFlag) {
+        this.visibility = newVisibility;
+        this.stickyFlag = newStickyFlag;
+        this.commentFlag = newCommentFlag;
     }
 
-    public void publish() {
-        this.state = ArticleState.PUBLISH;
-    }
-
-    public void changeArticleInfo(String newTitle, String newDescription) {
+    public void updateInfo(String newTitle, String newDescription) {
         this.title = newTitle;
         this.description = newDescription;
     }
 
-    public void ban() {
-        this.state = ArticleState.BANNED;
+    public void ban(Integer banDuration, LocalDateTime bannedAt) {
+        this.visibility = ArticleVisibility.BANNED;
+        this.bannedAt = bannedAt;
+        this.banDuration = banDuration;
     }
 
-    public void updateArticleLikes(Long num) {
-        this.getArticleStatistics().likes = num;
+    public void report() {
     }
 
-    public void updateArticleFavorites(Integer num) {
-        this.getArticleStatistics().favorites = num;
+    public void like(Long memberId, LocalDateTime now) {
+        this.getArticleLikes().add(new ArticleLike(memberId, now));
+        events().attach(new ArticleLikedDomainEvent(this), this);
     }
 
-    public void createArticleCommon(ArticleComment newComment) {
-        this.articleComments.add(newComment);
+    public void unlike(Long articleLikeId) {
+        this.getArticleLikes().stream()
+                .filter(al -> Objects.equals(al.getId(), articleLikeId))
+                .findFirst()
+                .ifPresent(articleLike -> this.getArticleLikes().remove(articleLike));
+        events().attach(new ArticleUnlikedDomainEvent(this), this);
     }
 
-    public void deleteArticleCommon(Long commentId) {
+    public void updateTags(List<Tag> tags) {
+        this.articleTags = tags.stream()
+                .map(tag -> new ArticleTag(tag.getId(), tag.getName()))
+                .collect(Collectors.toList());
+    }
+
+    public void updateCategory(List<Category> categories) {
+        this.articleCategories = categories.stream()
+                .map(category -> new ArticleCategory(category.getId(), category.getName()))
+                .collect(Collectors.toList());
+    }
+
+    public void updateLikeCount(Integer likeCount) {
+        this.getArticleStatistics().updateLikeCount(likeCount);
+        events().attach(new ArticleLikeCountUpdatedDomainEvent(this), this);
+    }
+
+    public void updateFavoriteCount(Integer favoriteCount) {
+        this.getArticleStatistics().updateArticleFavoriteCount(favoriteCount);
+        events().attach(new ArticleFavoriteCountUpdatedDomainEvent(this), this);
+    }
+
+    public void createComment(Long parentId, Long memberId, String memberName, String content, LocalDateTime createAt) {
+        this.articleComments.add(
+                ArticleComment.builder()
+                        .parentId(parentId)
+                        .authorId(memberId)
+                        .authorName(memberName)
+                        .content(content)
+                        .createAt(createAt)
+                        .articleCommentStatistics(Collections.singletonList(ArticleCommentStatistics.builder().build()))
+                        .build()
+        );
+        events().attach(new ArticleCommentCreatedDomainEvent(this, parentId), this);
+    }
+
+    public void updateCommentInfo(Long commentId, String memberName) {
         this.getArticleComments().stream()
                 .filter(c -> Objects.equals(c.getId(), commentId))
                 .findFirst()
-                .ifPresent(comment -> this.getArticleComments().remove(comment));
+                .ifPresent(comment -> comment.updateInfo(memberName));
     }
 
-    public void likeArticleComment(ArticleLike newArticleLike) {
-        this.getArticleLikes().add(newArticleLike);
-    }
-
-    public void unLikeArticleComment(Long articleLikeId) {
-        this.getArticleLikes().stream()
-                .filter(l -> Objects.equals(l.getId(), articleLikeId))
+    public void reportComment(Long commentId) {
+        this.getArticleComments().stream()
+                .filter(c -> Objects.equals(c.getId(), commentId))
                 .findFirst()
-                .ifPresent(like -> this.getArticleLikes().remove(like));
+                .ifPresent(ArticleComment::report);
+    }
+
+    public void deleteComment(Long commentId) {
+        this.getArticleComments().stream()
+                .filter(c -> Objects.equals(c.getId(), commentId))
+                .findFirst()
+                .ifPresent(comment -> {
+                    this.getArticleComments().remove(comment);
+                    events().attach(new ArticleCommentDeletedDomainEvent(this, comment.getId()), this);
+                });
+    }
+
+    public void likeComment(Long commentId, Long memberId, LocalDateTime now) {
+        this.getArticleComments().stream()
+                .filter(ac -> Objects.equals(ac.getId(), commentId))
+                .findFirst()
+                .ifPresent(articleComment -> {
+                    articleComment.like(new ArticleCommentLike(memberId, now));
+                    events().attach(new ArticleCommentLikedDomainEvent(this, commentId), this);
+                });
+    }
+
+    public void unlikeComment(Long commentId, Long memberId) {
+        this.getArticleComments().stream()
+                .filter(ac -> Objects.equals(ac.getId(), commentId))
+                .findFirst()
+                .ifPresent(articleComment -> {
+                    articleComment.unlike(memberId);
+                    events().attach(new ArticleCommentUnlikedDomainEvent(this, commentId), this);
+                });
+    }
+
+    public void updateCommentLikeCount(Long commentId, Integer likeCount) {
+        this.getArticleComments().stream()
+                .filter(ac -> Objects.equals(ac.getId(), commentId))
+                .findFirst()
+                .ifPresent(articleComment -> {
+                    articleComment.updateLikeCount(likeCount);
+                    events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
+                });
+    }
+
+    public void updateCommentVisibility(Long commentId, CommentVisibility visibility) {
+        this.getArticleComments().stream()
+                .filter(ac -> Objects.equals(ac.getId(), commentId))
+                .findFirst()
+                .ifPresent(articleComment -> articleComment.updateVisibility(visibility));
+    }
+
+    public void updateCommentSticky(Long commentId, Boolean sticky) {
+        this.getArticleComments().stream()
+                .filter(ac -> Objects.equals(ac.getId(), commentId))
+                .findFirst()
+                .ifPresent(articleComment -> articleComment.updateSticky(sticky));
+    }
+
+    public void updateCommentCount(Integer commentCount) {
+        this.getArticleStatistics().updateCommentCount(commentCount);
+    }
+
+    public void updateCommentReplyCount(Long commentId, Integer replyCount) {
+        this.getArticleComments().stream()
+                .filter(ac -> Objects.equals(ac.getId(), commentId))
+                .findFirst()
+                .ifPresent(articleComment -> articleComment.updateReplyCount(replyCount));
+    }
+
+    public void updateAuthorInfo(Long memberId, String memberName) {
+        this.getArticleAuthors().stream()
+                .filter(aa -> Objects.equals(aa.getId(), memberId))
+                .forEach(articleAuthor -> articleAuthor.updateInfo(memberName));
+    }
+
+    public void updateTagInfo(Long tagId, String tagName) {
+        this.getArticleTags().stream()
+                .filter(at -> Objects.equals(at.getId(), tagId))
+                .findFirst()
+                .ifPresent(articleTag -> articleTag.updateInfo(tagName));
+    }
+
+    public void updateCategoryInfo(Long categoryId, String categoryName) {
+        this.getArticleCategories().stream()
+                .filter(ac -> Objects.equals(ac.getId(), categoryId))
+                .findFirst()
+                .ifPresent(articleCategory -> articleCategory.updateInfo(categoryName));
     }
 
     /**
      * 暂未设计
-     *
      */
     public void reportArticleComment() {
-       throw new UnsupportedOperationException("未实现");
+        throw new UnsupportedOperationException("未实现");
     }
 
-    public void deleteArmticle() {
+    public void deleteArticle() {
         this.delFlag = true;
     }
 
@@ -111,22 +237,22 @@ public class Article {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleCategory> articleCategories;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleAuthor> articleAuthors;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleComment> articleComments;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -136,12 +262,12 @@ public class Article {
         return articleStatistics == null || articleStatistics.size() == 0 ? null : articleStatistics.get(0);
     }
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleTag> articleTags;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleLike> articleLikes;
@@ -186,10 +312,10 @@ public class Article {
 
     /**
      * 文章附件
-     * int
+     * varchar(255)
      */
     @Column(name = "`appendix`")
-    Integer appendix;
+    String appendix;
 
     /**
      * 文章价格
@@ -203,11 +329,11 @@ public class Article {
      * 0:PRIVATE:PRIVATE
      * 1:PUBLISH:PUBLISH
      * 2:BANNED:BANNED
-     * int
+     * tinyint
      */
-    @Convert(converter = com.only4.domain.aggregates.article.enums.ArticleState.Converter.class)
-    @Column(name = "`state`")
-    com.only4.domain.aggregates.article.enums.ArticleState state;
+    @Convert(converter = com.only4.domain.aggregates.article.enums.ArticleVisibility.Converter.class)
+    @Column(name = "`visibility`")
+    com.only4.domain.aggregates.article.enums.ArticleVisibility visibility;
 
     /**
      * 置顶标识
@@ -229,6 +355,20 @@ public class Article {
      */
     @Column(name = "`del_flag`")
     Boolean delFlag;
+
+    /**
+     * 封禁时间
+     * timestamp
+     */
+    @Column(name = "`banned_at`")
+    java.time.LocalDateTime bannedAt;
+
+    /**
+     * 封禁时间
+     * int
+     */
+    @Column(name = "`ban_duration`")
+    Integer banDuration;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

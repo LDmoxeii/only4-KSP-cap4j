@@ -15,13 +15,14 @@ import java.util.List;
 
 /**
  * 用户权限表
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/11/13
  */
-@Aggregate(aggregate = "AdminUser", name = "AdminUserPermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "AdminUser" }, description = "用户权限表")
+@Aggregate(aggregate = "AdminUser", name = "AdminUserPermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"AdminUser"}, description = "用户权限表")
 @Entity
 @Table(name = "`admin_user_permission`")
 @DynamicInsert

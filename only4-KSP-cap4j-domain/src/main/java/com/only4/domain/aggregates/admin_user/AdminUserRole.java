@@ -13,13 +13,14 @@ import javax.persistence.*;
 
 /**
  * 用户角色表
- *
+ * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
+ *
  * @author cap4j-ddd-codegen
  * @date 2024/11/13
  */
-@Aggregate(aggregate = "AdminUser", name = "AdminUserRole", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "AdminUser" }, description = "用户角色表")
+@Aggregate(aggregate = "AdminUser", name = "AdminUserRole", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"AdminUser"}, description = "用户角色表")
 @Entity
 @Table(name = "`admin_user_role`")
 @DynamicInsert
@@ -35,13 +36,12 @@ public class AdminUserRole {
 
     // 【行为方法开始】
 
-    public void updateRoleInfo(String  roleName) {
+    public void updateRoleInfo(String roleName) {
         this.roleName = roleName;
     }
 
 
     // 【行为方法结束】
-
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动

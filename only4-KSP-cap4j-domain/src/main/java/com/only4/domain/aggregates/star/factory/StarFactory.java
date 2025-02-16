@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 /**
  * Star聚合工厂
  *
- *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04
  */
@@ -40,7 +39,7 @@ public class StarFactory implements AggregateFactory<StarFactory.Payload, Star> 
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<Star> {
         String name;
-        Integer amount;
+        Long amount;
         String description;
 
     }
