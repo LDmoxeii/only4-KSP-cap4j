@@ -15,7 +15,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 /**
- * todo: 命令描述
+ * 更新文章价格
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/16
@@ -36,7 +36,7 @@ public class UpdateArticlePriceCmd {
                     .map(article -> {
                         article.updatePrice(cmd.getPrice());
                         Mediator.uow().persist(article);
-                        
+
                         Mediator.uow().save();
 
                         return Response.builder()

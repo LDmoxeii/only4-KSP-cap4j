@@ -6,8 +6,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 /**
- * Article.ArticleTagsUpdatedDomainEvent领域事件订阅
- * todo: 领域事件说明
+ * Article.ArticleTagsUpdatedDomainEvent领域事件订阅<br/>
+ * 文章标签更新事件订阅
  */
 @Service
 @RequiredArgsConstructor
@@ -15,7 +15,7 @@ public class ArticleTagsUpdatedDomainEventSubscriber {
 
     @EventListener(ArticleTagsUpdatedDomainEvent.class)
     public void on(ArticleTagsUpdatedDomainEvent event) {
-        
+
     }
 
 }
