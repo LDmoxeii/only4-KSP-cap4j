@@ -34,6 +34,7 @@ public class DeleteArticleCommentCmd {
                               article.deleteComment(cmd.getCommentId());
                               Mediator.uow().persist(article);
                         });
+
             Mediator.uow().save();
 
             return Response.builder()

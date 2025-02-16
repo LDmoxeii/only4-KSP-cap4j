@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleCommentLike", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "ArticleComment" }, description = "文章评论点赞")
+@Aggregate(aggregate = "Article", name = "ArticleCommentLike", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"ArticleComment"}, description = "文章评论点赞")
 @Entity
 @Table(name = "`article_comment_like`")
 @DynamicInsert
@@ -37,7 +37,7 @@ public class ArticleCommentLike {
 
     // 【行为方法开始】
 
-    protected ArticleCommentLike(Long memberId, LocalDateTime now) {
+    ArticleCommentLike(Long memberId, LocalDateTime now) {
         this.memberId = memberId;
         this.createAt = now;
     }

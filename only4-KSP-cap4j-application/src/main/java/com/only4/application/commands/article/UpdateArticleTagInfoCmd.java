@@ -34,6 +34,7 @@ public class UpdateArticleTagInfoCmd {
                         article.updateTagInfo(cmd.getTagId(), cmd.getTagName());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

@@ -37,6 +37,7 @@ public class LikeArticleCommentCmd {
                         article.likeComment(cmd.getCommentId(), cmd.getMemberId(), LocalDateTime.now());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

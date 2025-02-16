@@ -147,9 +147,9 @@ public class ArticleSchema {
 
     /**
      * 文章附件
-     * int
+     * varchar(255)
      */
-    public Schema.Field<Integer> appendix() {
+    public Schema.Field<String> appendix() {
         return new Schema.Field<>(root.get("appendix"), this.criteriaBuilder);
     }
 

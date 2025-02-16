@@ -1,9 +1,6 @@
 package com.only4.domain.aggregates.article.factory;
 
-import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.ArticleAuthor;
-import com.only4.domain.aggregates.article.ArticleCategory;
-import com.only4.domain.aggregates.article.ArticleTag;
+import com.only4.domain.aggregates.article.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +10,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.AggregatePayload;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,6 +39,7 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
                 .articleAuthors(payload.authors)
                 .articleCategories(payload.categories)
                 .articleTags(payload.tags)
+                .articleStatistics(Collections.singletonList(new ArticleStatistics()))
                 .build();
     }
 
@@ -58,7 +57,7 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
         String content;
         Long price;
         String cover;
-        Integer appendix;
+        String appendix;
         com.only4.domain.aggregates.article.enums.ArticleVisibility visibility;
         Boolean stickyFlag;
         Boolean commentFlag;

@@ -34,6 +34,7 @@ public class UnlikeArticleCommentCmd {
                         article.unlikeComment(cmd.getCommentId(), cmd.getMemberId());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

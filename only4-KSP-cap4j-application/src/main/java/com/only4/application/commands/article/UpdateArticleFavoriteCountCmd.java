@@ -33,6 +33,7 @@ public class UpdateArticleFavoriteCountCmd {
                         article.updateFavoriteCount(cmd.getFavoriteCount());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

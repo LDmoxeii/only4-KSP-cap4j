@@ -33,6 +33,7 @@ public class UpdateArticleCommentCountCmd {
                         article.updateCommentCount(cmd.getCommentCount());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()
@@ -50,7 +51,7 @@ public class UpdateArticleCommentCountCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
         Long articleId;
-        Integer CommentCount;
+        Integer commentCount;
     }
 
     /**

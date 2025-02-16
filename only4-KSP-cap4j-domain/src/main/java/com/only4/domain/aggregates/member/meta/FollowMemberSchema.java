@@ -78,9 +78,9 @@ public class FollowMemberSchema {
 
     /**
      * 关注会员名
-     * int
+     * varchar(255)
      */
-    public Schema.Field<Integer> followMemberName() {
+    public Schema.Field<String> followMemberName() {
         return new Schema.Field<>(root.get("followMemberName"), this.criteriaBuilder);
     }
 

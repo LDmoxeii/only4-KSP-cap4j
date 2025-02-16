@@ -22,7 +22,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Member", name = "Favorite", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Member" }, description = "会员收藏夹")
+@Aggregate(aggregate = "Member", name = "Favorite", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Member"}, description = "会员收藏夹")
 @Entity
 @Table(name = "`favorite`")
 @DynamicInsert
@@ -44,7 +44,7 @@ public class Favorite {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`favorite_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -54,7 +54,7 @@ public class Favorite {
         return articleFavoriteStatistics == null || articleFavoriteStatistics.size() == 0 ? null : articleFavoriteStatistics.get(0);
     }
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`favorite_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.ArticleFavoriteRecord> articleFavoriteRecords;
