@@ -78,9 +78,9 @@ public class MemberPermissionSchema {
 
     /**
      * 权限备注
-     * int
+     * varchar(50)
      */
-    public Schema.Field<Integer> permissionMark() {
+    public Schema.Field<String> permissionMark() {
         return new Schema.Field<>(root.get("permissionMark"), this.criteriaBuilder);
     }
 

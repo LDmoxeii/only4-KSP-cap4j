@@ -20,7 +20,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/11/13
  */
-@Aggregate(aggregate = "AdminUser", name = "AdminUserRole", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "AdminUser" }, description = "用户角色表")
+@Aggregate(aggregate = "AdminUser", name = "AdminUserRole", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"AdminUser"}, description = "用户角色表")
 @Entity
 @Table(name = "`admin_user_role`")
 @DynamicInsert

@@ -34,6 +34,7 @@ public class UpdateArticleCommentVisibilityCmd {
                         article.updateCommentVisibility(cmd.getCommentId(),cmd.getVisibility());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

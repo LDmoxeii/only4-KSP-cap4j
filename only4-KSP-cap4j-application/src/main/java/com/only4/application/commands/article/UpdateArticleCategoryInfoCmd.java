@@ -33,6 +33,7 @@ public class UpdateArticleCategoryInfoCmd {
                         article.updateCategoryInfo(cmd.getCategoryId(), cmd.getCategoryName());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

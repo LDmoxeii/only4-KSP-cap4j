@@ -20,7 +20,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleTag", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "文章标签")
+@Aggregate(aggregate = "Article", name = "ArticleTag", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Article"}, description = "文章标签")
 @Entity
 @Table(name = "`article_tag`")
 @DynamicInsert
@@ -36,12 +36,12 @@ public class ArticleTag {
 
     // 【行为方法开始】
 
-    protected ArticleTag(Long tagId, String tagName) {
+    ArticleTag(Long tagId, String tagName) {
         this.tagId = tagId;
         this.tagName = tagName;
     }
 
-    protected void updateInfo(String tagName) {
+    void updateInfo(String tagName) {
         this.tagName = tagName;
     }
 

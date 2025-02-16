@@ -74,7 +74,12 @@ public class MemberSchema {
         /**
          * 封禁时间
          */
-        public static final String banTime = "banTime";
+        public static final String bannedAt = "bannedAt";
+
+        /**
+         * 封禁时长
+         */
+        public static final String banDuration = "banDuration";
 
         /**
          * 逻辑删除
@@ -171,8 +176,16 @@ public class MemberSchema {
      * 封禁时间
      * timestamp
      */
-    public Schema.Field<java.time.LocalDateTime> banTime() {
-        return new Schema.Field<>(root.get("banTime"), this.criteriaBuilder);
+    public Schema.Field<java.time.LocalDateTime> bannedAt() {
+        return new Schema.Field<>(root.get("bannedAt"), this.criteriaBuilder);
+    }
+
+    /**
+     * 封禁时长
+     * int
+     */
+    public Schema.Field<Integer> banDuration() {
+        return new Schema.Field<>(root.get("banDuration"), this.criteriaBuilder);
     }
 
     /**

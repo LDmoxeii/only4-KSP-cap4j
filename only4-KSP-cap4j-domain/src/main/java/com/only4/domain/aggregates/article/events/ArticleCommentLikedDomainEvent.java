@@ -23,4 +23,5 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 @NoArgsConstructor
 public class ArticleCommentLikedDomainEvent {
     Article entity;
+    Long commentId;
 }

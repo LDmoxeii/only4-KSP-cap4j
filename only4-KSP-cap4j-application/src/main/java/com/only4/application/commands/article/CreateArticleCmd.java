@@ -14,7 +14,9 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * todo: 命令描述
@@ -33,22 +35,26 @@ public class CreateArticleCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            val article = Mediator.factories().create(ArticleFactory.Payload
-                    .builder()
-                    .title(cmd.getTitle())
-                    .description(cmd.getDescription())
-                    .visibility(cmd.visibility())
-                    .stickyFlag(cmd.getStickyFlag())
-                    .commentFlag(cmd.getCommentFlag())
-                    .cover(cmd.getCover())
-                    .appendix(cmd.getAppendix())
-                    .authors(cmd.getAuthors())
-                    .categories(cmd.getCategories())
-                    .price(cmd.getPrice())
-                    .tags(cmd.getTags())
-                    .build());
-            article.create();
-            Mediator.uow().persist(article);
+            Optional.ofNullable(Mediator.factories().create(
+                    ArticleFactory.Payload.builder()
+                            .title(cmd.getTitle())
+                            .description(cmd.getDescription())
+                            .content(cmd.getContent())
+                            .visibility(cmd.getVisibility())
+                            .stickyFlag(cmd.getStickyFlag())
+                            .commentFlag(cmd.getCommentFlag())
+                            .cover(cmd.getCover())
+                            .appendix(cmd.getAppendix())
+                            .authors(cmd.getAuthors())
+                            .categories(cmd.getCategories())
+                            .price(cmd.getPrice())
+                            .tags(cmd.getTags())
+                            .build()
+            )).ifPresent(article -> {
+                article.create();
+                Mediator.uow().persist(article);
+            });
+
             Mediator.uow().save();
 
             return Response.builder()
@@ -78,7 +84,7 @@ public class CreateArticleCmd {
         Boolean stickyFlag;
         Boolean commentFlag;
         String cover;
-        Integer appendix;
+        String appendix;
 
         @NotEmpty
         List<ArticleAuthor> authors;
@@ -87,8 +93,28 @@ public class CreateArticleCmd {
         Long price;
         List<ArticleTag> tags;
 
-        protected ArticleVisibility visibility() {
+        ArticleVisibility getVisibility() {
             return visibility == null ? ArticleVisibility.PRIVATE : visibility;
+        }
+
+        Boolean getStickyFlag() {
+            return stickyFlag != null && stickyFlag;
+        }
+
+        Boolean getCommentFlag() {
+            return commentFlag != null && commentFlag;
+        }
+
+        Long getPrice() {
+            return price == null ? 0L : price;
+        }
+
+        List<ArticleCategory> getCategories() {
+            return categories == null ? Collections.emptyList() : categories;
+        }
+
+        List<ArticleTag> getTags() {
+            return tags == null ? Collections.emptyList() : tags;
         }
     }
 

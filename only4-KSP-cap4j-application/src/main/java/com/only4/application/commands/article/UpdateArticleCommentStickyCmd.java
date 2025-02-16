@@ -33,6 +33,7 @@ public class UpdateArticleCommentStickyCmd {
                         article.updateCommentSticky(cmd.getCommentId(), cmd.getSticky());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

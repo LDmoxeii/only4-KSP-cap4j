@@ -17,6 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -74,7 +75,6 @@ public class Article {
 
     public void like(Long memberId, LocalDateTime now) {
         this.getArticleLikes().add(new ArticleLike(memberId, now));
-        this.getArticleStatistics().updateLikeCount(1);
         events().attach(new ArticleLikedDomainEvent(this), this);
     }
 
@@ -83,7 +83,6 @@ public class Article {
                 .filter(al -> Objects.equals(al.getId(), articleLikeId))
                 .findFirst()
                 .ifPresent(articleLike -> this.getArticleLikes().remove(articleLike));
-        this.getArticleStatistics().updateLikeCount(-1);
         events().attach(new ArticleUnlikedDomainEvent(this), this);
     }
 
@@ -109,9 +108,18 @@ public class Article {
         events().attach(new ArticleFavoriteCountUpdatedDomainEvent(this), this);
     }
 
-    public void createComment(Long memberId, String memberName, String content, LocalDateTime createAt) {
-        this.articleComments.add(new ArticleComment(memberId, memberName, content, createAt));
-        events().attach(new ArticleCommentCreatedDomainEvent(this), this);
+    public void createComment(Long parentId, Long memberId, String memberName, String content, LocalDateTime createAt) {
+        this.articleComments.add(
+                ArticleComment.builder()
+                        .parentId(parentId)
+                        .authorId(memberId)
+                        .authorName(memberName)
+                        .content(content)
+                        .createAt(createAt)
+                        .articleCommentStatistics(Collections.singletonList(ArticleCommentStatistics.builder().build()))
+                        .build()
+        );
+        events().attach(new ArticleCommentCreatedDomainEvent(this, parentId), this);
     }
 
     public void updateCommentInfo(Long commentId, String memberName) {
@@ -132,32 +140,40 @@ public class Article {
         this.getArticleComments().stream()
                 .filter(c -> Objects.equals(c.getId(), commentId))
                 .findFirst()
-                .ifPresent(comment -> this.getArticleComments().remove(comment));
-        events().attach(new ArticleCommentDeletedDomainEvent(this), this);
+                .ifPresent(comment -> {
+                    this.getArticleComments().remove(comment);
+                    events().attach(new ArticleCommentDeletedDomainEvent(this, comment.getId()), this);
+                });
     }
 
     public void likeComment(Long commentId, Long memberId, LocalDateTime now) {
         this.getArticleComments().stream()
                 .filter(ac -> Objects.equals(ac.getId(), commentId))
                 .findFirst()
-                .ifPresent(articleComment -> articleComment.like(new ArticleCommentLike(memberId, now)));
-        events().attach(new ArticleCommentLikedDomainEvent(this), this);
+                .ifPresent(articleComment -> {
+                    articleComment.like(new ArticleCommentLike(memberId, now));
+                    events().attach(new ArticleCommentLikedDomainEvent(this, commentId), this);
+                });
     }
 
     public void unlikeComment(Long commentId, Long memberId) {
         this.getArticleComments().stream()
                 .filter(ac -> Objects.equals(ac.getId(), commentId))
                 .findFirst()
-                .ifPresent(articleComment -> articleComment.unlike(memberId));
-        events().attach(new ArticleCommentUnlikedDomainEvent(this), this);
+                .ifPresent(articleComment -> {
+                    articleComment.unlike(memberId);
+                    events().attach(new ArticleCommentUnlikedDomainEvent(this, commentId), this);
+                });
     }
 
     public void updateCommentLikeCount(Long commentId, Integer likeCount) {
         this.getArticleComments().stream()
                 .filter(ac -> Objects.equals(ac.getId(), commentId))
                 .findFirst()
-                .ifPresent(articleComment -> articleComment.updateLikeCount(likeCount));
-        events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
+                .ifPresent(articleComment -> {
+                    articleComment.updateLikeCount(likeCount);
+                    events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
+                });
     }
 
     public void updateCommentVisibility(Long commentId, CommentVisibility visibility) {
@@ -221,22 +237,22 @@ public class Article {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleCategory> articleCategories;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleAuthor> articleAuthors;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleComment> articleComments;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -246,12 +262,12 @@ public class Article {
         return articleStatistics == null || articleStatistics.size() == 0 ? null : articleStatistics.get(0);
     }
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleTag> articleTags;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleLike> articleLikes;
@@ -296,10 +312,10 @@ public class Article {
 
     /**
      * 文章附件
-     * int
+     * varchar(255)
      */
     @Column(name = "`appendix`")
-    Integer appendix;
+    String appendix;
 
     /**
      * 文章价格

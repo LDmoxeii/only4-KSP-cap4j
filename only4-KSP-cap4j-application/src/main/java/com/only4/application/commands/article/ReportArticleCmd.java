@@ -28,11 +28,12 @@ public class ReportArticleCmd {
         @Override
         public Response exec(Request cmd) {
             Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Article.class, cmd.getId()))
+                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
                         article.report();
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()
@@ -49,7 +50,17 @@ public class ReportArticleCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long id;
+        Long articleId;
+
+        {
+            validateExists();
+        }
+
+        private void validateExists() {
+            if (!Mediator.repositories().exists(JpaPredicate.byId(Article.class, articleId))) {
+                throw new IllegalArgumentException("文章不存在");
+            }
+        }
     }
 
     /**

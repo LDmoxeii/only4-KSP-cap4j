@@ -20,7 +20,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleCommentStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "ArticleComment" }, description = "文章评论")
+@Aggregate(aggregate = "Article", name = "ArticleCommentStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"ArticleComment"}, description = "文章评论")
 @Entity
 @Table(name = "`article_comment_statistics`")
 @DynamicInsert

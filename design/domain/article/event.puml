@@ -1,7 +1,5 @@
 @startuml
 !include ..\lib_eventstorming.puml
-
-' ArticleEvent
 DomainEvent("ArticleCreated") [
     已创建文章
     --属性--
@@ -9,8 +7,6 @@ DomainEvent("ArticleCreated") [
     --监听者--
     该文章作者
 ]
-
-' ArticleStatisticsEvent
 DomainEvent("ArticleLikeCountUpdated") [
     已更新文章点赞数
     --属性--
@@ -19,7 +15,6 @@ DomainEvent("ArticleLikeCountUpdated") [
     --监听者--
     该文章作者
 ]
-
 DomainEvent("ArticleFavoriteCountUpdated") [
     已更新文章收藏数
     --属性--
@@ -28,8 +23,6 @@ DomainEvent("ArticleFavoriteCountUpdated") [
     --监听者--
     该文章作者
 ]
-
-' ArticleLikeEvent
 DomainEvent("ArticleLiked") [
     已点赞文章
     --属性--
@@ -46,8 +39,6 @@ DomainEvent("ArticleUnliked") [
     该文章
     操作者
 ]
-
-' ArticleCommentEvent
 DomainEvent("ArticleCommentCreated") [
     已创建文章评论
     --属性--
@@ -55,7 +46,6 @@ DomainEvent("ArticleCommentCreated") [
     --监听者--
     该评论文章
 ]
-
 DomainEvent("ArticleCommentDeleted") [
     已删除文章评论
     --属性--
@@ -63,8 +53,6 @@ DomainEvent("ArticleCommentDeleted") [
     --监听者--
     该评论文章
 ]
-
-' ArticleCommentLikeEvent
 DomainEvent("ArticleCommentLiked") [
     已点赞文章评论
     --属性--
@@ -74,7 +62,6 @@ DomainEvent("ArticleCommentLiked") [
     该评论作者
     操作者
 ]
-
 DomainEvent("ArticleCommentUnliked") [
     已取消点赞文章评论
     --属性--
@@ -84,8 +71,6 @@ DomainEvent("ArticleCommentUnliked") [
     该评论作者
     操作者
 ]
-
-' ArticleCommentStatisticsEvent
 DomainEvent("ArticleCommentLikeCountUpdated") [
     已更新文章评论点赞数
     --属性--

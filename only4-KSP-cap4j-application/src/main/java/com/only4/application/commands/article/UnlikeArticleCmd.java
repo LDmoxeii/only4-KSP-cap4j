@@ -33,6 +33,7 @@ public class UnlikeArticleCmd {
                         article.unlike(cmd.getMemberId());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

@@ -33,6 +33,7 @@ public class UpdateArticleAuthorInfoCmd {
                         article.updateAuthorInfo(cmd.getMemberId(), cmd.getMemberName());
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()

@@ -11,6 +11,8 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * todo: 命令描述
  *
@@ -29,11 +31,16 @@ public class UpdateArticleStateCmd {
         @Override
         public Response exec(Request cmd) {
             Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Article.class, cmd.getId()))
+                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .ifPresent(article -> {
-                        article.updateVisibility(cmd.getVisibility(), cmd.getStickyFlag(), cmd.getCommentFlag());
+                        article.updateVisibility(
+                                Optional.ofNullable(cmd.getVisibility()).orElse(article.getVisibility()),
+                                Optional.ofNullable(cmd.getStickyFlag()).orElse(article.getStickyFlag()),
+                                Optional.ofNullable(cmd.getCommentFlag()).orElse(article.getCommentFlag())
+                        );
                         Mediator.uow().persist(article);
                     });
+
             Mediator.uow().save();
 
             return Response.builder()
@@ -50,10 +57,19 @@ public class UpdateArticleStateCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long id;
+        Long articleId;
         ArticleVisibility visibility;
         Boolean stickyFlag;
         Boolean commentFlag;
+        {
+            validateExists();
+        }
+
+        private void validateExists() {
+            if (!Mediator.repositories().exists(JpaPredicate.byId(Article.class, articleId))) {
+                throw new IllegalArgumentException("文章不存在");
+            }
+        }
     }
 
     /**

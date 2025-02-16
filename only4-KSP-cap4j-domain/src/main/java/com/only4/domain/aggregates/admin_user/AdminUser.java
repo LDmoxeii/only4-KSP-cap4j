@@ -155,12 +155,12 @@ public class AdminUser {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`admin_user_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.admin_user.AdminUserRole> adminUserRoles;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`admin_user_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.admin_user.AdminUserPermission> adminUserPermissions;

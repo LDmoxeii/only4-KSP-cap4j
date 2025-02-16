@@ -20,7 +20,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/11/13
  */
-@Aggregate(aggregate = "Role", name = "RolePermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Role" }, description = "角色权限表")
+@Aggregate(aggregate = "Role", name = "RolePermission", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Role"}, description = "角色权限表")
 @Entity
 @Table(name = "`role_permission`")
 @DynamicInsert
