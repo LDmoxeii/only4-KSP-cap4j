@@ -5,7 +5,9 @@ import com.only4.domain.aggregates.tag.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/15
+ * @date 2025/02/17
  */
 @RequiredArgsConstructor
 public class TagSchema {
@@ -25,7 +27,7 @@ public class TagSchema {
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-        
+
         /**
          * ID
          */
@@ -45,6 +47,11 @@ public class TagSchema {
          * 标签图标
          */
         public static final String icon = "icon";
+
+        /**
+         * 引用次数
+         */
+        public static final String refCount = "refCount";
 
         /**
          * 逻辑删除
@@ -95,6 +102,14 @@ public class TagSchema {
      */
     public Schema.Field<String> icon() {
         return new Schema.Field<>(root.get("icon"), this.criteriaBuilder);
+    }
+
+    /**
+     * 引用次数
+     * int
+     */
+    public Schema.Field<Integer> refCount() {
+        return new Schema.Field<>(root.get("refCount"), this.criteriaBuilder);
     }
 
     /**

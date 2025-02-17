@@ -5,9 +5,7 @@ import com.only4.domain.aggregates.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,7 +25,7 @@ public class MemberSchema {
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-
+        
         /**
          * ID
          */

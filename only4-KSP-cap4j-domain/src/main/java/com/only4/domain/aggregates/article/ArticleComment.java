@@ -1,6 +1,5 @@
 package com.only4.domain.aggregates.article;
 
-import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.enums.CommentVisibility;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,9 +12,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * 文章评论
