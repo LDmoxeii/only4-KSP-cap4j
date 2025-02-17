@@ -5,9 +5,10 @@ import com.only4.domain.aggregates.member.MemberStatistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/15
+ * @date 2025/02/17
  */
 @RequiredArgsConstructor
 public class MemberStatisticsSchema {
@@ -25,7 +26,7 @@ public class MemberStatisticsSchema {
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-        
+
         /**
          * ID
          */
@@ -65,6 +66,11 @@ public class MemberStatisticsSchema {
          * 逻辑删除
          */
         public static final String delFlag = "delFlag";
+
+        /**
+         * 星尘数
+         */
+        public static final String stardustCount = "stardustCount";
 
     }
 
@@ -142,6 +148,14 @@ public class MemberStatisticsSchema {
      */
     public Schema.Field<Boolean> delFlag() {
         return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
+    }
+
+    /**
+     * 星尘数
+     * int
+     */
+    public Schema.Field<Integer> stardustCount() {
+        return new Schema.Field<>(root.get("stardustCount"), this.criteriaBuilder);
     }
 
 

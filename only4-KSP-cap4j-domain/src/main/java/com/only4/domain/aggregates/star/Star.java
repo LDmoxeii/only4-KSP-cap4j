@@ -75,11 +75,6 @@ public class Star {
         return starStatistics == null || starStatistics.size() == 0 ? null : starStatistics.get(0);
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`star_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.star.StarLike> starLikes;
-
     /**
      * ID
      * bigint

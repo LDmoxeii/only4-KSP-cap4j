@@ -1,11 +1,13 @@
-package com.only4.domain.aggregates.star.meta;
+package com.only4.domain.aggregates.star_like.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.star.StarLike;
+import com.only4.domain.aggregates.star_like.StarLike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/15
+ * @date 2025/02/17
  */
 @RequiredArgsConstructor
 public class StarLikeSchema {
@@ -25,11 +27,16 @@ public class StarLikeSchema {
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-        
+
         /**
          * ID
          */
         public static final String id = "id";
+
+        /**
+         * 星球ID
+         */
+        public static final String starId = "starId";
 
         /**
          * 星尘ID
@@ -66,6 +73,14 @@ public class StarLikeSchema {
      */
     public Schema.Field<Long> id() {
         return new Schema.Field<>(root.get("id"), this.criteriaBuilder);
+    }
+
+    /**
+     * 星球ID
+     * bigint
+     */
+    public Schema.Field<Long> starId() {
+        return new Schema.Field<>(root.get("starId"), this.criteriaBuilder);
     }
 
     /**
@@ -211,4 +226,110 @@ public class StarLikeSchema {
         };
     }
 
+    /**
+     * 构建查询条件
+     *
+     * @param id 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<StarLike> predicateById(Object id) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byId(StarLike.class, id);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<StarLike> predicateByIds(Collection<Object> ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(StarLike.class, ids);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<StarLike> predicateByIds(Object... ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(StarLike.class, Arrays.asList(ids));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<StarLike> predicate(Schema.PredicateBuilder<StarLikeSchema> builder) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(StarLike.class, specify(builder));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder  查询条件构造器
+     * @param distinct 是否去重
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<StarLike> predicate(Schema.PredicateBuilder<StarLikeSchema> builder, boolean distinct) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(StarLike.class, specify(builder, distinct));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<StarLike> predicate(Schema.PredicateBuilder<StarLikeSchema> builder, List<Schema.OrderBuilder<StarLikeSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(StarLike.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<StarLike> predicate(Schema.PredicateBuilder<StarLikeSchema> builder, Schema.OrderBuilder<StarLikeSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(StarLike.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<StarLike> predicate(Schema.PredicateBuilder<StarLikeSchema> builder, boolean distinct, List<Schema.OrderBuilder<StarLikeSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(StarLike.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<StarLike> predicate(Schema.PredicateBuilder<StarLikeSchema> builder, boolean distinct, Schema.OrderBuilder<StarLikeSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(StarLike.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<StarLike> predicate(Schema.Specification<StarLike, StarLikeSchema> specifier) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(StarLike.class, specify(specifier));
+    }
 }

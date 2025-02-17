@@ -70,11 +70,18 @@ public class Favorite {
     Long id;
 
     /**
-     * 收藏夹ID
-     * bigint
+     * 收藏夹名
+     * varchar(50)
      */
-    @Column(name = "`favorite_id`")
-    Long favoriteId;
+    @Column(name = "`name`")
+    String name;
+
+    /**
+     * 描述
+     * varchar(255)
+     */
+    @Column(name = "`description`")
+    String description;
 
     /**
      * 逻辑删除
@@ -82,6 +89,13 @@ public class Favorite {
      */
     @Column(name = "`del_flag`")
     Boolean delFlag;
+
+    /**
+     * 默认标识
+     * tinyint(1)
+     */
+    @Column(name = "`default_flag`")
+    Boolean defaultFlag;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

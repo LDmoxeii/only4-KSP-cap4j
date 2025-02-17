@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
@@ -42,6 +43,41 @@ public class Member {
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`member_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.member.MemberPermission> memberPermissions;
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`member_id`", nullable = false)
+    @Getter(lombok.AccessLevel.PROTECTED)
+    private java.util.List<com.only4.domain.aggregates.member.MemberStatistics> memberStatistics;
+
+    public com.only4.domain.aggregates.member.MemberStatistics getMemberStatistics() {
+        return memberStatistics == null || memberStatistics.size() == 0 ? null : memberStatistics.get(0);
+    }
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`member_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.member.FollowMember> followMembers;
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`member_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.member.BlockMember> blockMembers;
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`member_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.member.MemberStar> memberStars;
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`member_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.member.Favorite> favorites;
 
     /**
      * ID
