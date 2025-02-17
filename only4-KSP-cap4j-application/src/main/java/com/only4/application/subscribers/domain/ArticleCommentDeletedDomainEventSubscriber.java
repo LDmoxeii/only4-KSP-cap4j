@@ -13,7 +13,6 @@ import java.util.Optional;
 
 /**
  * Article.ArticleCommentDeletedDomainEvent领域事件订阅
- * todo: 领域事件说明
  */
 @Service
 @RequiredArgsConstructor

@@ -14,7 +14,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PositiveOrZero;
 
 /**
- * todo: 命令描述
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/14

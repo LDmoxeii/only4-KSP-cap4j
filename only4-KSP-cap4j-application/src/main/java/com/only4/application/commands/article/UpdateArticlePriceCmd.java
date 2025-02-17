@@ -15,7 +15,6 @@ import javax.validation.constraints.PositiveOrZero;
 import java.util.Optional;
 
 /**
- * 更新文章价格
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/16

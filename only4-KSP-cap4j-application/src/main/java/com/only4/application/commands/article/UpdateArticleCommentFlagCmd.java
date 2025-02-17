@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 /**
- * 更新文章评论开关
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/16
