@@ -177,14 +177,7 @@ public class Article {
     }
 
     public void unlikeComment(Long commentId, Long memberId) {
-        Optional.ofNullable(this.getArticleComments().stream()
-                        .filter(ac -> Objects.equals(ac.getId(), commentId))
-                        .findFirst()
-                        .orElseThrow(() -> new KnownException("评论不存在")))
-                .ifPresent(articleComment -> {
-                    articleComment.unlike(memberId);
-                    events().attach(new ArticleCommentUnlikedDomainEvent(this, commentId), this);
-                });
+
     }
 
     public void updateCommentLikeCount(Long commentId, Integer likeCount) {
