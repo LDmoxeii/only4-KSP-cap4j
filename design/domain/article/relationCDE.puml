@@ -30,4 +30,6 @@ Article-down->ArticleCommentCreated
 Article-down->ArticleCommentDeleted
 Article-down->ArticleCategoriesUpdated
 Article-down->ArticleTagsUpdated
+Article-down->ArticleLikeCountUpdated
+Article-down->ArticleCommentLikeCountUpdated
 @enduml
