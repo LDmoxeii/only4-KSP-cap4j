@@ -7,7 +7,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/15
+ * @date 2025/02/17
  */
 @RequiredArgsConstructor
 public class FavoriteSchema {
@@ -25,21 +24,31 @@ public class FavoriteSchema {
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-        
+
         /**
          * ID
          */
         public static final String id = "id";
 
         /**
-         * 收藏夹ID
+         * 收藏夹名
          */
-        public static final String favoriteId = "favoriteId";
+        public static final String name = "name";
+
+        /**
+         * 描述
+         */
+        public static final String description = "description";
 
         /**
          * 逻辑删除
          */
         public static final String delFlag = "delFlag";
+
+        /**
+         * 默认标识
+         */
+        public static final String defaultFlag = "defaultFlag";
 
     }
 
@@ -64,11 +73,19 @@ public class FavoriteSchema {
     }
 
     /**
-     * 收藏夹ID
-     * bigint
+     * 收藏夹名
+     * varchar(50)
      */
-    public Schema.Field<Long> favoriteId() {
-        return new Schema.Field<>(root.get("favoriteId"), this.criteriaBuilder);
+    public Schema.Field<String> name() {
+        return new Schema.Field<>(root.get("name"), this.criteriaBuilder);
+    }
+
+    /**
+     * 描述
+     * varchar(255)
+     */
+    public Schema.Field<String> description() {
+        return new Schema.Field<>(root.get("description"), this.criteriaBuilder);
     }
 
     /**
@@ -77,6 +94,14 @@ public class FavoriteSchema {
      */
     public Schema.Field<Boolean> delFlag() {
         return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
+    }
+
+    /**
+     * 默认标识
+     * tinyint(1)
+     */
+    public Schema.Field<Boolean> defaultFlag() {
+        return new Schema.Field<>(root.get("defaultFlag"), this.criteriaBuilder);
     }
 
 

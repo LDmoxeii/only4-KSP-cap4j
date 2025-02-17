@@ -1,6 +1,7 @@
 package com.only4.domain.aggregates.member.factory;
 
 import com.only4.domain.aggregates.member.Member;
+import com.only4.domain.aggregates.member.MemberStatistics;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,9 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.AggregateFactory;
 import org.netcorepal.cap4j.ddd.domain.aggregate.AggregatePayload;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.Optional;
 
 /**
  * Member聚合工厂
@@ -24,9 +28,13 @@ public class MemberFactory implements AggregateFactory<MemberFactory.Payload, Me
     public Member create(Payload payload) {
 
         return Member.builder()
-                .name(payload.name)
-                .password(payload.password)
-                .phone(payload.phone)
+                .name(payload.getName())
+                .password(payload.getPassword())
+                .phone(payload.getPhone())
+                .nickName("覅甄")
+                .signature("这是个人")
+                .level(0)
+                .memberStatistics(Collections.singletonList(MemberStatistics.builder().build()))
                 .build();
     }
 
@@ -41,8 +49,25 @@ public class MemberFactory implements AggregateFactory<MemberFactory.Payload, Me
     public static class Payload implements AggregatePayload<Member> {
 
         String name;
+
         String password;
+
         String phone;
+
+        String getName() {
+            return Optional.ofNullable(name)
+                    .orElse("223344");
+        }
+
+        String getPassword() {
+            return Optional.ofNullable(password)
+                    .orElse("223344");
+        }
+
+        String getPhone() {
+            return Optional.ofNullable(phone)
+                    .orElse("");
+        }
 
     }
 }

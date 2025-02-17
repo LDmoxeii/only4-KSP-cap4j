@@ -20,7 +20,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Member", name = "MemberStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Member"}, description = "会员统计")
+@Aggregate(aggregate = "Member", name = "MemberStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Member" }, description = "会员统计")
 @Entity
 @Table(name = "`member_statistics`")
 @DynamicInsert
@@ -100,6 +100,13 @@ public class MemberStatistics {
      */
     @Column(name = "`del_flag`")
     Boolean delFlag;
+
+    /**
+     * 星尘数
+     * int
+     */
+    @Column(name = "`stardust_count`")
+    Integer stardustCount;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

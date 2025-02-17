@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import java.util.Objects;
 
 
 /**
@@ -38,6 +39,28 @@ public class Favorite {
 
     // 【行为方法开始】
 
+    public void updateInfo(String favoritesName, String favoritesDesc) {
+        this.name = favoritesName;
+        this.description = favoritesDesc;
+    }
+
+    public Boolean hasArticle(Long articleId) {
+        return this.getArticleFavoriteRecords().stream()
+                .anyMatch(articleFavoriteRecord ->
+                        Objects.equals(articleFavoriteRecord.getArticleId(), articleId));
+    }
+
+    public void addArticle(Long articleId) {
+        this.getArticleFavoriteRecords().add(ArticleFavoriteRecord.builder()
+                .articleId(articleId)
+                .createAt(java.time.LocalDateTime.now())
+                .build());
+    }
+
+    public void removeArticle(Long articleId) {
+        this.getArticleFavoriteRecords().removeIf(articleFavoriteRecord ->
+                Objects.equals(articleFavoriteRecord.getArticleId(), articleId));
+    }
 
     // 【行为方法结束】
 
@@ -70,11 +93,18 @@ public class Favorite {
     Long id;
 
     /**
-     * 收藏夹ID
-     * bigint
+     * 收藏夹名
+     * varchar(50)
      */
-    @Column(name = "`favorite_id`")
-    Long favoriteId;
+    @Column(name = "`name`")
+    String name;
+
+    /**
+     * 描述
+     * varchar(255)
+     */
+    @Column(name = "`description`")
+    String description;
 
     /**
      * 逻辑删除
@@ -82,6 +112,13 @@ public class Favorite {
      */
     @Column(name = "`del_flag`")
     Boolean delFlag;
+
+    /**
+     * 默认标识
+     * tinyint(1)
+     */
+    @Column(name = "`default_flag`")
+    Boolean defaultFlag;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

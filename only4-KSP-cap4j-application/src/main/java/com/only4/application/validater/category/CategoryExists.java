@@ -1,7 +1,5 @@
 package com.only4.application.validater.category;
 
-import com.only4.application.validater.article.ArticleExists;
-import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.category.Category;
 import org.netcorepal.cap4j.ddd.Mediator;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;

@@ -21,7 +21,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Member", name = "FollowMember", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Member"}, description = "关注会员")
+@Aggregate(aggregate = "Member", name = "FollowMember", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Member" }, description = "关注会员")
 @Entity
 @Table(name = "`follow_member`")
 @DynamicInsert

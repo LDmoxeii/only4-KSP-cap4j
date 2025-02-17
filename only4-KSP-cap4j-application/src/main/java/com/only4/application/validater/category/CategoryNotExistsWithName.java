@@ -1,6 +1,5 @@
 package com.only4.application.validater.category;
 
-import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.category.Category;
 import com.only4.domain.aggregates.category.meta.CategorySchema;
 import org.netcorepal.cap4j.ddd.Mediator;

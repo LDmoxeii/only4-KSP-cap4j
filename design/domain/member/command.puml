@@ -1,7 +1,7 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
-Command("RegisterMemberByPassword") [
+Command("RegisterMemberWithPassword") [
     通过密码方式注册用户
     --触发器--
     游客
@@ -13,7 +13,7 @@ Command("RegisterMemberByPassword") [
     2. 用户名必须唯一
     3. 密码不能为空
 ]
-Command("RegisterMemberByPhone") [
+Command("RegisterMemberWithPhone") [
     通过手机号方式注册用户
     --触发器--
     游客
@@ -40,7 +40,7 @@ Command("UpdateMemberPassword") [
     用户ID
     新密码
     --规则--
-    1. 新密码必须与旧密码不同
+    1. 密码不能为空
 ]
 Command("UpdateMemberInfo") [
     更新用户信息
@@ -54,7 +54,7 @@ Command("UpdateMemberInfo") [
     1. 用户名不能为空
     2. 用户名必须唯一
 ]
-Command("SignIn") [
+Command("CheckIn") [
     签到
     --触发器--
     当前用户
@@ -96,7 +96,7 @@ Command("ReportMember") [
     1. 用户必须存在
     2. 用户未被封禁
 ]
-Command("LevelRaise") [
+Command("MemberLevelUp") [
      等级提升
      --触发者--
      已更新用户等级分事件
@@ -110,7 +110,7 @@ Command("LevelRaise") [
     6. 如果4->5积分须大于等于50000
     8. 如果5->6积分须大于等于66666
 ]
-Command("UpdateMemberLikes") [
+Command("UpdateMemberLikeCount") [
     更新用户点赞数
     --触发者--
     已更新文章点赞数事件
@@ -123,7 +123,7 @@ Command("UpdateMemberLikes") [
     --规则--
     1. 用户必须存在
 ]
-Command("UpdateMemberFans") [
+Command("UpdateMemberFanCount") [
     更新用户粉丝数
     --触发者--
     已关注用户事件
@@ -134,7 +134,7 @@ Command("UpdateMemberFans") [
     --规则--
     1. 用户必须存在
 ]
-Command("UpdateMemberWorks") [
+Command("UpdateMemberWorkCount") [
     更新用户作品数
     --触发者--
     已创建文章事件
@@ -159,7 +159,7 @@ Command("BanMember") [
     2. 用户未被封禁
     3. 封禁时长必须大于0
 ]
-Command("UnBanMember") [
+Command("UnbanMember") [
     取消封禁用户
     --触发者--
     管理员
@@ -181,7 +181,7 @@ Command("FollowMember") [
     1. 用户必须存在
     2. 用户未被关注
 ]
-Command("UnFollowMember") [
+Command("UnfollowMember") [
     取消关注用户
     --触发者--
     当前用户
@@ -223,7 +223,7 @@ Command("UpdateFavoritesInfo") [
     4. 收藏夹描述不能为空
     5. 默认收藏夹不能修改
 ]
-Command("FavoriteArticle") [
+Command("AddArticleToFavorite") [
     收藏文章
     --触发者--
     当前用户
@@ -235,7 +235,7 @@ Command("FavoriteArticle") [
     1. 文章必须存在
     2. 未在当前收藏夹中
 ]
-Command("UnFavoriteArticle") [
+Command("RemoveArticleFromFavorite") [
     取消收藏文章
     --触发者--
     当前用户
@@ -260,7 +260,7 @@ Command("DeleteFavorites") [
     3. 该用户为收藏夹拥有者
 ]
 
-Command("CreateMemberHistory") [
+Command("CreateMemberViewHistory") [
     创建用户历史记录
     --触发者--
     已浏览文章事件(TODO)
@@ -272,7 +272,7 @@ Command("CreateMemberHistory") [
     2. 文章必须存在
 ]
 
-Command("CalculateWillReceiveRanks") [
+Command("CalculateRank") [
     计算用户即将获得的等级分
     --触发者--
     已签到事件
@@ -297,7 +297,7 @@ Command("CalculateWillReceiveRanks") [
     4. 收藏数未超过10次
     5. 评论数为超过5次
 ]
-Command("UpdateMemberFollowings") [
+Command("UpdateMemberFollowingCount") [
     更新用户关注数
     --触发者--
     已关注用户事件
@@ -309,7 +309,7 @@ Command("UpdateMemberFollowings") [
     1. 用户必须存在
 ]
 
-Command("UpdateMemberFavoritesArticles") [
+Command("UpdateMemberFavoritesArticleCount") [
     更新用户收藏文章数
     --触发者--
     已收藏文章事件
@@ -337,7 +337,7 @@ Command("UpdateMemberStarInfo") [
     3. 会员星球名不能为空
 ]
 
-Command("UpdateMemberStardust")[
+Command("UpdateMemberStardustCount")[
     更新用户星尘
     --触发者--
     已加入星球事件
