@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/16
+ * @date 2025/02/17
  */
 @RequiredArgsConstructor
 public class ArticleSchema {
@@ -298,18 +298,6 @@ public class ArticleSchema {
         JoinType type = joinType.toJpaJoinType();
         Join<Article, com.only4.domain.aggregates.article.ArticleTag> join = ((Root<Article>) this.root).join("articleTags", type);
         com.only4.domain.aggregates.article.meta.ArticleTagSchema schema = new com.only4.domain.aggregates.article.meta.ArticleTagSchema(join, this.criteriaBuilder);
-        return schema;
-    }
-    /**
-     * ArticleLike 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.article.meta.ArticleLikeSchema joinArticleLike(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Article, com.only4.domain.aggregates.article.ArticleLike> join = ((Root<Article>) this.root).join("articleLikes", type);
-        com.only4.domain.aggregates.article.meta.ArticleLikeSchema schema = new com.only4.domain.aggregates.article.meta.ArticleLikeSchema(join, this.criteriaBuilder);
         return schema;
     }
 
