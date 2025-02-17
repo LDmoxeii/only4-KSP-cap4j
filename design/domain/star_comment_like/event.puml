@@ -1,0 +1,20 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+DomainEvent("StarCommentLiked")[
+    已点赞星球评论
+    --属性--
+    星球ID
+    --监听者--
+    星球
+    操作者
+]
+DomainEvent("StarCommentUnliked")[
+    已取消点赞星球评论
+    --属性--
+    星球ID
+    --监听者--
+    星球
+    操作者
+]
+@enduml

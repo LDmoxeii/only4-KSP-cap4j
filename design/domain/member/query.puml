@@ -25,7 +25,7 @@ Query("GetFavoritesByMemberId") [
     用户ID
 ]
 
-Query("SignInRecordExistsByDate") [
+Query("CheckInRecordExistsByDate") [
     根据日期判断用户是否签到
     --属性--
     用户ID

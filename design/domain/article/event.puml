@@ -23,22 +23,6 @@ DomainEvent("ArticleFavoriteCountUpdated") [
     --监听者--
     该文章作者
 ]
-DomainEvent("ArticleLiked") [
-    已点赞文章
-    --属性--
-    作者ID
-    --监听者--
-    该文章
-    操作者
-]
-DomainEvent("ArticleUnliked") [
-    已取消点赞文章
-    --属性--
-    作者ID
-    --监听者--
-    该文章
-    操作者
-]
 DomainEvent("ArticleCommentCreated") [
     已创建文章评论
     --属性--
@@ -52,24 +36,6 @@ DomainEvent("ArticleCommentDeleted") [
     文章ID
     --监听者--
     该评论文章
-]
-DomainEvent("ArticleCommentLiked") [
-    已点赞文章评论
-    --属性--
-    文章评论ID
-    --监听者--
-    该评论文章
-    该评论作者
-    操作者
-]
-DomainEvent("ArticleCommentUnliked") [
-    已取消点赞文章评论
-    --属性--
-    文章评论ID
-    --监听者--
-    该评论文章
-    该评论作者
-    操作者
 ]
 DomainEvent("ArticleCommentLikeCountUpdated") [
     已更新文章评论点赞数

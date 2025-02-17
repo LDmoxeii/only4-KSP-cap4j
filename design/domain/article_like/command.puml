@@ -1,0 +1,25 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Command("LikeArticle") [
+    点赞文章
+    --触发者--
+    用户
+    --属性--
+    用户ID
+    文章ID
+    --规则--
+    1. 未点赞
+]
+Command("UnlikeArticle") [
+    取消点赞文章
+    --触发者--
+    用户
+    --属性--
+    用户ID
+    文章ID
+    --规则--
+    1. 文章必须存在
+    2. 已点赞
+]
+@enduml

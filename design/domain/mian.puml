@@ -4,11 +4,17 @@
 
 !include adminUser/view.puml
 !include article/view.puml
+!include article_like/view.puml
+!include article_comment_like/view.puml
 !include category/view.puml
 !include member/view.puml
+!include check_in/view.puml
+!include view_history/view.puml
 !include order/view.puml
 !include role/view.puml
 !include star/view.puml
+!include star_like/view.puml
+!include star_comment_like/view.puml
 !include tag/view.puml
 !include relationEC.puml
 @enduml
