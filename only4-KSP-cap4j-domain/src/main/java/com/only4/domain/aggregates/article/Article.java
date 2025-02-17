@@ -72,29 +72,10 @@ public class Article {
     public void report() {
     }
 
-    public void like(Long memberId) {
-        if (this.getArticleLikes().stream().anyMatch(articleLike ->
-                Objects.equals(articleLike.getId(), memberId)
-        )) {
-            throw new KnownException("点赞已存在");
-        }
-
-        this.getArticleLikes().add(ArticleLike.builder()
-                .memberId(memberId)
-                .likeTime(LocalDateTime.now())
-                .build());
-        events().attach(new ArticleLikedDomainEvent(this), this);
+    public void like(Long memberId, LocalDateTime now) {
     }
 
     public void unlike(Long articleLikeId) {
-        Optional.ofNullable(this.getArticleLikes().stream()
-                        .filter(al -> Objects.equals(al.getId(), articleLikeId))
-                        .findFirst()
-                        .orElseThrow(() -> new KnownException("点赞不存在")))
-                .ifPresent(articleLike -> {
-                    this.getArticleLikes().remove(articleLike);
-                    events().attach(new ArticleUnlikedDomainEvent(this), this);
-                });
     }
 
     public void updateTags(List<Tag> tags) {
@@ -192,15 +173,7 @@ public class Article {
                 });
     }
 
-    public void likeComment(Long commentId, Long memberId) {
-        Optional.ofNullable(this.getArticleComments().stream()
-                        .filter(ac -> Objects.equals(ac.getId(), commentId))
-                        .findFirst()
-                        .orElseThrow(() -> new KnownException("评论不存在")))
-                .ifPresent(articleComment -> {
-                    articleComment.like(memberId);
-                    events().attach(new ArticleCommentLikedDomainEvent(this, commentId), this);
-                });
+    public void likeComment(Long commentId, Long memberId, LocalDateTime now) {
     }
 
     public void unlikeComment(Long commentId, Long memberId) {
@@ -304,22 +277,22 @@ public class Article {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleCategory> articleCategories;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleAuthor> articleAuthors;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleComment> articleComments;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -329,15 +302,10 @@ public class Article {
         return articleStatistics == null || articleStatistics.size() == 0 ? null : articleStatistics.get(0);
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleTag> articleTags;
-
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`article_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.article.ArticleLike> articleLikes;
 
     /**
      * ID

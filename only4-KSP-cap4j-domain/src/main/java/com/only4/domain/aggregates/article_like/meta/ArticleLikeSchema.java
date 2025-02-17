@@ -1,7 +1,7 @@
-package com.only4.domain.aggregates.article.meta;
+package com.only4.domain.aggregates.article_like.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.article.ArticleLike;
+import com.only4.domain.aggregates.article_like.ArticleLike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/16
+ * @date 2025/02/17
  */
 @RequiredArgsConstructor
 public class ArticleLikeSchema {
@@ -33,6 +34,11 @@ public class ArticleLikeSchema {
         public static final String id = "id";
 
         /**
+         * 文章ID
+         */
+        public static final String articleId = "articleId";
+
+        /**
          * 点赞用户ID
          */
         public static final String memberId = "memberId";
@@ -40,7 +46,7 @@ public class ArticleLikeSchema {
         /**
          * 点赞时间
          */
-        public static final String likeTime = "likeTime";
+        public static final String createAt = "createAt";
 
         /**
          * 逻辑删除
@@ -70,6 +76,14 @@ public class ArticleLikeSchema {
     }
 
     /**
+     * 文章ID
+     * bigint
+     */
+    public Schema.Field<Long> articleId() {
+        return new Schema.Field<>(root.get("articleId"), this.criteriaBuilder);
+    }
+
+    /**
      * 点赞用户ID
      * bigint
      */
@@ -81,8 +95,8 @@ public class ArticleLikeSchema {
      * 点赞时间
      * timestamp
      */
-    public Schema.Field<java.time.LocalDateTime> likeTime() {
-        return new Schema.Field<>(root.get("likeTime"), this.criteriaBuilder);
+    public Schema.Field<java.time.LocalDateTime> createAt() {
+        return new Schema.Field<>(root.get("createAt"), this.criteriaBuilder);
     }
 
     /**
@@ -212,4 +226,110 @@ public class ArticleLikeSchema {
         };
     }
 
+    /**
+     * 构建查询条件
+     *
+     * @param id 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<ArticleLike> predicateById(Object id) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byId(ArticleLike.class, id);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<ArticleLike> predicateByIds(Collection<Object> ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(ArticleLike.class, ids);
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param ids 主键
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<ArticleLike> predicateByIds(Object... ids) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.byIds(ArticleLike.class, Arrays.asList(ids));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<ArticleLike> predicate(Schema.PredicateBuilder<ArticleLikeSchema> builder) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(ArticleLike.class, specify(builder));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder  查询条件构造器
+     * @param distinct 是否去重
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<ArticleLike> predicate(Schema.PredicateBuilder<ArticleLikeSchema> builder, boolean distinct) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(ArticleLike.class, specify(builder, distinct));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<ArticleLike> predicate(Schema.PredicateBuilder<ArticleLikeSchema> builder, List<Schema.OrderBuilder<ArticleLikeSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(ArticleLike.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<ArticleLike> predicate(Schema.PredicateBuilder<ArticleLikeSchema> builder, Schema.OrderBuilder<ArticleLikeSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(ArticleLike.class, specify(builder, false, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<ArticleLike> predicate(Schema.PredicateBuilder<ArticleLikeSchema> builder, boolean distinct, List<Schema.OrderBuilder<ArticleLikeSchema>> orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(ArticleLike.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param builder       查询条件构造器
+     * @param distinct      是否去重
+     * @param orderBuilders 排序构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<ArticleLike> predicate(Schema.PredicateBuilder<ArticleLikeSchema> builder, boolean distinct, Schema.OrderBuilder<ArticleLikeSchema>... orderBuilders) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(ArticleLike.class, specify(builder, distinct, orderBuilders));
+    }
+
+    /**
+     * 构建查询条件
+     *
+     * @param specifier 查询条件构造器
+     * @return
+     */
+    public static org.netcorepal.cap4j.ddd.domain.repo.Predicate<ArticleLike> predicate(Schema.Specification<ArticleLike, ArticleLikeSchema> specifier) {
+        return org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate.bySpecification(ArticleLike.class, specify(specifier));
+    }
 }
