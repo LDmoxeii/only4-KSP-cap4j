@@ -1,9 +1,8 @@
 package com.only4.application.commands.article;
 
 
-import com.only4.application.validater.article.ArticleTagExists;
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.ArticleTag;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -32,8 +31,9 @@ public class UpdateArticleTagInfoCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+            return Optional.ofNullable(Mediator.repositories()
+                            .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+                            .orElseThrow(() -> new KnownException("文章不存在")))
                     .map(article -> {
                         article.updateTagInfo(cmd.getTagId(), cmd.getTagName());
                         Mediator.uow().persist(article);
@@ -54,7 +54,6 @@ public class UpdateArticleTagInfoCmd {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @ArticleTagExists
     public static class Request implements RequestParam<Response> {
 
         Long articleId;

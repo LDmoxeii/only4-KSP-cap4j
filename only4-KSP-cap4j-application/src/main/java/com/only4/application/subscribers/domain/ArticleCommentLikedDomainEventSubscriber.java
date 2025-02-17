@@ -8,11 +8,10 @@ import org.netcorepal.cap4j.ddd.Mediator;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Article.ArticleCommentLikedDomainEvent领域事件订阅
- * todo: 领域事件说明
  */
 @Service
 @RequiredArgsConstructor
@@ -21,16 +20,13 @@ public class ArticleCommentLikedDomainEventSubscriber {
     @EventListener(ArticleCommentLikedDomainEvent.class)
     public void updateArticleCommentLikeCount(ArticleCommentLikedDomainEvent event) {
         val article = event.getEntity();
-        val commentId = event.getCommentId();
-        article.getArticleComments().stream()
-                .filter(c -> Objects.equals(c.getId(), commentId))
-                .findFirst()
-                .map(articleComment -> UpdateArticleCommentLikeCountCmd.Request.builder()
-                        .articleId(article.getId())
-                        .commentId(commentId)
-                        .likeCount(articleComment.getArticleCommentStatistics().getLikeCount() + 1)
-                        .build()
-                )
+        val comment = event.getComment();
+
+        Optional.of(UpdateArticleCommentLikeCountCmd.Request.builder()
+                .articleId(article.getId())
+                .commentId(comment.getId())
+                .likeCount(1)
+                .build())
                 .ifPresent(Mediator.commands()::send);
     }
 

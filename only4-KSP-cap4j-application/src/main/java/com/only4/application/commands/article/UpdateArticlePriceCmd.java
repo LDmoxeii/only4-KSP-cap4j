@@ -1,7 +1,7 @@
 package com.only4.application.commands.article;
 
 
-import com.only4.application.validater.article.ArticleExists;
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +11,8 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+import java.util.Optional;
 
 /**
  * 更新文章价格
@@ -31,8 +31,9 @@ public class UpdateArticlePriceCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+            return Optional.ofNullable(Mediator.repositories()
+                            .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+                            .orElseThrow(() -> new KnownException("文章不存在")))
                     .map(article -> {
                         article.updatePrice(cmd.getPrice());
                         Mediator.uow().persist(article);
@@ -55,7 +56,6 @@ public class UpdateArticlePriceCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
 
-        @ArticleExists
         Long articleId;
 
         @PositiveOrZero

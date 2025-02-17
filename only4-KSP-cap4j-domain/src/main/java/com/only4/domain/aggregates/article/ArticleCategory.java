@@ -20,7 +20,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleCategory", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "文章分类")
+@Aggregate(aggregate = "Article", name = "ArticleCategory", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Article"}, description = "文章分类")
 @Entity
 @Table(name = "`article_category`")
 @DynamicInsert
@@ -35,10 +35,6 @@ import javax.persistence.*;
 public class ArticleCategory {
 
     // 【行为方法开始】
-    ArticleCategory(Long categoryId, String categoryName) {
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-    }
 
     void updateInfo(String categoryName) {
         this.categoryName = categoryName;

@@ -1,14 +1,14 @@
 @startuml
 'Article
-ArticleCreated                  -down-> UpdateMemberWorks
-ArticleLikeCountUpdated         -down-> UpdateMemberLikes
+ArticleCreated                  -down-> UpdateMemberWorkCount
+ArticleLikeCountUpdated         -down-> UpdateMemberLikeCount
 ArticleCategoriesUpdated        -down-> UpdateCategoryRefCount
 ArticleTagsUpdated              -down-> UpdateTagRefCount
-ArticleLiked                    -down-> CalculateWillReceiveRanks
-ArticleUnliked                  -down-> CalculateWillReceiveRanks
-ArticleCommentLiked             -down-> CalculateWillReceiveRanks
-ArticleCommentUnliked           -down-> CalculateWillReceiveRanks
-ArticleCommentLikeCountUpdated  -down-> UpdateMemberLikes
+ArticleLiked                    -down-> CalculateRank
+ArticleUnliked                  -down-> CalculateRank
+ArticleCommentLiked             -down-> CalculateRank
+ArticleCommentUnliked           -down-> CalculateRank
+ArticleCommentLikeCountUpdated  -down-> UpdateMemberLikeCount
 
 
 'category
@@ -31,14 +31,14 @@ UpdatedRoleInfo         -down-> UpdateAdminUserRoleInfo
 'star
 CreatedStar                 -down-> UpdateMemberStarInfo
 DeletedStar                 -down-> UpdateMemberStarInfo
-JoinedStar                  -down-> UpdateMemberStardust
-LeftStar                    -down-> UpdateMemberStardust
-LikedStar                   -down-> CalculateWillReceiveRanks
-UnLikedStar                 -down-> CalculateWillReceiveRanks
-LikedStarComment            -down-> CalculateWillReceiveRanks
-UnLikedStarComment          -down-> CalculateWillReceiveRanks
-UpdatedStarLikes            -down-> UpdateMemberLikes
-UpdatedStarCommentLikes     -down-> UpdateMemberLikes
+JoinedStar                  -down-> UpdateMemberStardustCount
+LeftStar                    -down-> UpdateMemberStardustCount
+LikedStar                   -down-> CalculateRank
+UnLikedStar                 -down-> CalculateRank
+LikedStarComment            -down-> CalculateRank
+UnLikedStarComment          -down-> CalculateRank
+UpdatedStarLikes            -down-> UpdateMemberLikeCount
+UpdatedStarCommentLikes     -down-> UpdateMemberLikeCount
 UpdatedStarInfo             -down-> UpdateMemberStarInfo
 
 'tag

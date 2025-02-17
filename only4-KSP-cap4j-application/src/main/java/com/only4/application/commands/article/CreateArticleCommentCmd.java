@@ -1,7 +1,6 @@
 package com.only4.application.commands.article;
 
 
-import com.only4.application.validater.article.ArticleExists;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +11,7 @@ import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDateTime;
-import java.util.Optional;
+import javax.validation.constraints.PositiveOrZero;
 
 /**
  * todo: 命令描述
@@ -36,11 +34,10 @@ public class CreateArticleCommentCmd {
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .map(article -> {
                         article.createComment(
-                                cmd.parentId(),
+                                cmd.getParentId(),
                                 cmd.getMemberId(),
                                 cmd.getMemberName(),
-                                cmd.getContent(),
-                                LocalDateTime.now()
+                                cmd.getContent()
                         );
                         Mediator.uow().persist(article);
 
@@ -62,22 +59,21 @@ public class CreateArticleCommentCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
 
-        @ArticleExists
         Long articleId;
 
+        @PositiveOrZero(message = "父评论ID参数异常")
+        //TODO: 编写@CommentExists
         Long parentId;
 
+        //TODO: 编写@MemberExists
         Long memberId;
 
+        @NotEmpty(message = "评论人名称不能为空")
         String memberName;
 
         @NotEmpty(message = "评论内容不能为空")
         String content;
 
-        private Long parentId() {
-            return Optional.ofNullable(parentId)
-                    .orElse(0L);
-        }
     }
 
     /**

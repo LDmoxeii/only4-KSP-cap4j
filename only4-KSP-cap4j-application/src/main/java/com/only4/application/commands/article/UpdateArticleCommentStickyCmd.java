@@ -1,7 +1,7 @@
 package com.only4.application.commands.article;
 
 
-import com.only4.application.validater.article.ArticleCommentExists;
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +11,7 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 /**
@@ -30,8 +31,9 @@ public class UpdateArticleCommentStickyCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+            return Optional.ofNullable(Mediator.repositories()
+                            .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+                            .orElseThrow(() -> new KnownException("文章不存在")))
                     .map(article -> {
                         article.updateCommentSticky(cmd.getCommentId(), cmd.getSticky());
                         Mediator.uow().persist(article);
@@ -52,19 +54,14 @@ public class UpdateArticleCommentStickyCmd {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @ArticleCommentExists
     public static class Request implements RequestParam<Response> {
 
         Long articleId;
 
         Long commentId;
 
+        @NotNull
         Boolean sticky;
-
-        Boolean getSticky() {
-            return Optional.ofNullable(sticky)
-                    .orElse(false);
-        }
     }
 
     /**

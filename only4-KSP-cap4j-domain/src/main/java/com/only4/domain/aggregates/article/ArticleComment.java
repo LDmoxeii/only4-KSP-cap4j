@@ -1,5 +1,6 @@
 package com.only4.domain.aggregates.article;
 
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.enums.CommentVisibility;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 文章评论
@@ -23,7 +26,7 @@ import java.util.Objects;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleComment", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "文章评论")
+@Aggregate(aggregate = "Article", name = "ArticleComment", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Article"}, description = "文章评论")
 @Entity
 @Table(name = "`article_comment`")
 @DynamicInsert
@@ -39,19 +42,31 @@ public class ArticleComment {
 
 
     // 【行为方法开始】
-    void like(ArticleCommentLike newArticleCommentLike) {
-        this.getArticleCommentLikes().add(newArticleCommentLike);
+    void like(Long memberId) {
+        if (this.getArticleCommentLikes().stream().anyMatch(al ->
+                Objects.equals(al.getId(), memberId)
+        )) {
+            throw new KnownException("点赞已存在");
+        }
+
+        this.getArticleCommentLikes().add(ArticleCommentLike.builder()
+                .memberId(memberId)
+                .createAt(LocalDateTime.now())
+                .build());
     }
 
     void unlike(Long memberId) {
-        this.getArticleCommentLikes().stream()
-                .filter(cl -> Objects.equals(cl.getMemberId(), memberId))
-                .findFirst()
-                .ifPresent(commentLike -> this.getArticleCommentLikes().remove(commentLike));
+        Optional.ofNullable(this.getArticleCommentLikes().stream()
+                        .filter(cl -> Objects.equals(cl.getMemberId(), memberId))
+                        .findFirst()
+                        .orElseThrow(() -> new KnownException("点赞不存在")))
+                .ifPresent(commentLike ->
+                        this.getArticleCommentLikes().remove(commentLike)
+                );
     }
 
     void updateLikeCount(Integer likeCount) {
-        this.getArticleCommentStatistics().likeCount = likeCount;
+        this.getArticleCommentStatistics().updateLikeCount(likeCount);
     }
 
     void updateVisibility(CommentVisibility visibility) {
@@ -64,7 +79,7 @@ public class ArticleComment {
     }
 
     void updateReplyCount(Integer replyCount) {
-        this.getArticleCommentStatistics().replyCount = replyCount;
+        this.getArticleCommentStatistics().updateReplyCount(replyCount);
     }
 
     void updateInfo(String memberName) {
@@ -80,7 +95,7 @@ public class ArticleComment {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_comment_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -90,7 +105,7 @@ public class ArticleComment {
         return articleCommentStatistics == null || articleCommentStatistics.size() == 0 ? null : articleCommentStatistics.get(0);
     }
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_comment_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleCommentLike> articleCommentLikes;
