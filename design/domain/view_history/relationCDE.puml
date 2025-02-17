@@ -1,0 +1,3 @@
+@startuml
+CreateMemberHistory -down-> ViewHistory
+@enduml

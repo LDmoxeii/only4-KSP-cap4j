@@ -1,0 +1,22 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+DomainEvent("ArticleCommentLiked") [
+    已点赞文章评论
+    --属性--
+    文章评论ID
+    --监听者--
+    该评论文章
+    该评论作者
+    操作者
+]
+DomainEvent("ArticleCommentUnliked") [
+    已取消点赞文章评论
+    --属性--
+    文章评论ID
+    --监听者--
+    该评论文章
+    该评论作者
+    操作者
+]
+@enduml

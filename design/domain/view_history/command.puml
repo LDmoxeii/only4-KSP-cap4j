@@ -1,0 +1,15 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Command("CreateMemberHistory") [
+    创建用户历史记录
+    --触发者--
+    已浏览文章事件(TODO)
+    --属性--
+    用户ID
+    文章ID
+    --规则--
+    1. 用户必须存在
+    2. 文章必须存在
+]
+@enduml

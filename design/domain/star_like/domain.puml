@@ -1,0 +1,12 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Aggregate("StarLike") [
+    星球点赞
+    --属性--
+    星球ID
+    星尘ID
+    点赞时间
+]
+
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+DomainEvent("CheckedIn") [
+    已签到
+    --属性--
+    用户ID
+    签到时间
+    --监听者--
+    该用户
+]
+@enduml
