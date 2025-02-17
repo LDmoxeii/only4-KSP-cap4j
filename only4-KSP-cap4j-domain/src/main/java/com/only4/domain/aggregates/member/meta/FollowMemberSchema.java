@@ -5,9 +5,10 @@ import com.only4.domain.aggregates.member.FollowMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/15
+ * @date 2025/02/17
  */
 @RequiredArgsConstructor
 public class FollowMemberSchema {
@@ -25,7 +26,7 @@ public class FollowMemberSchema {
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-        
+
         /**
          * ID
          */

@@ -1,0 +1,12 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Aggregate("ArticleCommentLike") [
+    文章评论点赞
+    --属性--
+    文章评论ID
+    点赞用户ID
+    点赞时间
+]
+
+@enduml

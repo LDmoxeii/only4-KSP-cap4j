@@ -7,7 +7,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/16
+ * @date 2025/02/17
  */
 @RequiredArgsConstructor
 public class ArticleCommentSchema {
@@ -25,7 +24,7 @@ public class ArticleCommentSchema {
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-        
+
         /**
          * ID
          */
@@ -198,18 +197,6 @@ public class ArticleCommentSchema {
         JoinType type = joinType.toJpaJoinType();
         Join<ArticleComment, com.only4.domain.aggregates.article.ArticleCommentStatistics> join = ((Root<ArticleComment>) this.root).join("articleCommentStatistics", type);
         com.only4.domain.aggregates.article.meta.ArticleCommentStatisticsSchema schema = new com.only4.domain.aggregates.article.meta.ArticleCommentStatisticsSchema(join, this.criteriaBuilder);
-        return schema;
-    }
-    /**
-     * ArticleCommentLike 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.article.meta.ArticleCommentLikeSchema joinArticleCommentLike(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<ArticleComment, com.only4.domain.aggregates.article.ArticleCommentLike> join = ((Root<ArticleComment>) this.root).join("articleCommentLikes", type);
-        com.only4.domain.aggregates.article.meta.ArticleCommentLikeSchema schema = new com.only4.domain.aggregates.article.meta.ArticleCommentLikeSchema(join, this.criteriaBuilder);
         return schema;
     }
 

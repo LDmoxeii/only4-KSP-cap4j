@@ -1,7 +1,7 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
-DomainEvent("UpdatedTagInfo") [
+DomainEvent("TagInfoUpdated") [
     已更新标签信息
     --属性--
     标签名

@@ -15,29 +15,6 @@ Aggregate("Article") [
     文章附件
     封禁时间
     封禁时长
-    --行为--
-    更新文章状态
-    更新文章信息
-    封禁文章
-    举报文章
-    点赞文章
-    取消点赞文章
-    更新文章点赞数
-    更新文章收藏数
-    创建文章评论
-    删除文章评论
-    点赞文章评论
-    取消点赞文章评论
-    举报文章评论
-    删除文章
-]
-
-Aggregate("ArticleLike") [
-    文章点赞
-    --属性--
-    文章ID
-    点赞用户ID
-    点赞时间
 ]
 
 Aggregate("ArticleComment") [
@@ -58,14 +35,6 @@ Aggregate("ArticleCommentStatistics") [
     文章评论ID
     文章评论点赞数
     评论回复数
-]
-
-Aggregate("ArticleCommentLike") [
-    文章评论点赞
-    --属性--
-    文章评论ID
-    点赞用户ID
-    点赞时间
 ]
 
 Aggregate("ArticleCategory") [
@@ -103,12 +72,10 @@ Aggregate("ArticleAuthor") [
 ]
 
 Article -right-> ArticleComment
-Article -right-> ArticleLike
 Article -right-> ArticleCategory
 Article -right-> ArticleTag
 Article -right-> ArticleStatistics
 Article -right-> ArticleAuthor
 
-ArticleComment -right-> ArticleCommentLike
 ArticleComment -right-> ArticleCommentStatistics
 @enduml

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/15
+ * @date 2025/02/17
  */
 @RequiredArgsConstructor
 public class MemberSchema {
@@ -150,9 +150,9 @@ public class MemberSchema {
 
     /**
      * 等级
-     * tinyint
+     * int
      */
-    public Schema.Field<Byte> level() {
+    public Schema.Field<Integer> level() {
         return new Schema.Field<>(root.get("level"), this.criteriaBuilder);
     }
 
@@ -225,18 +225,6 @@ public class MemberSchema {
     }
 
     /**
-     * MemberLikeRecord 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.member.meta.MemberLikeRecordSchema joinMemberLikeRecord(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.MemberLikeRecord> join = ((Root<Member>) this.root).join("memberLikeRecords", type);
-        com.only4.domain.aggregates.member.meta.MemberLikeRecordSchema schema = new com.only4.domain.aggregates.member.meta.MemberLikeRecordSchema(join, this.criteriaBuilder);
-        return schema;
-    }
-    /**
      * MemberPermission 关联查询条件定义
      *
      * @param joinType
@@ -246,18 +234,6 @@ public class MemberSchema {
         JoinType type = joinType.toJpaJoinType();
         Join<Member, com.only4.domain.aggregates.member.MemberPermission> join = ((Root<Member>) this.root).join("memberPermissions", type);
         com.only4.domain.aggregates.member.meta.MemberPermissionSchema schema = new com.only4.domain.aggregates.member.meta.MemberPermissionSchema(join, this.criteriaBuilder);
-        return schema;
-    }
-    /**
-     * ViewHistory 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.member.meta.ViewHistorySchema joinViewHistory(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.ViewHistory> join = ((Root<Member>) this.root).join("viewHistories", type);
-        com.only4.domain.aggregates.member.meta.ViewHistorySchema schema = new com.only4.domain.aggregates.member.meta.ViewHistorySchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
@@ -318,18 +294,6 @@ public class MemberSchema {
         JoinType type = joinType.toJpaJoinType();
         Join<Member, com.only4.domain.aggregates.member.Favorite> join = ((Root<Member>) this.root).join("favorites", type);
         com.only4.domain.aggregates.member.meta.FavoriteSchema schema = new com.only4.domain.aggregates.member.meta.FavoriteSchema(join, this.criteriaBuilder);
-        return schema;
-    }
-    /**
-     * SignInRecord 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.member.meta.SignInRecordSchema joinSignInRecord(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.SignInRecord> join = ((Root<Member>) this.root).join("signInRecords", type);
-        com.only4.domain.aggregates.member.meta.SignInRecordSchema schema = new com.only4.domain.aggregates.member.meta.SignInRecordSchema(join, this.criteriaBuilder);
         return schema;
     }
 

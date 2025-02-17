@@ -1,16 +1,11 @@
 @startuml
-UpdatedMemberInfo           -down-> UpdateBlackMemberInfo
-UpdatedMemberInfo           -down-> UpdateFollowMemberInfo
-CalculatedWillReceiveRanks  -down-> UpdateMemberRank
-FollowedMember              -down-> UpdateMemberFollowings
-FollowedMember              -down-> UpdateMemberFans
-UnFollowedMember            -down-> UpdateMemberFollowings
-UnFollowedMember            -down-> UpdateMemberFans
+MemberInfoUpdated           -down-> UpdateBlackMemberInfo
+MemberInfoUpdated           -down-> UpdateFollowMemberInfo
+MemberFollowed              -down-> UpdateMemberFollowingCount
+MemberFollowed              -down-> UpdateMemberFanCount
+MemberUnfollowed            -down-> UpdateMemberFollowingCount
+MemberUnfollowed            -down-> UpdateMemberFanCount
 FavoritedArticle            -down-> UpdateMemberFavoritesArticles
 UnFavoritedArticle          -down-> UpdateMemberFavoritesArticles
-SignedIn                    -down-> CalculateWillReceiveRanks
-FavoritedArticle            -down-> CalculateWillReceiveRanks
-UnFavoritedArticle          -down-> CalculateWillReceiveRanks
-UpdatedMemberLikes          -down-> CalculateWillReceiveRanks
-UpdatedMemberRank           -down-> LevelRaise
+MemberRankUpdated           -down-> LevelUp
 @enduml

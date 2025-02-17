@@ -4,5 +4,5 @@ UpdateTagInfo       -down-> Tag
 UpdateTagRefCount   -down-> Tag
 DeleteTag           -down-> Tag
 
-Tag -down-> UpdatedTagInfo
+Tag -down-> TagInfoUpdated
 @enduml

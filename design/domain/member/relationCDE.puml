@@ -1,45 +1,42 @@
 @startuml
-RegisterMemberByPassword            -down-> Member
-RegisterMemberByPhone               -down-> Member
+RegisterMemberWithPassword            -down-> Member
+RegisterMemberWithPhone               -down-> Member
 UpdateMemberPhone                   -down-> Member
 UpdateMemberPassword                -down-> Member
 UpdateMemberInfo                    -down-> Member
-SignIn                              -down-> Member
+CheckIn                              -down-> Member
 UpdateMemberRank                    -down-> Member
 DeleteMember                        -down-> Member
 ReportMember                        -down-> Member
-LevelRaise                          -down-> Member
-UpdateMemberLikes                   -down-> Member
-UpdateMemberFans                    -down-> Member
-UpdateMemberFollowings              -down-> Member
-UpdateMemberWorks                   -down-> Member
+LevelUp                          -down-> Member
+UpdateMemberLikeCount                   -down-> Member
+UpdateMemberFanCount                    -down-> Member
+UpdateMemberFollowingCount              -down-> Member
+UpdateMemberWorkCount                   -down-> Member
 BanMember                           -down-> Member
-UnBanMember                         -down-> Member
+UnbanMember                         -down-> Member
 FollowMember                        -down-> Member
-UnFollowMember                      -down-> Member
+UnfollowMember                      -down-> Member
 CreateFavorites                     -down-> Member
 UpdateFavoritesInfo                 -down-> Member
 FavoriteArticle                     -down-> Member
 UnFavoriteArticle                   -down-> Member
 DeleteFavorites                     -down-> Member
-CreateMemberHistory                 -down-> Member
 CalculateWillReceiveRanks           -down-> Member
 UpdateMemberFavoritesArticles       -down-> Member
 UpdateMemberStarInfo                -down-> Member
-UpdateMemberStardust                -down-> Member
+UpdateMemberStardustCount                -down-> Member
 UpdateBlackMemberInfo               -down-> Member
 UpdateFollowMemberInfo              -down-> Member
 
 
 
-Member-down->UpdatedMemberInfo
-Member-down->SignedIn
-Member-down->UpdatedMemberRank
-Member-down->FollowedMember
-Member-down->UnFollowedMember
+Member-down->MemberInfoUpdated
+Member-down->MemberRankUpdated
+Member-down->MemberFollowed
+Member-down->MemberUnfollowed
 Member-down->FavoritedArticle
 Member-down->UnFavoritedArticle
-Member-down->CalculatedWillReceiveRanks
-Member-down->RegisteredMemberByPassword
-Member-down->RegisteredMemberByPhone
+Member-down->MemberRegisteredWithPassword
+Member-down->MemberRegisteredWithPhone
 @enduml

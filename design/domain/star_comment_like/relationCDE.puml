@@ -1,0 +1,7 @@
+@startuml
+LikeStarComment -down-> StarCommentLike
+UnlikeStarComment -down-> StarCommentLike
+
+StarCommentLike -down-> StarCommentLiked
+StarCommentLike -down-> StarCommentUnliked
+@enduml
