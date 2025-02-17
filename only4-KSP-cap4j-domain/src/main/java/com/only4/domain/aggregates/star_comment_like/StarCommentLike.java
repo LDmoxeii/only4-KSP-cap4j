@@ -1,5 +1,6 @@
 package com.only4.domain.aggregates.star_comment_like;
 
+import apache.rocketmq.v2.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
