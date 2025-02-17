@@ -1,18 +1,17 @@
 package com.only4.application.commands.category;
 
 
-import com.only4.domain.aggregates.category.Category;
+import com.only4.application.validater.category.CategoryNotExistsWithName;
 import com.only4.domain.aggregates.category.factory.CategoryFactory;
-import com.only4.domain.aggregates.category.meta.CategorySchema;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
 import org.netcorepal.cap4j.ddd.application.RequestParam;
 import org.netcorepal.cap4j.ddd.application.command.Command;
-import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Optional;
 
 /**
  * todo: 命令描述
@@ -31,19 +30,20 @@ public class CreateCategoryCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            val category = Mediator.factories().create(
+            return Optional.ofNullable(Mediator.factories().create(
                     CategoryFactory.Payload.builder()
                             .name(cmd.getCategoryName())
                             .build()
-            );
-            category.create();
-            Mediator.uow().persist(category);
+            )).map(category -> {
+                category.create();
+                Mediator.uow().persist(category);
 
-            Mediator.uow().save();
-            return Response.builder()
-                    .id(category.getId())
-                    .success(true)
-                    .build();
+                Mediator.uow().save();
+                return Response.builder()
+                        .id(category.getId())
+                        .success(true)
+                        .build();
+            }).orElseThrow(RuntimeException::new);
         }
     }
 
@@ -55,22 +55,10 @@ public class CreateCategoryCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
         @NotEmpty
+        @CategoryNotExistsWithName
         String categoryName;
-
-        {
-            validateNameNotExists();
-        }
-
-        private void validateNameNotExists() {
-            if (Mediator.repositories().exists(JpaPredicate.bySpecification(Category.class,
-                    CategorySchema.specify(category ->
-                            category.name().eq(categoryName)
-                    ))
-            )) {
-                throw new IllegalArgumentException("分类名称已存在");
-            }
-        }
     }
 
     /**
