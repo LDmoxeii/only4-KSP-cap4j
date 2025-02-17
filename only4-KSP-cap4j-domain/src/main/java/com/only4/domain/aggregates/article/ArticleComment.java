@@ -13,7 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.util.Objects;
 
 /**
  * 文章评论
@@ -40,19 +39,9 @@ public class ArticleComment {
 
 
     // 【行为方法开始】
-    void like(ArticleCommentLike newArticleCommentLike) {
-        this.getArticleCommentLikes().add(newArticleCommentLike);
-    }
-
-    void unlike(Long memberId) {
-        this.getArticleCommentLikes().stream()
-                .filter(cl -> Objects.equals(cl.getMemberId(), memberId))
-                .findFirst()
-                .ifPresent(commentLike -> this.getArticleCommentLikes().remove(commentLike));
-    }
 
     void updateLikeCount(Integer likeCount) {
-        this.getArticleCommentStatistics().likeCount = likeCount;
+        this.getArticleCommentStatistics().updateLikeCount(likeCount);
     }
 
     void updateVisibility(CommentVisibility visibility) {
@@ -65,7 +54,7 @@ public class ArticleComment {
     }
 
     void updateReplyCount(Integer replyCount) {
-        this.getArticleCommentStatistics().replyCount = replyCount;
+        this.getArticleCommentStatistics().updateReplyCount(replyCount);
     }
 
     void updateInfo(String memberName) {

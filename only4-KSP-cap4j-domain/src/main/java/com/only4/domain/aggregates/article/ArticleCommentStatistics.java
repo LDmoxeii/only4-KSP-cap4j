@@ -36,6 +36,14 @@ public class ArticleCommentStatistics {
 
     // 【行为方法开始】
 
+    void updateLikeCount(Integer likeCount) {
+        this.likeCount += likeCount;
+    }
+
+    void updateReplyCount(Integer replyCount) {
+        this.replyCount += replyCount;
+    }
+
 
     // 【行为方法结束】
 

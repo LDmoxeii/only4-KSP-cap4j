@@ -1,6 +1,7 @@
 package com.only4.application.commands.article;
 
 
+import com.only4._share.exception.KnownException;
 import com.only4.application.validater.article.ArticleCommentExists;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
@@ -11,8 +12,9 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
- * todo: 命令描述
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/14
@@ -28,12 +30,13 @@ public class DeleteArticleCommentCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+            return Optional.ofNullable(Mediator.repositories()
+                            .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+                            .orElseThrow(() -> new KnownException("文章不存在")))
                     .map(article -> {
                         article.deleteComment(cmd.getCommentId());
                         Mediator.uow().persist(article);
-                        
+
                         Mediator.uow().save();
 
                         return Response.builder()
@@ -57,6 +60,7 @@ public class DeleteArticleCommentCmd {
 
         Long commentId;
 
+        //TODO: 编写@MemberExists
         Long memberId;
     }
 

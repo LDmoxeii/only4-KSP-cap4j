@@ -37,15 +37,15 @@ public class ArticleStatistics {
     // 【行为方法开始】
 
     void updateLikeCount(Integer num) {
-        this.likeCount = num;
+        this.likeCount += num;
     }
 
-    void updateArticleFavoriteCount(Integer num) {
-        this.favoriteCount = num;
+    void updateFavoriteCount(Integer num) {
+        this.favoriteCount += num;
     }
 
     void updateCommentCount(Integer commentCount) {
-        this.commentCount = commentCount;
+        this.commentCount += commentCount;
     }
 
     // 【行为方法结束】

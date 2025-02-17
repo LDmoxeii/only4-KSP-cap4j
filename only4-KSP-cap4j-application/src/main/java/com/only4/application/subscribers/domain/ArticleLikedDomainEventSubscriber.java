@@ -1,6 +1,5 @@
 package com.only4.application.subscribers.domain;
 
-import com.only4.application.commands.article.UpdateArticleCommentLikeCountCmd;
 import com.only4.application.commands.article.UpdateArticleLikeCountCmd;
 import com.only4.domain.aggregates.article.events.ArticleLikedDomainEvent;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import java.util.Optional;
 
 /**
  * Article.ArticleLikedDomainEvent领域事件订阅
- * todo: 领域事件说明
  */
 @Service
 @RequiredArgsConstructor
@@ -21,9 +19,11 @@ public class ArticleLikedDomainEventSubscriber {
 
     @EventListener(ArticleLikedDomainEvent.class)
     public void updateArticleLikeCount(ArticleLikedDomainEvent event) {
-        Optional.of(event.getEntity()).map(article -> UpdateArticleLikeCountCmd.Request.builder()
+        val article = event.getEntity();
+
+        Optional.of(UpdateArticleLikeCountCmd.Request.builder()
                 .articleId(article.getId())
-                .likeCount(article.getArticleStatistics().getLikeCount() + 1)
+                .likeCount(1)
                 .build())
                 .ifPresent(Mediator.commands()::send);
     }

@@ -36,11 +36,6 @@ public class ArticleTag {
 
     // 【行为方法开始】
 
-    ArticleTag(Long tagId, String tagName) {
-        this.tagId = tagId;
-        this.tagName = tagName;
-    }
-
     void updateInfo(String tagName) {
         this.tagName = tagName;
     }

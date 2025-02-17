@@ -23,5 +23,6 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 @NoArgsConstructor
 public class ArticleCommentDeletedDomainEvent {
     Article entity;
-    Long commentId;
+
+    Long parentId;
 }

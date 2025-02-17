@@ -11,10 +11,9 @@ import org.netcorepal.cap4j.ddd.Mediator;
 import org.netcorepal.cap4j.ddd.application.UnitOfWork;
 import org.netcorepal.cap4j.ddd.domain.repo.RepositorySupervisor;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,13 +38,11 @@ class BanArticleCmdTest {
     void testExec_ShouldBanArticleAndPersist_WhenRequestIsValid() {
         Long articleId = 1L;
         Integer banDuration = 30;
-        LocalDateTime bannedAt = LocalDateTime.now();
         try (
                 MockedStatic<Mediator> mediator = mockStatic(Mediator.class)
         ) {
             when(request.getArticleId()).thenReturn(articleId);
             when(request.getBanDuration()).thenReturn(banDuration);
-            when(request.getBannedAt()).thenReturn(bannedAt);
             mediator.when(Mediator::repositories).thenReturn(repository);
             mediator.when(Mediator::uow).thenReturn(uow);
             when(repository.findOne(any())).thenReturn(Optional.of(article));
@@ -53,7 +50,7 @@ class BanArticleCmdTest {
             BanArticleCmd.Response response = handler.exec(request);
 
             assertTrue(response.isSuccess());
-            verify(article).ban(request.getBanDuration(), request.getBannedAt());
+            verify(article).ban(request.getBanDuration());
             verify(uow).persist(article);
             verify(uow).save();
 

@@ -35,10 +35,6 @@ import javax.persistence.*;
 public class ArticleCategory {
 
     // 【行为方法开始】
-    ArticleCategory(Long categoryId, String categoryName) {
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-    }
 
     void updateInfo(String categoryName) {
         this.categoryName = categoryName;
