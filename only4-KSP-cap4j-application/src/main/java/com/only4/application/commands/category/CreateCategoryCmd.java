@@ -1,7 +1,7 @@
 package com.only4.application.commands.category;
 
 
-import com.only4.application.validater.category.CategoryNotExistsWithName;
+import com.only4.application.validater.category.CategoryUniqueName;
 import com.only4.domain.aggregates.category.factory.CategoryFactory;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Optional;
 
 /**
- * todo: 命令描述
+ * CreateCategoryCmd命令
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/21
@@ -57,7 +57,7 @@ public class CreateCategoryCmd {
     public static class Request implements RequestParam<Response> {
 
         @NotEmpty
-        @CategoryNotExistsWithName
+        @CategoryUniqueName
         String categoryName;
     }
 

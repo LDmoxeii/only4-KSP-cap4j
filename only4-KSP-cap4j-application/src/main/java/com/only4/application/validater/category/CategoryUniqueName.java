@@ -1,6 +1,5 @@
 package com.only4.application.validater.category;
 
-import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.category.Category;
 import com.only4.domain.aggregates.category.meta.CategorySchema;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -17,15 +16,15 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD})
-@Constraint(validatedBy = CategoryNotExistsWithName.Validator.class)
-public @interface CategoryNotExistsWithName {
+@Constraint(validatedBy = CategoryUniqueName.Validator.class)
+public @interface CategoryUniqueName {
     String message() default "同名标签已存在";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    class Validator implements ConstraintValidator<CategoryNotExistsWithName, String> {
+    class Validator implements ConstraintValidator<CategoryUniqueName, String> {
         @Override
         public boolean isValid(String categoryName, ConstraintValidatorContext context) {
             return !Mediator.repositories()
