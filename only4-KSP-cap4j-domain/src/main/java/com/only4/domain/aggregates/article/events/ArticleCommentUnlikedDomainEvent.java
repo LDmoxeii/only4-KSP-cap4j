@@ -1,7 +1,6 @@
 package com.only4.domain.aggregates.article.events;
 
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.ArticleComment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,5 +23,6 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 @NoArgsConstructor
 public class ArticleCommentUnlikedDomainEvent {
     Article entity;
-    ArticleComment comment;
+
+    Long commentId;
 }

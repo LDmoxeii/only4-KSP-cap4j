@@ -20,11 +20,11 @@ public class ArticleCommentUnlikedDomainEventSubscriber {
     @EventListener(ArticleCommentUnlikedDomainEvent.class)
     public void updateArticleCommentLikeCount(ArticleCommentUnlikedDomainEvent event) {
         val article = event.getEntity();
-        val comment = event.getComment();
+        val commentId = event.getCommentId();
 
         Optional.of(UpdateArticleCommentLikeCountCmd.Request.builder()
                 .articleId(article.getId())
-                .commentId(comment.getId())
+                .commentId(commentId)
                 .likeCount(-1)
                 .build())
                 .ifPresent(Mediator.commands()::send);

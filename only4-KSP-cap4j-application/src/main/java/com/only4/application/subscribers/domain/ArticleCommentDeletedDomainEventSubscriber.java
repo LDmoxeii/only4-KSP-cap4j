@@ -32,10 +32,10 @@ public class ArticleCommentDeletedDomainEventSubscriber {
     @EventListener(ArticleCommentDeletedDomainEvent.class)
     public void updateArticleCommentReplyCount(ArticleCommentDeletedDomainEvent event) {
         val article = event.getEntity();
-        val comment = event.getComment();
+        val parentId = event.getParentId();
         Optional.of(UpdateArticleCommentReplyCountCmd.Request.builder()
                 .articleId(article.getId())
-                .commentId(comment.getParentId())
+                .commentId(parentId)
                 .replyCount(1)
                 .build())
                 .ifPresent(Mediator.commands()::send);

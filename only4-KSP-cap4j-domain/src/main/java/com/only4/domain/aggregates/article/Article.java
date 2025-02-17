@@ -157,7 +157,7 @@ public class Article {
                     this.articleComments.add(articleComment);
 
                     if (parentId > 0) {
-                        events().attach(new ArticleCommentCreatedDomainEvent(this, articleComment), this);
+                        events().attach(new ArticleCommentCreatedDomainEvent(this, parentId), this);
                     }
                 });
     }
@@ -199,7 +199,7 @@ public class Article {
                         .orElseThrow(() -> new KnownException("评论不存在")))
                 .ifPresent(articleComment -> {
                     articleComment.like(memberId);
-                    events().attach(new ArticleCommentLikedDomainEvent(this, articleComment), this);
+                    events().attach(new ArticleCommentLikedDomainEvent(this, commentId), this);
                 });
     }
 
@@ -210,7 +210,7 @@ public class Article {
                         .orElseThrow(() -> new KnownException("评论不存在")))
                 .ifPresent(articleComment -> {
                     articleComment.unlike(memberId);
-                    events().attach(new ArticleCommentUnlikedDomainEvent(this, articleComment), this);
+                    events().attach(new ArticleCommentUnlikedDomainEvent(this, commentId), this);
                 });
     }
 
