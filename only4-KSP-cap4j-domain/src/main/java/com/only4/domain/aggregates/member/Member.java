@@ -47,17 +47,7 @@ public class Member {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.member.MemberLikeRecord> memberLikeRecords;
-
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.MemberPermission> memberPermissions;
-
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`member_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.member.ViewHistory> viewHistories;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
@@ -88,11 +78,6 @@ public class Member {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.Favorite> favorites;
-
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`member_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.member.SignInRecord> signInRecords;
 
     /**
      * ID
@@ -141,10 +126,10 @@ public class Member {
 
     /**
      * 等级
-     * tinyint
+     * int
      */
     @Column(name = "`level`")
-    Byte level;
+    Integer level;
 
     /**
      * 余额

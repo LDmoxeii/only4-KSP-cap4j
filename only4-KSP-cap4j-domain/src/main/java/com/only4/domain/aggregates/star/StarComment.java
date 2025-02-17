@@ -53,11 +53,6 @@ public class StarComment {
         return starCommentStatistics == null || starCommentStatistics.size() == 0 ? null : starCommentStatistics.get(0);
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`star_comment_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.star.StarCommentLike> starCommentLikes;
-
     /**
      * ID
      * bigint

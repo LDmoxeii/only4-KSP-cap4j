@@ -1,38 +1,44 @@
-package com.only4.domain.aggregates.member.meta;
+package com.only4.domain.aggregates.article.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.member.SignInRecord;
+import com.only4.domain.aggregates.article.ArticleCommentLike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 会员签到记录
+ * 文章评论点赞
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/15
+ * @date 2025/02/16
  */
 @RequiredArgsConstructor
-public class SignInRecordSchema {
+public class ArticleCommentLikeSchema {
     /**
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-        
+
         /**
          * ID
          */
         public static final String id = "id";
 
         /**
-         * 签到时间
+         * 点赞用户ID
+         */
+        public static final String memberId = "memberId";
+
+        /**
+         * 点赞时间
          */
         public static final String createAt = "createAt";
 
@@ -43,14 +49,14 @@ public class SignInRecordSchema {
 
     }
 
-    private final Path<SignInRecord> root;
+    private final Path<ArticleCommentLike> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
 
-    public Path<SignInRecord> _root() {
+    public Path<ArticleCommentLike> _root() {
         return root;
     }
 
@@ -64,7 +70,15 @@ public class SignInRecordSchema {
     }
 
     /**
-     * 签到时间
+     * 点赞用户ID
+     * bigint
+     */
+    public Schema.Field<Long> memberId() {
+        return new Schema.Field<>(root.get("memberId"), this.criteriaBuilder);
+    }
+
+    /**
+     * 点赞时间
      * timestamp
      */
     public Schema.Field<java.time.LocalDateTime> createAt() {
@@ -103,7 +117,7 @@ public class SignInRecordSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<SignInRecordSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<ArticleCommentLikeSchema> builder){
         return builder.build(this);
     }
 
@@ -114,7 +128,7 @@ public class SignInRecordSchema {
      * @param builder where条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder) {
+    public static Specification<ArticleCommentLike> specify(Schema.PredicateBuilder<ArticleCommentLikeSchema> builder) {
         return specify(builder, false, Collections.emptyList());
     }
 
@@ -125,7 +139,7 @@ public class SignInRecordSchema {
      * @param distinct 是否去重
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, boolean distinct) {
+    public static Specification<ArticleCommentLike> specify(Schema.PredicateBuilder<ArticleCommentLikeSchema> builder, boolean distinct) {
         return specify(builder, distinct, Collections.emptyList());
     }
 
@@ -136,7 +150,7 @@ public class SignInRecordSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, Schema.OrderBuilder<SignInRecordSchema>... orderBuilders) {
+    public static Specification<ArticleCommentLike> specify(Schema.PredicateBuilder<ArticleCommentLikeSchema> builder, Schema.OrderBuilder<ArticleCommentLikeSchema>... orderBuilders) {
         return specify(builder, Arrays.asList(orderBuilders));
     }
 
@@ -147,7 +161,7 @@ public class SignInRecordSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, List<Schema.OrderBuilder<SignInRecordSchema>> orderBuilders) {
+    public static Specification<ArticleCommentLike> specify(Schema.PredicateBuilder<ArticleCommentLikeSchema> builder, List<Schema.OrderBuilder<ArticleCommentLikeSchema>> orderBuilders) {
         return specify(builder, orderBuilders);
     }
 
@@ -159,7 +173,7 @@ public class SignInRecordSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, boolean distinct, Schema.OrderBuilder<SignInRecordSchema>... orderBuilders) {
+    public static Specification<ArticleCommentLike> specify(Schema.PredicateBuilder<ArticleCommentLikeSchema> builder, boolean distinct, Schema.OrderBuilder<ArticleCommentLikeSchema>... orderBuilders) {
         return specify(builder, distinct, Arrays.asList(orderBuilders));
     }
 
@@ -171,7 +185,7 @@ public class SignInRecordSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.PredicateBuilder<SignInRecordSchema> builder, boolean distinct, List<Schema.OrderBuilder<SignInRecordSchema>> orderBuilders) {
+    public static Specification<ArticleCommentLike> specify(Schema.PredicateBuilder<ArticleCommentLikeSchema> builder, boolean distinct, List<Schema.OrderBuilder<ArticleCommentLikeSchema>> orderBuilders) {
         return specify((schema, criteriaQuery) -> {
             criteriaQuery.where(builder.build(schema));
             criteriaQuery.distinct(distinct);
@@ -191,10 +205,10 @@ public class SignInRecordSchema {
      * @param specifier 查询条件构造器
      * @return
      */
-    public static Specification<SignInRecord> specify(Schema.Specification<SignInRecord, SignInRecordSchema> specifier) {
+    public static Specification<ArticleCommentLike> specify(Schema.Specification<ArticleCommentLike, ArticleCommentLikeSchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            SignInRecordSchema signInRecord = new SignInRecordSchema(root, criteriaBuilder);
-            return specifier.toPredicate(signInRecord, criteriaQuery);
+            ArticleCommentLikeSchema articleCommentLike = new ArticleCommentLikeSchema(root, criteriaBuilder);
+            return specifier.toPredicate(articleCommentLike, criteriaQuery);
         };
     }
 
