@@ -11,7 +11,7 @@
  Target Server Version : 80033
  File Encoding         : 65001
 
- Date: 16/02/2025 15:55:49
+ Date: 17/02/2025 22:57:44
 */
 
 SET NAMES utf8mb4;
@@ -321,13 +321,20 @@ CREATE TABLE `article`  (
   `banned_at` timestamp(0) NULL DEFAULT NULL COMMENT '封禁时间',
   `ban_duration` int(0) NOT NULL DEFAULT 0 COMMENT '封禁时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章\n @Fac;\n @DE=ArticleCreated|ArticleLikeCountUpdated|ArticleFavoriteCountUpdated|ArticleLiked|ArticleUnliked|ArticleCommentCreated|ArticleCommentDeleted|ArticleCommentLiked|ArticleCommentUnliked|ArticleCommentLikeCountUpdated;' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章\n @Fac;\n @DE=ArticleCreated|ArticleLikeCountUpdated|ArticleFavoriteCountUpdated|ArticleLiked|ArticleUnliked|ArticleCommentCreated|ArticleCommentDeleted|ArticleCommentLiked|ArticleCommentUnliked|ArticleCommentLikeCountUpdated|ArticleCategoriesUpdated|ArticleTagsUpdated;' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article
 -- ----------------------------
-INSERT INTO `article` VALUES (138048748285591552, 'Test Title', 'Test Description', 'Test Content', 'cover.jpg', 'appendix.pdf', 99, 1, 1, 0, 0, '1970-01-01 00:00:01', 0);
-INSERT INTO `article` VALUES (138055829478703104, 'Test Title', 'Test Description', 'Test Content', 'cover.jpg', 'appendix.pdf', 99, 1, 1, 0, 0, '1970-01-01 00:00:01', 0);
+INSERT INTO `article` VALUES (138368423083114496, 'Test Title', 'Test Description', 'Test Content', 'cover.jpg', 'appendix.pdf', 0, 0, 0, 1, 0, NULL, 0);
+INSERT INTO `article` VALUES (138368484051517440, 'Test Title', 'Test Description', 'Test Content', 'cover.jpg', 'appendix.pdf', 0, 0, 0, 1, 0, NULL, 0);
+INSERT INTO `article` VALUES (138368607829622784, 'Test Title', 'Test Description', 'Test Content', 'cover.jpg', 'appendix.pdf', 0, 0, 0, 1, 0, NULL, 0);
+INSERT INTO `article` VALUES (138370027706384384, 'Test Title', 'Test Description', 'Test Content', 'cover.jpg', 'appendix.pdf', 0, 0, 0, 1, 0, NULL, 0);
+INSERT INTO `article` VALUES (138370173508780032, 'Test Title', 'Test Description', 'Test Content', 'cover.jpg', 'appendix.pdf', 0, 0, 0, 1, 0, NULL, 0);
+INSERT INTO `article` VALUES (138372668251439104, 'Test Title', 'Test Description', 'Test Content', 'cover.jpg', 'appendix.pdf', 0, 0, 0, 1, 0, NULL, 0);
+INSERT INTO `article` VALUES (138375852315377664, 'Test Title', 'Test Description', 'Test Content', 'cover.jpg', 'appendix.pdf', 0, 0, 0, 1, 0, NULL, 0);
+INSERT INTO `article` VALUES (138376698478460928, 'Test Title', 'Test Description', 'Test Content', 'cover.jpg', 'appendix.pdf', 0, 0, 0, 1, 0, NULL, 0);
+INSERT INTO `article` VALUES (138376740908040192, 'Test Title', 'Test Description', 'Test Content', 'cover.jpg', 'appendix.pdf', 0, 0, 0, 1, 0, NULL, 0);
 
 -- ----------------------------
 -- Table structure for article_author
@@ -345,8 +352,15 @@ CREATE TABLE `article_author`  (
 -- ----------------------------
 -- Records of article_author
 -- ----------------------------
-INSERT INTO `article_author` VALUES (138048748285591553, 138048748285591552, 1, 'Author', 0);
-INSERT INTO `article_author` VALUES (138055830464364544, 138055829478703104, 1, 'Author', 0);
+INSERT INTO `article_author` VALUES (138368423980695552, 138368423083114496, 1, 'Author', 0);
+INSERT INTO `article_author` VALUES (138368484051517441, 138368484051517440, 1, 'Author', 0);
+INSERT INTO `article_author` VALUES (138368607829622785, 138368607829622784, 1, 'Author', 0);
+INSERT INTO `article_author` VALUES (138370028578799616, 138370027706384384, 1, 'Author', 0);
+INSERT INTO `article_author` VALUES (138370173508780033, 138370173508780032, 1, 'Author', 0);
+INSERT INTO `article_author` VALUES (138372668255633408, 138372668251439104, 1, 'Author', 0);
+INSERT INTO `article_author` VALUES (138375852315377665, 138375852315377664, 1, 'Author', 0);
+INSERT INTO `article_author` VALUES (138376698478460929, 138376698478460928, 1, 'Author', 0);
+INSERT INTO `article_author` VALUES (138376740908040193, 138376740908040192, 1, 'Author', 0);
 
 -- ----------------------------
 -- Table structure for article_category
@@ -386,7 +400,9 @@ CREATE TABLE `article_comment`  (
 -- ----------------------------
 -- Records of article_comment
 -- ----------------------------
-INSERT INTO `article_comment` VALUES (138051928897617920, 138048748285591552, 0, 1, 'Author', 'Test Comment', 0, 1, '2025-02-15 22:47:49', 1);
+INSERT INTO `article_comment` VALUES (138372602010796032, 138370173508780032, 0, 1, 'Author', 'Test Comment', 0, 1, '2025-02-16 20:03:11', 0);
+INSERT INTO `article_comment` VALUES (138372656914235392, 138370173508780032, 0, 1, 'Author', 'Test Comment', 0, 1, '2025-02-16 20:03:32', 0);
+INSERT INTO `article_comment` VALUES (138375837215883264, 138370173508780032, 0, 1, 'Author', 'Test Comment', 0, 1, '2025-02-16 20:16:10', 0);
 
 -- ----------------------------
 -- Table structure for article_comment_like
@@ -399,7 +415,7 @@ CREATE TABLE `article_comment_like`  (
   `create_at` timestamp(0) NOT NULL COMMENT '点赞时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章评论点赞\n @P=article_comment;\n @L=true;' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章评论点赞\n @Fac;\n @VO;' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article_comment_like
@@ -421,7 +437,9 @@ CREATE TABLE `article_comment_statistics`  (
 -- ----------------------------
 -- Records of article_comment_statistics
 -- ----------------------------
-INSERT INTO `article_comment_statistics` VALUES (138051928901812224, 138051928897617920, 0, 0, 1);
+INSERT INTO `article_comment_statistics` VALUES (138372602266648576, 138372602010796032, 0, 0, 0);
+INSERT INTO `article_comment_statistics` VALUES (138372656914235393, 138372656914235392, 0, 0, 0);
+INSERT INTO `article_comment_statistics` VALUES (138375837438181376, 138375837215883264, 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for article_favorite_record
@@ -464,10 +482,10 @@ CREATE TABLE `article_like`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
   `article_id` bigint(0) NOT NULL COMMENT '文章ID',
   `member_id` bigint(0) NOT NULL COMMENT '点赞用户ID',
-  `like_time` timestamp(0) NOT NULL COMMENT '点赞时间',
+  `create_at` timestamp(0) NOT NULL COMMENT '点赞时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章点赞\n @P=article;\n @L=true;' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章点赞\n @Fac;\n @VO;' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article_like
@@ -491,8 +509,15 @@ CREATE TABLE `article_statistics`  (
 -- ----------------------------
 -- Records of article_statistics
 -- ----------------------------
-INSERT INTO `article_statistics` VALUES (138048748285591554, 138048748285591552, 0, 0, 1, 0, 0);
-INSERT INTO `article_statistics` VALUES (138055830481141760, 138055829478703104, 0, 0, 0, 0, 0);
+INSERT INTO `article_statistics` VALUES (138368424005861376, 138368423083114496, 0, 0, 0, 0, 0);
+INSERT INTO `article_statistics` VALUES (138368484051517442, 138368484051517440, 0, 0, 0, 0, 0);
+INSERT INTO `article_statistics` VALUES (138368607829622786, 138368607829622784, 0, 0, 0, 0, 0);
+INSERT INTO `article_statistics` VALUES (138370028599771136, 138370027706384384, 0, 0, 0, 0, 0);
+INSERT INTO `article_statistics` VALUES (138370173508780034, 138370173508780032, 0, 0, 3, 0, 0);
+INSERT INTO `article_statistics` VALUES (138372668255633409, 138372668251439104, 0, 0, 0, 0, 0);
+INSERT INTO `article_statistics` VALUES (138375852315377666, 138375852315377664, 0, 0, 0, 0, 0);
+INSERT INTO `article_statistics` VALUES (138376698478460930, 138376698478460928, 0, 0, 0, 0, 0);
+INSERT INTO `article_statistics` VALUES (138376740908040194, 138376740908040192, 0, 0, 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for article_tag
@@ -545,19 +570,19 @@ CREATE TABLE `category`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for check_in_record
+-- Table structure for check_in
 -- ----------------------------
-DROP TABLE IF EXISTS `check_in_record`;
-CREATE TABLE `check_in_record`  (
+DROP TABLE IF EXISTS `check_in`;
+CREATE TABLE `check_in`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
   `member_id` bigint(0) NOT NULL COMMENT '会员ID',
   `create_at` timestamp(0) NOT NULL COMMENT '签到时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员签到记录 \n @P=member;\n @L=true;' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员签到记录 \n @Fac;\n @VO;' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of check_in_record
+-- Records of check_in
 -- ----------------------------
 
 -- ----------------------------
@@ -567,8 +592,10 @@ DROP TABLE IF EXISTS `favorite`;
 CREATE TABLE `favorite`  (
   `id` bigint(0) NOT NULL COMMENT 'ID',
   `member_id` bigint(0) NOT NULL COMMENT '会员ID',
-  `favorite_id` bigint(0) NOT NULL COMMENT '收藏夹ID',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '默认收藏夹' COMMENT '收藏夹名',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '描述',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `default_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '默认标识',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员收藏夹\n @P=member;\n @L=true;' ROW_FORMAT = Dynamic;
 
@@ -604,7 +631,7 @@ CREATE TABLE `member`  (
   `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '手机号',
   `nick_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '昵称',
   `signature` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '个性签名',
-  `level` tinyint(0) NOT NULL DEFAULT 0 COMMENT '等级',
+  `level` int(0) NOT NULL DEFAULT 0 COMMENT '等级',
   `balance` bigint(0) NOT NULL DEFAULT 0 COMMENT '余额',
   `ban_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '封禁标识',
   `banned_at` timestamp(0) NOT NULL DEFAULT '1970-01-01 00:00:01' COMMENT '封禁时间',
@@ -615,22 +642,6 @@ CREATE TABLE `member`  (
 
 -- ----------------------------
 -- Records of member
--- ----------------------------
-
--- ----------------------------
--- Table structure for member_like_record
--- ----------------------------
-DROP TABLE IF EXISTS `member_like_record`;
-CREATE TABLE `member_like_record`  (
-  `id` bigint(0) NOT NULL COMMENT 'ID',
-  `member_id` bigint(0) NOT NULL COMMENT '会员ID',
-  `article_id` bigint(0) NOT NULL COMMENT '文章ID',
-  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员点赞记录\n @P=member;\n @L=true;' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of member_like_record
 -- ----------------------------
 
 -- ----------------------------
@@ -681,6 +692,7 @@ CREATE TABLE `member_statistics`  (
   `following_count` int(0) NOT NULL DEFAULT 0 COMMENT '关注数',
   `work_count` int(0) NOT NULL DEFAULT 0 COMMENT '作品数',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `stardust_count` int(0) NOT NULL DEFAULT 0 COMMENT '星尘数',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员统计\n @P=member;\n @C=One;\n @L=true;' ROW_FORMAT = Dynamic;
 
@@ -812,7 +824,7 @@ CREATE TABLE `star_comment_like`  (
   `create_at` timestamp(0) NOT NULL COMMENT '点赞时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '星球评论点赞\n @P=star_comment;\n @L=true;' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '星球评论点赞\n @Fac;\n @VO;' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of star_comment_like
@@ -846,7 +858,7 @@ CREATE TABLE `star_like`  (
   `create_at` timestamp(0) NOT NULL COMMENT '点赞时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '星球点赞\n @P=star;\n @L=true;' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '星球点赞\n @Fac;\n @VO;' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of star_like
@@ -916,7 +928,7 @@ CREATE TABLE `view_history`  (
   `article_id` bigint(0) NOT NULL COMMENT '文章ID',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员历史记录\n @P=member;\n @L=true;' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员历史记录\n @Fac;\n @VO;' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of view_history
