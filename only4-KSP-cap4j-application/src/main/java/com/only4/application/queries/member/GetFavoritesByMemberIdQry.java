@@ -1,6 +1,6 @@
 package com.only4.application.queries.member;
 
-import com.only4.domain.aggregates.member.Favorite;
+import com.only4.domain.aggregates.member.Favorites;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +35,6 @@ public class GetFavoritesByMemberIdQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        List<Favorite> favorites;
+        List<Favorites> favorites;
     }
 }

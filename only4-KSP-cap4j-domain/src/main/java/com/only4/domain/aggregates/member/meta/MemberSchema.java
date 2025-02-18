@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/17
+ * @date 2025/02/18
  */
 @RequiredArgsConstructor
 public class MemberSchema {
@@ -225,6 +225,18 @@ public class MemberSchema {
     }
 
     /**
+     * Favorites 关联查询条件定义
+     *
+     * @param joinType
+     * @return
+     */
+    public com.only4.domain.aggregates.member.meta.FavoritesSchema joinFavorites(Schema.JoinType joinType) {
+        JoinType type = joinType.toJpaJoinType();
+        Join<Member, com.only4.domain.aggregates.member.Favorites> join = ((Root<Member>) this.root).join("favorites", type);
+        com.only4.domain.aggregates.member.meta.FavoritesSchema schema = new com.only4.domain.aggregates.member.meta.FavoritesSchema(join, this.criteriaBuilder);
+        return schema;
+    }
+    /**
      * MemberPermission 关联查询条件定义
      *
      * @param joinType
@@ -282,18 +294,6 @@ public class MemberSchema {
         JoinType type = joinType.toJpaJoinType();
         Join<Member, com.only4.domain.aggregates.member.MemberStar> join = ((Root<Member>) this.root).join("memberStars", type);
         com.only4.domain.aggregates.member.meta.MemberStarSchema schema = new com.only4.domain.aggregates.member.meta.MemberStarSchema(join, this.criteriaBuilder);
-        return schema;
-    }
-    /**
-     * Favorite 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.member.meta.FavoriteSchema joinFavorite(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Member, com.only4.domain.aggregates.member.Favorite> join = ((Root<Member>) this.root).join("favorites", type);
-        com.only4.domain.aggregates.member.meta.FavoriteSchema schema = new com.only4.domain.aggregates.member.meta.FavoriteSchema(join, this.criteriaBuilder);
         return schema;
     }
 

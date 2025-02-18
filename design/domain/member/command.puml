@@ -40,7 +40,7 @@ Command("UpdateMemberPassword") [
     用户ID
     新密码
     --规则--
-    1. 新密码必须与旧密码不同
+    1. 密码不能为空
 ]
 Command("UpdateMemberInfo") [
     更新用户信息
@@ -53,17 +53,6 @@ Command("UpdateMemberInfo") [
     --规则--
     1. 用户名不能为空
     2. 用户名必须唯一
-]
-Command("CheckIn") [
-    签到
-    --触发器--
-    当前用户
-    --属性--
-    用户ID
-    签到时间
-    --规则--
-    1. 用户必须存在
-    2. 用户未签到
 ]
 Command("UpdateMemberRank") [
     更新用户等级分
@@ -96,7 +85,7 @@ Command("ReportMember") [
     1. 用户必须存在
     2. 用户未被封禁
 ]
-Command("LevelUp") [
+Command("MemberLevelUp") [
      等级提升
      --触发者--
      已更新用户等级分事件
@@ -223,7 +212,7 @@ Command("UpdateFavoritesInfo") [
     4. 收藏夹描述不能为空
     5. 默认收藏夹不能修改
 ]
-Command("FavoriteArticle") [
+Command("AddArticleToFavorite") [
     收藏文章
     --触发者--
     当前用户
@@ -235,7 +224,7 @@ Command("FavoriteArticle") [
     1. 文章必须存在
     2. 未在当前收藏夹中
 ]
-Command("UnFavoriteArticle") [
+Command("RemoveArticleFromFavorite") [
     取消收藏文章
     --触发者--
     当前用户
@@ -272,7 +261,7 @@ Command("UpdateMemberFollowingCount") [
     1. 用户必须存在
 ]
 
-Command("UpdateMemberFavoritesArticles") [
+Command("UpdateFavoritesArticleCount") [
     更新用户收藏文章数
     --触发者--
     已收藏文章事件

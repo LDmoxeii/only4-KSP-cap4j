@@ -5,7 +5,7 @@ MemberFollowed              -down-> UpdateMemberFollowingCount
 MemberFollowed              -down-> UpdateMemberFanCount
 MemberUnfollowed            -down-> UpdateMemberFollowingCount
 MemberUnfollowed            -down-> UpdateMemberFanCount
-FavoritedArticle            -down-> UpdateMemberFavoritesArticles
-UnFavoritedArticle          -down-> UpdateMemberFavoritesArticles
-MemberRankUpdated           -down-> LevelUp
+ArticleAddedToFavorites     -down-> UpdateFavoritesArticleCount
+ArticleRemovedFromFavorites -down-> UpdateFavoritesArticleCount
+MemberRankUpdated           -down-> MemberLevelUp
 @enduml

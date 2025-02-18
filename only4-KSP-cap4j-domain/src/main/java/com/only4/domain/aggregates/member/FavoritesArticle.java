@@ -11,34 +11,34 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 
-
 /**
- * 会员作品
- * <p>
+ * 会员收藏记录
+ *
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
- *
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/02/18
  */
-@Aggregate(aggregate = "Member", name = "MemberWrok", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Member"}, description = "会员作品")
+@Aggregate(aggregate = "Member", name = "FavoritesArticle", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Favorites" }, description = "会员收藏记录")
 @Entity
-@Table(name = "`member_wrok`")
+@Table(name = "`favorites_article`")
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "update `member_wrok` set `del_flag` = 1 where `id` = ? ")
+@SQLDelete(sql = "update `favorites_article` set `del_flag` = 1 where `id` = ? ")
 @Where(clause = "`del_flag` = 0")
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-public class MemberWrok {
+public class FavoritesArticle {
 
     // 【行为方法开始】
 
 
+
     // 【行为方法结束】
+
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
@@ -54,11 +54,18 @@ public class MemberWrok {
     Long id;
 
     /**
-     * 作品ID
+     * 文章ID
      * bigint
      */
-    @Column(name = "`work_id`")
-    Long workId;
+    @Column(name = "`article_id`")
+    Long articleId;
+
+    /**
+     * 收藏时间
+     * timestamp
+     */
+    @Column(name = "`create_at`")
+    java.time.LocalDateTime createAt;
 
     /**
      * 逻辑删除

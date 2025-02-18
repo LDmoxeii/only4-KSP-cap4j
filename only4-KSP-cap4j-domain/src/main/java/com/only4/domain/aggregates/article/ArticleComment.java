@@ -1,7 +1,6 @@
 package com.only4.domain.aggregates.article;
 
 import com.only4.domain.aggregates.article.enums.CommentVisibility;
-import com.only4.domain.aggregates.article_comment_like.ArticleCommentLike;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

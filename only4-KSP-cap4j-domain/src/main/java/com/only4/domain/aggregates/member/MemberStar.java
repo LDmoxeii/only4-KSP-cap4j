@@ -37,6 +37,9 @@ public class MemberStar {
 
     // 【行为方法开始】
 
+    void updateInfo(String starName) {
+        this.starName = starName;
+    }
 
     // 【行为方法结束】
 

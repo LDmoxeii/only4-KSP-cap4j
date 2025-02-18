@@ -1,7 +1,7 @@
 package com.only4.domain.aggregates.member.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.member.Favorite;
+import com.only4.domain.aggregates.member.Favorites;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/17
+ * @date 2025/02/18
  */
 @RequiredArgsConstructor
-public class FavoriteSchema {
+public class FavoritesSchema {
     /**
      * 属性字段集合
      */
@@ -52,14 +52,14 @@ public class FavoriteSchema {
 
     }
 
-    private final Path<Favorite> root;
+    private final Path<Favorites> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
 
-    public Path<Favorite> _root() {
+    public Path<Favorites> _root() {
         return root;
     }
 
@@ -128,32 +128,32 @@ public class FavoriteSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<FavoriteSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<FavoritesSchema> builder){
         return builder.build(this);
     }
 
     /**
-     * ArticleFavoriteStatistics 关联查询条件定义
+     * FavoritesStatistics 关联查询条件定义
      *
      * @param joinType
      * @return
      */
-    public com.only4.domain.aggregates.member.meta.ArticleFavoriteStatisticsSchema joinArticleFavoriteStatistics(Schema.JoinType joinType) {
+    public com.only4.domain.aggregates.member.meta.FavoritesStatisticsSchema joinFavoritesStatistics(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Favorite, com.only4.domain.aggregates.member.ArticleFavoriteStatistics> join = ((Root<Favorite>) this.root).join("articleFavoriteStatistics", type);
-        com.only4.domain.aggregates.member.meta.ArticleFavoriteStatisticsSchema schema = new com.only4.domain.aggregates.member.meta.ArticleFavoriteStatisticsSchema(join, this.criteriaBuilder);
+        Join<Favorites, com.only4.domain.aggregates.member.FavoritesStatistics> join = ((Root<Favorites>) this.root).join("favoritesStatistics", type);
+        com.only4.domain.aggregates.member.meta.FavoritesStatisticsSchema schema = new com.only4.domain.aggregates.member.meta.FavoritesStatisticsSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**
-     * ArticleFavoriteRecord 关联查询条件定义
+     * FavoritesArticle 关联查询条件定义
      *
      * @param joinType
      * @return
      */
-    public com.only4.domain.aggregates.member.meta.ArticleFavoriteRecordSchema joinArticleFavoriteRecord(Schema.JoinType joinType) {
+    public com.only4.domain.aggregates.member.meta.FavoritesArticleSchema joinFavoritesArticle(Schema.JoinType joinType) {
         JoinType type = joinType.toJpaJoinType();
-        Join<Favorite, com.only4.domain.aggregates.member.ArticleFavoriteRecord> join = ((Root<Favorite>) this.root).join("articleFavoriteRecords", type);
-        com.only4.domain.aggregates.member.meta.ArticleFavoriteRecordSchema schema = new com.only4.domain.aggregates.member.meta.ArticleFavoriteRecordSchema(join, this.criteriaBuilder);
+        Join<Favorites, com.only4.domain.aggregates.member.FavoritesArticle> join = ((Root<Favorites>) this.root).join("favoritesArticles", type);
+        com.only4.domain.aggregates.member.meta.FavoritesArticleSchema schema = new com.only4.domain.aggregates.member.meta.FavoritesArticleSchema(join, this.criteriaBuilder);
         return schema;
     }
 
@@ -163,7 +163,7 @@ public class FavoriteSchema {
      * @param builder where条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder) {
+    public static Specification<Favorites> specify(Schema.PredicateBuilder<FavoritesSchema> builder) {
         return specify(builder, false, Collections.emptyList());
     }
 
@@ -174,7 +174,7 @@ public class FavoriteSchema {
      * @param distinct 是否去重
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder, boolean distinct) {
+    public static Specification<Favorites> specify(Schema.PredicateBuilder<FavoritesSchema> builder, boolean distinct) {
         return specify(builder, distinct, Collections.emptyList());
     }
 
@@ -185,7 +185,7 @@ public class FavoriteSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder, Schema.OrderBuilder<FavoriteSchema>... orderBuilders) {
+    public static Specification<Favorites> specify(Schema.PredicateBuilder<FavoritesSchema> builder, Schema.OrderBuilder<FavoritesSchema>... orderBuilders) {
         return specify(builder, Arrays.asList(orderBuilders));
     }
 
@@ -196,7 +196,7 @@ public class FavoriteSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder, List<Schema.OrderBuilder<FavoriteSchema>> orderBuilders) {
+    public static Specification<Favorites> specify(Schema.PredicateBuilder<FavoritesSchema> builder, List<Schema.OrderBuilder<FavoritesSchema>> orderBuilders) {
         return specify(builder, orderBuilders);
     }
 
@@ -208,7 +208,7 @@ public class FavoriteSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder, boolean distinct, Schema.OrderBuilder<FavoriteSchema>... orderBuilders) {
+    public static Specification<Favorites> specify(Schema.PredicateBuilder<FavoritesSchema> builder, boolean distinct, Schema.OrderBuilder<FavoritesSchema>... orderBuilders) {
         return specify(builder, distinct, Arrays.asList(orderBuilders));
     }
 
@@ -220,7 +220,7 @@ public class FavoriteSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder, boolean distinct, List<Schema.OrderBuilder<FavoriteSchema>> orderBuilders) {
+    public static Specification<Favorites> specify(Schema.PredicateBuilder<FavoritesSchema> builder, boolean distinct, List<Schema.OrderBuilder<FavoritesSchema>> orderBuilders) {
         return specify((schema, criteriaQuery) -> {
             criteriaQuery.where(builder.build(schema));
             criteriaQuery.distinct(distinct);
@@ -240,10 +240,10 @@ public class FavoriteSchema {
      * @param specifier 查询条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.Specification<Favorite, FavoriteSchema> specifier) {
+    public static Specification<Favorites> specify(Schema.Specification<Favorites, FavoritesSchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            FavoriteSchema favorite = new FavoriteSchema(root, criteriaBuilder);
-            return specifier.toPredicate(favorite, criteriaQuery);
+            FavoritesSchema favorites = new FavoritesSchema(root, criteriaBuilder);
+            return specifier.toPredicate(favorites, criteriaQuery);
         };
     }
 

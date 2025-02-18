@@ -4,11 +4,10 @@ RegisterMemberWithPhone               -down-> Member
 UpdateMemberPhone                   -down-> Member
 UpdateMemberPassword                -down-> Member
 UpdateMemberInfo                    -down-> Member
-CheckIn                              -down-> Member
 UpdateMemberRank                    -down-> Member
 DeleteMember                        -down-> Member
 ReportMember                        -down-> Member
-LevelUp                          -down-> Member
+MemberLevelUp                          -down-> Member
 UpdateMemberLikeCount                   -down-> Member
 UpdateMemberFanCount                    -down-> Member
 UpdateMemberFollowingCount              -down-> Member
@@ -19,11 +18,10 @@ FollowMember                        -down-> Member
 UnfollowMember                      -down-> Member
 CreateFavorites                     -down-> Member
 UpdateFavoritesInfo                 -down-> Member
-FavoriteArticle                     -down-> Member
-UnFavoriteArticle                   -down-> Member
+AddArticleToFavorite                     -down-> Member
+RemoveArticleFromFavorite                   -down-> Member
 DeleteFavorites                     -down-> Member
-CalculateWillReceiveRanks           -down-> Member
-UpdateMemberFavoritesArticles       -down-> Member
+UpdateFavoritesArticleCount       -down-> Member
 UpdateMemberStarInfo                -down-> Member
 UpdateMemberStardustCount                -down-> Member
 UpdateBlackMemberInfo               -down-> Member
@@ -35,8 +33,9 @@ Member-down->MemberInfoUpdated
 Member-down->MemberRankUpdated
 Member-down->MemberFollowed
 Member-down->MemberUnfollowed
-Member-down->FavoritedArticle
-Member-down->UnFavoritedArticle
+Member-down->ArticleAddedToFavorites
+Member-down->ArticleRemovedFromFavorites
 Member-down->MemberRegisteredWithPassword
 Member-down->MemberRegisteredWithPhone
+Member-down->MemberLikeCountUpdated
 @enduml

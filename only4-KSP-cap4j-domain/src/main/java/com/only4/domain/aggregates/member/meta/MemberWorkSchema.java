@@ -1,7 +1,7 @@
 package com.only4.domain.aggregates.member.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.member.ArticleFavoriteStatistics;
+import com.only4.domain.aggregates.member.MemberWork;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 收藏夹统计
+ * 会员作品
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/17
+ * @date 2025/02/18
  */
 @RequiredArgsConstructor
-public class ArticleFavoriteStatisticsSchema {
+public class MemberWorkSchema {
     /**
      * 属性字段集合
      */
@@ -33,9 +33,9 @@ public class ArticleFavoriteStatisticsSchema {
         public static final String id = "id";
 
         /**
-         * 文章数
+         * 作品ID
          */
-        public static final String articleCount = "articleCount";
+        public static final String workId = "workId";
 
         /**
          * 逻辑删除
@@ -44,14 +44,14 @@ public class ArticleFavoriteStatisticsSchema {
 
     }
 
-    private final Path<ArticleFavoriteStatistics> root;
+    private final Path<MemberWork> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
 
-    public Path<ArticleFavoriteStatistics> _root() {
+    public Path<MemberWork> _root() {
         return root;
     }
 
@@ -65,11 +65,11 @@ public class ArticleFavoriteStatisticsSchema {
     }
 
     /**
-     * 文章数
-     * int
+     * 作品ID
+     * bigint
      */
-    public Schema.Field<Integer> articleCount() {
-        return new Schema.Field<>(root.get("articleCount"), this.criteriaBuilder);
+    public Schema.Field<Long> workId() {
+        return new Schema.Field<>(root.get("workId"), this.criteriaBuilder);
     }
 
     /**
@@ -104,7 +104,7 @@ public class ArticleFavoriteStatisticsSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<ArticleFavoriteStatisticsSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<MemberWorkSchema> builder){
         return builder.build(this);
     }
 
@@ -115,7 +115,7 @@ public class ArticleFavoriteStatisticsSchema {
      * @param builder where条件构造器
      * @return
      */
-    public static Specification<ArticleFavoriteStatistics> specify(Schema.PredicateBuilder<ArticleFavoriteStatisticsSchema> builder) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder) {
         return specify(builder, false, Collections.emptyList());
     }
 
@@ -126,7 +126,7 @@ public class ArticleFavoriteStatisticsSchema {
      * @param distinct 是否去重
      * @return
      */
-    public static Specification<ArticleFavoriteStatistics> specify(Schema.PredicateBuilder<ArticleFavoriteStatisticsSchema> builder, boolean distinct) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder, boolean distinct) {
         return specify(builder, distinct, Collections.emptyList());
     }
 
@@ -137,7 +137,7 @@ public class ArticleFavoriteStatisticsSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<ArticleFavoriteStatistics> specify(Schema.PredicateBuilder<ArticleFavoriteStatisticsSchema> builder, Schema.OrderBuilder<ArticleFavoriteStatisticsSchema>... orderBuilders) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder, Schema.OrderBuilder<MemberWorkSchema>... orderBuilders) {
         return specify(builder, Arrays.asList(orderBuilders));
     }
 
@@ -148,7 +148,7 @@ public class ArticleFavoriteStatisticsSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<ArticleFavoriteStatistics> specify(Schema.PredicateBuilder<ArticleFavoriteStatisticsSchema> builder, List<Schema.OrderBuilder<ArticleFavoriteStatisticsSchema>> orderBuilders) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder, List<Schema.OrderBuilder<MemberWorkSchema>> orderBuilders) {
         return specify(builder, orderBuilders);
     }
 
@@ -160,7 +160,7 @@ public class ArticleFavoriteStatisticsSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<ArticleFavoriteStatistics> specify(Schema.PredicateBuilder<ArticleFavoriteStatisticsSchema> builder, boolean distinct, Schema.OrderBuilder<ArticleFavoriteStatisticsSchema>... orderBuilders) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder, boolean distinct, Schema.OrderBuilder<MemberWorkSchema>... orderBuilders) {
         return specify(builder, distinct, Arrays.asList(orderBuilders));
     }
 
@@ -172,7 +172,7 @@ public class ArticleFavoriteStatisticsSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<ArticleFavoriteStatistics> specify(Schema.PredicateBuilder<ArticleFavoriteStatisticsSchema> builder, boolean distinct, List<Schema.OrderBuilder<ArticleFavoriteStatisticsSchema>> orderBuilders) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder, boolean distinct, List<Schema.OrderBuilder<MemberWorkSchema>> orderBuilders) {
         return specify((schema, criteriaQuery) -> {
             criteriaQuery.where(builder.build(schema));
             criteriaQuery.distinct(distinct);
@@ -192,10 +192,10 @@ public class ArticleFavoriteStatisticsSchema {
      * @param specifier 查询条件构造器
      * @return
      */
-    public static Specification<ArticleFavoriteStatistics> specify(Schema.Specification<ArticleFavoriteStatistics, ArticleFavoriteStatisticsSchema> specifier) {
+    public static Specification<MemberWork> specify(Schema.Specification<MemberWork, MemberWorkSchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            ArticleFavoriteStatisticsSchema articleFavoriteStatistics = new ArticleFavoriteStatisticsSchema(root, criteriaBuilder);
-            return specifier.toPredicate(articleFavoriteStatistics, criteriaQuery);
+            MemberWorkSchema memberWork = new MemberWorkSchema(root, criteriaBuilder);
+            return specifier.toPredicate(memberWork, criteriaQuery);
         };
     }
 

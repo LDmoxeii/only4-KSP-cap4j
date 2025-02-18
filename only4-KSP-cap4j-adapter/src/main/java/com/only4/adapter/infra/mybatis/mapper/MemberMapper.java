@@ -1,6 +1,6 @@
 package com.only4.adapter.infra.mybatis.mapper;
 
-import com.only4.domain.aggregates.member.Favorite;
+import com.only4.domain.aggregates.member.Favorites;
 import com.only4.domain.aggregates.member.Member;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,8 +11,8 @@ public interface MemberMapper {
     Boolean existedMemberByName(String name);
     Boolean existedMemberByPhone(String phone);
     Member getMemberByName(String name);
-    List<Favorite> getFavoritesByMemberId(Long id);
+    List<Favorites> getFavoritesByMemberId(Long id);
     Boolean existedSignInRecordByDate(Long id);
     Integer countFavoriteRecordByMemberIdAndDate(Long id);
-    Favorite getFavoriteByFavoriteId(Long favoriteId);
+    Favorites getFavoriteByFavoriteId(Long favoriteId);
 }

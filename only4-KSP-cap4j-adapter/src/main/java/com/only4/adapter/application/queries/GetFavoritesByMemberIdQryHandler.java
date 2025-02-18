@@ -2,7 +2,7 @@ package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.MemberMapper;
 import com.only4.application.queries.member.GetFavoritesByMemberIdQry;
-import com.only4.domain.aggregates.member.Favorite;
+import com.only4.domain.aggregates.member.Favorites;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.application.query.Query;
@@ -25,7 +25,7 @@ public class GetFavoritesByMemberIdQryHandler implements Query<GetFavoritesByMem
     @Override
     public GetFavoritesByMemberIdQry.Response exec(GetFavoritesByMemberIdQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        List<Favorite> favorites = memberMapper.getFavoritesByMemberId(request.getMemberId());
+        List<Favorites> favorites = memberMapper.getFavoritesByMemberId(request.getMemberId());
         return GetFavoritesByMemberIdQry.Response.builder()
                 .favorites(favorites)
                 .build();
