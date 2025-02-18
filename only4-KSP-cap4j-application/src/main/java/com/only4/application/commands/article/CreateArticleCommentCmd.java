@@ -2,6 +2,7 @@ package com.only4.application.commands.article;
 
 
 import com.only4._share.exception.KnownException;
+import com.only4.application.validater.MemberExists;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,6 @@ import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.PositiveOrZero;
 
 /**
  *
@@ -35,7 +35,6 @@ public class CreateArticleCommentCmd {
                     .orElseThrow(() -> new KnownException("文章不存在"));
 
             article.createComment(
-                    cmd.getParentId(),
                     cmd.getMemberId(),
                     cmd.getMemberName(),
                     cmd.getContent()
@@ -60,11 +59,7 @@ public class CreateArticleCommentCmd {
 
         Long articleId;
 
-        @PositiveOrZero(message = "父评论ID参数异常")
-        //TODO: 编写@CommentExists
-        Long parentId;
-
-        //TODO: 编写@MemberExists
+        @MemberExists
         Long memberId;
 
         @NotEmpty(message = "评论人名称不能为空")

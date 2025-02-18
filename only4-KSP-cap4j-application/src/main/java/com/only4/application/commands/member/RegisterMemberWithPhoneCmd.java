@@ -2,7 +2,7 @@ package com.only4.application.commands.member;
 
 
 import com.only4._share.exception.KnownException;
-import com.only4.application.validater.member.MemberUniquePhone;
+import com.only4.application.validater.MemberUniquePhone;
 import com.only4.domain.aggregates.member.Member;
 import com.only4.domain.aggregates.member.factory.MemberFactory;
 import lombok.*;

@@ -125,7 +125,6 @@ Command("CreateArticleComment") [
     用户名
     文章ID
     评论内容
-    评论时间
     --规则--
     1. 文章必须存在
     2. 评论内容不能为空
@@ -296,5 +295,33 @@ Command("UpdateArticlePrice") [
     --规则--
     1. 文章必须存在
     2. 价格必须大于等于0
+]
+
+Command("CreateArticleCommentReply") [
+    创建文章评论回复
+    --触发者--
+    用户
+    --属性--
+    文章ID
+    评论ID
+    用户ID
+    用户名
+    回复内容
+    --规则--
+    用户必须存在
+    用户名不能为空
+    回复内容不能为空
+]
+
+Command("DeleteArticleCommentReply")[
+    删除文章评论回复
+    --触发者--
+    管理员
+    --属性--
+    文章ID
+    评论ID
+    回复ID
+    --规则--
+    无
 ]
 @enduml

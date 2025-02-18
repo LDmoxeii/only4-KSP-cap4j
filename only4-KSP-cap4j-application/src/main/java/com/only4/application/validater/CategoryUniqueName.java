@@ -1,4 +1,4 @@
-package com.only4.application.validater.category;
+package com.only4.application.validater;
 
 import com.only4.domain.aggregates.category.Category;
 import com.only4.domain.aggregates.category.meta.CategorySchema;

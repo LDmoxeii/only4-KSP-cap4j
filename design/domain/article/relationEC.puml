@@ -1,6 +1,8 @@
 @startuml
 ArticleCommentCreated       -down-> UpdateArticleCommentCount
-ArticleCommentCreated       -down-> UpdateArticleCommentReplyCount
 ArticleCommentDeleted       -down-> UpdateArticleCommentCount
-ArticleCommentDeleted       -down-> UpdateArticleCommentReplyCount
+ArticleCommentReplyCreated  -down-> UpdateArticleCommentReplyCount
+ArticleCommentReplyCreated  -down-> UpdateArticleCommentCount
+ArticleCommentReplyDeleted  -down-> UpdateArticleCommentReplyCount
+ArticleCommentReplyDeleted  -down-> UpdateArticleCommentCount
 @enduml

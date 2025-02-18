@@ -1,6 +1,6 @@
 package com.only4.domain.aggregates.article;
 
-import com.only4.domain.aggregates.article.enums.CommentVisibility;
+import com.only4._share.exception.KnownException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +12,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 文章评论
@@ -43,13 +46,8 @@ public class ArticleComment {
         this.getArticleCommentStatistics().updateLikeCount(likeCount);
     }
 
-    void updateVisibility(CommentVisibility visibility) {
-        this.visibility = visibility;
-    }
-
     void updateSticky(Boolean sticky) {
         this.stickyFlag = sticky;
-
     }
 
     void updateReplyCount(Integer replyCount) {
@@ -61,13 +59,34 @@ public class ArticleComment {
     }
 
     void report() {
+    }
 
+    void createReply(Long memberId, String memberName, String content) {
+        this.getArticleCommentReplies().add(ArticleCommentReply.builder()
+                .authorId(memberId)
+                .authorName(memberName)
+                .content(content)
+                .createAt(LocalDateTime.now())
+                .build());
+    }
+
+    void deleteReply(Long replyId) {
+        Optional.of(this.getArticleCommentReplies().stream()
+                        .filter(reply -> Objects.equals(reply.getId(), replyId))
+                        .findFirst()
+                        .orElseThrow(() -> new KnownException("回复不存在")))
+                .ifPresent(reply -> this.getArticleCommentReplies().remove(reply));
     }
 
     // 【行为方法结束】
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "`article_comment_id`", nullable = false)
+    private java.util.List<com.only4.domain.aggregates.article.ArticleCommentReply> articleCommentReplies;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
@@ -88,13 +107,6 @@ public class ArticleComment {
     @GenericGenerator(name = "org.netcorepal.cap4j.ddd.domain.distributed.SnowflakeIdentifierGenerator", strategy = "org.netcorepal.cap4j.ddd.domain.distributed.SnowflakeIdentifierGenerator")
     @Column(name = "`id`")
     Long id;
-
-    /**
-     * 父评论ID
-     * bigint
-     */
-    @Column(name = "`parent_id`")
-    Long parentId;
 
     /**
      * 评论用户ID
@@ -123,17 +135,6 @@ public class ArticleComment {
      */
     @Column(name = "`sticky_flag`")
     Boolean stickyFlag;
-
-    /**
-     * 可见性
-     * 0:PRIVATE:PRIVATE
-     * 1:PUBLISH:PUBLISH
-     * 2:BANNED:BANNED
-     * tinyint
-     */
-    @Convert(converter = com.only4.domain.aggregates.article.enums.CommentVisibility.Converter.class)
-    @Column(name = "`visibility`")
-    com.only4.domain.aggregates.article.enums.CommentVisibility visibility;
 
     /**
      * 评论时间

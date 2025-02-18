@@ -2,7 +2,6 @@ package com.only4.domain.aggregates.article;
 
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.enums.ArticleVisibility;
-import com.only4.domain.aggregates.article.enums.CommentVisibility;
 import com.only4.domain.aggregates.article.events.*;
 import com.only4.domain.aggregates.category.Category;
 import com.only4.domain.aggregates.tag.Tag;
@@ -119,23 +118,17 @@ public class Article {
         events().attach(new ArticleFavoriteCountUpdatedDomainEvent(this), this);
     }
 
-    public void createComment(Long parentId, Long memberId, String memberName, String content) {
-        Optional.ofNullable(ArticleComment.builder()
-                        .parentId(parentId)
-                        .authorId(memberId)
-                        .authorName(memberName)
-                        .content(content)
-                        .createAt(LocalDateTime.now())
-                        .articleCommentStatistics(Collections.singletonList(ArticleCommentStatistics.builder().build()))
-                        .build())
-                .ifPresent(articleComment -> {
-                    this.articleComments.add(articleComment);
-
-                    if (parentId > 0) {
-                        events().attach(new ArticleCommentCreatedDomainEvent(this, parentId), this);
-                    }
+    public void createCommentReply(Long commentId, Long memberId, String memberName, String content) {
+        Optional.of(this.getArticleComments().stream()
+                        .filter(c -> Objects.equals(c.getId(), commentId))
+                        .findFirst()
+                        .orElseThrow(() -> new KnownException("评论不存在")))
+                .ifPresent(comment -> {
+                    comment.createReply(memberId, memberName, content);
+                    events().attach(new ArticleCommentReplyCreatedDomainEvent(this, commentId), this);
                 });
     }
+
 
     public void updateCommentInfo(Long commentId, String memberName) {
         this.getArticleComments().stream()
@@ -153,25 +146,15 @@ public class Article {
                 .report();
     }
 
-    public void deleteComment(Long commentId) {
+    public void deleteCommentReply(Long commentId, Long replyId) {
         Optional.of(this.getArticleComments().stream()
                         .filter(c -> Objects.equals(c.getId(), commentId))
                         .findFirst()
                         .orElseThrow(() -> new KnownException("评论不存在")))
                 .ifPresent(comment -> {
-                    this.getArticleComments().remove(comment);
-                    val parentId = comment.getParentId();
-                    if (parentId > 0) {
-                        events().attach(new ArticleCommentDeletedDomainEvent(this, parentId), this);
-                    }
+                    comment.deleteReply(replyId);
+                    events().attach(new ArticleCommentReplyDeletedDomainEvent(this, commentId), this);
                 });
-    }
-
-    public void likeComment(Long commentId, Long memberId, LocalDateTime now) {
-    }
-
-    public void unlikeComment(Long commentId, Long memberId) {
-
     }
 
     public void updateCommentLikeCount(Long commentId, Integer likeCount) {
@@ -182,14 +165,6 @@ public class Article {
                 .updateLikeCount(likeCount);
         events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
 
-    }
-
-    public void updateCommentVisibility(Long commentId, CommentVisibility visibility) {
-        this.getArticleComments().stream()
-                .filter(ac -> Objects.equals(ac.getId(), commentId))
-                .findFirst()
-                .orElseThrow(() -> new KnownException("评论不存在"))
-                .updateVisibility(visibility);
     }
 
     public void updateCommentSticky(Long commentId, Boolean sticky) {
@@ -257,6 +232,28 @@ public class Article {
 
     public void deleteArticle() {
         this.delFlag = true;
+    }
+
+    public void createComment(Long memberId, String memberName, String content) {
+        this.getArticleComments().add(ArticleComment.builder()
+                .authorId(memberId)
+                .authorName(memberName)
+                .content(content)
+                .createAt(java.time.LocalDateTime.now())
+                .articleCommentStatistics(Collections.singletonList(ArticleCommentStatistics.builder().build()))
+                .build());
+        events().attach(new ArticleCommentCreatedDomainEvent(this), this);
+    }
+
+    public void deleteComment(Long commentId) {
+        Optional.of(this.getArticleComments().stream()
+                .filter(ac -> Objects.equals(ac.getId(), commentId))
+                .findFirst()
+                .orElseThrow(() -> new KnownException("评论不存在")))
+                .ifPresent(comment -> {
+                    this.getArticleComments().remove(comment);
+                    events().attach(new ArticleCommentDeletedDomainEvent(this), this);
+                });
     }
 
     // 【行为方法结束】

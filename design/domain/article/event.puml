@@ -30,8 +30,22 @@ DomainEvent("ArticleCommentCreated") [
     --监听者--
     该评论文章
 ]
+DomainEvent("ArticleCommentReplyCreated") [
+    已创建文章评论回复
+    --属性--
+    文章ID
+    --监听者--
+    该评论文章
+]
 DomainEvent("ArticleCommentDeleted") [
     已删除文章评论
+    --属性--
+    文章ID
+    --监听者--
+    该评论文章
+]
+DomainEvent("ArticleCommentReplyDeleted") [
+    已删除文章评论回复
     --属性--
     文章ID
     --监听者--

@@ -23,13 +23,19 @@ UpdateArticleVisibility         -down-> Article
 UpdateArticleSticky             -down-> Article
 UpdateArticleCommentFlag        -down-> Article
 UpdateArticlePrice              -down-> Article
+UpdateArticleLikeCount          -down-> Article
+UpdateArticleCommentLikeCount   -down-> Article
+CreateArticleCommentReply       -down-> Article
+DeleteArticleCommentReply       -down-> Article
 
-Article-down->ArticleCreated
-Article-down->ArticleFavoriteCountUpdated
-Article-down->ArticleCommentCreated
-Article-down->ArticleCommentDeleted
-Article-down->ArticleCategoriesUpdated
-Article-down->ArticleTagsUpdated
-Article-down->ArticleLikeCountUpdated
-Article-down->ArticleCommentLikeCountUpdated
+Article -down-> ArticleCreated
+Article -down-> ArticleFavoriteCountUpdated
+Article -down-> ArticleCommentCreated
+Article -down-> ArticleCommentDeleted
+Article -down-> ArticleCategoriesUpdated
+Article -down-> ArticleTagsUpdated
+Article -down-> ArticleLikeCountUpdated
+Article -down-> ArticleCommentLikeCountUpdated
+Article -down-> ArticleCommentReplyCreated
+Article -down-> ArticleCommentReplyDeleted
 @enduml

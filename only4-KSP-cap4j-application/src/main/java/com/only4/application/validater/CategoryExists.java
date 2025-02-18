@@ -1,4 +1,4 @@
-package com.only4.application.validater.category;
+package com.only4.application.validater;
 
 import com.only4.domain.aggregates.category.Category;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -15,22 +15,18 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD})
-@Constraint(validatedBy = CategoryNotRef.Validator.class)
-public @interface CategoryNotRef {
-
+@Constraint(validatedBy = CategoryExists.Validator.class)
+public @interface CategoryExists {
     String message() default "分类不存在";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    class Validator implements ConstraintValidator<CategoryNotRef, Long> {
+    class Validator implements ConstraintValidator<CategoryExists, Long> {
         @Override
         public boolean isValid(Long categoryId, ConstraintValidatorContext context) {
-            return Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Category.class, categoryId))
-                    .map(category -> category.getRefCount() == 0)
-                    .orElseThrow(() -> new IllegalArgumentException("RefCount异常"));
+            return Mediator.repositories().exists(JpaPredicate.byId(Category.class, categoryId));
         }
     }
 }

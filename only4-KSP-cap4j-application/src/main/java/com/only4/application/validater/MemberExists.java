@@ -1,7 +1,6 @@
-package com.only4.application.validater.member;
+package com.only4.application.validater;
 
 import com.only4.domain.aggregates.member.Member;
-import com.only4.domain.aggregates.member.meta.MemberSchema;
 import org.netcorepal.cap4j.ddd.Mediator;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 
@@ -16,22 +15,18 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD})
-@Constraint(validatedBy = MemberUniqueNickName.Validator.class)
-public @interface MemberUniqueNickName {
-    String message() default "帐号已存在";
+@Constraint(validatedBy = MemberExists.Validator.class)
+public @interface MemberExists {
+    String message() default "用户已存在";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    class Validator implements ConstraintValidator<MemberUniqueNickName, String> {
+    class Validator implements ConstraintValidator<MemberExists, Long> {
         @Override
-        public boolean isValid(String nickName, ConstraintValidatorContext context) {
-            return !Mediator.repositories().exists(JpaPredicate.bySpecification(Member.class,
-                    MemberSchema.specify(member ->
-                            member.nickName().equal(nickName)
-                    )
-            ));
+        public boolean isValid(Long memberId, ConstraintValidatorContext context) {
+            return Mediator.repositories().exists(JpaPredicate.byId(Member.class, memberId));
         }
     }
 }

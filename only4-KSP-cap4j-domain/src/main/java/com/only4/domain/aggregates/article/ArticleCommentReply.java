@@ -12,36 +12,33 @@ import javax.persistence.Table;
 import javax.persistence.*;
 
 /**
- * 文章作者
- * <p>
+ * 文章评论回复
+ *
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
- *
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/02/18
  */
-@Aggregate(aggregate = "Article", name = "ArticleAuthor", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "文章作者")
+@Aggregate(aggregate = "Article", name = "ArticleCommentReply", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "ArticleComment" }, description = "文章评论回复")
 @Entity
-@Table(name = "`article_author`")
+@Table(name = "`article_comment_reply`")
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "update `article_author` set `del_flag` = 1 where `id` = ? ")
+@SQLDelete(sql = "update `article_comment_reply` set `del_flag` = 1 where `id` = ? ")
 @Where(clause = "`del_flag` = 0")
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-public class ArticleAuthor {
+public class ArticleCommentReply {
 
     // 【行为方法开始】
 
-    void updateInfo(String memberName) {
-        this.authorName = memberName;
-    }
 
 
     // 【行为方法结束】
+
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
@@ -57,18 +54,32 @@ public class ArticleAuthor {
     Long id;
 
     /**
-     * 作者ID
+     * 回复用户ID
      * bigint
      */
     @Column(name = "`author_id`")
     Long authorId;
 
     /**
-     * 作者名
+     * 回复用户名
      * varchar(50)
      */
     @Column(name = "`author_name`")
     String authorName;
+
+    /**
+     * 回复内容
+     * varchar(255)
+     */
+    @Column(name = "`content`")
+    String content;
+
+    /**
+     * 回复时间
+     * timestamp
+     */
+    @Column(name = "`create_at`")
+    java.time.LocalDateTime createAt;
 
     /**
      * 逻辑删除

@@ -2,7 +2,7 @@ package com.only4.application.commands.member;
 
 
 import com.only4._share.exception.KnownException;
-import com.only4.application.validater.article.ArticleExists;
+import com.only4.application.validater.ArticleExists;
 import com.only4.domain.aggregates.member.Member;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

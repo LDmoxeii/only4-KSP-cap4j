@@ -1,4 +1,4 @@
-package com.only4.application.validater.member;
+package com.only4.application.validater;
 
 import com.only4.domain.aggregates.member.Member;
 import com.only4.domain.aggregates.member.meta.MemberSchema;
@@ -16,21 +16,21 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD})
-@Constraint(validatedBy = MemberUniquePhone.Validator.class)
-public @interface MemberUniquePhone {
-    String message() default "手机号已绑定";
+@Constraint(validatedBy = MemberUniqueName.Validator.class)
+public @interface MemberUniqueName {
+    String message() default "帐号已存在";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    class Validator implements ConstraintValidator<MemberUniquePhone, String> {
+    class Validator implements ConstraintValidator<MemberUniqueName, String> {
         @Override
-        public boolean isValid(String memberPhone, ConstraintValidatorContext context) {
+        public boolean isValid(String memberName, ConstraintValidatorContext context) {
             return !Mediator.repositories().exists(JpaPredicate.bySpecification(Member.class,
                     MemberSchema.specify(member ->
-                            member.phone().equal(memberPhone
-                            ))
+                            member.name().equal(memberName)
+                    )
             ));
         }
     }
