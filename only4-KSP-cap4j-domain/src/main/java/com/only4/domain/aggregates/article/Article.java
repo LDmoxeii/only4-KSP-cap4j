@@ -72,12 +72,6 @@ public class Article {
     public void report() {
     }
 
-    public void like(Long memberId, LocalDateTime now) {
-    }
-
-    public void unlike(Long articleLikeId) {
-    }
-
     public void updateTags(List<Tag> tags) {
         val currentTags = this.getArticleTags().stream()
                 .collect(Collectors.toMap(ArticleTag::getTagId,

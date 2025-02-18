@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -32,19 +31,17 @@ public class UpdateArticleCategoriesCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Optional.ofNullable(Mediator.repositories()
-                            .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
-                            .orElseThrow(() -> new KnownException("文章不存在")))
-                    .map(article -> {
-                        article.updateCategory(cmd.getCategories());
-                        Mediator.uow().persist(article);
+            Article article = Mediator.repositories()
+                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+                    .orElseThrow(() -> new KnownException("文章不存在"));
 
-                        Mediator.uow().save();
+            article.updateCategory(cmd.getCategories());
+            Mediator.uow().persist(article);
+            Mediator.uow().save();
 
-                        return Response.builder()
-                                .success(true)
-                                .build();
-                    }).orElseThrow(RuntimeException::new);
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
     }
 

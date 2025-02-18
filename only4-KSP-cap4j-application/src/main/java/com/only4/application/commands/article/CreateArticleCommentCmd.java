@@ -1,6 +1,7 @@
 package com.only4.application.commands.article;
 
 
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -29,23 +30,22 @@ public class CreateArticleCommentCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Mediator.repositories()
+            Article article = Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
-                    .map(article -> {
-                        article.createComment(
-                                cmd.getParentId(),
-                                cmd.getMemberId(),
-                                cmd.getMemberName(),
-                                cmd.getContent()
-                        );
-                        Mediator.uow().persist(article);
+                    .orElseThrow(() -> new KnownException("文章不存在"));
 
-                        Mediator.uow().save();
+            article.createComment(
+                    cmd.getParentId(),
+                    cmd.getMemberId(),
+                    cmd.getMemberName(),
+                    cmd.getContent()
+            );
+            Mediator.uow().persist(article);
+            Mediator.uow().save();
 
-                        return Response.builder()
-                                .success(true)
-                                .build();
-                    }).orElseThrow(RuntimeException::new);
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
     }
 
