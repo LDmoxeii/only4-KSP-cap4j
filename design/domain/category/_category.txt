@@ -1,0 +1,6 @@
+cmd:category.CreateCategory:创建分类
+cmd:category.UpdateCategoryInfo:更新分类信息
+cmd:category.UpdateCategoryRefCount:更新分类引用数
+cmd:category.DeleteCategory:删除分类
+
+de:category.Category:CategoryInfoUpdated:分类信息已更新
