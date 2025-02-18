@@ -1,41 +1,41 @@
 @startuml
-RegisterMemberWithPassword            -down-> Member
-RegisterMemberWithPhone               -down-> Member
-UpdateMemberPhone                   -down-> Member
-UpdateMemberPassword                -down-> Member
-UpdateMemberInfo                    -down-> Member
-UpdateMemberRank                    -down-> Member
-DeleteMember                        -down-> Member
-ReportMember                        -down-> Member
-MemberLevelUp                          -down-> Member
-UpdateMemberLikeCount                   -down-> Member
-UpdateMemberFanCount                    -down-> Member
-UpdateMemberFollowingCount              -down-> Member
-UpdateMemberWorkCount                   -down-> Member
-BanMember                           -down-> Member
-UnbanMember                         -down-> Member
-FollowMember                        -down-> Member
-UnfollowMember                      -down-> Member
-CreateFavorites                     -down-> Member
-UpdateFavoritesInfo                 -down-> Member
-AddArticleToFavorite                     -down-> Member
-RemoveArticleFromFavorite                   -down-> Member
-DeleteFavorites                     -down-> Member
-UpdateFavoritesArticleCount       -down-> Member
-UpdateMemberStarInfo                -down-> Member
-UpdateMemberStardustCount                -down-> Member
-UpdateBlackMemberInfo               -down-> Member
-UpdateFollowMemberInfo              -down-> Member
+RegisterMemberWithPassword       -down-> Member
+RegisterMemberWithPhone          -down-> Member
+UpdateMemberPhone                -down-> Member
+UpdateMemberPassword             -down-> Member
+UpdateMemberInfo                 -down-> Member
+UpdateMemberRank                 -down-> Member
+DeleteMember                     -down-> Member
+ReportMember                     -down-> Member
+UpMemberLevel                    -down-> Member
+UpdateMemberLikeCount            -down-> Member
+UpdateMemberFanCount             -down-> Member
+UpdateMemberFollowingCount       -down-> Member
+UpdateMemberWorkCount            -down-> Member
+BanMember                        -down-> Member
+UnbanMember                      -down-> Member
+FollowMember                     -down-> Member
+UnfollowMember                   -down-> Member
+CreateFavorites                  -down-> Member
+UpdateFavoritesInfo              -down-> Member
+AddArticleToFavorite             -down-> Member
+RemoveArticleFromFavorite        -down-> Member
+DeleteFavorites                  -down-> Member
+UpdateFavoritesArticleCount      -down-> Member
+UpdateMemberStarInfo             -down-> Member
+UpdateMemberStardustCount        -down-> Member
+UpdateBlackMemberInfo            -down-> Member
+UpdateFollowMemberInfo           -down-> Member
 
 
 
-Member-down->MemberInfoUpdated
-Member-down->MemberRankUpdated
-Member-down->MemberFollowed
-Member-down->MemberUnfollowed
-Member-down->ArticleAddedToFavorites
-Member-down->ArticleRemovedFromFavorites
-Member-down->MemberRegisteredWithPassword
-Member-down->MemberRegisteredWithPhone
-Member-down->MemberLikeCountUpdated
+Member -down-> MemberInfoUpdated
+Member -down-> MemberRankUpdated
+Member -down-> MemberFollowed
+Member -down-> MemberUnfollowed
+Member -down-> ArticleAddedToFavorites
+Member -down-> ArticleRemovedFromFavorites
+Member -down-> MemberRegisteredWithPassword
+Member -down-> MemberRegisteredWithPhone
+Member -down-> MemberLikeCountUpdated
 @enduml

@@ -48,8 +48,9 @@ public class MemberStatistics {
         this.likeCount += likeCount;
     }
 
-    void updateRank(Integer rank) {
+    Integer updateRank(Integer rank) {
         this.rank += rank;
+        return this.rank;
     }
 
     void updateWorkCount(Integer workCount) {

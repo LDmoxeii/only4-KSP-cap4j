@@ -12,51 +12,49 @@ import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
 /**
- * 用户提升等级
+ * 提升用户等级
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/16
+ * @date 2025/02/18
  */
-public class MemberLevelUpCmd {
+public class UpMemberLevelCmd {
 
     /**
-     * LevelUpCmd命令请求实现
+     * UpMemberLevelCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
     @Slf4j
     public static class Handler implements Command<Request, Response> {
         @Override
-        public Response exec(Request cmd) {
+        public UpMemberLevelCmd.Response exec(UpMemberLevelCmd.Request cmd) {
             Member member = Mediator.repositories()
                     .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
                     .orElseThrow(() -> new KnownException("用户不存在"));
 
-            member.levelUp();
+            member.upLevel();
             Mediator.uow().persist(member);
             Mediator.uow().save();
 
-            return Response.builder()
+            return UpMemberLevelCmd.Response.builder()
                     .success(true)
                     .build();
         }
-
     }
 
     /**
-     * MemberLevelUpCmd命令请求参数
+     * UpMemberLevelCmd命令请求参数
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-
         Long memberId;
     }
 
     /**
-     * MemberLevelUpCmd命令响应
+     * UpMemberLevelCmd命令响应
      */
     @Data
     @Builder

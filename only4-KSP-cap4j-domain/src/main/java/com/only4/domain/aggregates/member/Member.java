@@ -2,10 +2,7 @@ package com.only4.domain.aggregates.member;
 
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.member.events.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
@@ -69,8 +66,11 @@ public class Member {
         return this.getLevel() >= 0;
     }
 
-    public void levelUp() {
-
+    public void upLevel() {
+        if (!hasLevel()) {
+            throw new KnownException("用户未处于活跃状态, 无法获取等级分");
+        }
+        this.level++;
     }
 
     public void updateRank(Integer rank) {
@@ -78,8 +78,8 @@ public class Member {
             throw new KnownException("用户非活跃用户, 无法获取等级分");
         }
 
-        this.getMemberStatistics().updateRank(rank);
-        events().attach(new MemberRankUpdatedDomainEvent(this), this);
+        val newRank = this.getMemberStatistics().updateRank(rank);
+        events().attach(new MemberRankUpdatedDomainEvent(this, newRank), this);
     }
 
     private boolean isActive() {
@@ -158,7 +158,7 @@ public class Member {
                         .orElseThrow(() -> new IllegalArgumentException("关注用户不存在")))
                 .ifPresent(followMember -> {
                     this.getFollowMembers().remove(followMember);
-                    events().attach(new MemberUnfollowedDomainEvent(this), this);
+                    events().attach(new MemberUnfollowedDomainEvent(this, otherId), this);
                 });
     }
 
@@ -197,19 +197,25 @@ public class Member {
     }
 
     public void addArticleToFavorite(Long favoritesId, Long articleId) {
-        this.getFavorites().stream()
-                .filter(favorites -> Objects.equals(favorites.getId(), favoritesId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("收藏夹不存在"))
-                .addArticle(articleId);
+        Optional.ofNullable(this.getFavorites().stream()
+                        .filter(favorites -> Objects.equals(favorites.getId(), favoritesId))
+                        .findFirst()
+                        .orElseThrow(() -> new KnownException("收藏夹不存在")))
+                .ifPresent(favorites -> {
+                    favorites.addArticle(articleId);
+                    events().attach(new ArticleAddedToFavoritesDomainEvent(this, favoritesId), this);
+                });
     }
 
     public void removeArticleFromFavorite(Long favoritesId, Long articleId) {
-        this.getFavorites().stream()
-                .filter(favorites -> Objects.equals(favorites.getId(), favoritesId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("收藏夹不存在"))
-                .removeArticle(articleId);
+        Optional.ofNullable(this.getFavorites().stream()
+                        .filter(favorites -> Objects.equals(favorites.getId(), favoritesId))
+                        .findFirst()
+                        .orElseThrow(() -> new KnownException("收藏夹不存在")))
+                .ifPresent(favorites -> {
+                    favorites.removeArticle(articleId);
+                    events().attach(new ArticleRemovedFromFavoritesDomainEvent(this, favoritesId), this);
+                });
     }
 
     public void deleteFavorites(Long favoritesId) {

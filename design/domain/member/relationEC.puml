@@ -7,5 +7,5 @@ MemberUnfollowed            -down-> UpdateMemberFollowingCount
 MemberUnfollowed            -down-> UpdateMemberFanCount
 ArticleAddedToFavorites     -down-> UpdateFavoritesArticleCount
 ArticleRemovedFromFavorites -down-> UpdateFavoritesArticleCount
-MemberRankUpdated           -down-> MemberLevelUp
+MemberRankUpdated           -down-> UpMemberLevel
 @enduml
