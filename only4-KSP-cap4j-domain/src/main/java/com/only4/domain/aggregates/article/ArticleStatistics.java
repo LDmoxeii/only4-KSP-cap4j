@@ -20,7 +20,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Article", name = "ArticleStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Article" }, description = "文章统计")
+@Aggregate(aggregate = "Article", name = "ArticleStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Article"}, description = "文章统计")
 @Entity
 @Table(name = "`article_statistics`")
 @DynamicInsert
@@ -37,15 +37,15 @@ public class ArticleStatistics {
     // 【行为方法开始】
 
     void updateLikeCount(Integer num) {
-        this.likeCount = num;
+        this.likeCount += num;
     }
 
-    void updateArticleFavoriteCount(Integer num) {
-        this.favoriteCount = num;
+    void updateFavoriteCount(Integer num) {
+        this.favoriteCount += num;
     }
 
     void updateCommentCount(Integer commentCount) {
-        this.commentCount = commentCount;
+        this.commentCount += commentCount;
     }
 
     // 【行为方法结束】

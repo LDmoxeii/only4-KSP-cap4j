@@ -1,7 +1,7 @@
 package com.only4.application.commands.article;
 
 
-import com.only4.application.validater.article.ArticleExists;
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.tag.Tag;
 import lombok.*;
@@ -12,12 +12,10 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Optional;
 
 /**
- * todo: 命令描述
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/14
@@ -33,18 +31,17 @@ public class UpdateArticleTagsCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Mediator.repositories()
+            Article article = Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
-                    .map(article -> {
-                        article.updateTags(cmd.getTags());
-                        Mediator.uow().persist(article);
-                        
-                        Mediator.uow().save();
+                    .orElseThrow(() -> new KnownException("文章不存在"));
 
-                        return Response.builder()
-                                .success(true)
-                                .build();
-                    }).orElseThrow(RuntimeException::new);
+            article.updateTags(cmd.getTags());
+            Mediator.uow().persist(article);
+            Mediator.uow().save();
+
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
     }
 
@@ -57,15 +54,10 @@ public class UpdateArticleTagsCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
 
-        @ArticleExists
         Long articleId;
 
+        @NotNull
         List<Tag> tags;
-
-        List<Tag> getTags() {
-            return Optional.ofNullable(tags)
-                    .orElse(Collections.emptyList());
-        }
     }
 
     /**

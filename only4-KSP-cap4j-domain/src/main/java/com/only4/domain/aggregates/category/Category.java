@@ -1,5 +1,6 @@
 package com.only4.domain.aggregates.category;
 
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.category.events.CategoryInfoUpdatedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,6 +50,8 @@ public class Category {
     }
 
     public void delete() {
+        if (this.getRefCount() > 0)
+            throw new KnownException("该分类已被引用，不能删除！");
         this.delFlag = true;
     }
 

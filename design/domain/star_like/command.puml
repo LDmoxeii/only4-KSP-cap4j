@@ -1,0 +1,26 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Command("LikeStar") [
+    点赞星球
+    --触发者--
+    当前用户
+    --属性--
+    用户ID
+    星球ID
+    --规则--
+    1. 星球必须存在
+    2. 未点赞
+]
+Command("UnLikeStar") [
+    取消点赞星球
+    --触发者--
+    当前用户
+    --属性--
+    用户ID
+    星球ID
+    --规则--
+    1. 星球必须存在
+    2. 已点赞
+]
+@enduml

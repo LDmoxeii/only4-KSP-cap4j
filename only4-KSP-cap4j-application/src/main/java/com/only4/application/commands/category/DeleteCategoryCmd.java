@@ -1,8 +1,7 @@
 package com.only4.application.commands.category;
 
 
-import com.only4.application.validater.category.CategoryExists;
-import com.only4.application.validater.category.CategoryNotRef;
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.category.Category;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -29,19 +28,19 @@ public class DeleteCategoryCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            Mediator.repositories()
+            Category category = Mediator.repositories()
                     .findOne(JpaPredicate.byId(Category.class, cmd.getCategoryId()))
-                    .ifPresent(category -> {
-                        category.delete();
-                        Mediator.uow().persist(category);
-                    });
+                    .orElseThrow(() -> new KnownException("分类不存在"));
 
+            category.delete();
+            Mediator.uow().persist(category);
             Mediator.uow().save();
 
             return Response.builder()
                     .success(true)
                     .build();
         }
+
     }
 
     /**
@@ -53,8 +52,6 @@ public class DeleteCategoryCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
 
-        @CategoryExists
-        @CategoryNotRef
         Long categoryId;
     }
 

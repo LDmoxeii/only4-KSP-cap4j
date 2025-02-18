@@ -40,7 +40,7 @@ Command("JoinStar") [
     1. 星球必须存在
     2. 用户未加入星球
 ]
-Command("UpdateStardustInfo") [
+Command("UpdateStardustCountInfo") [
     更新星尘信息
     --触发器--
     已更新用户信息事件
@@ -51,7 +51,7 @@ Command("UpdateStardustInfo") [
     1. 星尘必须存在
 ]
 
-Command("UpdateStardust") [
+Command("UpdateStardustCount") [
     更新星尘
     --触发者--
     已加入星球事件
@@ -134,7 +134,7 @@ Command("LikeStarComment") [
     1. 星球评论必须存在
     2. 未点赞
 ]
-Command("UnLikeStarComment") [
+Command("UnlikeStarComment") [
     取消点赞星球评论
     --触发者--
     当前用户
@@ -159,7 +159,7 @@ Command("UpdateStarCommentAuthorInfo") [
     2. 星球评论作者必须存在
 ]
 
-Command("UpdateStarLikes") [
+Command("UpdateStarLikeCount") [
     更新星球点赞数
     --触发者--
     已点赞星球事件
@@ -171,7 +171,7 @@ Command("UpdateStarLikes") [
     1. 星球必须存在
 ]
 
-Command("UpdateStarComments") [
+Command("UpdateStarCommentCount") [
     更新星球评论数
     --触发者--
     已创建星球评论事件
@@ -183,7 +183,7 @@ Command("UpdateStarComments") [
     1. 星球必须存在
 ]
 
-Command("UpdateStarCommentLikes") [
+Command("UpdateStarCommentLikeCount") [
     更新星球评论点赞数
     --触发者--
     已点赞星球评论事件

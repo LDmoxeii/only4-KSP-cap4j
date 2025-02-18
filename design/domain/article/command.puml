@@ -72,27 +72,6 @@ Command("ReportArticle") [
     --规则--
     1. 文章必须存在
 ]
-Command("LikeArticle") [
-    点赞文章
-    --触发者--
-    用户
-    --属性--
-    用户ID
-    文章ID
-    --规则--
-    1. 未点赞
-]
-Command("UnlikeArticle") [
-    取消点赞文章
-    --触发者--
-    用户
-    --属性--
-    用户ID
-    文章ID
-    --规则--
-    1. 文章必须存在
-    2. 已点赞
-]
 Command("UpdateArticleTag") [
     更新文章标签
     --触发者--
@@ -184,27 +163,6 @@ Command("DeleteArticleComment") [
     文章评论ID
     --规则--
     1. 文章评论必须存在
-]
-Command("LikeArticleComment") [
-    点赞文章评论
-    --触发者--
-    用户
-    --属性--
-    用户ID
-    文章评论ID
-    --规则--
-    1. 未点赞
-]
-Command("UnlikeArticleComment") [
-    取消点赞文章评论
-    --触发者--
-    用户
-    --属性--
-    用户ID
-    文章评论ID
-    --规则--
-    1. 文章评论必须存在
-    2. 已点赞
 ]
 Command("UpdateArticleCommentSticky") [
     更新文章评论置顶

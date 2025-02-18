@@ -1,14 +1,12 @@
 package com.only4.domain.aggregates.article;
 
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.enums.ArticleVisibility;
 import com.only4.domain.aggregates.article.enums.CommentVisibility;
 import com.only4.domain.aggregates.article.events.*;
 import com.only4.domain.aggregates.category.Category;
 import com.only4.domain.aggregates.tag.Tag;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
@@ -20,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
@@ -62,40 +61,52 @@ public class Article {
         this.description = newDescription;
     }
 
-    public void ban(Integer banDuration, LocalDateTime bannedAt) {
-        this.visibility = ArticleVisibility.BANNED;
-        this.bannedAt = bannedAt;
+    public void ban(Integer banDuration) {
+        if (this.visibility.equals(ArticleVisibility.BANNED)) {
+            throw new KnownException("文章已被封禁");
+        }
+        this.bannedAt = LocalDateTime.now();
         this.banDuration = banDuration;
     }
 
     public void report() {
     }
 
-    public void like(Long memberId, LocalDateTime now) {
-        this.getArticleLikes().add(new ArticleLike(memberId, now));
-        events().attach(new ArticleLikedDomainEvent(this), this);
-    }
-
-    public void unlike(Long articleLikeId) {
-        this.getArticleLikes().stream()
-                .filter(al -> Objects.equals(al.getId(), articleLikeId))
-                .findFirst()
-                .ifPresent(articleLike -> this.getArticleLikes().remove(articleLike));
-        events().attach(new ArticleUnlikedDomainEvent(this), this);
-    }
-
     public void updateTags(List<Tag> tags) {
-        this.articleCategories.clear();
-        this.articleTags = tags.stream()
-                .map(tag -> new ArticleTag(tag.getId(), tag.getName()))
-                .collect(Collectors.toList());
+        val currentTags = this.getArticleTags().stream()
+                .collect(Collectors.toMap(ArticleTag::getTagId,
+                        at -> at));
+        val targetTags = tags.stream().collect(Collectors.toMap(Tag::getId,
+                tag -> ArticleTag.builder()
+                        .tagId(tag.getId())
+                        .tagName(tag.getName())
+                        .build()));
+
+        currentTags.keySet().stream()
+                .filter(tagId -> !targetTags.containsKey(tagId))
+                .forEach(tagId -> this.articleTags.remove(currentTags.get(tagId)));
+        targetTags.keySet().stream()
+                .filter(tagId -> !currentTags.containsKey(tagId))
+                .forEach(tagId -> this.articleTags.add(targetTags.get(tagId)));
     }
 
     public void updateCategory(List<Category> categories) {
-        this.articleCategories.clear();
-        this.articleCategories = categories.stream()
-                .map(category -> new ArticleCategory(category.getId(), category.getName()))
-                .collect(Collectors.toList());
+        val currentCategories = this.getArticleCategories().stream()
+                .collect(Collectors.toMap(ArticleCategory::getCategoryId,
+                        ac -> ac));
+        val targetCategories = categories.stream().collect(Collectors.toMap(Category::getId,
+                category -> ArticleCategory.builder()
+                        .categoryId(category.getId())
+                        .categoryName(category.getName())
+                        .build()));
+
+        currentCategories.keySet().stream()
+                .filter(categoryId -> !targetCategories.containsKey(categoryId))
+                .forEach(categoryId -> this.articleCategories.remove(currentCategories.get(categoryId)));
+        targetCategories.keySet().stream()
+                .filter(categoryId -> !currentCategories.containsKey(categoryId))
+                .forEach(categoryId -> this.articleCategories.add(targetCategories.get(categoryId)));
+
     }
 
     public void updateLikeCount(Integer likeCount) {
@@ -104,90 +115,89 @@ public class Article {
     }
 
     public void updateFavoriteCount(Integer favoriteCount) {
-        this.getArticleStatistics().updateArticleFavoriteCount(favoriteCount);
+        this.getArticleStatistics().updateFavoriteCount(favoriteCount);
         events().attach(new ArticleFavoriteCountUpdatedDomainEvent(this), this);
     }
 
-    public void createComment(Long parentId, Long memberId, String memberName, String content, LocalDateTime createAt) {
-        this.articleComments.add(
-                ArticleComment.builder()
+    public void createComment(Long parentId, Long memberId, String memberName, String content) {
+        Optional.ofNullable(ArticleComment.builder()
                         .parentId(parentId)
                         .authorId(memberId)
                         .authorName(memberName)
                         .content(content)
-                        .createAt(createAt)
+                        .createAt(LocalDateTime.now())
                         .articleCommentStatistics(Collections.singletonList(ArticleCommentStatistics.builder().build()))
-                        .build()
-        );
-        events().attach(new ArticleCommentCreatedDomainEvent(this, parentId), this);
+                        .build())
+                .ifPresent(articleComment -> {
+                    this.articleComments.add(articleComment);
+
+                    if (parentId > 0) {
+                        events().attach(new ArticleCommentCreatedDomainEvent(this, parentId), this);
+                    }
+                });
     }
 
     public void updateCommentInfo(Long commentId, String memberName) {
         this.getArticleComments().stream()
                 .filter(c -> Objects.equals(c.getId(), commentId))
                 .findFirst()
-                .ifPresent(comment -> comment.updateInfo(memberName));
+                .orElseThrow(() -> new KnownException("评论不存在"))
+                .updateInfo(memberName);
     }
 
     public void reportComment(Long commentId) {
         this.getArticleComments().stream()
                 .filter(c -> Objects.equals(c.getId(), commentId))
                 .findFirst()
-                .ifPresent(ArticleComment::report);
+                .orElseThrow(() -> new KnownException("评论不存在"))
+                .report();
     }
 
     public void deleteComment(Long commentId) {
-        this.getArticleComments().stream()
-                .filter(c -> Objects.equals(c.getId(), commentId))
-                .findFirst()
+        Optional.of(this.getArticleComments().stream()
+                        .filter(c -> Objects.equals(c.getId(), commentId))
+                        .findFirst()
+                        .orElseThrow(() -> new KnownException("评论不存在")))
                 .ifPresent(comment -> {
                     this.getArticleComments().remove(comment);
-                    events().attach(new ArticleCommentDeletedDomainEvent(this, comment.getId()), this);
+                    val parentId = comment.getParentId();
+                    if (parentId > 0) {
+                        events().attach(new ArticleCommentDeletedDomainEvent(this, parentId), this);
+                    }
                 });
     }
 
     public void likeComment(Long commentId, Long memberId, LocalDateTime now) {
-        this.getArticleComments().stream()
-                .filter(ac -> Objects.equals(ac.getId(), commentId))
-                .findFirst()
-                .ifPresent(articleComment -> {
-                    articleComment.like(new ArticleCommentLike(memberId, now));
-                    events().attach(new ArticleCommentLikedDomainEvent(this, commentId), this);
-                });
     }
 
     public void unlikeComment(Long commentId, Long memberId) {
-        this.getArticleComments().stream()
-                .filter(ac -> Objects.equals(ac.getId(), commentId))
-                .findFirst()
-                .ifPresent(articleComment -> {
-                    articleComment.unlike(memberId);
-                    events().attach(new ArticleCommentUnlikedDomainEvent(this, commentId), this);
-                });
+
     }
 
     public void updateCommentLikeCount(Long commentId, Integer likeCount) {
         this.getArticleComments().stream()
                 .filter(ac -> Objects.equals(ac.getId(), commentId))
                 .findFirst()
-                .ifPresent(articleComment -> {
-                    articleComment.updateLikeCount(likeCount);
-                    events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
-                });
+                .orElseThrow(() -> new KnownException("评论不存在"))
+                .updateLikeCount(likeCount);
+        events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
+
     }
 
     public void updateCommentVisibility(Long commentId, CommentVisibility visibility) {
         this.getArticleComments().stream()
                 .filter(ac -> Objects.equals(ac.getId(), commentId))
                 .findFirst()
-                .ifPresent(articleComment -> articleComment.updateVisibility(visibility));
+                .orElseThrow(() -> new KnownException("评论不存在"))
+                .updateVisibility(visibility);
     }
 
     public void updateCommentSticky(Long commentId, Boolean sticky) {
         this.getArticleComments().stream()
                 .filter(ac -> Objects.equals(ac.getId(), commentId))
                 .findFirst()
-                .ifPresent(articleComment -> articleComment.updateSticky(sticky));
+                .orElseThrow(() -> new KnownException("评论不存在"))
+                .updateSticky(sticky);
     }
 
     public void updateCommentCount(Integer commentCount) {
@@ -198,27 +208,32 @@ public class Article {
         this.getArticleComments().stream()
                 .filter(ac -> Objects.equals(ac.getId(), commentId))
                 .findFirst()
-                .ifPresent(articleComment -> articleComment.updateReplyCount(replyCount));
+                .orElseThrow(() -> new KnownException("评论不存在"))
+                .updateReplyCount(replyCount);
     }
 
     public void updateAuthorInfo(Long memberId, String memberName) {
         this.getArticleAuthors().stream()
                 .filter(aa -> Objects.equals(aa.getId(), memberId))
-                .forEach(articleAuthor -> articleAuthor.updateInfo(memberName));
+                .findFirst()
+                .orElseThrow(() -> new KnownException("作者不存在"))
+                .updateInfo(memberName);
     }
 
     public void updateTagInfo(Long tagId, String tagName) {
         this.getArticleTags().stream()
                 .filter(at -> Objects.equals(at.getId(), tagId))
                 .findFirst()
-                .ifPresent(articleTag -> articleTag.updateInfo(tagName));
+                .orElseThrow(() -> new KnownException("标签不存在"))
+                .updateInfo(tagName);
     }
 
     public void updateCategoryInfo(Long categoryId, String categoryName) {
         this.getArticleCategories().stream()
                 .filter(ac -> Objects.equals(ac.getId(), categoryId))
                 .findFirst()
-                .ifPresent(articleCategory -> articleCategory.updateInfo(categoryName));
+                .orElseThrow(() -> new KnownException("分类不存在"))
+                .updateInfo(categoryName);
     }
 
     public void updateCommentFlag(Boolean commentFlag) {
@@ -249,22 +264,22 @@ public class Article {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleCategory> articleCategories;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleAuthor> articleAuthors;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleComment> articleComments;
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -274,15 +289,10 @@ public class Article {
         return articleStatistics == null || articleStatistics.size() == 0 ? null : articleStatistics.get(0);
     }
 
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleTag> articleTags;
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`article_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.article.ArticleLike> articleLikes;
 
     /**
      * ID

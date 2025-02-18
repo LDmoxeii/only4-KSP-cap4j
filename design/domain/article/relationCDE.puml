@@ -5,19 +5,13 @@ UpdateArticleState              -down-> Article
 UpdateArticleInfo               -down-> Article
 BanArticle                      -down-> Article
 ReportArticle                   -down-> Article
-UpdateArticleLikeCount          -down-> Article
 UpdateArticleFavoriteCount      -down-> Article
 UpdateArticleTag                -down-> Article
 UpdateArticleCategories         -down-> Article
-LikeArticle                     -down-> Article
-UnlikeArticle                   -down-> Article
 CreateArticleComment            -down-> Article
 ReportArticleComment            -down-> Article
 DeleteArticleComment            -down-> Article
-LikeArticleComment              -down-> Article
-UnlikeArticleComment            -down-> Article
 UpdateArticleCommentCount       -down-> Article
-UpdateArticleCommentLikeCount   -down-> Article
 UpdateArticleCommentReplyCount  -down-> Article
 UpdateArticleCommentSticky      -down-> Article
 UpdateArticleCommentVisibility  -down-> Article
@@ -31,15 +25,9 @@ UpdateArticleCommentFlag        -down-> Article
 UpdateArticlePrice              -down-> Article
 
 Article-down->ArticleCreated
-Article-down->ArticleLikeCountUpdated
 Article-down->ArticleFavoriteCountUpdated
-Article-down->ArticleLiked
-Article-down->ArticleUnliked
 Article-down->ArticleCommentCreated
 Article-down->ArticleCommentDeleted
-Article-down->ArticleCommentLiked
-Article-down->ArticleCommentUnliked
-Article-down->ArticleCommentLikeCountUpdated
 Article-down->ArticleCategoriesUpdated
 Article-down->ArticleTagsUpdated
 Article-down->ArticleLikeCountUpdated

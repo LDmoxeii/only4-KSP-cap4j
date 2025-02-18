@@ -8,28 +8,28 @@ UnLikeStar                      -down-> Star
 CreateStarComment               -down-> Star
 DeleteStarComment               -down-> Star
 LikeStarComment                 -down-> Star
-UnLikeStarComment               -down-> Star
-UpdateStardustInfo              -down-> Star
+UnlikeStarComment               -down-> Star
+UpdateStardustCountInfo              -down-> Star
 UpdateStarCommentAuthorInfo     -down-> Star
-UpdateStarComments              -down-> Star
+UpdateStarCommentCount              -down-> Star
 UpdateStarCommentAuthorInfo     -down-> Star
-UpdateStarLikes                 -down-> Star
-UpdateStarCommentLikes          -down-> Star
-UpdateStardust                  -down-> Star
+UpdateStarLikeCount                 -down-> Star
+UpdateStarCommentLikeCount          -down-> Star
+UpdateStardustCount                  -down-> Star
 
-Star -down-> CreatedStar
-Star -down-> DeletedStar
+Star -down-> StarCreated
+Star -down-> StarDeleted
 Star -down-> JoinedStar
 Star -down-> LeftStar
-Star -down-> LikedStar
-Star -down-> UnLikedStar
-Star -down-> CreatedStarComment
-Star -down-> DeletedStarComment
-Star -down-> LikedStarComment
-Star -down-> UnLikedStarComment
-Star -down-> UpdatedStarLikes
-Star -down-> UpdatedStarCommentLikes
-Star -down-> UpdatedStarInfo
+Star -down-> StarLiked
+Star -down-> StarUnliked
+Star -down-> StarCreatedComment
+Star -down-> StarDeletedComment
+Star -down-> StarCommentLiked
+Star -down-> StarCommentUnliked
+Star -down-> StarLikeCountUpdated
+Star -down-> StarCommentLikeCountUpdated
+Star -down-> StarInfoUpdated
 
 
 @enduml

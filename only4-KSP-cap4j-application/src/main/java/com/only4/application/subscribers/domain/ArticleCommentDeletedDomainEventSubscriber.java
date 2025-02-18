@@ -13,7 +13,6 @@ import java.util.Optional;
 
 /**
  * Article.ArticleCommentDeletedDomainEvent领域事件订阅
- * todo: 领域事件说明
  */
 @Service
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class ArticleCommentDeletedDomainEventSubscriber {
         val article = event.getEntity();
         Optional.of(UpdateArticleCommentCountCmd.Request.builder()
                 .articleId(article.getId())
-                .commentCount(article.getArticleStatistics().getCommentCount())
+                .commentCount(1)
                 .build())
                 .ifPresent(Mediator.commands()::send);
     }
@@ -32,17 +31,12 @@ public class ArticleCommentDeletedDomainEventSubscriber {
     @EventListener(ArticleCommentDeletedDomainEvent.class)
     public void updateArticleCommentReplyCount(ArticleCommentDeletedDomainEvent event) {
         val article = event.getEntity();
-        val commentId = event.getCommentId();
-        if (commentId <= 0) return;
-        article.getArticleComments().stream()
-                .filter(c -> c.getId().equals(commentId))
-                .findFirst()
-                .map(articleComment -> UpdateArticleCommentReplyCountCmd.Request.builder()
-                        .articleId(article.getId())
-                        .commentId(commentId)
-                        .replyCount(articleComment.getArticleCommentStatistics().getReplyCount() + 1)
-                        .build()
-                )
+        val parentId = event.getParentId();
+        Optional.of(UpdateArticleCommentReplyCountCmd.Request.builder()
+                .articleId(article.getId())
+                .commentId(parentId)
+                .replyCount(1)
+                .build())
                 .ifPresent(Mediator.commands()::send);
     }
 

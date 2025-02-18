@@ -1,7 +1,7 @@
 package com.only4.application.commands.article;
 
 
-import com.only4.application.validater.article.ArticleCategoryExists;
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * todo: 命令描述
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/14
@@ -30,19 +29,17 @@ public class UpdateArticleCategoryInfoCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Mediator.repositories()
+            Article article = Mediator.repositories()
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
-                    .map(article -> {
-                        article.updateCategoryInfo(cmd.getCategoryId(), cmd.getCategoryName());
-                        Mediator.uow().persist(article);
+                    .orElseThrow(() -> new KnownException("文章不存在"));
 
-                        Mediator.uow().save();
+            article.updateCategoryInfo(cmd.getCategoryId(), cmd.getCategoryName());
+            Mediator.uow().persist(article);
+            Mediator.uow().save();
 
-                        return Response.builder()
-                                .success(true)
-                                .build();
-                    }).orElseThrow(RuntimeException::new);
-
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
     }
 
@@ -53,7 +50,6 @@ public class UpdateArticleCategoryInfoCmd {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @ArticleCategoryExists
     public static class Request implements RequestParam<Response> {
 
         Long articleId;

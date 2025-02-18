@@ -1,10 +1,6 @@
 @startuml
-JoinedStar                  -down-> UpdateStardust
-LeftStar                    -down-> UpdateStardust
-LikedStar                   -down-> UpdateStarLikes
-UnLikedStar                 -down-> UpdateStarLikes
-CreatedStarComment          -down-> UpdateStarComments
-DeletedStarComment          -down-> UpdateStarComments
-LikedStarComment            -down-> UpdateStarCommentLikes
-UnLikedStarComment          -down-> UpdateStarCommentLikes
+JoinedStar                  -down-> UpdateStardustCount
+LeftStar                    -down-> UpdateStardustCount
+StarCreatedComment          -down-> UpdateStarCommentCount
+StarDeletedComment          -down-> UpdateStarCommentCount
 @enduml

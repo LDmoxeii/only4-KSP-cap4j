@@ -4,43 +4,53 @@ ArticleCreated                  -down-> UpdateMemberWorkCount
 ArticleLikeCountUpdated         -down-> UpdateMemberLikeCount
 ArticleCategoriesUpdated        -down-> UpdateCategoryRefCount
 ArticleTagsUpdated              -down-> UpdateTagRefCount
-ArticleLiked                    -down-> CalculateRank
-ArticleUnliked                  -down-> CalculateRank
-ArticleCommentLiked             -down-> CalculateRank
-ArticleCommentUnliked           -down-> CalculateRank
 ArticleCommentLikeCountUpdated  -down-> UpdateMemberLikeCount
 
+'ArticleLike
+ArticleLiked                -down-> UpdateArticleLikeCount
+ArticleUnliked              -down-> UpdateArticleLikeCount
 
-'category
-UpdatedCategoryInfo -down-> UpdateArticleCategoryInfo
+'ArticleCommentLike
+ArticleCommentLiked         -down-> UpdateArticleCommentLikeCount
+ArticleCommentUnliked       -down-> UpdateArticleCommentLikeCount
 
-'member
-UpdatedMemberInfo           -down-> UpdateStardustInfo
-UpdatedMemberInfo           -down-> UpdateArticleCommentAuthorInfo
-UpdatedMemberInfo           -down-> UpdateStarCommentAuthorInfo
-UpdatedMemberInfo           -down-> UpdateArticleAuthorInfo
-RegisteredMemberByPassword  -down-> CreateFavorites
-RegisteredMemberByPhone     -down-> CreateFavorites
-FavoritedArticle            -down-> UpdateArticleFavorites
-UnFavoritedArticle          -down-> UpdateArticleFavorites
+'Category
+CategoryInfoUpdated -down-> UpdateArticleCategoryInfo
+
+'Member
+MemberInfoUpdated               -down-> UpdateStardustCountInfo
+MemberInfoUpdated               -down-> UpdateArticleCommentInfo
+MemberInfoUpdated               -down-> UpdateStarCommentAuthorInfo
+MemberInfoUpdated               -down-> UpdateArticleAuthorInfo
+MemberRegisteredWithPassword    -down-> CreateFavorites
+MemberRegisteredWithPhone       -down-> CreateFavorites
+FavoritedArticle                -down-> UpdateArticleFavorites
+UnFavoritedArticle              -down-> UpdateArticleFavorites
+
+'ViewHistory
+
 
 'role
 UpdatedRolePermissions  -down-> UpdateAdminUserRolePermissions
 UpdatedRoleInfo         -down-> UpdateAdminUserRoleInfo
 
 'star
-CreatedStar                 -down-> UpdateMemberStarInfo
-DeletedStar                 -down-> UpdateMemberStarInfo
+StarCreated                 -down-> UpdateMemberStarInfo
+StarDeleted                 -down-> UpdateMemberStarInfo
 JoinedStar                  -down-> UpdateMemberStardustCount
 LeftStar                    -down-> UpdateMemberStardustCount
-LikedStar                   -down-> CalculateRank
-UnLikedStar                 -down-> CalculateRank
-LikedStarComment            -down-> CalculateRank
-UnLikedStarComment          -down-> CalculateRank
-UpdatedStarLikes            -down-> UpdateMemberLikeCount
-UpdatedStarCommentLikes     -down-> UpdateMemberLikeCount
-UpdatedStarInfo             -down-> UpdateMemberStarInfo
+StarLikeCountUpdated            -down-> UpdateMemberLikeCount
+StarCommentLikeCountUpdated     -down-> UpdateMemberLikeCount
+StarInfoUpdated             -down-> UpdateMemberStarInfo
+
+'StarLike
+StarLiked                   -down-> UpdateStarLikeCount
+StarUnliked                 -down-> UpdateStarLikeCount
+
+'StarCommentLike
+StarCommentLiked            -down-> UpdateStarCommentLikeCount
+StarCommentUnliked          -down-> UpdateStarCommentLikeCount
 
 'tag
-UpdatedTagInfo -down-> UpdateArticleTagInfo
+TagInfoUpdated -down-> UpdateArticleTagInfo
 @enduml

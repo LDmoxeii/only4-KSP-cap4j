@@ -18,9 +18,8 @@ import java.util.stream.Collectors;
  * 订单
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
- *
  * @author cap4j-ddd-codegen
- * @date 2025/02/15
+ * @date 2025/02/17
  */
 @RequiredArgsConstructor
 public class OrderSchema {
@@ -111,7 +110,6 @@ public class OrderSchema {
 
     /**
      * 满足所有条件
-     *
      * @param restrictions
      * @return
      */
@@ -121,7 +119,6 @@ public class OrderSchema {
 
     /**
      * 满足任一条件
-     *
      * @param restrictions
      * @return
      */
@@ -131,11 +128,10 @@ public class OrderSchema {
 
     /**
      * 指定条件
-     *
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<OrderSchema> builder) {
+    public Predicate spec(Schema.PredicateBuilder<OrderSchema> builder){
         return builder.build(this);
     }
 
