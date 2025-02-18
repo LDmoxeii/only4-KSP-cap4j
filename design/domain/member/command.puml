@@ -85,7 +85,7 @@ Command("ReportMember") [
     1. 用户必须存在
     2. 用户未被封禁
 ]
-Command("MemberLevelUp") [
+Command("UpMemberLevel") [
      等级提升
      --触发者--
      已更新用户等级分事件

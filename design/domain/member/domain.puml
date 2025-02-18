@@ -81,20 +81,6 @@ Aggregate("MemberWork") [
     作品ID
 ]
 
-Aggregate("ViewHistory") [
-    会员历史记录
-    --属性--
-    会员ID
-    文章ID
-]
-
-Aggregate("MemberLikeRecord") [
-    会员点赞记录
-    --属性--
-    会员ID
-    文章ID
-]
-
 Aggregate("Favorite") [
     会员收藏夹
     --属性--

@@ -15,15 +15,6 @@ DomainEvent("MemberInfoUpdated") [
     该用户的文章
 ]
 
-DomainEvent("MemberCheckedIn") [
-    已签到
-    --属性--
-    用户ID
-    签到时间
-    --监听者--
-    该用户
-]
-
 DomainEvent("MemberRankUpdated") [
     已更新用户等级
     --属性--
@@ -73,16 +64,6 @@ DomainEvent("ArticleAddedToFavorites") [
     --监听者--
     该用户
     文章
-]
-
-' 好像不用 暂时不写
-DomainEvent("RanksCalculated") [
-    已计算用户即将获得的等级分
-    --属性--
-    用户ID
-    等级分
-    --监听者--
-    该用户
 ]
 
 DomainEvent("MemberRegisteredWithPassword") [
