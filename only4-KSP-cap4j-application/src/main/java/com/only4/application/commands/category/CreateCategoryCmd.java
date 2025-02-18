@@ -1,7 +1,9 @@
 package com.only4.application.commands.category;
 
 
-import com.only4.application.validater.category.CategoryNotExistsWithName;
+import com.only4._share.exception.KnownException;
+import com.only4.application.validater.category.CategoryUniqueName;
+import com.only4.domain.aggregates.category.Category;
 import com.only4.domain.aggregates.category.factory.CategoryFactory;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +16,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Optional;
 
 /**
- * todo: 命令描述
+ * CreateCategoryCmd命令
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/21
@@ -30,21 +32,22 @@ public class CreateCategoryCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Optional.ofNullable(Mediator.factories().create(
+            Category category = Optional.ofNullable(Mediator.factories().create(
                     CategoryFactory.Payload.builder()
                             .name(cmd.getCategoryName())
                             .build()
-            )).map(category -> {
-                category.create();
-                Mediator.uow().persist(category);
+            )).orElseThrow(() -> new KnownException("分类创建失败"));
 
-                Mediator.uow().save();
-                return Response.builder()
-                        .id(category.getId())
-                        .success(true)
-                        .build();
-            }).orElseThrow(RuntimeException::new);
+            category.create();
+            Mediator.uow().persist(category);
+            Mediator.uow().save();
+
+            return Response.builder()
+                    .id(category.getId())
+                    .success(true)
+                    .build();
         }
+
     }
 
     /**
@@ -57,7 +60,7 @@ public class CreateCategoryCmd {
     public static class Request implements RequestParam<Response> {
 
         @NotEmpty
-        @CategoryNotExistsWithName
+        @CategoryUniqueName
         String categoryName;
     }
 
