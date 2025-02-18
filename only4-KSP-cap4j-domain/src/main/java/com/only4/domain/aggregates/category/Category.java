@@ -44,7 +44,7 @@ public class Category {
 
     }
 
-    public void updateCategoryInfo(String categoryName) {
+    public void updateInfo(String categoryName) {
         this.name = categoryName;
         events().attach(new CategoryInfoUpdatedDomainEvent(this), this);
     }
@@ -53,6 +53,10 @@ public class Category {
         if (this.getRefCount() > 0)
             throw new KnownException("该分类已被引用，不能删除！");
         this.delFlag = true;
+    }
+
+    public void updateRefCount(Integer refCount) {
+        this.refCount += refCount;
     }
 
     // 【行为方法结束】
