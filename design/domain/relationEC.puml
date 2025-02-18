@@ -24,8 +24,6 @@ MemberInfoUpdated               -down-> UpdateStarCommentAuthorInfo
 MemberInfoUpdated               -down-> UpdateArticleAuthorInfo
 MemberRegisteredWithPassword    -down-> CreateFavorites
 MemberRegisteredWithPhone       -down-> CreateFavorites
-FavoritedArticle                -down-> UpdateArticleFavorites
-UnFavoritedArticle              -down-> UpdateArticleFavorites
 
 'ViewHistory
 
@@ -35,13 +33,13 @@ UpdatedRolePermissions  -down-> UpdateAdminUserRolePermissions
 UpdatedRoleInfo         -down-> UpdateAdminUserRoleInfo
 
 'star
-StarCreated                 -down-> UpdateMemberStarInfo
-StarDeleted                 -down-> UpdateMemberStarInfo
-JoinedStar                  -down-> UpdateMemberStardustCount
-LeftStar                    -down-> UpdateMemberStardustCount
+StarCreated                     -down-> UpdateMemberStarInfo
+StarDeleted                     -down-> UpdateMemberStarInfo
+JoinedStar                      -down-> UpdateMemberStardustCount
+LeftStar                        -down-> UpdateMemberStardustCount
 StarLikeCountUpdated            -down-> UpdateMemberLikeCount
 StarCommentLikeCountUpdated     -down-> UpdateMemberLikeCount
-StarInfoUpdated             -down-> UpdateMemberStarInfo
+StarInfoUpdated                 -down-> UpdateMemberStarInfo
 
 'StarLike
 StarLiked                   -down-> UpdateStarLikeCount
