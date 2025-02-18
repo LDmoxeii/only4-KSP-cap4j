@@ -2,7 +2,6 @@ package com.only4.application.commands.category;
 
 
 import com.only4._share.exception.KnownException;
-import com.only4.application.validater.CategoryUniqueName;
 import com.only4.domain.aggregates.category.Category;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -12,16 +11,18 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
+
 /**
- * 更新分类信息
+ * 更新分类引用数
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/16
+ * @date 2025/02/18
  */
-public class UpdateCategoryInfoCmd {
+public class UpdateCategoryRefCountCmd {
 
     /**
-     * UpdateCategoryInfoCmd命令请求实现
+     * UpdateCategoryRefCountCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -33,7 +34,7 @@ public class UpdateCategoryInfoCmd {
                     .findOne(JpaPredicate.byId(Category.class, cmd.getCategoryId()))
                     .orElseThrow(() -> new KnownException("分类不存在"));
 
-            category.updateInfo(cmd.getCategoryName());
+            category.updateRefCount(cmd.getRefCount());
             Mediator.uow().persist(category);
             Mediator.uow().save();
 
@@ -41,11 +42,10 @@ public class UpdateCategoryInfoCmd {
                     .success(true)
                     .build();
         }
-
     }
 
     /**
-     * UpdateCategoryInfoCmd命令请求参数
+     * UpdateCategoryRefCountCmd命令请求参数
      */
     @Data
     @Builder
@@ -55,12 +55,12 @@ public class UpdateCategoryInfoCmd {
 
         Long categoryId;
 
-        @CategoryUniqueName
-        String categoryName;
+        @NotNull
+        Integer refCount;
     }
 
     /**
-     * UpdateCategoryInfoCmd命令响应
+     * UpdateCategoryRefCountCmd命令响应
      */
     @Data
     @Builder
