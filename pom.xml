@@ -116,6 +116,7 @@
                     <datePackage4Java>java.time</datePackage4Java>
                     <generateDbType>true</generateDbType>
                     <generateSchema>true</generateSchema>
+                    <designFile></designFile>
                 </configuration>
             </plugin>
             <plugin>
