@@ -2,7 +2,6 @@ package com.only4.application.commands.member;
 
 
 import com.only4._share.exception.KnownException;
-import com.only4.application.validater.article.ArticleExists;
 import com.only4.domain.aggregates.member.Member;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -12,18 +11,18 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import javax.validation.constraints.NotNull;
 
 /**
- * 创建会员观看历史记录
+ * UpdateFavoritesArticleCountCmd命令
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/16
  */
-public class CreateMemberViewHistoryCmd {
+public class UpdateFavoritesArticleCountCmd {
 
     /**
-     * CreateMemberViewHistoryCmd命令请求实现
+     * UpdateFavoritesArticleCountCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -31,26 +30,22 @@ public class CreateMemberViewHistoryCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Optional.ofNullable(Mediator.repositories()
-                            .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
-                            .orElseThrow(() -> new KnownException("用户不存在")))
-                    .map(member -> {
+            Member member = Mediator.repositories()
+                    .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
+                    .orElseThrow(() -> new KnownException("用户不存在"));
 
-                        member.addViewHistory(cmd.getArticleId());
+            member.updateFavoritesArticleCount(cmd.getFavoritesId(), cmd.getArticleCount());
+            Mediator.uow().persist(member);
+            Mediator.uow().save();
 
-                        Mediator.uow().persist(member);
-
-                        Mediator.uow().save();
-
-                        return Response.builder()
-                                .success(true)
-                                .build();
-                    }).orElseThrow(RuntimeException::new);
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
     }
 
     /**
-     * CreateMemberViewHistoryCmd命令请求参数
+     * UpdateFavoritesArticleCountCmd命令请求参数
      */
     @Data
     @Builder
@@ -60,12 +55,14 @@ public class CreateMemberViewHistoryCmd {
 
         Long memberId;
 
-        @ArticleExists
-        Long articleId;
+        Long FavoritesId;
+
+        @NotNull
+        Integer ArticleCount;
     }
 
     /**
-     * CreateMemberViewHistoryCmd命令响应
+     * UpdateFavoritesArticleCountCmd命令响应
      */
     @Data
     @Builder

@@ -2,7 +2,7 @@ package com.only4.application.commands.member;
 
 
 import com.only4._share.exception.KnownException;
-import com.only4.application.validater.member.FavoritesContainsArticle;
+import com.only4.application.validater.article.ArticleExists;
 import com.only4.domain.aggregates.member.Member;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +11,6 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 /**
  * RemoveArticleFromFavoriteCmd命令
@@ -31,25 +29,19 @@ public class RemoveArticleFromFavoriteCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Optional.ofNullable(Mediator.repositories()
-                            .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
-                            .orElseThrow(() -> new KnownException("用户不存在")))
-                    .map(member -> {
+            Member member = Mediator.repositories()
+                    .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
+                    .orElseThrow(() -> new KnownException("用户不存在"));
 
-                        member.removeArticleFromFavorite(
-                                cmd.getFavoritesId(),
-                                cmd.getArticleId()
-                        );
+            member.removeArticleFromFavorite(cmd.getFavoritesId(), cmd.getArticleId());
+            Mediator.uow().persist(member);
+            Mediator.uow().save();
 
-                        Mediator.uow().persist(member);
-
-                        Mediator.uow().save();
-
-                        return Response.builder()
-                                .success(true)
-                                .build();
-                    }).orElseThrow(RuntimeException::new);
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
+
     }
 
     /**
@@ -59,13 +51,13 @@ public class RemoveArticleFromFavoriteCmd {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @FavoritesContainsArticle
     public static class Request implements RequestParam<Response> {
 
         Long memberId;
 
         Long favoritesId;
 
+        @ArticleExists
         Long articleId;
     }
 

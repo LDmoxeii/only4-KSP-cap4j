@@ -11,32 +11,38 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 
-
 /**
- * 会员作品
+ * 收藏夹统计
  * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
  *
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/02/18
  */
-@Aggregate(aggregate = "Member", name = "MemberWrok", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Member" }, description = "会员作品")
+@Aggregate(aggregate = "Member", name = "FavoritesStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Favorites"}, description = "收藏夹统计")
 @Entity
-@Table(name = "`member_wrok`")
+@Table(name = "`favorites_statistics`")
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "update `member_wrok` set `del_flag` = 1 where `id` = ? ")
+@SQLDelete(sql = "update `favorites_statistics` set `del_flag` = 1 where `id` = ? ")
 @Where(clause = "`del_flag` = 0")
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-public class MemberWrok {
+public class FavoritesStatistics {
 
     // 【行为方法开始】
 
+    void updateArticleCount(Integer articleCount) {
+        this.articleCount += articleCount;
+    }
+
+    boolean validateArticleCount() {
+        return this.articleCount > 0;
+    }
 
     // 【行为方法结束】
 
@@ -54,11 +60,11 @@ public class MemberWrok {
     Long id;
 
     /**
-     * 作品ID
-     * bigint
+     * 文章数
+     * int
      */
-    @Column(name = "`work_id`")
-    Long workId;
+    @Column(name = "`article_count`")
+    Integer articleCount;
 
     /**
      * 逻辑删除

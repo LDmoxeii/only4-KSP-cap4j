@@ -1,7 +1,7 @@
 package com.only4.application.commands.member;
 
 
-import com.only4.application.validater.member.MemberExists;
+import com.only4._share.exception.KnownException;
 import com.only4.application.validater.member.MemberUniquePhone;
 import com.only4.domain.aggregates.member.Member;
 import lombok.*;
@@ -29,19 +29,19 @@ public class UpdateMemberPhoneCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Mediator.repositories()
+            Member member = Mediator.repositories()
                     .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
-                    .map(member -> {
-                        member.updatePhone(cmd.getPhone());
+                    .orElseThrow(() -> new KnownException("用户不存在"));
 
-                        Mediator.uow().save();
+            member.updatePhone(cmd.getPhone());
+            Mediator.uow().persist(member);
+            Mediator.uow().save();
 
-                        return Response.builder()
-                                .success(true)
-                                .build();
-                    }).orElseThrow(RuntimeException::new);
-
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
+
     }
 
     /**
@@ -53,7 +53,6 @@ public class UpdateMemberPhoneCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
 
-        @MemberExists
         Long memberId;
 
         @MemberUniquePhone

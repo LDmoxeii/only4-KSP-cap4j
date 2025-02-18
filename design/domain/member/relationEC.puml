@@ -1,16 +1,11 @@
 @startuml
-MemberInfoUpdated               -down-> UpdateBlackMemberInfo
-MemberInfoUpdated               -down-> UpdateFollowMemberInfo
-RanksCalculated                 -down-> UpdateMemberRank
-MemberFollowed                  -down-> UpdateMemberFollowingCount
-MemberFollowed                  -down-> UpdateMemberFanCount
-MemberUnfollowed                -down-> UpdateMemberFollowingCount
-MemberUnfollowed                -down-> UpdateMemberFanCount
-ArticleAddedToFavorites         -down-> UpdateMemberFavoritesArticleCount
-ArticleRemovedFromFavorites     -down-> UpdateMemberFavoritesArticleCount
-MemberCheckedIn                 -down-> CalculateRank
-ArticleAddedToFavorites         -down-> CalculateRank
-ArticleRemovedFromFavorites     -down-> CalculateRank
-MemberLikeCountUpdated          -down-> CalculateRank
-MemberRankUpdated               -down-> MemberLevelUp
+MemberInfoUpdated           -down-> UpdateBlackMemberInfo
+MemberInfoUpdated           -down-> UpdateFollowMemberInfo
+MemberFollowed              -down-> UpdateMemberFollowingCount
+MemberFollowed              -down-> UpdateMemberFanCount
+MemberUnfollowed            -down-> UpdateMemberFollowingCount
+MemberUnfollowed            -down-> UpdateMemberFanCount
+ArticleAddedToFavorites     -down-> UpdateFavoritesArticleCount
+ArticleRemovedFromFavorites -down-> UpdateFavoritesArticleCount
+MemberRankUpdated           -down-> MemberLevelUp
 @enduml

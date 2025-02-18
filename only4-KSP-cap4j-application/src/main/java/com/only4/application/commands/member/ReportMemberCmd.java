@@ -1,7 +1,7 @@
 package com.only4.application.commands.member;
 
 
-import com.only4.application.validater.member.MemberNotBanned;
+import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.member.Member;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -28,20 +28,19 @@ public class ReportMemberCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Mediator.repositories()
+            Member member = Mediator.repositories()
                     .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
-                    .map(member -> {
-                        member.report();
+                    .orElseThrow(() -> new KnownException("用户不存在"));
 
-                        Mediator.uow().persist(member);
-                        Mediator.uow().save();
+            member.report();
+            Mediator.uow().persist(member);
+            Mediator.uow().save();
 
-                        return Response.builder()
-                                .success(true)
-                                .build();
-                    }).orElseThrow(RuntimeException::new);
-
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
+
     }
 
     /**
@@ -51,7 +50,6 @@ public class ReportMemberCmd {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @MemberNotBanned
     public static class Request implements RequestParam<Response> {
 
         Long memberId;

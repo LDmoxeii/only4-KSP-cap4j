@@ -42,4 +42,6 @@ Article-down->ArticleCommentUnliked
 Article-down->ArticleCommentLikeCountUpdated
 Article-down->ArticleCategoriesUpdated
 Article-down->ArticleTagsUpdated
+Article-down->ArticleLikeCountUpdated
+Article-down->ArticleCommentLikeCountUpdated
 @enduml

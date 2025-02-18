@@ -1,7 +1,9 @@
 package com.only4.application.commands.member;
 
 
+import com.only4._share.exception.KnownException;
 import com.only4.application.validater.member.MemberUniqueName;
+import com.only4.domain.aggregates.member.Member;
 import com.only4.domain.aggregates.member.factory.MemberFactory;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -30,23 +32,23 @@ public class RegisterMemberWithPasswordCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Optional.ofNullable(Mediator.factories().create(
+            Member member = Optional.ofNullable(Mediator.factories().create(
                     MemberFactory.Payload.builder()
                             .name(cmd.getMemberName())
                             .password(cmd.getPassword())
+                            .phone("10086")
                             .build()
-            )).map(member -> {
-                member.registerWithPassword();
-                Mediator.uow().persist(member);
+            )).orElseThrow(() -> new KnownException("用户创建失败"));
 
-                Mediator.uow().save();
+            member.registerWithPassword();
+            Mediator.uow().persist(member);
+            Mediator.uow().save();
 
-                return Response.builder()
-                        .success(true)
-                        .build();
-            }).orElseThrow(RuntimeException::new);
-
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
+
     }
 
     /**

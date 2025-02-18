@@ -54,17 +54,6 @@ Command("UpdateMemberInfo") [
     1. 用户名不能为空
     2. 用户名必须唯一
 ]
-Command("CheckIn") [
-    签到
-    --触发器--
-    当前用户
-    --属性--
-    用户ID
-    签到时间
-    --规则--
-    1. 用户必须存在
-    2. 用户未签到
-]
 Command("UpdateMemberRank") [
     更新用户等级分
     --触发器--
@@ -260,43 +249,6 @@ Command("DeleteFavorites") [
     3. 该用户为收藏夹拥有者
 ]
 
-Command("CreateMemberViewHistory") [
-    创建用户历史记录
-    --触发者--
-    已浏览文章事件(TODO)
-    --属性--
-    用户ID
-    文章ID
-    --规则--
-    1. 用户必须存在
-    2. 文章必须存在
-]
-
-Command("CalculateRank") [
-    计算用户即将获得的等级分
-    --触发者--
-    已签到事件
-    已点赞文章事件
-    已取消点赞文章事件
-    已点赞星球事件
-    已取消点赞星球事件
-    已点赞文章评论事件
-    已取消点赞文章评论事件
-    已点赞星球评论事件
-    已取消点赞星球评论事件
-    已收藏文章事件
-    已取消收藏文章事件
-    已更新点赞数事件
-    --属性--
-    用户ID
-    获取方式
-    --规则--
-    1. 用户必须存在
-    2. 今天第一次签到
-    3. 点赞数未超过10次
-    4. 收藏数未超过10次
-    5. 评论数为超过5次
-]
 Command("UpdateMemberFollowingCount") [
     更新用户关注数
     --触发者--
@@ -309,7 +261,7 @@ Command("UpdateMemberFollowingCount") [
     1. 用户必须存在
 ]
 
-Command("UpdateMemberFavoritesArticleCount") [
+Command("UpdateFavoritesArticleCount") [
     更新用户收藏文章数
     --触发者--
     已收藏文章事件

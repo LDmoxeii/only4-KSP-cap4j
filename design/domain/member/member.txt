@@ -23,7 +23,7 @@ cmd:member.DeleteFavorites
 cmd:member.CreateMemberViewHistory
 cmd:member.CalculateRank
 cmd:member.UpdateMemberFollowingCount
-cmd:member.UpdateMemberFavoritesArticleCount
+cmd:member.UpdateFavoritesArticleCount
 cmd:member.UpdateMemberStarInfo
 cmd:member.UpdateMemberStardustCount
 cmd:member.UpdateBlackMemberInfo

@@ -1,7 +1,7 @@
 package com.only4.domain.aggregates.member.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.member.MemberWrok;
+import com.only4.domain.aggregates.member.FavoritesStatistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 会员作品
+ * 收藏夹统计
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/17
+ * @date 2025/02/18
  */
 @RequiredArgsConstructor
-public class MemberWrokSchema {
+public class FavoritesStatisticsSchema {
     /**
      * 属性字段集合
      */
@@ -33,9 +33,9 @@ public class MemberWrokSchema {
         public static final String id = "id";
 
         /**
-         * 作品ID
+         * 文章数
          */
-        public static final String workId = "workId";
+        public static final String articleCount = "articleCount";
 
         /**
          * 逻辑删除
@@ -44,14 +44,14 @@ public class MemberWrokSchema {
 
     }
 
-    private final Path<MemberWrok> root;
+    private final Path<FavoritesStatistics> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
 
-    public Path<MemberWrok> _root() {
+    public Path<FavoritesStatistics> _root() {
         return root;
     }
 
@@ -65,11 +65,11 @@ public class MemberWrokSchema {
     }
 
     /**
-     * 作品ID
-     * bigint
+     * 文章数
+     * int
      */
-    public Schema.Field<Long> workId() {
-        return new Schema.Field<>(root.get("workId"), this.criteriaBuilder);
+    public Schema.Field<Integer> articleCount() {
+        return new Schema.Field<>(root.get("articleCount"), this.criteriaBuilder);
     }
 
     /**
@@ -104,7 +104,7 @@ public class MemberWrokSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<MemberWrokSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<FavoritesStatisticsSchema> builder){
         return builder.build(this);
     }
 
@@ -115,7 +115,7 @@ public class MemberWrokSchema {
      * @param builder where条件构造器
      * @return
      */
-    public static Specification<MemberWrok> specify(Schema.PredicateBuilder<MemberWrokSchema> builder) {
+    public static Specification<FavoritesStatistics> specify(Schema.PredicateBuilder<FavoritesStatisticsSchema> builder) {
         return specify(builder, false, Collections.emptyList());
     }
 
@@ -126,7 +126,7 @@ public class MemberWrokSchema {
      * @param distinct 是否去重
      * @return
      */
-    public static Specification<MemberWrok> specify(Schema.PredicateBuilder<MemberWrokSchema> builder, boolean distinct) {
+    public static Specification<FavoritesStatistics> specify(Schema.PredicateBuilder<FavoritesStatisticsSchema> builder, boolean distinct) {
         return specify(builder, distinct, Collections.emptyList());
     }
 
@@ -137,7 +137,7 @@ public class MemberWrokSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<MemberWrok> specify(Schema.PredicateBuilder<MemberWrokSchema> builder, Schema.OrderBuilder<MemberWrokSchema>... orderBuilders) {
+    public static Specification<FavoritesStatistics> specify(Schema.PredicateBuilder<FavoritesStatisticsSchema> builder, Schema.OrderBuilder<FavoritesStatisticsSchema>... orderBuilders) {
         return specify(builder, Arrays.asList(orderBuilders));
     }
 
@@ -148,7 +148,7 @@ public class MemberWrokSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<MemberWrok> specify(Schema.PredicateBuilder<MemberWrokSchema> builder, List<Schema.OrderBuilder<MemberWrokSchema>> orderBuilders) {
+    public static Specification<FavoritesStatistics> specify(Schema.PredicateBuilder<FavoritesStatisticsSchema> builder, List<Schema.OrderBuilder<FavoritesStatisticsSchema>> orderBuilders) {
         return specify(builder, orderBuilders);
     }
 
@@ -160,7 +160,7 @@ public class MemberWrokSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<MemberWrok> specify(Schema.PredicateBuilder<MemberWrokSchema> builder, boolean distinct, Schema.OrderBuilder<MemberWrokSchema>... orderBuilders) {
+    public static Specification<FavoritesStatistics> specify(Schema.PredicateBuilder<FavoritesStatisticsSchema> builder, boolean distinct, Schema.OrderBuilder<FavoritesStatisticsSchema>... orderBuilders) {
         return specify(builder, distinct, Arrays.asList(orderBuilders));
     }
 
@@ -172,7 +172,7 @@ public class MemberWrokSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<MemberWrok> specify(Schema.PredicateBuilder<MemberWrokSchema> builder, boolean distinct, List<Schema.OrderBuilder<MemberWrokSchema>> orderBuilders) {
+    public static Specification<FavoritesStatistics> specify(Schema.PredicateBuilder<FavoritesStatisticsSchema> builder, boolean distinct, List<Schema.OrderBuilder<FavoritesStatisticsSchema>> orderBuilders) {
         return specify((schema, criteriaQuery) -> {
             criteriaQuery.where(builder.build(schema));
             criteriaQuery.distinct(distinct);
@@ -192,10 +192,10 @@ public class MemberWrokSchema {
      * @param specifier 查询条件构造器
      * @return
      */
-    public static Specification<MemberWrok> specify(Schema.Specification<MemberWrok, MemberWrokSchema> specifier) {
+    public static Specification<FavoritesStatistics> specify(Schema.Specification<FavoritesStatistics, FavoritesStatisticsSchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            MemberWrokSchema memberWrok = new MemberWrokSchema(root, criteriaBuilder);
-            return specifier.toPredicate(memberWrok, criteriaQuery);
+            FavoritesStatisticsSchema favoritesStatistics = new FavoritesStatisticsSchema(root, criteriaBuilder);
+            return specifier.toPredicate(favoritesStatistics, criteriaQuery);
         };
     }
 

@@ -2,7 +2,6 @@ package com.only4.application.commands.member;
 
 
 import com.only4._share.exception.KnownException;
-import com.only4.application.validater.member.MemberUniqueFavorites;
 import com.only4.domain.aggregates.member.Member;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,6 @@ import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.Optional;
 
 /**
  * 创建收藏夹
@@ -32,23 +30,19 @@ public class CreateFavoritesCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Optional.of(Mediator.repositories()
-                            .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
-                            .orElseThrow(() -> new KnownException("用户不存在")))
-                    .map(member -> {
+            Member member = Mediator.repositories()
+                    .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
+                    .orElseThrow(() -> new KnownException("用户不存在"));
 
-                        member.createFavorites(cmd.getFavoritesName(), cmd.getFavoritesDesc());
+            member.createFavorites(cmd.getFavoritesName(), cmd.getFavoritesDesc());
+            Mediator.uow().persist(member);
+            Mediator.uow().save();
 
-                        Mediator.uow().persist(member);
-
-
-                        Mediator.uow().save();
-
-                        return Response.builder()
-                                .success(true)
-                                .build();
-                    }).orElseThrow(RuntimeException::new);
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
+
     }
 
     /**
@@ -58,7 +52,6 @@ public class CreateFavoritesCmd {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @MemberUniqueFavorites
     public static class Request implements RequestParam<Response> {
 
         Long memberId;

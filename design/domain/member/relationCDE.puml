@@ -4,7 +4,6 @@ RegisterMemberWithPhone               -down-> Member
 UpdateMemberPhone                   -down-> Member
 UpdateMemberPassword                -down-> Member
 UpdateMemberInfo                    -down-> Member
-CheckIn                              -down-> Member
 UpdateMemberRank                    -down-> Member
 DeleteMember                        -down-> Member
 ReportMember                        -down-> Member
@@ -22,9 +21,7 @@ UpdateFavoritesInfo                 -down-> Member
 AddArticleToFavorite                     -down-> Member
 RemoveArticleFromFavorite                   -down-> Member
 DeleteFavorites                     -down-> Member
-CreateMemberViewHistory                 -down-> Member
-CalculateRank           -down-> Member
-UpdateMemberFavoritesArticleCount       -down-> Member
+UpdateFavoritesArticleCount       -down-> Member
 UpdateMemberStarInfo                -down-> Member
 UpdateMemberStardustCount                -down-> Member
 UpdateBlackMemberInfo               -down-> Member
@@ -33,13 +30,11 @@ UpdateFollowMemberInfo              -down-> Member
 
 
 Member-down->MemberInfoUpdated
-Member-down->MemberCheckedIn
 Member-down->MemberRankUpdated
 Member-down->MemberFollowed
 Member-down->MemberUnfollowed
 Member-down->ArticleAddedToFavorites
 Member-down->ArticleRemovedFromFavorites
-Member-down->RanksCalculated
 Member-down->MemberRegisteredWithPassword
 Member-down->MemberRegisteredWithPhone
 Member-down->MemberLikeCountUpdated

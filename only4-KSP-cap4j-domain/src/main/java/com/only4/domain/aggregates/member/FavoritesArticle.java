@@ -11,29 +11,28 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 
-
 /**
- * 会员点赞记录
+ * 会员收藏记录
  * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
  *
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/02/18
  */
-@Aggregate(aggregate = "Member", name = "MemberLikeRecord", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Member" }, description = "会员点赞记录")
+@Aggregate(aggregate = "Member", name = "FavoritesArticle", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Favorites"}, description = "会员收藏记录")
 @Entity
-@Table(name = "`member_like_record`")
+@Table(name = "`favorites_article`")
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "update `member_like_record` set `del_flag` = 1 where `id` = ? ")
+@SQLDelete(sql = "update `favorites_article` set `del_flag` = 1 where `id` = ? ")
 @Where(clause = "`del_flag` = 0")
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-public class MemberLikeRecord {
+public class FavoritesArticle {
 
     // 【行为方法开始】
 
@@ -59,6 +58,13 @@ public class MemberLikeRecord {
      */
     @Column(name = "`article_id`")
     Long articleId;
+
+    /**
+     * 收藏时间
+     * timestamp
+     */
+    @Column(name = "`create_at`")
+    java.time.LocalDateTime createAt;
 
     /**
      * 逻辑删除

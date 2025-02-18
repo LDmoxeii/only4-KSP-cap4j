@@ -10,6 +10,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 
 /**
  * 会员统计
@@ -20,7 +21,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Member", name = "MemberStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Member" }, description = "会员统计")
+@Aggregate(aggregate = "Member", name = "MemberStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Member"}, description = "会员统计")
 @Entity
 @Table(name = "`member_statistics`")
 @DynamicInsert
@@ -35,7 +36,57 @@ import javax.persistence.*;
 public class MemberStatistics {
 
     // 【行为方法开始】
+    void updateReportCount(Integer reportCount) {
+        this.reportCount += reportCount;
+    }
 
+    void updateFanCount(Integer fanCount) {
+        this.fanCount += fanCount;
+    }
+
+    void updateLikeCount(@Positive Integer likeCount) {
+        this.likeCount += likeCount;
+    }
+
+    void updateRank(Integer rank) {
+        this.rank += rank;
+    }
+
+    void updateWorkCount(Integer workCount) {
+        this.workCount += workCount;
+    }
+
+    void updateFollowingCount(Integer followingCount) {
+        this.followingCount += followingCount;
+    }
+
+    void updateStardustCount(Integer stardustCount) {
+        this.stardustCount += stardustCount;
+    }
+
+    boolean validateRank() {
+        return this.rank > 0;
+    }
+
+    boolean validateLikeCount() {
+        return this.likeCount > 0;
+    }
+
+    boolean validateFanCount() {
+        return this.fanCount > 0;
+    }
+
+    boolean validateReportCount() {
+        return this.reportCount > 0;
+    }
+
+    boolean validateFollowingCount() {
+        return this.followingCount > 0;
+    }
+
+    boolean validateWorkCount() {
+        return this.workCount > 0;
+    }
 
     // 【行为方法结束】
 

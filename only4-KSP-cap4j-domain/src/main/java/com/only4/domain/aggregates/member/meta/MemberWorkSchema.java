@@ -1,25 +1,27 @@
 package com.only4.domain.aggregates.member.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.member.Favorite;
+import com.only4.domain.aggregates.member.MemberWork;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 会员收藏夹
+ * 会员作品
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/17
+ * @date 2025/02/18
  */
 @RequiredArgsConstructor
-public class FavoriteSchema {
+public class MemberWorkSchema {
     /**
      * 属性字段集合
      */
@@ -31,35 +33,25 @@ public class FavoriteSchema {
         public static final String id = "id";
 
         /**
-         * 收藏夹名
+         * 作品ID
          */
-        public static final String name = "name";
-
-        /**
-         * 描述
-         */
-        public static final String description = "description";
+        public static final String workId = "workId";
 
         /**
          * 逻辑删除
          */
         public static final String delFlag = "delFlag";
 
-        /**
-         * 默认标识
-         */
-        public static final String defaultFlag = "defaultFlag";
-
     }
 
-    private final Path<Favorite> root;
+    private final Path<MemberWork> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
 
-    public Path<Favorite> _root() {
+    public Path<MemberWork> _root() {
         return root;
     }
 
@@ -73,19 +65,11 @@ public class FavoriteSchema {
     }
 
     /**
-     * 收藏夹名
-     * varchar(50)
+     * 作品ID
+     * bigint
      */
-    public Schema.Field<String> name() {
-        return new Schema.Field<>(root.get("name"), this.criteriaBuilder);
-    }
-
-    /**
-     * 描述
-     * varchar(255)
-     */
-    public Schema.Field<String> description() {
-        return new Schema.Field<>(root.get("description"), this.criteriaBuilder);
+    public Schema.Field<Long> workId() {
+        return new Schema.Field<>(root.get("workId"), this.criteriaBuilder);
     }
 
     /**
@@ -94,14 +78,6 @@ public class FavoriteSchema {
      */
     public Schema.Field<Boolean> delFlag() {
         return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
-    }
-
-    /**
-     * 默认标识
-     * tinyint(1)
-     */
-    public Schema.Field<Boolean> defaultFlag() {
-        return new Schema.Field<>(root.get("defaultFlag"), this.criteriaBuilder);
     }
 
 
@@ -128,34 +104,10 @@ public class FavoriteSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<FavoriteSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<MemberWorkSchema> builder){
         return builder.build(this);
     }
 
-    /**
-     * ArticleFavoriteStatistics 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.member.meta.ArticleFavoriteStatisticsSchema joinArticleFavoriteStatistics(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Favorite, com.only4.domain.aggregates.member.ArticleFavoriteStatistics> join = ((Root<Favorite>) this.root).join("articleFavoriteStatistics", type);
-        com.only4.domain.aggregates.member.meta.ArticleFavoriteStatisticsSchema schema = new com.only4.domain.aggregates.member.meta.ArticleFavoriteStatisticsSchema(join, this.criteriaBuilder);
-        return schema;
-    }
-    /**
-     * ArticleFavoriteRecord 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.member.meta.ArticleFavoriteRecordSchema joinArticleFavoriteRecord(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Favorite, com.only4.domain.aggregates.member.ArticleFavoriteRecord> join = ((Root<Favorite>) this.root).join("articleFavoriteRecords", type);
-        com.only4.domain.aggregates.member.meta.ArticleFavoriteRecordSchema schema = new com.only4.domain.aggregates.member.meta.ArticleFavoriteRecordSchema(join, this.criteriaBuilder);
-        return schema;
-    }
 
     /**
      * 构建查询条件
@@ -163,7 +115,7 @@ public class FavoriteSchema {
      * @param builder where条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder) {
         return specify(builder, false, Collections.emptyList());
     }
 
@@ -174,7 +126,7 @@ public class FavoriteSchema {
      * @param distinct 是否去重
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder, boolean distinct) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder, boolean distinct) {
         return specify(builder, distinct, Collections.emptyList());
     }
 
@@ -185,7 +137,7 @@ public class FavoriteSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder, Schema.OrderBuilder<FavoriteSchema>... orderBuilders) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder, Schema.OrderBuilder<MemberWorkSchema>... orderBuilders) {
         return specify(builder, Arrays.asList(orderBuilders));
     }
 
@@ -196,7 +148,7 @@ public class FavoriteSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder, List<Schema.OrderBuilder<FavoriteSchema>> orderBuilders) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder, List<Schema.OrderBuilder<MemberWorkSchema>> orderBuilders) {
         return specify(builder, orderBuilders);
     }
 
@@ -208,7 +160,7 @@ public class FavoriteSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder, boolean distinct, Schema.OrderBuilder<FavoriteSchema>... orderBuilders) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder, boolean distinct, Schema.OrderBuilder<MemberWorkSchema>... orderBuilders) {
         return specify(builder, distinct, Arrays.asList(orderBuilders));
     }
 
@@ -220,7 +172,7 @@ public class FavoriteSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.PredicateBuilder<FavoriteSchema> builder, boolean distinct, List<Schema.OrderBuilder<FavoriteSchema>> orderBuilders) {
+    public static Specification<MemberWork> specify(Schema.PredicateBuilder<MemberWorkSchema> builder, boolean distinct, List<Schema.OrderBuilder<MemberWorkSchema>> orderBuilders) {
         return specify((schema, criteriaQuery) -> {
             criteriaQuery.where(builder.build(schema));
             criteriaQuery.distinct(distinct);
@@ -240,10 +192,10 @@ public class FavoriteSchema {
      * @param specifier 查询条件构造器
      * @return
      */
-    public static Specification<Favorite> specify(Schema.Specification<Favorite, FavoriteSchema> specifier) {
+    public static Specification<MemberWork> specify(Schema.Specification<MemberWork, MemberWorkSchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            FavoriteSchema favorite = new FavoriteSchema(root, criteriaBuilder);
-            return specifier.toPredicate(favorite, criteriaQuery);
+            MemberWorkSchema memberWork = new MemberWorkSchema(root, criteriaBuilder);
+            return specifier.toPredicate(memberWork, criteriaQuery);
         };
     }
 

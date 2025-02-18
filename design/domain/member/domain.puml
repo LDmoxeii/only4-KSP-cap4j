@@ -117,13 +117,6 @@ Aggregate("ArticleFavoriteRecord") [
     收藏时间
 ]
 
-Aggregate("CheckInRecord") [
-    会员签到记录
-    --属性--
-    会员ID
-    签到时间
-]
-
 Aggregate("MemberStar") [
     会员星球
     --属性--
@@ -134,12 +127,9 @@ Aggregate("MemberStar") [
 
 Member -right-> MemberPermission
 Member -right-> MemberStatistics
-Member -right-> CheckInRecord
 Member -right-> BlockMember
 Member -right-> FollowMember
 Member -right-> MemberWork
-Member -right-> ViewHistory
-Member -right-> MemberLikeRecord
 Member -right-> Favorite
 Favorite -right-> ArticleFavoriteStatistics
 Favorite -right-> ArticleFavoriteRecord

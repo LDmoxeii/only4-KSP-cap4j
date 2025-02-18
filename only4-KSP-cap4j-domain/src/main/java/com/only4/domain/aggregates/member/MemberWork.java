@@ -12,27 +12,27 @@ import javax.persistence.Table;
 import javax.persistence.*;
 
 /**
- * 收藏夹统计
+ * 会员作品
  * <p>
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
  *
  * @author cap4j-ddd-codegen
- * @date 2024/12/15
+ * @date 2025/02/18
  */
-@Aggregate(aggregate = "Member", name = "ArticleFavoriteStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Favorite" }, description = "收藏夹统计")
+@Aggregate(aggregate = "Member", name = "MemberWork", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Member"}, description = "会员作品")
 @Entity
-@Table(name = "`article_favorite_statistics`")
+@Table(name = "`member_work`")
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "update `article_favorite_statistics` set `del_flag` = 1 where `id` = ? ")
+@SQLDelete(sql = "update `member_work` set `del_flag` = 1 where `id` = ? ")
 @Where(clause = "`del_flag` = 0")
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-public class ArticleFavoriteStatistics {
+public class MemberWork {
 
     // 【行为方法开始】
 
@@ -53,11 +53,11 @@ public class ArticleFavoriteStatistics {
     Long id;
 
     /**
-     * 文章数
-     * int
+     * 作品ID
+     * bigint
      */
-    @Column(name = "`article_count`")
-    Integer articleCount;
+    @Column(name = "`work_id`")
+    Long workId;
 
     /**
      * 逻辑删除

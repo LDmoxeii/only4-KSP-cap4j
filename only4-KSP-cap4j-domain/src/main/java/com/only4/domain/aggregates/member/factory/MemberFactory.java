@@ -12,7 +12,6 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Optional;
 
 /**
  * Member聚合工厂
@@ -53,21 +52,6 @@ public class MemberFactory implements AggregateFactory<MemberFactory.Payload, Me
         String password;
 
         String phone;
-
-        String getName() {
-            return Optional.ofNullable(name)
-                    .orElse("223344");
-        }
-
-        String getPassword() {
-            return Optional.ofNullable(password)
-                    .orElse("223344");
-        }
-
-        String getPhone() {
-            return Optional.ofNullable(phone)
-                    .orElse("");
-        }
 
     }
 }
