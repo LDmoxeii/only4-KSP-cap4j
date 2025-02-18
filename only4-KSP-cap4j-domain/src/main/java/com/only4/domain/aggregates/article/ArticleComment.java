@@ -61,7 +61,7 @@ public class ArticleComment {
     void report() {
     }
 
-    public void createReply(Long memberId, String memberName, String content) {
+    void createReply(Long memberId, String memberName, String content) {
         this.getArticleCommentReplies().add(ArticleCommentReply.builder()
                 .authorId(memberId)
                 .authorName(memberName)
@@ -70,7 +70,7 @@ public class ArticleComment {
                 .build());
     }
 
-    public void deleteReply(Long replyId) {
+    void deleteReply(Long replyId) {
         Optional.of(this.getArticleCommentReplies().stream()
                         .filter(reply -> Objects.equals(reply.getId(), replyId))
                         .findFirst()
