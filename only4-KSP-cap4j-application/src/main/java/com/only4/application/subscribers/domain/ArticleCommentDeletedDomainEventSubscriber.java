@@ -1,7 +1,6 @@
 package com.only4.application.subscribers.domain;
 
 import com.only4.application.commands.article.UpdateArticleCommentCountCmd;
-import com.only4.application.commands.article.UpdateArticleCommentReplyCountCmd;
 import com.only4.domain.aggregates.article.events.ArticleCommentDeletedDomainEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -22,22 +21,9 @@ public class ArticleCommentDeletedDomainEventSubscriber {
     public void updateArticleCommentCount(ArticleCommentDeletedDomainEvent event) {
         val article = event.getEntity();
         Optional.of(UpdateArticleCommentCountCmd.Request.builder()
-                .articleId(article.getId())
-                .commentCount(1)
-                .build())
+                        .articleId(article.getId())
+                        .commentCount(1)
+                        .build())
                 .ifPresent(Mediator.commands()::send);
     }
-
-    @EventListener(ArticleCommentDeletedDomainEvent.class)
-    public void updateArticleCommentReplyCount(ArticleCommentDeletedDomainEvent event) {
-        val article = event.getEntity();
-        val parentId = event.getParentId();
-        Optional.of(UpdateArticleCommentReplyCountCmd.Request.builder()
-                .articleId(article.getId())
-                .commentId(parentId)
-                .replyCount(1)
-                .build())
-                .ifPresent(Mediator.commands()::send);
-    }
-
 }

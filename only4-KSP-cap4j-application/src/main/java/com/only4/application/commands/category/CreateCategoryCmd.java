@@ -2,7 +2,7 @@ package com.only4.application.commands.category;
 
 
 import com.only4._share.exception.KnownException;
-import com.only4.application.validater.category.CategoryUniqueName;
+import com.only4.application.validater.CategoryUniqueName;
 import com.only4.domain.aggregates.category.Category;
 import com.only4.domain.aggregates.category.factory.CategoryFactory;
 import lombok.*;

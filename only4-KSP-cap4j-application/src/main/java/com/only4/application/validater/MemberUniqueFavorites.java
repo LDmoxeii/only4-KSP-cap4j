@@ -1,4 +1,4 @@
-package com.only4.application.validater.member;
+package com.only4.application.validater;
 
 import com.only4.domain.aggregates.member.Member;
 import org.netcorepal.cap4j.ddd.Mediator;

@@ -1,7 +1,7 @@
 package com.only4.domain.aggregates.article.meta;
 
 import com.only4.domain._share.meta.Schema;
-import com.only4.domain.aggregates.article.ArticleTag;
+import com.only4.domain.aggregates.article.ArticleCommentReply;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 文章标签
+ * 文章评论回复
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
  * @date 2025/02/18
  */
 @RequiredArgsConstructor
-public class ArticleTagSchema {
+public class ArticleCommentReplySchema {
     /**
      * 属性字段集合
      */
@@ -33,14 +33,24 @@ public class ArticleTagSchema {
         public static final String id = "id";
 
         /**
-         * 标签ID
+         * 回复用户ID
          */
-        public static final String tagId = "tagId";
+        public static final String authorId = "authorId";
 
         /**
-         * 标签名
+         * 回复用户名
          */
-        public static final String tagName = "tagName";
+        public static final String authorName = "authorName";
+
+        /**
+         * 回复内容
+         */
+        public static final String content = "content";
+
+        /**
+         * 回复时间
+         */
+        public static final String createAt = "createAt";
 
         /**
          * 逻辑删除
@@ -49,14 +59,14 @@ public class ArticleTagSchema {
 
     }
 
-    private final Path<ArticleTag> root;
+    private final Path<ArticleCommentReply> root;
     private final CriteriaBuilder criteriaBuilder;
 
     public CriteriaBuilder _criteriaBuilder() {
         return criteriaBuilder;
     }
 
-    public Path<ArticleTag> _root() {
+    public Path<ArticleCommentReply> _root() {
         return root;
     }
 
@@ -70,19 +80,35 @@ public class ArticleTagSchema {
     }
 
     /**
-     * 标签ID
+     * 回复用户ID
      * bigint
      */
-    public Schema.Field<Long> tagId() {
-        return new Schema.Field<>(root.get("tagId"), this.criteriaBuilder);
+    public Schema.Field<Long> authorId() {
+        return new Schema.Field<>(root.get("authorId"), this.criteriaBuilder);
     }
 
     /**
-     * 标签名
+     * 回复用户名
      * varchar(50)
      */
-    public Schema.Field<String> tagName() {
-        return new Schema.Field<>(root.get("tagName"), this.criteriaBuilder);
+    public Schema.Field<String> authorName() {
+        return new Schema.Field<>(root.get("authorName"), this.criteriaBuilder);
+    }
+
+    /**
+     * 回复内容
+     * varchar(255)
+     */
+    public Schema.Field<String> content() {
+        return new Schema.Field<>(root.get("content"), this.criteriaBuilder);
+    }
+
+    /**
+     * 回复时间
+     * timestamp
+     */
+    public Schema.Field<java.time.LocalDateTime> createAt() {
+        return new Schema.Field<>(root.get("createAt"), this.criteriaBuilder);
     }
 
     /**
@@ -117,7 +143,7 @@ public class ArticleTagSchema {
      * @param builder
      * @return
      */
-    public Predicate spec(Schema.PredicateBuilder<ArticleTagSchema> builder){
+    public Predicate spec(Schema.PredicateBuilder<ArticleCommentReplySchema> builder){
         return builder.build(this);
     }
 
@@ -128,7 +154,7 @@ public class ArticleTagSchema {
      * @param builder where条件构造器
      * @return
      */
-    public static Specification<ArticleTag> specify(Schema.PredicateBuilder<ArticleTagSchema> builder) {
+    public static Specification<ArticleCommentReply> specify(Schema.PredicateBuilder<ArticleCommentReplySchema> builder) {
         return specify(builder, false, Collections.emptyList());
     }
 
@@ -139,7 +165,7 @@ public class ArticleTagSchema {
      * @param distinct 是否去重
      * @return
      */
-    public static Specification<ArticleTag> specify(Schema.PredicateBuilder<ArticleTagSchema> builder, boolean distinct) {
+    public static Specification<ArticleCommentReply> specify(Schema.PredicateBuilder<ArticleCommentReplySchema> builder, boolean distinct) {
         return specify(builder, distinct, Collections.emptyList());
     }
 
@@ -150,7 +176,7 @@ public class ArticleTagSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<ArticleTag> specify(Schema.PredicateBuilder<ArticleTagSchema> builder, Schema.OrderBuilder<ArticleTagSchema>... orderBuilders) {
+    public static Specification<ArticleCommentReply> specify(Schema.PredicateBuilder<ArticleCommentReplySchema> builder, Schema.OrderBuilder<ArticleCommentReplySchema>... orderBuilders) {
         return specify(builder, Arrays.asList(orderBuilders));
     }
 
@@ -161,7 +187,7 @@ public class ArticleTagSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<ArticleTag> specify(Schema.PredicateBuilder<ArticleTagSchema> builder, List<Schema.OrderBuilder<ArticleTagSchema>> orderBuilders) {
+    public static Specification<ArticleCommentReply> specify(Schema.PredicateBuilder<ArticleCommentReplySchema> builder, List<Schema.OrderBuilder<ArticleCommentReplySchema>> orderBuilders) {
         return specify(builder, orderBuilders);
     }
 
@@ -173,7 +199,7 @@ public class ArticleTagSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<ArticleTag> specify(Schema.PredicateBuilder<ArticleTagSchema> builder, boolean distinct, Schema.OrderBuilder<ArticleTagSchema>... orderBuilders) {
+    public static Specification<ArticleCommentReply> specify(Schema.PredicateBuilder<ArticleCommentReplySchema> builder, boolean distinct, Schema.OrderBuilder<ArticleCommentReplySchema>... orderBuilders) {
         return specify(builder, distinct, Arrays.asList(orderBuilders));
     }
 
@@ -185,7 +211,7 @@ public class ArticleTagSchema {
      * @param orderBuilders 排序条件构造器
      * @return
      */
-    public static Specification<ArticleTag> specify(Schema.PredicateBuilder<ArticleTagSchema> builder, boolean distinct, List<Schema.OrderBuilder<ArticleTagSchema>> orderBuilders) {
+    public static Specification<ArticleCommentReply> specify(Schema.PredicateBuilder<ArticleCommentReplySchema> builder, boolean distinct, List<Schema.OrderBuilder<ArticleCommentReplySchema>> orderBuilders) {
         return specify((schema, criteriaQuery) -> {
             criteriaQuery.where(builder.build(schema));
             criteriaQuery.distinct(distinct);
@@ -205,10 +231,10 @@ public class ArticleTagSchema {
      * @param specifier 查询条件构造器
      * @return
      */
-    public static Specification<ArticleTag> specify(Schema.Specification<ArticleTag, ArticleTagSchema> specifier) {
+    public static Specification<ArticleCommentReply> specify(Schema.Specification<ArticleCommentReply, ArticleCommentReplySchema> specifier) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            ArticleTagSchema articleTag = new ArticleTagSchema(root, criteriaBuilder);
-            return specifier.toPredicate(articleTag, criteriaQuery);
+            ArticleCommentReplySchema articleCommentReply = new ArticleCommentReplySchema(root, criteriaBuilder);
+            return specifier.toPredicate(articleCommentReply, criteriaQuery);
         };
     }
 

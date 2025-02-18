@@ -2,7 +2,7 @@ package com.only4.application.commands.article;
 
 
 import com.only4._share.exception.KnownException;
-import com.only4.application.validater.article.ArticleCommentExists;
+import com.only4.application.validater.MemberExists;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -49,14 +49,13 @@ public class DeleteArticleCommentCmd {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @ArticleCommentExists
     public static class Request implements RequestParam<Response> {
 
         Long articleId;
 
         Long commentId;
 
-        //TODO: 编写@MemberExists
+        @MemberExists
         Long memberId;
     }
 

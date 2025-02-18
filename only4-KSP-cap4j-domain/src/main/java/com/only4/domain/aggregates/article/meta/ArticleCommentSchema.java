@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/17
+ * @date 2025/02/18
  */
 @RequiredArgsConstructor
 public class ArticleCommentSchema {
@@ -29,11 +29,6 @@ public class ArticleCommentSchema {
          * ID
          */
         public static final String id = "id";
-
-        /**
-         * 父评论ID
-         */
-        public static final String parentId = "parentId";
 
         /**
          * 评论用户ID
@@ -54,11 +49,6 @@ public class ArticleCommentSchema {
          * 置顶标识
          */
         public static final String stickyFlag = "stickyFlag";
-
-        /**
-         * 可见性
-         */
-        public static final String visibility = "visibility";
 
         /**
          * 评论时间
@@ -93,14 +83,6 @@ public class ArticleCommentSchema {
     }
 
     /**
-     * 父评论ID
-     * bigint
-     */
-    public Schema.Field<Long> parentId() {
-        return new Schema.Field<>(root.get("parentId"), this.criteriaBuilder);
-    }
-
-    /**
      * 评论用户ID
      * bigint
      */
@@ -130,17 +112,6 @@ public class ArticleCommentSchema {
      */
     public Schema.Field<Boolean> stickyFlag() {
         return new Schema.Field<>(root.get("stickyFlag"), this.criteriaBuilder);
-    }
-
-    /**
-     * 可见性
-     * 0:PRIVATE:PRIVATE
-     * 1:PUBLISH:PUBLISH
-     * 2:BANNED:BANNED
-     * tinyint
-     */
-    public Schema.Field<com.only4.domain.aggregates.article.enums.CommentVisibility> visibility() {
-        return new Schema.Field<>(root.get("visibility"), this.criteriaBuilder);
     }
 
     /**
@@ -187,6 +158,18 @@ public class ArticleCommentSchema {
         return builder.build(this);
     }
 
+    /**
+     * ArticleCommentReply 关联查询条件定义
+     *
+     * @param joinType
+     * @return
+     */
+    public com.only4.domain.aggregates.article.meta.ArticleCommentReplySchema joinArticleCommentReply(Schema.JoinType joinType) {
+        JoinType type = joinType.toJpaJoinType();
+        Join<ArticleComment, com.only4.domain.aggregates.article.ArticleCommentReply> join = ((Root<ArticleComment>) this.root).join("articleCommentReplies", type);
+        com.only4.domain.aggregates.article.meta.ArticleCommentReplySchema schema = new com.only4.domain.aggregates.article.meta.ArticleCommentReplySchema(join, this.criteriaBuilder);
+        return schema;
+    }
     /**
      * ArticleCommentStatistics 关联查询条件定义
      *

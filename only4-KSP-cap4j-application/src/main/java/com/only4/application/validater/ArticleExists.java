@@ -1,6 +1,6 @@
-package com.only4.application.validater.category;
+package com.only4.application.validater;
 
-import com.only4.domain.aggregates.category.Category;
+import com.only4.domain.aggregates.article.Article;
 import org.netcorepal.cap4j.ddd.Mediator;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 
@@ -15,18 +15,19 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD})
-@Constraint(validatedBy = CategoryExists.Validator.class)
-public @interface CategoryExists {
-    String message() default "分类不存在";
+@Constraint(validatedBy = ArticleExists.Validator.class)
+public @interface ArticleExists {
+
+    String message() default "文章不存在";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    class Validator implements ConstraintValidator<CategoryExists, Long> {
+    class Validator implements ConstraintValidator<ArticleExists, Long> {
         @Override
-        public boolean isValid(Long categoryId, ConstraintValidatorContext context) {
-            return Mediator.repositories().exists(JpaPredicate.byId(Category.class, categoryId));
+        public boolean isValid(Long articleId, ConstraintValidatorContext context) {
+            return Mediator.repositories().exists(JpaPredicate.byId(Article.class, articleId));
         }
     }
 }

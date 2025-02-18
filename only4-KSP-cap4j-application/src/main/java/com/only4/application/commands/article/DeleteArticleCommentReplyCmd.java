@@ -1,9 +1,9 @@
-package com.only4.application.commands.member;
+package com.only4.application.commands.article;
 
 
 import com.only4._share.exception.KnownException;
 import com.only4.application.validater.MemberExists;
-import com.only4.domain.aggregates.member.Member;
+import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -12,18 +12,16 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
-
 /**
- * UpdateBlackMemberInfoCmd命令
+ * 删除文章评论回复
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/16
+ * @date 2025/02/18
  */
-public class UpdateBlackMemberInfoCmd {
+public class DeleteArticleCommentReplyCmd {
 
     /**
-     * UpdateBlackMemberInfoCmd命令请求实现
+     * DeleteArticleCommentReplyCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -31,40 +29,40 @@ public class UpdateBlackMemberInfoCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            Member member = Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
-                    .orElseThrow(() -> new KnownException("用户不存在"));
+            Article article = Mediator.repositories()
+                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+                    .orElseThrow(() -> new KnownException("文章不存在"));
 
-            member.updateBlackInfo(cmd.getOtherId(), cmd.getOtherName());
-            Mediator.uow().persist(member);
+            article.deleteCommentReply(cmd.getCommentId(), cmd.getReplyId());
+            Mediator.uow().persist(article);
             Mediator.uow().save();
 
-            return Response.builder()
+            return DeleteArticleCommentReplyCmd.Response.builder()
                     .success(true)
                     .build();
         }
     }
 
     /**
-     * UpdateBlackMemberInfoCmd命令请求参数
+     * DeleteArticleCommentReplyCmd命令请求参数
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+        Long articleId;
 
-        Long memberId;
+        Long commentId;
+
+        Long replyId;
 
         @MemberExists
-        Long otherId;
-
-        @NotEmpty
-        String otherName;
+        Long memberId;
     }
 
     /**
-     * UpdateBlackMemberInfoCmd命令响应
+     * DeleteArticleCommentReplyCmd命令响应
      */
     @Data
     @Builder

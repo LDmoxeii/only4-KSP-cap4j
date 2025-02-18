@@ -21,7 +21,6 @@ Aggregate("ArticleComment") [
     文章评论
     --属性--
     文章ID
-    父评论ID
     评论用户ID
     评论用户名
     评论内容
@@ -71,6 +70,16 @@ Aggregate("ArticleAuthor") [
     作者名
 ]
 
+Aggregate("ArticleCommentReply") [
+    文章评论回复
+    --属性--
+    评论ID
+    回复用户ID
+    回复用户名
+    回复内容
+    回复时间
+]
+
 Article -right-> ArticleComment
 Article -right-> ArticleCategory
 Article -right-> ArticleTag
@@ -78,4 +87,5 @@ Article -right-> ArticleStatistics
 Article -right-> ArticleAuthor
 
 ArticleComment -right-> ArticleCommentStatistics
+ArticleComment -right-> ArticleCommentReply
 @enduml
