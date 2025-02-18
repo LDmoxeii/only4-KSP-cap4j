@@ -1,4 +1,4 @@
-package com.only4.domain.aggregates.article_like;
+package com.only4.domain.aggregates.view_history;
 
 import apache.rocketmq.v2.Address;
 import lombok.AllArgsConstructor;
@@ -14,32 +14,33 @@ import javax.persistence.Table;
 import javax.persistence.*;
 
 /**
- * 文章点赞
- * <p>
+ * 会员历史记录
+ *
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件的字段声明，重新生成会覆盖字段声明
- *
  * @author cap4j-ddd-codegen
- * @date 2025/02/17
+ * @date 2025/02/18
  */
-@Aggregate(aggregate = "ArticleLike", name = "ArticleLike", root = true, type = Aggregate.TYPE_VALUE_OBJECT, description = "文章点赞")
+@Aggregate(aggregate = "ViewHistory", name = "ViewHistory", root = true, type = Aggregate.TYPE_VALUE_OBJECT, description = "会员历史记录")
 @Entity
-@Table(name = "`article_like`")
+@Table(name = "`view_history`")
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "update `article_like` set `del_flag` = 1 where `id` = ? ")
+@SQLDelete(sql = "update `view_history` set `del_flag` = 1 where `id` = ? ")
 @Where(clause = "`del_flag` = 0")
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-public class ArticleLike implements ValueObject<Long> {
+public class ViewHistory implements ValueObject<Long> {
 
     // 【行为方法开始】
 
 
+
     // 【行为方法结束】
+
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
@@ -80,25 +81,18 @@ public class ArticleLike implements ValueObject<Long> {
     Long id;
 
     /**
-     * 文章ID
-     * bigint
-     */
-    @Column(name = "`article_id`")
-    Long articleId;
-
-    /**
-     * 点赞用户ID
+     * 会员ID
      * bigint
      */
     @Column(name = "`member_id`")
     Long memberId;
 
     /**
-     * 点赞时间
-     * timestamp
+     * 文章ID
+     * bigint
      */
-    @Column(name = "`create_at`")
-    java.time.LocalDateTime createAt;
+    @Column(name = "`article_id`")
+    Long articleId;
 
     /**
      * 逻辑删除

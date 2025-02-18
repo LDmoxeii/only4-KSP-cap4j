@@ -46,8 +46,8 @@ public class StarCommentLike implements ValueObject<Long> {
 
     @Override
     public Long hash() {
-        if (null == id) {
-            id = (Long)org.netcorepal.cap4j.ddd.domain.repo.Md5HashIdentifierGenerator.hash(this, "id");
+        if(null == id) {
+            id = (Long) org.netcorepal.cap4j.ddd.domain.repo.Md5HashIdentifierGenerator.hash(this, "id");
         }
         return id;
     }
