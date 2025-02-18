@@ -12,7 +12,6 @@ import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
-import java.util.Optional;
 
 /**
  *
@@ -30,19 +29,17 @@ public class UpdateArticleCommentStickyCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Optional.ofNullable(Mediator.repositories()
-                            .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
-                            .orElseThrow(() -> new KnownException("文章不存在")))
-                    .map(article -> {
-                        article.updateCommentSticky(cmd.getCommentId(), cmd.getSticky());
-                        Mediator.uow().persist(article);
+            Article article = Mediator.repositories()
+                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+                    .orElseThrow(() -> new KnownException("文章不存在"));
 
-                        Mediator.uow().save();
+            article.updateCommentSticky(cmd.getCommentId(), cmd.getSticky());
+            Mediator.uow().persist(article);
+            Mediator.uow().save();
 
-                        return Response.builder()
-                                .success(true)
-                                .build();
-                    }).orElseThrow(RuntimeException::new);
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
     }
 

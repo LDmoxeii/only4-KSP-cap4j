@@ -1,6 +1,8 @@
 package com.only4.application.commands.article;
 
 
+import com.only4._share.exception.KnownException;
+import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.article.ArticleAuthor;
 import com.only4.domain.aggregates.article.factory.ArticleFactory;
 import lombok.*;
@@ -30,24 +32,24 @@ public class CreateArticleCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            return Optional.ofNullable(Mediator.factories().create(
+            Article article = Optional.ofNullable(Mediator.factories().create(
                     ArticleFactory.Payload.builder()
                             .title(cmd.getTitle())
                             .description(cmd.getDescription())
                             .content(cmd.getContent())
                             .authors(cmd.getAuthors())
                             .build()
-            )).map(article -> {
-                article.create();
-                Mediator.uow().persist(article);
+            )).orElseThrow(() -> new KnownException("文章创建失败"));
 
-                Mediator.uow().save();
+            article.create();
+            Mediator.uow().persist(article);
+            Mediator.uow().save();
 
-                return Response.builder()
-                        .success(true)
-                        .build();
-            }).orElseThrow(RuntimeException::new);
+            return Response.builder()
+                    .success(true)
+                    .build();
         }
+
     }
 
     /**
