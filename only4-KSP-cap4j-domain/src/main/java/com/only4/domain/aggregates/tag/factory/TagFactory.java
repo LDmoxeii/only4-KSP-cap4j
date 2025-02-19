@@ -27,6 +27,7 @@ public class TagFactory implements AggregateFactory<TagFactory.Payload, Tag> {
                 .name(payload.name)
                 .description(payload.description)
                 .icon(payload.icon)
+                .refCount(0)
                 .build();
     }
 
@@ -39,8 +40,11 @@ public class TagFactory implements AggregateFactory<TagFactory.Payload, Tag> {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<Tag> {
+
         String name;
+
         String description;
+
         String icon;
     }
 }

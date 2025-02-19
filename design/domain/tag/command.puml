@@ -14,6 +14,15 @@ Command("CreateTag") [
     标签图标不能为空
     不存在同名标签
 ]
+Command("DeleteTag") [
+    删除标签
+    --触发事件--
+    --属性--
+    标签ID
+    --规则--
+    标签必须存在
+    标签未被使用
+]
 Command("UpdateTagInfo") [
     更新标签信息
     --触发事件--
@@ -39,13 +48,5 @@ Command("UpdateTagRefCount") [
     标签必须存在
     引用次数不为NULL
 ]
-Command("DeleteTag") [
-    删除标签
-    --触发事件--
-    --属性--
-    标签ID
-    --规则--
-    标签必须存在
-    标签未被使用
-]
+
 @enduml

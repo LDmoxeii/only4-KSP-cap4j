@@ -1,6 +1,5 @@
 package com.only4.domain.aggregates.tag;
 
-import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.tag.events.UpdatedTagInfoDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +11,8 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
@@ -40,18 +41,24 @@ import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport
 public class Tag {
 
     // 【行为方法开始】
-    public void updateTagInfo(String name, String description, String icon) {
+    public void create() {
+
+    }
+
+    public void updateInfo(@NotBlank String name, @NotBlank String description, @NotBlank String icon) {
         this.name = name;
         this.description = description;
         this.icon = icon;
+
         events().attach(new UpdatedTagInfoDomainEvent(this), this);
+
+    }
+
+    public void updateRefCount(@NotNull Integer refCount) {
+        this.refCount += refCount;
     }
 
     public void delete() {
-        if (delFlag) {
-            throw new KnownException("标签已经被删除！");
-        }
-        this.delFlag = true;
     }
 
 
