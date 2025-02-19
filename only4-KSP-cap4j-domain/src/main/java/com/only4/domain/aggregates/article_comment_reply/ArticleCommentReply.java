@@ -1,7 +1,9 @@
 package com.only4.domain.aggregates.article_comment_reply;
 
-import com.only4.domain.aggregates.article.events.ArticleCommentReplyCreatedDomainEvent;
-import com.only4.domain.aggregates.article.events.ArticleCommentReplyDeletedDomainEvent;
+import com.only4._share.exception.KnownException;
+import com.only4.domain.aggregates.article_comment_reply.events.ArticleCommentReplyCreatedDomainEvent;
+import com.only4.domain.aggregates.article_comment_reply.events.ArticleCommentReplyDeletedDomainEvent;
+import com.only4.domain.aggregates.article_comment_reply.events.ArticleCommentReplyLikeCountUpdatedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +15,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import java.util.Objects;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
@@ -46,6 +49,28 @@ public class ArticleCommentReply {
 
     public void delete() {
         events().attach(new ArticleCommentReplyDeletedDomainEvent(this), this);
+    }
+
+    public void report() {
+
+    }
+
+    public void updateInfo(Long memberId, String memberName) {
+        if (this.isAuthor(memberId)) {
+            throw new KnownException("不是作者，不能修改");
+        }
+
+        this.authorName = memberName;
+    }
+
+    public boolean isAuthor(Long memberId) {
+        return Objects.equals(memberId, this.authorId);
+    }
+
+    public void updateLikeCount(Integer likeCount) {
+        this.getArticleCommentReplyStatistics().updateLikeCount(likeCount);
+
+        events().attach(new ArticleCommentReplyLikeCountUpdatedDomainEvent(this), this);
     }
 
     // 【行为方法结束】

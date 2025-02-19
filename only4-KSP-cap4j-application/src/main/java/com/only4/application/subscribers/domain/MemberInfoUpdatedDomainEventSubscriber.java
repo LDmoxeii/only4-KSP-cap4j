@@ -31,7 +31,7 @@ public class MemberInfoUpdatedDomainEventSubscriber {
                 .find(JpaPredicate.bySpecification(Member.class,
                         MemberSchema.specify(member ->
                         member.joinBlockMember(Schema.JoinType.INNER)
-                                .blockMemberId().equal(other.getId())
+                                .otherId().equal(other.getId())
                         )))
                 .forEach(member -> Optional.of(UpdateBlackMemberInfoCmd.Request.builder()
                         .memberId(member.getId())
@@ -49,7 +49,7 @@ public class MemberInfoUpdatedDomainEventSubscriber {
                 .find(JpaPredicate.bySpecification(Member.class,
                         MemberSchema.specify(member ->
                         member.joinFollowMember(Schema.JoinType.INNER)
-                                .followMemberId().equal(other.getId())
+                                .otherId().equal(other.getId())
                         )))
                 .forEach(member -> Optional.of(UpdateFollowMemberInfoCmd.Request.builder()
                         .memberId(member.getId())
