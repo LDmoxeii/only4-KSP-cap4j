@@ -10,6 +10,8 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.AggregatePayload;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 /**
  * ArticleLike聚合工厂
  *
@@ -25,7 +27,9 @@ public class ArticleLikeFactory implements AggregateFactory<ArticleLikeFactory.P
     public ArticleLike create(Payload payload) {
 
         return ArticleLike.builder()
-
+                .memberId(payload.getMemberId())
+                .articleId(payload.getArticleId())
+                .createAt(LocalDateTime.now())
                 .build();
     }
 
@@ -38,7 +42,10 @@ public class ArticleLikeFactory implements AggregateFactory<ArticleLikeFactory.P
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<ArticleLike> {
-        String name;
+
+        Long memberId;
+
+        Long articleId;
 
     }
 }

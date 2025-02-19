@@ -1,6 +1,8 @@
 package com.only4.domain.aggregates.article_like;
 
 import apache.rocketmq.v2.Address;
+import com.only4.domain.aggregates.article_like.events.ArticleLikedDomainEvent;
+import com.only4.domain.aggregates.article_like.events.ArticleUnlikedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +14,8 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 文章点赞
@@ -37,7 +41,13 @@ import javax.persistence.*;
 public class ArticleLike implements ValueObject<Long> {
 
     // 【行为方法开始】
+    public void create() {
+        events().attach(new ArticleLikedDomainEvent(this), this);
+    }
 
+    public void delete() {
+        events().attach(new ArticleUnlikedDomainEvent(this), this);
+    }
 
     // 【行为方法结束】
 
