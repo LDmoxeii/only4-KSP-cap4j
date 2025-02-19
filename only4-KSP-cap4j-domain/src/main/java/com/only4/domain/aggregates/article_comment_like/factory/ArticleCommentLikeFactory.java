@@ -25,7 +25,8 @@ public class ArticleCommentLikeFactory implements AggregateFactory<ArticleCommen
     public ArticleCommentLike create(Payload payload) {
 
         return ArticleCommentLike.builder()
-
+                .memberId(payload.getMemberId())
+                .articleCommentId(payload.getCommentId())
                 .build();
     }
 
@@ -38,7 +39,10 @@ public class ArticleCommentLikeFactory implements AggregateFactory<ArticleCommen
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<ArticleCommentLike> {
-        String name;
+
+        Long memberId;
+
+        Long commentId;
 
     }
 }
