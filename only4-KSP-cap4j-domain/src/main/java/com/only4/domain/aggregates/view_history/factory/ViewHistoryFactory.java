@@ -25,7 +25,8 @@ public class ViewHistoryFactory implements AggregateFactory<ViewHistoryFactory.P
     public ViewHistory create(Payload payload) {
 
         return ViewHistory.builder()
-
+                .memberId(payload.getMemberId())
+                .articleId(payload.getArticleId())
                 .build();
     }
 
@@ -38,7 +39,9 @@ public class ViewHistoryFactory implements AggregateFactory<ViewHistoryFactory.P
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<ViewHistory> {
-        String name;
 
+        Long memberId;
+
+        Long articleId;
     }
 }
