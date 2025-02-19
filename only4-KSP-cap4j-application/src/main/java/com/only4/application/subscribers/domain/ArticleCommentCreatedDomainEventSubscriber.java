@@ -1,29 +1,21 @@
 package com.only4.application.subscribers.domain;
 
-import com.only4.application.commands.article.UpdateArticleCommentCountCmd;
-import com.only4.domain.aggregates.article.events.ArticleCommentCreatedDomainEvent;
+import com.only4.domain.aggregates.article_comment.events.ArticleCommentCreatedDomainEvent;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
-import org.netcorepal.cap4j.ddd.Mediator;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 /**
- * Article.ArticleCommentCreatedDomainEvent领域事件订阅
+ * ArticleComment.ArticleCommentCreatedDomainEvent领域事件订阅
+ * 文章评论已更创建
  */
 @Service
 @RequiredArgsConstructor
 public class ArticleCommentCreatedDomainEventSubscriber {
 
     @EventListener(ArticleCommentCreatedDomainEvent.class)
-    public void updateArticleCommentCount(ArticleCommentCreatedDomainEvent event) {
-        val article = event.getEntity();
-        Optional.of(UpdateArticleCommentCountCmd.Request.builder()
-                        .articleId(article.getId())
-                        .commentCount(1)
-                        .build())
-                .ifPresent(Mediator.commands()::send);
+    public void on(ArticleCommentCreatedDomainEvent event) {
+        
     }
+
 }

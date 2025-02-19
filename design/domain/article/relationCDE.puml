@@ -18,9 +18,9 @@ UpdateArticlePrice              -down-> Article
 UpdateArticleLikeCount          -down-> Article
 UpdateArticleViewCount          -down-> Article
 
+Article -down-> ArticleCategoriesUpdated
 Article -down-> ArticleCreated
 Article -down-> ArticleLikeCountUpdated
-Article -down-> ArticleCategoriesUpdated
 Article -down-> ArticleTagsUpdated
 Article -down-> ArticleViewCountUpdated
 @enduml

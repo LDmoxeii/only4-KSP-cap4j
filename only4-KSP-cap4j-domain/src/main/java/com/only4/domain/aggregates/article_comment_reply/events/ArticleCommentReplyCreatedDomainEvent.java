@@ -1,6 +1,6 @@
-package com.only4.domain.aggregates.article.events;
+package com.only4.domain.aggregates.article_comment_reply.events;
 
-import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.article_comment_reply.ArticleCommentReply;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,20 +9,18 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 
 /**
- * Article.ArticleCommentReplyCreatedDomainEvent领域事件
+ * ArticleCommentReply.ArticleCommentReplyCreatedDomainEvent领域事件
  * 文章评论回复已创建
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/18
+ * @date 2025/02/19
  */
 @DomainEvent(persist = false)
-@Aggregate(aggregate = "Article", name = "ArticleCommentReplyCreatedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
+@Aggregate(aggregate = "ArticleCommentReply", name = "ArticleCommentReplyCreatedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ArticleCommentReplyCreatedDomainEvent {
-    Article entity;
-
-    Long commentId;
+    ArticleCommentReply entity;
 }

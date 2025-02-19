@@ -9,18 +9,18 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 
 /**
- * Article.ArticleCommentDeletedDomainEvent领域事件
- * todo: 领域事件说明
+ * Article.ArticleViewCountUpdatedDomainEvent领域事件
+ * 文章播放量已更新
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/14
+ * @date 2025/02/19
  */
 @DomainEvent(persist = false)
-@Aggregate(aggregate = "Article", name = "ArticleCommentDeletedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
+@Aggregate(aggregate = "Article", name = "ArticleViewCountUpdatedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArticleCommentDeletedDomainEvent {
+public class ArticleViewCountUpdatedDomainEvent {
     Article entity;
 }
