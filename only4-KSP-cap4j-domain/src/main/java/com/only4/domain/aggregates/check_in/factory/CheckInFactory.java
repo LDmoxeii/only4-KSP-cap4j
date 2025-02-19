@@ -10,6 +10,8 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.AggregatePayload;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 /**
  * CheckIn聚合工厂
  *
@@ -25,7 +27,8 @@ public class CheckInFactory implements AggregateFactory<CheckInFactory.Payload, 
     public CheckIn create(Payload payload) {
 
         return CheckIn.builder()
-
+                .memberId(payload.getMemberId())
+                .createAt(LocalDateTime.now())
                 .build();
     }
 
@@ -38,7 +41,7 @@ public class CheckInFactory implements AggregateFactory<CheckInFactory.Payload, 
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<CheckIn> {
-        String name;
+        Long memberId;
 
     }
 }
