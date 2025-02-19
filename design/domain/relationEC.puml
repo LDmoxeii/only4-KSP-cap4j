@@ -5,6 +5,7 @@ ArticleLikeCountUpdated         -down-> UpdateMemberLikeCount
 ArticleCategoriesUpdated        -down-> UpdateCategoryRefCount
 ArticleTagsUpdated              -down-> UpdateTagRefCount
 ArticleViewCountUpdated         -down-> UpdateMemberViewCount
+ArticleFavoriteCountUpdated     -down-> UpdateFavoritesArticleCount
 
 'ArticleComment
 ArticleCommentCreated           -down-> UpdateArticleCommentCount
@@ -40,8 +41,6 @@ MemberInfoUpdated               -down-> UpdateBlackMemberInfo
 MemberInfoUpdated               -down-> UpdateFollowMemberInfo
 MemberFollowed                  -down-> UpdateMemberFanCount
 MemberUnfollowed                -down-> UpdateMemberFanCount
-
-
 
 'Tag
 TagInfoUpdated -down-> UpdateArticleTagInfo
