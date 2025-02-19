@@ -22,5 +22,6 @@ Article -down-> ArticleCategoriesUpdated
 Article -down-> ArticleCreated
 Article -down-> ArticleLikeCountUpdated
 Article -down-> ArticleTagsUpdated
+Article -down-> ArticleFavoriteCountUpdated
 Article -down-> ArticleViewCountUpdated
 @enduml

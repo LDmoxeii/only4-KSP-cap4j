@@ -26,4 +26,9 @@ DomainEvent("ArticleViewCountUpdated") [
     --监听形式--
     更新用户浏览量
 ]
+DomainEvent("ArticleFavoriteCountUpdated") [
+    文章收藏数已更新
+    --监听行为--
+    更新用户收藏数
+]
 @enduml

@@ -22,6 +22,6 @@ cmd:member.DeleteFavorites:删除收藏夹
 cmd:member.UpdateBlackMemberInfo:更新拉黑用户信息
 cmd:member.UpdateFollowMemberInfo:更新关注用户信息
 
-MemberInfoUpdated:用户信息已更新
-MemberFollowed:用户已关注
-MemberUnfollowed:用户取消关注
+de:member.Member:MemberInfoUpdated:用户信息已更新
+de:member.Member:MemberFollowed:用户已关注
+de:member.Member:MemberUnfollowed:用户取消关注
