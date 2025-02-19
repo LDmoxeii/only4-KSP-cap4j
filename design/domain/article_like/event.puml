@@ -3,18 +3,12 @@
 
 DomainEvent("ArticleLiked") [
     已点赞文章
-    --属性--
-    作者ID
-    --监听者--
-    该文章
-    操作者
+    --监听行为--
+    更新文章点赞数
 ]
 DomainEvent("ArticleUnliked") [
     已取消点赞文章
-    --属性--
-    作者ID
-    --监听者--
-    该文章
-    操作者
+    --监听行为--
+    更新文章点赞数
 ]
 @enduml

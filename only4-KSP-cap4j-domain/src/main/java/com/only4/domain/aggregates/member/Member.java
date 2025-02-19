@@ -1,7 +1,10 @@
 package com.only4.domain.aggregates.member;
 
 import com.only4._share.exception.KnownException;
-import com.only4.domain.aggregates.member.events.*;
+import com.only4.domain.aggregates.member.events.MemberInfoUpdatedDomainEvent;
+import com.only4.domain.aggregates.member.events.MemberLikeCountUpdatedDomainEvent;
+import com.only4.domain.aggregates.member.events.MemberRankUpdatedDomainEvent;
+import com.only4.domain.aggregates.member.events.MemberRegisteredWithPasswordDomainEvent;
 import lombok.*;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
@@ -139,26 +142,30 @@ public class Member {
             throw new KnownException("用户已关注过该用户");
         }
         this.getFollowMembers().add(FollowMember.builder()
-                .followMemberId(otherId)
-                .followMemberName(otherName)
+                .otherId(otherId)
+                .otherName(otherName)
                 .build());
-        events().attach(new MemberFollowedDomainEvent(this), this);
+
+        // event
+        this.getMemberStatistics().updateFollowingCount(1);
     }
 
     public boolean hasFollowed(Long otherId) {
         return this.getFollowMembers().stream()
-                .anyMatch(followMember -> Objects.equals(followMember.getFollowMemberId(), otherId));
+                .anyMatch(followMember -> Objects.equals(followMember.getOtherId(), otherId));
     }
 
     public void unfollow(Long otherId) {
 
         Optional.of(this.getFollowMembers().stream()
-                        .filter(followMember -> Objects.equals(followMember.getFollowMemberId(), otherId))
+                        .filter(followMember -> Objects.equals(followMember.getOtherId(), otherId))
                         .findFirst()
                         .orElseThrow(() -> new IllegalArgumentException("关注用户不存在")))
                 .ifPresent(followMember -> {
                     this.getFollowMembers().remove(followMember);
-                    events().attach(new MemberUnfollowedDomainEvent(this, otherId), this);
+
+                    // event
+                    this.getMemberStatistics().updateFollowingCount(-1);
                 });
     }
 
@@ -188,14 +195,6 @@ public class Member {
                 .updateInfo(favoritesName, favoritesDesc);
     }
 
-    public boolean favoriteHasArticle(Long favoritesId, Long articleId) {
-        return this.getFavorites().stream()
-                .filter(favorites -> Objects.equals(favorites.getId(), favoritesId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("收藏夹不存在"))
-                .hasArticle(articleId);
-    }
-
     public void addArticleToFavorite(Long favoritesId, Long articleId) {
         Optional.ofNullable(this.getFavorites().stream()
                         .filter(favorites -> Objects.equals(favorites.getId(), favoritesId))
@@ -203,7 +202,9 @@ public class Member {
                         .orElseThrow(() -> new KnownException("收藏夹不存在")))
                 .ifPresent(favorites -> {
                     favorites.addArticle(articleId);
-                    events().attach(new ArticleAddedToFavoritesDomainEvent(this, favoritesId), this);
+
+                    // event
+                    favorites.getFavoritesStatistics().updateArticleCount(1);
                 });
     }
 
@@ -214,7 +215,9 @@ public class Member {
                         .orElseThrow(() -> new KnownException("收藏夹不存在")))
                 .ifPresent(favorites -> {
                     favorites.removeArticle(articleId);
-                    events().attach(new ArticleRemovedFromFavoritesDomainEvent(this, favoritesId), this);
+
+                    // event
+                    favorites.getFavoritesStatistics().updateArticleCount(-1);
                 });
     }
 
@@ -231,8 +234,8 @@ public class Member {
             throw new KnownException("用户已屏蔽过该用户");
         }
         this.getBlockMembers().add(BlockMember.builder()
-                .blockMemberId(otherId)
-                .blockMemberName(otherName)
+                .otherId(otherId)
+                .otherName(otherName)
                 .build());
     }
 
@@ -241,47 +244,14 @@ public class Member {
             throw new KnownException("用户已关注过该用户");
         }
         this.getFollowMembers().add(FollowMember.builder()
-                .followMemberId(otherId)
-                .followMemberName(otherName)
+                .otherId(otherId)
+                .otherName(otherName)
                 .build());
     }
 
     public boolean hasBlocked(Long otherId) {
         return this.getBlockMembers().stream()
-                .anyMatch(blockMember -> Objects.equals(blockMember.getBlockMemberId(), otherId));
-    }
-
-    public void updateFavoritesArticleCount(Long favoritesId, Integer articleCount) {
-        Optional.of(this.getFavorites().stream()
-                        .filter(favorites -> Objects.equals(favorites.getId(), favoritesId))
-                        .findFirst()
-                        .orElseThrow(() -> new KnownException("收藏夹不存在")))
-                .ifPresent(favorites -> favorites.updateArticleCount(articleCount));
-    }
-
-    public void updateFollowingCount(Integer followingCount) {
-        this.getMemberStatistics().updateFollowingCount(followingCount);
-    }
-
-    public void updateStardustCount(Integer stardustCount) {
-        this.getMemberStatistics().updateStardustCount(stardustCount);
-    }
-
-    public void updateStarInfo(Long starId, String starName) {
-        if (this.hasUniqueStar(starName)) {
-            throw new KnownException("该用户已有同名星球");
-        }
-
-        this.getMemberStars().stream()
-                .filter(memberStar -> Objects.equals(memberStar.getStarId(), starId))
-                .findFirst()
-                .orElseThrow(() -> new KnownException("该用户未拥有该星球"))
-                .updateInfo(starName);
-    }
-
-    boolean hasUniqueStar(String starName) {
-        return this.getMemberStars().stream()
-                .anyMatch(memberStar -> Objects.equals(memberStar.getStarName(), starName));
+                .anyMatch(blockMember -> Objects.equals(blockMember.getOtherId(), otherId));
     }
 
     public boolean validateRank() {
@@ -318,17 +288,17 @@ public class Member {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.Favorites> favorites;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.MemberPermission> memberPermissions;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -338,20 +308,15 @@ public class Member {
         return memberStatistics == null || memberStatistics.size() == 0 ? null : memberStatistics.get(0);
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.FollowMember> followMembers;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.BlockMember> blockMembers;
-
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`member_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.member.MemberStar> memberStars;
 
     /**
      * ID

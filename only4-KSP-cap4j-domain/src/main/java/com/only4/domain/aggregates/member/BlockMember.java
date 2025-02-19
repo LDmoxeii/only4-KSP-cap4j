@@ -20,7 +20,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Member", name = "BlockMember", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Member"}, description = "拉黑会员")
+@Aggregate(aggregate = "Member", name = "BlockMember", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Member" }, description = "拉黑会员")
 @Entity
 @Table(name = "`block_member`")
 @DynamicInsert
@@ -56,15 +56,15 @@ public class BlockMember {
      * 拉黑会员ID
      * bigint
      */
-    @Column(name = "`block_member_id`")
-    Long blockMemberId;
+    @Column(name = "`other_id`")
+    Long otherId;
 
     /**
      * 拉黑会员名
      * varchar(50)
      */
-    @Column(name = "`block_member_name`")
-    String blockMemberName;
+    @Column(name = "`other_name`")
+    String otherName;
 
     /**
      * 逻辑删除

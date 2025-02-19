@@ -1,7 +1,7 @@
 @startuml
 
-LikeArticleComment -down-> ArticleCommentLike
-UnlikeArticleComment -down-> ArticleCommentLike
+LikeArticleComment      -down-> ArticleCommentLike
+UnlikeArticleComment    -down-> ArticleCommentLike
 
 ArticleCommentLike -down-> ArticleCommentLiked
 ArticleCommentLike -down-> ArticleCommentUnliked

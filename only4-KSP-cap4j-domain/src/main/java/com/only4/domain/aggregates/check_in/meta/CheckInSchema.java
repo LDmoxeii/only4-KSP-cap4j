@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/18
+ * @date 2025/02/19
  */
 @RequiredArgsConstructor
 public class CheckInSchema {
@@ -34,12 +34,12 @@ public class CheckInSchema {
         public static final String id = "id";
 
         /**
-         * 会员ID
+         * 用户ID
          */
         public static final String memberId = "memberId";
 
         /**
-         * 签到时间
+         * 创建时间
          */
         public static final String createAt = "createAt";
 
@@ -71,7 +71,7 @@ public class CheckInSchema {
     }
 
     /**
-     * 会员ID
+     * 用户ID
      * bigint
      */
     public Schema.Field<Long> memberId() {
@@ -79,7 +79,7 @@ public class CheckInSchema {
     }
 
     /**
-     * 签到时间
+     * 创建时间
      * timestamp
      */
     public Schema.Field<java.time.LocalDateTime> createAt() {

@@ -4,62 +4,17 @@
 Aggregate("Article") [
     文章
     --属性--
-    文章ID
-    文章名
-    文章描述
-    文章内容
-    文章可见性
+    标题
+    描述
+    内容
+    封面
+    附件
+    价格
+    可见性
     置顶状态
     评论状态
-    文章封面
-    文章附件
     封禁时间
     封禁时长
-]
-
-Aggregate("ArticleComment") [
-    文章评论
-    --属性--
-    文章ID
-    评论用户ID
-    评论用户名
-    评论内容
-    置顶状态
-    评论时间
-]
-
-Aggregate("ArticleCommentStatistics") [
-    文章评论统计
-    --属性--
-    文章评论ID
-    文章评论点赞数
-    评论回复数
-]
-
-Aggregate("ArticleCategory") [
-    文章分类
-    --属性--
-    文章ID
-    分类ID
-    分类名
-]
-
-Aggregate("ArticleTag") [
-    文章标签
-    --属性--
-    文章ID
-    标签ID
-    标签名
-]
-
-Aggregate("ArticleStatistics") [
-    文章统计
-    --属性--
-    文章ID
-    文章点赞数
-    文章收藏数
-    文章评论数
-    文章浏览数
 ]
 
 Aggregate("ArticleAuthor") [
@@ -70,22 +25,34 @@ Aggregate("ArticleAuthor") [
     作者名
 ]
 
-Aggregate("ArticleCommentReply") [
-    文章评论回复
+Aggregate("ArticleCategory") [
+    文章分类
     --属性--
-    评论ID
-    回复用户ID
-    回复用户名
-    回复内容
-    回复时间
+    文章ID
+    分类ID
+    分类名
 ]
 
-Article -right-> ArticleComment
+Aggregate("ArticleStatistics") [
+    文章统计
+    --属性--
+    文章ID
+    点赞数
+    收藏数
+    评论数
+    浏览数
+]
+
+Aggregate("ArticleTag") [
+    文章标签
+    --属性--
+    文章ID
+    标签ID
+    标签名
+]
+
 Article -right-> ArticleCategory
 Article -right-> ArticleTag
 Article -right-> ArticleStatistics
 Article -right-> ArticleAuthor
-
-ArticleComment -right-> ArticleCommentStatistics
-ArticleComment -right-> ArticleCommentReply
 @enduml

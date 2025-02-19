@@ -1,21 +1,13 @@
 @startuml
 
 CreateArticle                   -down-> Article
-UpdateArticleState              -down-> Article
 UpdateArticleInfo               -down-> Article
 BanArticle                      -down-> Article
 ReportArticle                   -down-> Article
 UpdateArticleFavoriteCount      -down-> Article
-UpdateArticleTag                -down-> Article
+UpdateArticleTags                -down-> Article
 UpdateArticleCategories         -down-> Article
-CreateArticleComment            -down-> Article
-ReportArticleComment            -down-> Article
-DeleteArticleComment            -down-> Article
 UpdateArticleCommentCount       -down-> Article
-UpdateArticleCommentReplyCount  -down-> Article
-UpdateArticleCommentSticky      -down-> Article
-UpdateArticleCommentVisibility  -down-> Article
-UpdateArticleCommentInfo        -down-> Article
 UpdateArticleCategoryInfo       -down-> Article
 UpdateArticleAuthorInfo         -down-> Article
 UpdateArticleTagInfo            -down-> Article
@@ -24,18 +16,11 @@ UpdateArticleSticky             -down-> Article
 UpdateArticleCommentFlag        -down-> Article
 UpdateArticlePrice              -down-> Article
 UpdateArticleLikeCount          -down-> Article
-UpdateArticleCommentLikeCount   -down-> Article
-CreateArticleCommentReply       -down-> Article
-DeleteArticleCommentReply       -down-> Article
+UpdateArticleViewCount          -down-> Article
 
 Article -down-> ArticleCreated
-Article -down-> ArticleFavoriteCountUpdated
-Article -down-> ArticleCommentCreated
-Article -down-> ArticleCommentDeleted
+Article -down-> ArticleLikeCountUpdated
 Article -down-> ArticleCategoriesUpdated
 Article -down-> ArticleTagsUpdated
-Article -down-> ArticleLikeCountUpdated
-Article -down-> ArticleCommentLikeCountUpdated
-Article -down-> ArticleCommentReplyCreated
-Article -down-> ArticleCommentReplyDeleted
+Article -down-> ArticleViewCountUpdated
 @enduml

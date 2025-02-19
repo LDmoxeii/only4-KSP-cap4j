@@ -21,7 +21,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Member", name = "FollowMember", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Member"}, description = "关注会员")
+@Aggregate(aggregate = "Member", name = "FollowMember", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Member" }, description = "关注会员")
 @Entity
 @Table(name = "`follow_member`")
 @DynamicInsert
@@ -57,15 +57,15 @@ public class FollowMember {
      * 关注会员ID
      * bigint
      */
-    @Column(name = "`follow_member_id`")
-    Long followMemberId;
+    @Column(name = "`other_id`")
+    Long otherId;
 
     /**
      * 关注会员名
      * varchar(255)
      */
-    @Column(name = "`follow_member_name`")
-    String followMemberName;
+    @Column(name = "`other_name`")
+    String otherName;
 
     /**
      * 逻辑删除

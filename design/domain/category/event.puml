@@ -3,10 +3,7 @@
 
 DomainEvent("CategoryInfoUpdated") [
     已更新分类
-    --属性--
-    分类ID
-    分类名
-    --监听者--
-    拥有该分类的所有文章
+    --监听行为--
+    更新文章分类信息
 ]
 @enduml

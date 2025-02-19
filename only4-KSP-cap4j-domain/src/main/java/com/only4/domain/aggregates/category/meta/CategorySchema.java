@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/17
+ * @date 2025/02/19
  */
 @RequiredArgsConstructor
 public class CategorySchema {
@@ -34,7 +34,7 @@ public class CategorySchema {
         public static final String id = "id";
 
         /**
-         * 分类名
+         * 名称
          */
         public static final String name = "name";
 
@@ -71,7 +71,7 @@ public class CategorySchema {
     }
 
     /**
-     * 分类名
+     * 名称
      * varchar(50)
      */
     public Schema.Field<String> name() {

@@ -75,7 +75,7 @@ public class Category {
     Long id;
 
     /**
-     * 分类名
+     * 名称
      * varchar(50)
      */
     @Column(name = "`name`")

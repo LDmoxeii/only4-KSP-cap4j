@@ -1,0 +1,12 @@
+@startuml
+
+CreateArticleCommentReply               -down-> ArticleCommentReply
+ReportArticleCommentReply               -down-> ArticleCommentReply
+DeleteArticleCommentReply               -down-> ArticleCommentReply
+UpdateArticleCommentReplyInfo           -down-> ArticleCommentReply
+UpdateArticleCommentReplyLikeCount      -down-> ArticleCommentReply
+
+ArticleCommentReply -down-> ArticleCommentReplyCreated
+ArticleCommentReply -down-> ArticleCommentReplyDeleted
+ArticleCommentReply -down-> ArticleCommentReplyLikeCountUpdated
+@enduml

@@ -2,7 +2,9 @@ package com.only4.domain.aggregates.article;
 
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.enums.ArticleVisibility;
-import com.only4.domain.aggregates.article.events.*;
+import com.only4.domain.aggregates.article.events.ArticleCreatedDomainEvent;
+import com.only4.domain.aggregates.article.events.ArticleFavoriteCountUpdatedDomainEvent;
+import com.only4.domain.aggregates.article.events.ArticleLikeCountUpdatedDomainEvent;
 import com.only4.domain.aggregates.category.Category;
 import com.only4.domain.aggregates.tag.Tag;
 import lombok.*;
@@ -14,10 +16,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
@@ -118,73 +118,8 @@ public class Article {
         events().attach(new ArticleFavoriteCountUpdatedDomainEvent(this), this);
     }
 
-    public void createCommentReply(Long commentId, Long memberId, String memberName, String content) {
-        Optional.of(this.getArticleComments().stream()
-                        .filter(c -> Objects.equals(c.getId(), commentId))
-                        .findFirst()
-                        .orElseThrow(() -> new KnownException("评论不存在")))
-                .ifPresent(comment -> {
-                    comment.createReply(memberId, memberName, content);
-                    events().attach(new ArticleCommentReplyCreatedDomainEvent(this, commentId), this);
-                });
-    }
-
-
-    public void updateCommentInfo(Long commentId, String memberName) {
-        this.getArticleComments().stream()
-                .filter(c -> Objects.equals(c.getId(), commentId))
-                .findFirst()
-                .orElseThrow(() -> new KnownException("评论不存在"))
-                .updateInfo(memberName);
-    }
-
-    public void reportComment(Long commentId) {
-        this.getArticleComments().stream()
-                .filter(c -> Objects.equals(c.getId(), commentId))
-                .findFirst()
-                .orElseThrow(() -> new KnownException("评论不存在"))
-                .report();
-    }
-
-    public void deleteCommentReply(Long commentId, Long replyId) {
-        Optional.of(this.getArticleComments().stream()
-                        .filter(c -> Objects.equals(c.getId(), commentId))
-                        .findFirst()
-                        .orElseThrow(() -> new KnownException("评论不存在")))
-                .ifPresent(comment -> {
-                    comment.deleteReply(replyId);
-                    events().attach(new ArticleCommentReplyDeletedDomainEvent(this, commentId), this);
-                });
-    }
-
-    public void updateCommentLikeCount(Long commentId, Integer likeCount) {
-        this.getArticleComments().stream()
-                .filter(ac -> Objects.equals(ac.getId(), commentId))
-                .findFirst()
-                .orElseThrow(() -> new KnownException("评论不存在"))
-                .updateLikeCount(likeCount);
-        events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
-
-    }
-
-    public void updateCommentSticky(Long commentId, Boolean sticky) {
-        this.getArticleComments().stream()
-                .filter(ac -> Objects.equals(ac.getId(), commentId))
-                .findFirst()
-                .orElseThrow(() -> new KnownException("评论不存在"))
-                .updateSticky(sticky);
-    }
-
     public void updateCommentCount(Integer commentCount) {
         this.getArticleStatistics().updateCommentCount(commentCount);
-    }
-
-    public void updateCommentReplyCount(Long commentId, Integer replyCount) {
-        this.getArticleComments().stream()
-                .filter(ac -> Objects.equals(ac.getId(), commentId))
-                .findFirst()
-                .orElseThrow(() -> new KnownException("评论不存在"))
-                .updateReplyCount(replyCount);
     }
 
     public void updateAuthorInfo(Long memberId, String memberName) {
@@ -234,49 +169,22 @@ public class Article {
         this.delFlag = true;
     }
 
-    public void createComment(Long memberId, String memberName, String content) {
-        this.getArticleComments().add(ArticleComment.builder()
-                .authorId(memberId)
-                .authorName(memberName)
-                .content(content)
-                .createAt(java.time.LocalDateTime.now())
-                .articleCommentStatistics(Collections.singletonList(ArticleCommentStatistics.builder().build()))
-                .build());
-        events().attach(new ArticleCommentCreatedDomainEvent(this), this);
-    }
-
-    public void deleteComment(Long commentId) {
-        Optional.of(this.getArticleComments().stream()
-                .filter(ac -> Objects.equals(ac.getId(), commentId))
-                .findFirst()
-                .orElseThrow(() -> new KnownException("评论不存在")))
-                .ifPresent(comment -> {
-                    this.getArticleComments().remove(comment);
-                    events().attach(new ArticleCommentDeletedDomainEvent(this), this);
-                });
-    }
-
     // 【行为方法结束】
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleCategory> articleCategories;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleAuthor> articleAuthors;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`article_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.article.ArticleComment> articleComments;
-
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -286,7 +194,7 @@ public class Article {
         return articleStatistics == null || articleStatistics.size() == 0 ? null : articleStatistics.get(0);
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`article_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.article.ArticleTag> articleTags;
@@ -369,13 +277,6 @@ public class Article {
     Boolean commentFlag;
 
     /**
-     * 逻辑删除
-     * tinyint(1)
-     */
-    @Column(name = "`del_flag`")
-    Boolean delFlag;
-
-    /**
      * 封禁时间
      * timestamp
      */
@@ -388,6 +289,13 @@ public class Article {
      */
     @Column(name = "`ban_duration`")
     Integer banDuration;
+
+    /**
+     * 逻辑删除
+     * tinyint(1)
+     */
+    @Column(name = "`del_flag`")
+    Boolean delFlag;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

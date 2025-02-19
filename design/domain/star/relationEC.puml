@@ -1,6 +1,4 @@
 @startuml
 JoinedStar                  -down-> UpdateStardustCount
 LeftStar                    -down-> UpdateStardustCount
-StarCreatedComment          -down-> UpdateStarCommentCount
-StarDeletedComment          -down-> UpdateStarCommentCount
 @enduml

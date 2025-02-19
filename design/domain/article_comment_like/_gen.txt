@@ -1,0 +1,5 @@
+cmd:article_comment_like.LikeArticleComment:点赞文章评论
+cmd:article_comment_like.UnlikeArticleComment:取消点赞文章评论
+
+de:article_comment_like.ArticleCommentLike:ArticleCommentLiked:已点赞文章评论
+de:article_comment_like.ArticleCommentLike:ArticleCommentUnliked:已取消点赞文章评论

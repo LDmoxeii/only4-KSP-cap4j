@@ -1,0 +1,54 @@
+@startuml
+!include ..\lib_eventstorming.puml
+Command("CreateArticleCommentReply") [
+    创建文章评论回复
+    --触发事件--
+    --属性--
+    文章ID
+    评论ID
+    用户ID
+    用户名
+    回复内容
+    --规则--
+    用户必须存在
+    用户名不能为空
+    回复内容不能为空
+]
+Command("ReportArticleCommentReply") [
+    举报文章评论回复
+    --触发事件--
+   --属性--
+    文章评论回复ID
+    --规则--
+]
+Command("DeleteArticleCommentReply")[
+    删除文章评论回复
+    --触发事件--
+    --属性--
+    文章评论回复ID
+    --规则--
+]
+Command("UpdateArticleCommentReplyInfo") [
+    更新文章评论回复信息
+    --触发事件--
+    已更新用户信息
+    --属性--
+    文章评论回复ID
+    用户ID
+    用户名
+    --规则--
+    用户必须存在
+    用户名不能为空
+]
+Command("UpdateArticleCommentReplyLikeCount") [
+    更新文章评论回复点赞数
+    --触发事件--
+    已点赞文章评论事件
+    已取消点赞文章评论事件
+    --属性--
+    文章评论回复ID
+    点赞数
+    --规则--
+    点赞数不为NULL
+]
+@enduml

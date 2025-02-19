@@ -87,14 +87,14 @@ public class ArticleLike implements ValueObject<Long> {
     Long articleId;
 
     /**
-     * 点赞用户ID
+     * 用户ID
      * bigint
      */
     @Column(name = "`member_id`")
     Long memberId;
 
     /**
-     * 点赞时间
+     * 创建时间
      * timestamp
      */
     @Column(name = "`create_at`")

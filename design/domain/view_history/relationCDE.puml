@@ -1,3 +1,5 @@
 @startuml
-CreateMemberHistory -down-> ViewHistory
+CreateViewHistory -down-> ViewHistory
+
+ViewHistory -down-> ViewHistoryCreated
 @enduml

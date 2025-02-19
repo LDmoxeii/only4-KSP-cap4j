@@ -1,11 +1,6 @@
 @startuml
-MemberInfoUpdated           -down-> UpdateBlackMemberInfo
-MemberInfoUpdated           -down-> UpdateFollowMemberInfo
 MemberFollowed              -down-> UpdateMemberFollowingCount
-MemberFollowed              -down-> UpdateMemberFanCount
 MemberUnfollowed            -down-> UpdateMemberFollowingCount
-MemberUnfollowed            -down-> UpdateMemberFanCount
 ArticleAddedToFavorites     -down-> UpdateFavoritesArticleCount
 ArticleRemovedFromFavorites -down-> UpdateFavoritesArticleCount
-MemberRankUpdated           -down-> UpMemberLevel
 @enduml

@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include ..\lib_eventstorming.puml
+!if VIEW_COMMENT
+Comment("need")[
+1.创建星球
+2.删除星球
+3.加入星球
+4.离开星球
+5.点赞星球
+6.取消点赞星球
+7.创建星球评论
+8.删除星球评论
+9.点赞星球评论
+10.取消点赞星球评论
+]
+!endif
+
+!include command.puml
+!include domain.puml
+!include event.puml
+!include relationCDE.puml
+
+!if VIEW_QUERY
+!include query.puml
+!endif
+
+!include relationEC.puml
+@enduml

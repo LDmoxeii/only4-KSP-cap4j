@@ -1,0 +1,3 @@
+cmd:viewHistory.CreateViewHistory:创建浏览记录
+
+de:view_history.ViewHistory:ViewHistoryCreated:浏览记录已创建

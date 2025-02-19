@@ -26,16 +26,11 @@ UpdateMemberStarInfo             -down-> Member
 UpdateMemberStardustCount        -down-> Member
 UpdateBlackMemberInfo            -down-> Member
 UpdateFollowMemberInfo           -down-> Member
-
-
+UpdateMemberViewCount            -down-> Member
 
 Member -down-> MemberInfoUpdated
-Member -down-> MemberRankUpdated
 Member -down-> MemberFollowed
 Member -down-> MemberUnfollowed
 Member -down-> ArticleAddedToFavorites
 Member -down-> ArticleRemovedFromFavorites
-Member -down-> MemberRegisteredWithPassword
-Member -down-> MemberRegisteredWithPhone
-Member -down-> MemberLikeCountUpdated
 @enduml

@@ -2,10 +2,9 @@
 !include ..\lib_eventstorming.puml
 
 Aggregate("ViewHistory") [
-    会员历史记录
+    浏览记录
     --属性--
-    会员ID
+    用户ID
     文章ID
 ]
-
 @enduml

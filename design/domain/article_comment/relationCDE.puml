@@ -1,0 +1,14 @@
+@startuml
+
+CreateArticleComment            -down-> ArticleComment
+ReportArticleComment            -down-> ArticleComment
+DeleteArticleComment            -down-> ArticleComment
+UpdateArticleCommentSticky      -down-> ArticleComment
+UpdateArticleCommentLikeCount   -down-> ArticleComment
+UpdateArticleCommentReplyCount  -down-> ArticleComment
+UpdateArticleCommentInfo        -down-> ArticleComment
+
+ArticleComment -down-> ArticleCommentCreated
+ArticleComment -down-> ArticleCommentDeleted
+ArticleComment -down-> ArticleCommentLikeCountUpdated
+@enduml

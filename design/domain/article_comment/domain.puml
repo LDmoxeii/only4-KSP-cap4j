@@ -1,0 +1,23 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Aggregate("ArticleComment") [
+    文章评论
+    --属性--
+    文章ID
+    作者ID
+    作者名
+    内容
+    置顶状态
+    创建时间
+]
+Aggregate("ArticleCommentStatistics") [
+    文章评论统计
+    --属性--
+    文章评论ID
+    点赞数
+    回复数
+]
+
+ArticleComment -right-> ArticleCommentStatistics
+@enduml

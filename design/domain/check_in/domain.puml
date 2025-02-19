@@ -2,10 +2,10 @@
 !include ..\lib_eventstorming.puml
 
 Aggregate("CheckIn") [
-    会员签到记录
+    签到记录
     --属性--
-    会员ID
-    签到时间
+    用户ID
+    创建时间
 ]
 
 @enduml
