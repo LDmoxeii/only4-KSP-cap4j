@@ -1,6 +1,7 @@
 package com.only4.domain.aggregates.view_history;
 
 import apache.rocketmq.v2.Address;
+import com.only4.domain.aggregates.view_history.events.ViewHistoryCreatedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +13,8 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 会员历史记录
@@ -100,6 +103,10 @@ public class ViewHistory implements ValueObject<Long> {
      */
     @Column(name = "`del_flag`")
     Boolean delFlag;
+
+    public void create() {
+        events().attach(new ViewHistoryCreatedDomainEvent(this), this);
+    }
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }
