@@ -21,3 +21,5 @@ de:article.Article:ArticleLikeCountUpdated:文章点赞数已更新
 de:article.Article:ArticleTagsUpdated:文章标签集已更新
 de:article.Article:ArticleViewCountUpdated:文章播放量已更新
 de:article.Article:ArticleFavoriteCountUpdated:文章收藏数已更新
+
+qry:article.ArticleExists:判断文章是否存在

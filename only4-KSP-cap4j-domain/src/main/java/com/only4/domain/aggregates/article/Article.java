@@ -123,10 +123,11 @@ public class Article {
     }
 
     public void updateAuthorInfo(Long memberId, String memberName) {
+
         this.getArticleAuthors().stream()
                 .filter(aa -> Objects.equals(aa.getId(), memberId))
                 .findFirst()
-                .orElseThrow(() -> new KnownException("作者不存在"))
+                .orElseThrow(() -> new KnownException("不是作者, 无法修改"))
                 .updateInfo(memberName);
     }
 
@@ -156,17 +157,6 @@ public class Article {
 
     public void updateSticky(Boolean sticky) {
         this.stickyFlag = sticky;
-    }
-
-    /**
-     * 暂未设计
-     */
-    public void reportArticleComment() {
-        throw new UnsupportedOperationException("未实现");
-    }
-
-    public void deleteArticle() {
-        this.delFlag = true;
     }
 
     // 【行为方法结束】

@@ -11,7 +11,7 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -54,7 +54,7 @@ public class UpdateArticleFavoriteCountCmd {
 
         Long articleId;
 
-        @PositiveOrZero
+        @NotNull
         Integer FavoriteCount;
     }
 

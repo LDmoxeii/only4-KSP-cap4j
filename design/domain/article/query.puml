@@ -45,4 +45,9 @@ Query("CountArticleCommentByMemberIdAndDate") [
     用户ID
     日期
 ]
+Query("ArticleExists") [
+    判断文章是否存在
+    --属性--
+    文章ID
+]
 @enduml
