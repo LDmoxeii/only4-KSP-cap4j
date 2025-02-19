@@ -1,5 +1,10 @@
 @startuml
 !include ..\lib_eventstorming.puml
+DomainEvent("ArticleCategoriesUpdated") [
+    文章分类集已更新
+    --监听行为--
+    更新分类引用数
+]
 DomainEvent("ArticleCreated") [
     文章已创建
     --监听行为--
@@ -10,11 +15,6 @@ DomainEvent("ArticleLikeCountUpdated") [
     点赞数
     --监听行为--
     更新用户点赞数
-]
-DomainEvent("ArticleCategoriesUpdated") [
-    文章分类集已更新
-    --监听行为--
-    更新分类引用数
 ]
 DomainEvent("ArticleTagsUpdated") [
     文章标签集已更新
