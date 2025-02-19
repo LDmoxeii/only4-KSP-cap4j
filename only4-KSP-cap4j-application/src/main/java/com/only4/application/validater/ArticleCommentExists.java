@@ -23,7 +23,7 @@ public @interface ArticleCommentExists {
 
     Class<? extends Payload>[] payload() default {};
 
-    class Validator implements ConstraintValidator<ArticleExists, Long> {
+    class Validator implements ConstraintValidator<ArticleCommentExists, Long> {
         @Override
         public boolean isValid(Long commentId, ConstraintValidatorContext context) {
             return Mediator.repositories().exists(JpaPredicate.byId(ArticleComment.class, commentId));

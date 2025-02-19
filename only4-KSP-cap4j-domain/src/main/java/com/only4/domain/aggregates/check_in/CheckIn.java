@@ -1,6 +1,7 @@
 package com.only4.domain.aggregates.check_in;
 
 import apache.rocketmq.v2.Address;
+import com.only4.domain.aggregates.check_in.events.CheckedInDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +13,8 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 会员签到记录
@@ -37,7 +40,9 @@ public class CheckIn implements ValueObject<Long> {
 
     // 【行为方法开始】
 
-
+    public void create() {
+        events().attach(new CheckedInDomainEvent(this), this);
+    }
 
     // 【行为方法结束】
 
