@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/18
+ * @date 2025/02/19
  */
 @RequiredArgsConstructor
 public class FollowMemberSchema {
@@ -35,12 +35,12 @@ public class FollowMemberSchema {
         /**
          * 关注会员ID
          */
-        public static final String followMemberId = "followMemberId";
+        public static final String otherId = "otherId";
 
         /**
          * 关注会员名
          */
-        public static final String followMemberName = "followMemberName";
+        public static final String otherName = "otherName";
 
         /**
          * 逻辑删除
@@ -73,16 +73,16 @@ public class FollowMemberSchema {
      * 关注会员ID
      * bigint
      */
-    public Schema.Field<Long> followMemberId() {
-        return new Schema.Field<>(root.get("followMemberId"), this.criteriaBuilder);
+    public Schema.Field<Long> otherId() {
+        return new Schema.Field<>(root.get("otherId"), this.criteriaBuilder);
     }
 
     /**
      * 关注会员名
      * varchar(255)
      */
-    public Schema.Field<String> followMemberName() {
-        return new Schema.Field<>(root.get("followMemberName"), this.criteriaBuilder);
+    public Schema.Field<String> otherName() {
+        return new Schema.Field<>(root.get("otherName"), this.criteriaBuilder);
     }
 
     /**

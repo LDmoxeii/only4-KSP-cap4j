@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/18
+ * @date 2025/02/19
  */
 @RequiredArgsConstructor
 public class BlockMemberSchema {
@@ -35,12 +35,12 @@ public class BlockMemberSchema {
         /**
          * 拉黑会员ID
          */
-        public static final String blockMemberId = "blockMemberId";
+        public static final String otherId = "otherId";
 
         /**
          * 拉黑会员名
          */
-        public static final String blockMemberName = "blockMemberName";
+        public static final String otherName = "otherName";
 
         /**
          * 逻辑删除
@@ -73,16 +73,16 @@ public class BlockMemberSchema {
      * 拉黑会员ID
      * bigint
      */
-    public Schema.Field<Long> blockMemberId() {
-        return new Schema.Field<>(root.get("blockMemberId"), this.criteriaBuilder);
+    public Schema.Field<Long> otherId() {
+        return new Schema.Field<>(root.get("otherId"), this.criteriaBuilder);
     }
 
     /**
      * 拉黑会员名
      * varchar(50)
      */
-    public Schema.Field<String> blockMemberName() {
-        return new Schema.Field<>(root.get("blockMemberName"), this.criteriaBuilder);
+    public Schema.Field<String> otherName() {
+        return new Schema.Field<>(root.get("otherName"), this.criteriaBuilder);
     }
 
     /**

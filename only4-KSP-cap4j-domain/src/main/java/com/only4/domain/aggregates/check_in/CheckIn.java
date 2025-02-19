@@ -81,14 +81,14 @@ public class CheckIn implements ValueObject<Long> {
     Long id;
 
     /**
-     * 会员ID
+     * 用户ID
      * bigint
      */
     @Column(name = "`member_id`")
     Long memberId;
 
     /**
-     * 签到时间
+     * 创建时间
      * timestamp
      */
     @Column(name = "`create_at`")

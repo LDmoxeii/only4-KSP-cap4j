@@ -24,7 +24,7 @@ import java.util.Optional;
  * @author cap4j-ddd-codegen
  * @date 2025/02/18
  */
-@Aggregate(aggregate = "Member", name = "Favorites", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Member"}, description = "会员收藏夹")
+@Aggregate(aggregate = "Member", name = "Favorites", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Member" }, description = "会员收藏夹")
 @Entity
 @Table(name = "`favorites`")
 @DynamicInsert
@@ -90,7 +90,7 @@ public class Favorites {
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`favorites_id`", nullable = false)
     @Getter(lombok.AccessLevel.PROTECTED)
@@ -100,7 +100,7 @@ public class Favorites {
         return favoritesStatistics == null || favoritesStatistics.size() == 0 ? null : favoritesStatistics.get(0);
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`favorites_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.FavoritesArticle> favoritesArticles;
@@ -130,18 +130,18 @@ public class Favorites {
     String description;
 
     /**
-     * 逻辑删除
-     * tinyint(1)
-     */
-    @Column(name = "`del_flag`")
-    Boolean delFlag;
-
-    /**
      * 默认标识
      * tinyint(1)
      */
     @Column(name = "`default_flag`")
     Boolean defaultFlag;
+
+    /**
+     * 逻辑删除
+     * tinyint(1)
+     */
+    @Column(name = "`del_flag`")
+    Boolean delFlag;
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

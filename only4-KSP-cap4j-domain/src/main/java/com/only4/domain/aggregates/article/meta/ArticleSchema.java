@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/18
+ * @date 2025/02/19
  */
 @RequiredArgsConstructor
 public class ArticleSchema {
@@ -77,11 +77,6 @@ public class ArticleSchema {
         public static final String commentFlag = "commentFlag";
 
         /**
-         * 逻辑删除
-         */
-        public static final String delFlag = "delFlag";
-
-        /**
          * 封禁时间
          */
         public static final String bannedAt = "bannedAt";
@@ -90,6 +85,11 @@ public class ArticleSchema {
          * 封禁时间
          */
         public static final String banDuration = "banDuration";
+
+        /**
+         * 逻辑删除
+         */
+        public static final String delFlag = "delFlag";
 
     }
 
@@ -189,14 +189,6 @@ public class ArticleSchema {
     }
 
     /**
-     * 逻辑删除
-     * tinyint(1)
-     */
-    public Schema.Field<Boolean> delFlag() {
-        return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
-    }
-
-    /**
      * 封禁时间
      * timestamp
      */
@@ -210,6 +202,14 @@ public class ArticleSchema {
      */
     public Schema.Field<Integer> banDuration() {
         return new Schema.Field<>(root.get("banDuration"), this.criteriaBuilder);
+    }
+
+    /**
+     * 逻辑删除
+     * tinyint(1)
+     */
+    public Schema.Field<Boolean> delFlag() {
+        return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
     }
 
 
@@ -262,18 +262,6 @@ public class ArticleSchema {
         JoinType type = joinType.toJpaJoinType();
         Join<Article, com.only4.domain.aggregates.article.ArticleAuthor> join = ((Root<Article>) this.root).join("articleAuthors", type);
         com.only4.domain.aggregates.article.meta.ArticleAuthorSchema schema = new com.only4.domain.aggregates.article.meta.ArticleAuthorSchema(join, this.criteriaBuilder);
-        return schema;
-    }
-    /**
-     * ArticleComment 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.article.meta.ArticleCommentSchema joinArticleComment(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Article, com.only4.domain.aggregates.article.ArticleComment> join = ((Root<Article>) this.root).join("articleComments", type);
-        com.only4.domain.aggregates.article.meta.ArticleCommentSchema schema = new com.only4.domain.aggregates.article.meta.ArticleCommentSchema(join, this.criteriaBuilder);
         return schema;
     }
     /**

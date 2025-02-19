@@ -5,7 +5,7 @@ Aggregate("ArticleLike") [
     文章点赞
     --属性--
     文章ID
-    点赞用户ID
-    点赞时间
+    用户ID
+    创建时间
 ]
 @enduml

@@ -1,0 +1,2 @@
+cmd:check_in.CheckIn:签到
+de:check_in.CheckIn:CheckedIn:已签到

@@ -4,51 +4,52 @@ ArticleCreated                  -down-> UpdateMemberWorkCount
 ArticleLikeCountUpdated         -down-> UpdateMemberLikeCount
 ArticleCategoriesUpdated        -down-> UpdateCategoryRefCount
 ArticleTagsUpdated              -down-> UpdateTagRefCount
-ArticleCommentLikeCountUpdated  -down-> UpdateMemberLikeCount
+ArticleViewCountUpdated         -down-> UpdateMemberViewCount
 
-'ArticleLike
-ArticleLiked                -down-> UpdateArticleLikeCount
-ArticleUnliked              -down-> UpdateArticleLikeCount
+'ArticleComment
+ArticleCommentCreated           -down-> UpdateArticleCommentCount
+ArticleCommentDeleted           -down-> UpdateArticleCommentCount
+ArticleCommentLikeCountUpdated  -down-> UpdateMemberLikeCount
 
 'ArticleCommentLike
 ArticleCommentLiked         -down-> UpdateArticleCommentLikeCount
 ArticleCommentUnliked       -down-> UpdateArticleCommentLikeCount
 
+'ArticleCommentReply
+ArticleCommentReplyCreated          -down-> UpdateArticleCommentReplyCount
+ArticleCommentReplyCreated          -down-> UpdateArticleCommentCount
+ArticleCommentReplyDeleted          -down-> UpdateArticleCommentReplyCount
+ArticleCommentReplyDeleted          -down-> UpdateArticleCommentCount
+ArticleCommentReplyLikeCountUpdated -down-> UpdateMemberLikeCount
+
+'ArticleLike
+ArticleLiked                -down-> UpdateArticleLikeCount
+ArticleUnliked              -down-> UpdateArticleLikeCount
+
 'Category
 CategoryInfoUpdated -down-> UpdateArticleCategoryInfo
 
+'CheckIn
+CheckedIn -down-> UpdateMemberRank
+
 'Member
-MemberInfoUpdated               -down-> UpdateStardustCountInfo
-MemberInfoUpdated               -down-> UpdateArticleCommentInfo
-MemberInfoUpdated               -down-> UpdateStarCommentAuthorInfo
 MemberInfoUpdated               -down-> UpdateArticleAuthorInfo
-MemberRegisteredWithPassword    -down-> CreateFavorites
-MemberRegisteredWithPhone       -down-> CreateFavorites
+MemberInfoUpdated               -down-> UpdateArticleCommentInfo
+MemberInfoUpdated               -down-> UpdateArticleCommentReplyInfo
+MemberInfoUpdated               -down-> UpdateBlackMemberInfo
+MemberInfoUpdated               -down-> UpdateFollowMemberInfo
+MemberFollowed                  -down-> UpdateMemberFanCount
+MemberUnfollowed                -down-> UpdateMemberFanCount
+
+
+
+'Tag
+TagInfoUpdated -down-> UpdateArticleTagInfo
 
 'ViewHistory
-
+ViewHistoryCreated       -down-> UpdateArticleViewCount
 
 'role
 UpdatedRolePermissions  -down-> UpdateAdminUserRolePermissions
 UpdatedRoleInfo         -down-> UpdateAdminUserRoleInfo
-
-'star
-StarCreated                     -down-> UpdateMemberStarInfo
-StarDeleted                     -down-> UpdateMemberStarInfo
-JoinedStar                      -down-> UpdateMemberStardustCount
-LeftStar                        -down-> UpdateMemberStardustCount
-StarLikeCountUpdated            -down-> UpdateMemberLikeCount
-StarCommentLikeCountUpdated     -down-> UpdateMemberLikeCount
-StarInfoUpdated                 -down-> UpdateMemberStarInfo
-
-'StarLike
-StarLiked                   -down-> UpdateStarLikeCount
-StarUnliked                 -down-> UpdateStarLikeCount
-
-'StarCommentLike
-StarCommentLiked            -down-> UpdateStarCommentLikeCount
-StarCommentUnliked          -down-> UpdateStarCommentLikeCount
-
-'tag
-TagInfoUpdated -down-> UpdateArticleTagInfo
 @enduml

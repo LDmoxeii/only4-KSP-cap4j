@@ -1,80 +1,29 @@
 @startuml
 !include ..\lib_eventstorming.puml
 DomainEvent("ArticleCreated") [
-    已创建文章
-    --属性--
-    作者ID
-    --监听者--
-    该文章作者
+    文章已创建
+    --监听行为--
+    更新用户作品数
 ]
 DomainEvent("ArticleLikeCountUpdated") [
-    已更新文章点赞数
-    --属性--
-    作者ID
+    文章点赞数已更新
     点赞数
-    --监听者--
-    该文章作者
-]
-DomainEvent("ArticleFavoriteCountUpdated") [
-    已更新文章收藏数
-    --属性--
-    作者ID
-    收藏数
-    --监听者--
-    该文章作者
-]
-DomainEvent("ArticleCommentCreated") [
-    已创建文章评论
-    --属性--
-    文章ID
-    --监听者--
-    该评论文章
-]
-DomainEvent("ArticleCommentReplyCreated") [
-    已创建文章评论回复
-    --属性--
-    文章ID
-    --监听者--
-    该评论文章
-]
-DomainEvent("ArticleCommentDeleted") [
-    已删除文章评论
-    --属性--
-    文章ID
-    --监听者--
-    该评论文章
-]
-DomainEvent("ArticleCommentReplyDeleted") [
-    已删除文章评论回复
-    --属性--
-    文章ID
-    --监听者--
-    该评论文章
-]
-DomainEvent("ArticleCommentLikeCountUpdated") [
-    已更新文章评论点赞数
-    --属性--
-    文章评论ID
-    点赞数
-    --监听者--
-    该评论作者
+    --监听行为--
+    更新用户点赞数
 ]
 DomainEvent("ArticleCategoriesUpdated") [
-    已更新文章分类集
-    --属性--
-    文章ID
-    分类ID
-    --监听者--
-    该文章
-    该分类
+    文章分类集已更新
+    --监听行为--
+    更新分类引用数
 ]
 DomainEvent("ArticleTagsUpdated") [
-已更新文章标签集
-    --属性--
-    文章ID
-    标签ID
-    --监听者--
-    该文章
-    该标签
+    文章标签集已更新
+    --监听行为--
+    更新标签引用数
+]
+DomainEvent("ArticleViewCountUpdated") [
+    文章浏览量已更新
+    --监听形式--
+    更新用户浏览量
 ]
 @enduml

@@ -1,0 +1,12 @@
+cmd:article_comment.CreateArticleComment:创建文章评论
+cmd:article_comment.ReportArticleComment:举报文章评论
+cmd:article_comment.DeleteArticleComment:删除文章评论
+cmd:article_comment.UpdateArticleCommentSticky:更新文章是否置顶
+cmd:article_comment.UpdateArticleCommentLikeCount:更新文章评论点赞数
+cmd:article_comment.UpdateArticleCommentReplyCount:更新文章评论回复数
+cmd:article_comment.UpdateArticleCommentInfo:更新文章评论信息
+
+de:article_comment.ArticleComment:ArticleCommentCreated:文章评论已更创建
+de:article_comment.ArticleComment:ArticleCommentDeleted:文章评论已删除
+de:article_comment.ArticleComment:ArticleCommentLikeCountUpdated:文章评论点赞数已更新
+

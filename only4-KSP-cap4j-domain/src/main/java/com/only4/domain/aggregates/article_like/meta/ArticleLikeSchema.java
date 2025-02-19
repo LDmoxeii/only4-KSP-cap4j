@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/18
+ * @date 2025/02/19
  */
 @RequiredArgsConstructor
 public class ArticleLikeSchema {
@@ -39,12 +39,12 @@ public class ArticleLikeSchema {
         public static final String articleId = "articleId";
 
         /**
-         * 点赞用户ID
+         * 用户ID
          */
         public static final String memberId = "memberId";
 
         /**
-         * 点赞时间
+         * 创建时间
          */
         public static final String createAt = "createAt";
 
@@ -84,7 +84,7 @@ public class ArticleLikeSchema {
     }
 
     /**
-     * 点赞用户ID
+     * 用户ID
      * bigint
      */
     public Schema.Field<Long> memberId() {
@@ -92,7 +92,7 @@ public class ArticleLikeSchema {
     }
 
     /**
-     * 点赞时间
+     * 创建时间
      * timestamp
      */
     public Schema.Field<java.time.LocalDateTime> createAt() {

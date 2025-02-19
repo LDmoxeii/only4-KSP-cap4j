@@ -1,0 +1,21 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+DomainEvent("ArticleCommentCreated") [
+    已创建文章评论
+    --监听行为--
+    更新文章评论数
+]
+DomainEvent("ArticleCommentDeleted") [
+    已删除文章评论
+    --监听行为--
+    更新文章评论数
+]
+DomainEvent("ArticleCommentLikeCountUpdated") [
+    已更新文章评论点赞数
+    --属性--
+    点赞数
+    --监听行为--
+    更新用户点赞数
+]
+@enduml

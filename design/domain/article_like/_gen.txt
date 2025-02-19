@@ -1,0 +1,2 @@
+cmd:article_like.LikeArticle:点赞文章
+cmd:article_like.UnlikeArticle:取消点赞文章

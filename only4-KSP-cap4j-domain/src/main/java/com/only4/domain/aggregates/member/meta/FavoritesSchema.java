@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/18
+ * @date 2025/02/19
  */
 @RequiredArgsConstructor
 public class FavoritesSchema {
@@ -41,14 +41,14 @@ public class FavoritesSchema {
         public static final String description = "description";
 
         /**
-         * 逻辑删除
-         */
-        public static final String delFlag = "delFlag";
-
-        /**
          * 默认标识
          */
         public static final String defaultFlag = "defaultFlag";
+
+        /**
+         * 逻辑删除
+         */
+        public static final String delFlag = "delFlag";
 
     }
 
@@ -89,19 +89,19 @@ public class FavoritesSchema {
     }
 
     /**
-     * 逻辑删除
-     * tinyint(1)
-     */
-    public Schema.Field<Boolean> delFlag() {
-        return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
-    }
-
-    /**
      * 默认标识
      * tinyint(1)
      */
     public Schema.Field<Boolean> defaultFlag() {
         return new Schema.Field<>(root.get("defaultFlag"), this.criteriaBuilder);
+    }
+
+    /**
+     * 逻辑删除
+     * tinyint(1)
+     */
+    public Schema.Field<Boolean> delFlag() {
+        return new Schema.Field<>(root.get("delFlag"), this.criteriaBuilder);
     }
 
 

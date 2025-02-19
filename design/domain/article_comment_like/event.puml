@@ -3,20 +3,12 @@
 
 DomainEvent("ArticleCommentLiked") [
     已点赞文章评论
-    --属性--
-    文章评论ID
-    --监听者--
-    该评论文章
-    该评论作者
-    操作者
+    --监听行为--
+    更新文章评论点赞数
 ]
 DomainEvent("ArticleCommentUnliked") [
     已取消点赞文章评论
-    --属性--
-    文章评论ID
-    --监听者--
-    该评论文章
-    该评论作者
-    操作者
+    --监听行为--
+    更新文章评论数
 ]
 @enduml

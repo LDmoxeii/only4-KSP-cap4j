@@ -21,7 +21,7 @@ import javax.validation.constraints.Positive;
  * @author cap4j-ddd-codegen
  * @date 2024/12/15
  */
-@Aggregate(aggregate = "Member", name = "MemberStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Member"}, description = "会员统计")
+@Aggregate(aggregate = "Member", name = "MemberStatistics", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Member" }, description = "会员统计")
 @Entity
 @Table(name = "`member_statistics`")
 @DynamicInsert

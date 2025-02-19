@@ -1,5 +1,10 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
+DomainEvent("ViewHistoryCreated") [
+    浏览记录已创建
+    --监听行为--
+    更新文章浏览量
+]
 
 @enduml

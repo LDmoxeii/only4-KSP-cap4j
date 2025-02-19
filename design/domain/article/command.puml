@@ -3,325 +3,176 @@
 
 Command("CreateArticle") [
     创建文章
-    --触发者--
-    作者
+    --触发事件--
     --属性--
     文章名
     文章描述
     文章内容
-    文章状态
-    置顶状态
-    评论状态
-    文章封面
-    文章附件
     文章作者
-    文章分类
-    文章价格
-    文章标签集
     --规则--
-    1. 文章名不能为空
-    2. 文章描述不能为空
-    3. 文章内容不能为空
-    4. 文章作者不能为空
-]
-Command("UpdateArticleState") [
-    更新文章状态
-    --触发者--
-    管理员
-    作者
-    --属性--
-    文章ID
-    文章可见状态
-    文章置顶状态
-    评论功能状态
-    --规则--
-    1. 文章必须存在
+    文章名不能为空
+    文章描述不能为空
+    文章内容不能为空
+    至少一位文章作者
 ]
 Command("UpdateArticleInfo") [
     更新文章信息
-    --触发者--
-    作者
+    --触发事件--
     --属性--
     文章ID
     文章名
     文章描述
     --规则--
-    1. 文章必须存在
-    2. 文章名不能为空
-    3. 文章描述不能为空
+    文章名不能为空
+    文章描述不能为空
 ]
 Command("BanArticle") [
     封禁文章
-    --触发者--
-    管理员
+    --触发事件--
     --属性--
     文章ID
     封禁时间
     封禁时长
     --规则--
-    1. 文章必须存在
-    2. 文章未封禁
-    3. 封禁时长必须大于0
+   封禁时长必须大于0
 ]
 Command("ReportArticle") [
     举报文章
-    --触发者--
-    用户
+    --触发事件--
     --属性--
     文章ID
     --规则--
-    1. 文章必须存在
-]
-Command("UpdateArticleTag") [
-    更新文章标签
-    --触发者--
-    作者
-    --属性--
-    文章ID
-    标签
-    --规则--
-    1. 文章必须存在
-]
-Command("UpdateArticleCategories") [
-    更新文章分类
-    --触发者--
-    作者
-    --属性--
-    文章ID
-    分类
-    --规则--
-    1. 文章必须存在
-]
-Command("UpdateArticleLikeCount") [
-    更新文章点赞数
-    --触发者--
-    已点赞文章事件
-    已取消点赞文章事件
-    --属性--
-    文章ID
-    点赞数
-    --规则--
-    1. 文章必须存在
-    2. 点赞数为正
 ]
 Command("UpdateArticleFavoriteCount") [
     更新文章收藏数
-    --触发者--
-    已收藏文章事件
-    已取消收藏文章事件
+    --触发事件--
+    已收藏文章
+    已取消收藏文章
     --属性--
     文章ID
     收藏数
     --规则--
-    1. 文章必须存在
-    2. 收藏数为正
+    收藏数不为NULL
 ]
-Command("CreateArticleComment") [
-    创建文章评论
-    --触发者--
-    用户
-    --属性--
-    用户ID
-    用户名
-    文章ID
-    评论内容
-    --规则--
-    1. 文章必须存在
-    2. 评论内容不能为空
-]
-Command("UpdateArticleCommentInfo") [
-    更新文章评论信息
-    --触发者--
-    已更新用户信息事件
+Command("UpdateArticleViewCount") [
+    更新文章浏览量
+    --触发事件--
+    浏览记录已创建
     --属性--
     文章ID
-    评论ID
-    用户名
+    浏览量
     --规则--
-    1. 文章评论必须存在
-    2.用户名不能为空
+    文章必须存在
+    浏览量不为NULL
 ]
-Command("ReportArticleComment") [
-    举报文章评论
-    --触发者--
-   用户
-   --属性--
-    文章ID
-    文章评论ID
-    --规则--
-    1. 文章评论必须存在
-]
-Command("DeleteArticleComment") [
-    删除文章评论
-    --触发者--
-    文章作者
-    管理员
-    --属性--
-    用户ID
-    文章ID
-    文章评论ID
-    --规则--
-    1. 文章评论必须存在
-]
-Command("UpdateArticleCommentSticky") [
-    更新文章评论置顶
-    --触发者--
-    作者
-    管理员
+Command("UpdateArticleTags") [
+    更新文章标签集
+    --触发事件--
     --属性--
     文章ID
-    文章评论ID
-    文章置顶标识
+    标签集
     --规则--
-    1. 文章评论必须存在
 ]
-Command("UpdateArticleCommentVisibility") [
-    更新文章评论可见性
-    --触发者--
-    作者
-    管理员
+Command("UpdateArticleCategories") [
+    更新文章分类集
+    --触发事件--
     --属性--
-    文章评论ID
-    评论可见性
+    文章ID
+    分类
     --规则--
-    1. 文章评论必须存在
 ]
 Command("UpdateArticleCommentCount") [
     更新文章评论数
     --触发者--
-    已创建文章评论事件
-    已删除文章评论事件
+    已创建文章评论
+    已删除文章评论
     --属性--
     文章ID
     评论数
     --规则--
-    1. 文章必须存在
-]
-Command("UpdateArticleCommentLikeCount") [
-    更新文章评论点赞数
-    --触发者--
-    已点赞文章评论事件
-    已取消点赞文章评论事件
-    --属性--
-    文章评论ID
-    点赞数
-    --规则--
-    1. 文章评论必须存在
-    2. 点赞数大于等于0
-]
-Command("UpdateArticleCommentReplyCount") [
-    更新文章评论回复数
-    --触发者--
-    已创建文章评论事件
-    --属性--
-    文章评论ID
-    回复数
-    --规则--
-    1. 文章评论必须存在
-]
-Command("UpdateArticleAuthorInfo")[
-    更新文章作者信息
-    --触发者--
-    已更新用户信息事件
-    --属性--
-    文章ID
-    用户ID
-    作者名
-    --规则--
-    1. 文章必须存在
-]
-Command("UpdateArticleTagInfo") [
-    更新文章标签信息
-    --触发者--
-    已更新标签信息事件
-    --属性--
-    标签ID
-    标签名
-    --规则--
-    1. 标签必须存在
+    评论数不为NULL
 ]
 Command("UpdateArticleCategoryInfo") [
     更新文章分类信息
     --触发者--
     已更新分类信息事件
     --属性--
+    文章ID
     分类ID
     分类名
     --规则--
-    1. 文章必须存在
-    2. 分类必须存在
+    分类必须存在
+    分类名不为空
+]
+Command("UpdateArticleAuthorInfo")[
+    更新文章作者信息
+    --触发事件--
+    已更新用户信息
+    --属性--
+    文章ID
+    用户ID
+    作者名
+    --规则--
+    用户必须存在
+    用户名不为空
+]
+Command("UpdateArticleTagInfo") [
+    更新文章标签信息
+    --触发者--
+    已更新标签信息
+    --属性--
+    文章ID
+    标签ID
+    标签名
+    --规则--
+    标签必须存在
+    标签名不为空
 ]
 Command("UpdateArticleVisibility") [
     更新文章可见性
-    --触发者--
-    作者
-    管理员
+    --触发事件--
     --属性--
     文章ID
     文章可见性
     --规则--
-    1. 文章必须存在
+    文章可见性不为NULL
 ]
 Command("UpdateArticleSticky") [
     更新文章置顶
-    --触发者--
-    作者
-    管理员
+    --触发事件--
     --属性--
     文章ID
     文章置顶标识
     --规则--
-    1. 文章必须存在
+    文章置顶标识不为NULL
 ]
 Command("UpdateArticleCommentFlag") [
     更新文章评论标识
-    --触发者--
-    作者
-    管理员
+    --触发事件--
     --属性--
     文章ID
     文章评论标识
     --规则--
-    1. 文章必须存在
+    文章评论标识不为NULL
 ]
 Command("UpdateArticlePrice") [
     更新文章价格
-    --触发者--
-    作者
-    管理员
+    --触发事件--
     --属性--
     文章ID
     价格
     --规则--
-    1. 文章必须存在
-    2. 价格必须大于等于0
+    价格必须大于等于0
 ]
-
-Command("CreateArticleCommentReply") [
-    创建文章评论回复
-    --触发者--
-    用户
+Command("UpdateArticleLikeCount") [
+    更新文章点赞数
+    --触发事件--
+    已点赞文章
+    已取消点赞文章
     --属性--
     文章ID
-    评论ID
-    用户ID
-    用户名
-    回复内容
+    点赞数
     --规则--
-    用户必须存在
-    用户名不能为空
-    回复内容不能为空
-]
-
-Command("DeleteArticleCommentReply")[
-    删除文章评论回复
-    --触发者--
-    管理员
-    --属性--
-    文章ID
-    评论ID
-    回复ID
-    --规则--
-    无
+    点赞数不为NULL
 ]
 @enduml

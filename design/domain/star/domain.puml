@@ -27,17 +27,6 @@ Aggregate("Stardust") [
     逃逸时间
 ]
 
-Aggregate("StarComment") [
-    星球评论
-    --属性--
-    星球ID
-    星球评论ID
-    星尘ID
-    星尘名
-    评论内容
-    评论时间
-]
-
 Aggregate("StarStatistics") [
     星球统计
     --属性--
@@ -47,26 +36,6 @@ Aggregate("StarStatistics") [
     星尘数
 ]
 
-Aggregate("StarLike") [
-    星球点赞
-    --属性--
-    星球ID
-    星尘ID
-    点赞时间
-]
-
-Aggregate("StarCommentLike")[
-    星球评论点赞
-    --属性--
-    星球ID
-    星尘ID
-    点赞时间
-]
-
 Star -right-> Stardust
-Star -right-> StarComment
-StarComment -right-> StarCommentLike
 Star -right-> StarStatistics
-Star -right-> StarLike
-
 @enduml

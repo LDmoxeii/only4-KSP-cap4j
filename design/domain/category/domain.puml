@@ -2,10 +2,10 @@
 !include ..\lib_eventstorming.puml
 
 Aggregate("Category") [
-    文章分类
+    分类
     --属性--
-    分类ID
-    分类名
+    ID
+    名称
     引用次数
     --行为--
     更新分类信息

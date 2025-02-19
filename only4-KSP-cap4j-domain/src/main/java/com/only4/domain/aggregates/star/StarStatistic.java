@@ -20,7 +20,7 @@ import javax.persistence.*;
  * @author cap4j-ddd-codegen
  * @date 2025/01/16
  */
-@Aggregate(aggregate = "Star", name = "StarStatistic", root = false, type = Aggregate.TYPE_ENTITY, relevant = {"Star"}, description = "星球统计")
+@Aggregate(aggregate = "Star", name = "StarStatistic", root = false, type = Aggregate.TYPE_ENTITY, relevant = { "Star" }, description = "星球统计")
 @Entity
 @Table(name = "`star_statistic`")
 @DynamicInsert
