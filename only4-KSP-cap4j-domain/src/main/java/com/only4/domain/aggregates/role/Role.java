@@ -45,6 +45,10 @@ public class Role {
 
     // 【行为方法开始】
 
+    public void create() {
+
+    }
+
     public void updateRoleInfo(String name, String description) {
         this.name = name;
         this.description = description;
@@ -58,11 +62,16 @@ public class Role {
                 .collect(Collectors.toMap(RolePermission::getPermissionCode, rolePermission -> rolePermission));
         currentPermissionMap.keySet().stream()
                 .filter(key -> !newPsermissionMap.containsKey(key))
-                .forEach(key -> this.rolePermissions.remove(currentPermissionMap.get(key)));
+                .forEach(key -> this.getRolePermissions().remove(currentPermissionMap.get(key)));
         newPsermissionMap.keySet().stream()
                 .filter(key -> !currentPermissionMap.containsKey(key))
-                .forEach(key -> this.rolePermissions.add(newPsermissionMap.get(key)));
+                .forEach(key -> this.getRolePermissions().add(newPsermissionMap.get(key)));
+
         events().attach(new UpdatedRolePermissionsDomainEvent(this), this);
+    }
+
+    public void delete() {
+
     }
 
 

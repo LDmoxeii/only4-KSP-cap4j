@@ -1,4 +1,4 @@
-package com.only4.application.queries.admin_user;
+package com.only4.application.queries.role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.application.RequestParam;
 
 /**
- * 判断该角色是否关联用户
+ * 根据角色ID判断角色是否存在
  *
  * @author cap4j-ddd-codegen
- * @date 2024/12/04
+ * @date 2025/02/20
  */
-public class ExistedAdminUserByRoleIdQry {
+public class RoleExistsByIdQry {
     /**
-     * ExistedAdminUserByRoleIdQry查询请求参数
+     * ExistsByIdQry查询请求参数
      */
     @Data
     @Builder
@@ -25,13 +25,13 @@ public class ExistedAdminUserByRoleIdQry {
     }
 
     /**
-     * ExistedAdminUserByRoleIdQry查询响应
+     * ExistsByIdQry查询响应
      */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        Boolean existed;
+        boolean exists;
     }
 }

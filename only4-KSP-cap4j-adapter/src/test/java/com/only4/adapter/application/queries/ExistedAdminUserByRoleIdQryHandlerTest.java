@@ -2,6 +2,7 @@ package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.AdminUserMapper;
 import com.only4.application.queries.admin_user.ExistedAdminUserByRoleIdQry;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,21 +30,21 @@ class ExistedAdminUserByRoleIdQryHandlerTest {
   void exec_existed() {
     when(request.getRoleId()).thenReturn(1L);
     when(mapper.existedByRoleId(1L)).thenReturn(1L);
-    ExistedAdminUserByRoleIdQry.Response exec = target.exec(request);
+    val exec = target.byMybatis(request.getRoleId());
 
     verify(mapper).existedByRoleId(1L);
 
-    assertTrue(exec.getExisted());
+    assertTrue(exec);
   }
 
   @Test
   void exec_not_existed() {
     when(request.getRoleId()).thenReturn(1L);
     when(mapper.existedByRoleId(1L)).thenReturn(0L);
-    ExistedAdminUserByRoleIdQry.Response exec = target.exec(request);
+    val exec = target.byMybatis(request.getRoleId());
 
     verify(mapper).existedByRoleId(1L);
 
-    assertFalse(exec.getExisted());
+    assertFalse(exec);
   }
 }

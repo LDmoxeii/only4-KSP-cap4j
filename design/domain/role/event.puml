@@ -3,19 +3,12 @@
 
 DomainEvent("UpdatedRolePermissions") [
     已更新角色权限集
-    --属性--
-    角色ID
-    角色权限集
-    --监听者--
-    拥有该角色的管理员用户
+    --监听行为--
+    更新角色权限信息
 ]
 DomainEvent("UpdatedRoleInfo") [
     已更新角色信息
-    --属性--
-    角色ID
-    角色名
-    角色描述
-    --监听者--
-    拥有该角色的管理员用户
+    --监听行为--
+    更新角色信息
 ]
 @enduml
