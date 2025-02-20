@@ -1,2 +1,5 @@
 cmd:check_in.CheckIn:签到
+
 de:check_in.CheckIn:CheckedIn:已签到
+
+qry:check_in.NotCheckedInToday:判断今天是否已签到
