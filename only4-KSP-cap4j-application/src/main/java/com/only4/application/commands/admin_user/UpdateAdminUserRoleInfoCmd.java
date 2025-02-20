@@ -2,6 +2,7 @@ package com.only4.application.commands.admin_user;
 
 
 import com.only4._share.exception.KnownException;
+import com.only4.application.validater.RoleExists;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +59,7 @@ public class UpdateAdminUserRoleInfoCmd {
         Long adminUserId;
 
         @Positive
-        //TODO: @RoleExists
+        @RoleExists
         Long roleId;
 
         @NotBlank(message = "角色名称不能为空")

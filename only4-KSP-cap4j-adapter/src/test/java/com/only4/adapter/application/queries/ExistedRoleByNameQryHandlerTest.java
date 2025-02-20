@@ -1,7 +1,8 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.RoleMapper;
-import com.only4.application.queries.role.ExistedRoleByNameQry;
+import com.only4.application.queries.role.RoleExistsByNameQry;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,7 +21,7 @@ class ExistedRoleByNameQryHandlerTest {
   private ExistedRoleByNameQryHandler target;
 
   @Mock
-  private ExistedRoleByNameQry.Request request;
+  private RoleExistsByNameQry.Request request;
 
   @Mock
   private RoleMapper mapper;
@@ -30,10 +31,10 @@ class ExistedRoleByNameQryHandlerTest {
     when(request.getName()).thenReturn("test");
     when(mapper.existByName("test")).thenReturn(1L);
 
-    ExistedRoleByNameQry.Response result = target.exec(request);
+    val result = target.byMapper(request.getName());
 
     verify(mapper).existByName(any());
-    assertTrue(result.getExisted());
+    assertTrue(result);
   }
 
   @Test
@@ -41,9 +42,9 @@ class ExistedRoleByNameQryHandlerTest {
     when(request.getName()).thenReturn("test");
     when(mapper.existByName("test")).thenReturn(0L);
 
-    ExistedRoleByNameQry.Response result = target.exec(request);
+    val result = target.byMapper(request.getName());
 
     verify(mapper).existByName(any());
-    assertFalse(result.getExisted());
+    assertFalse(result);
   }
 }

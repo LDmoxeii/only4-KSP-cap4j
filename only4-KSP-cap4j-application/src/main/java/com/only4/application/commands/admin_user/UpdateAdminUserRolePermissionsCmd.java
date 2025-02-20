@@ -2,6 +2,7 @@ package com.only4.application.commands.admin_user;
 
 
 import com.only4._share.exception.KnownException;
+import com.only4.application.validater.RoleExists;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.AdminUserPermission;
 import lombok.*;
@@ -59,7 +60,7 @@ public class UpdateAdminUserRolePermissionsCmd {
         Long adminUserId;
 
         @Positive
-        //TODO: @RoleExists
+        @RoleExists
         Long roleId;
 
         @NotNull

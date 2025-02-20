@@ -1,0 +1,10 @@
+cmd:role.CreateRole:创建角色
+cmd:role.UpdateRoleInfo:更新角色信息
+cmd:role.UpdateRolePermissions:更新角色权限集
+cmd:role.DeleteRole:删除角色
+
+de:role.Role:RoleInfoUpdated:角色信息已更新
+de:role.Role:RolePermissionsUpdated:角色权限集已更新
+
+qry:role.RoleExistsById:根据角色ID判断角色是否存在
+qry:role.RoleExistsByName:根据角色名判断角色是否存在
