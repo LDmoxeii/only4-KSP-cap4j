@@ -58,14 +58,14 @@ public class CreateTagCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
 
-        @NotBlank
+        @NotBlank(message = "标签名不能为空")
         @TagUniqueName
         String tagName;
 
-        @NotBlank
+        @NotBlank(message = "标签描述不能为空")
         String tagDesc;
 
-        @NotBlank
+        @NotBlank(message = "标签图标不能为空")
         String tagIcon;
     }
 
