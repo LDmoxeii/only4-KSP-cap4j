@@ -13,6 +13,7 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,7 +71,7 @@ public class CreateArticleCmd {
         @NotBlank(message = "文章内容不能为空")
         String content;
 
-        @NotBlank(message = "文章作者不能为空")
+        @NotEmpty(message = "文章作者不能为空")
         List<ArticleAuthor> authors;
     }
 

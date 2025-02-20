@@ -1,13 +1,16 @@
 package com.only4.domain.aggregates.article;
 
 import com.only4._share.exception.KnownException;
+import com.only4.domain.aggregates.article.dto.CategoryDto;
+import com.only4.domain.aggregates.article.dto.TagDto;
 import com.only4.domain.aggregates.article.enums.ArticleVisibility;
 import com.only4.domain.aggregates.article.events.ArticleCreatedDomainEvent;
 import com.only4.domain.aggregates.article.events.ArticleFavoriteCountUpdatedDomainEvent;
 import com.only4.domain.aggregates.article.events.ArticleLikeCountUpdatedDomainEvent;
-import com.only4.domain.aggregates.category.Category;
-import com.only4.domain.aggregates.tag.Tag;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
@@ -17,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -65,46 +69,47 @@ public class Article {
             throw new KnownException("文章已被封禁");
         }
         this.bannedAt = LocalDateTime.now();
+        this.visibility = ArticleVisibility.BANNED;
         this.banDuration = banDuration;
     }
 
     public void report() {
     }
 
-    public void updateTags(List<Tag> tags) {
-        val currentTags = this.getArticleTags().stream()
+    public void updateTags(List<TagDto> tags) {
+        Map<Long, ArticleTag> currentTags = this.getArticleTags().stream()
                 .collect(Collectors.toMap(ArticleTag::getTagId,
                         at -> at));
-        val targetTags = tags.stream().collect(Collectors.toMap(Tag::getId,
+        Map<Long, ArticleTag> targetTags = tags.stream().collect(Collectors.toMap(TagDto::getTagId,
                 tag -> ArticleTag.builder()
-                        .tagId(tag.getId())
-                        .tagName(tag.getName())
+                        .tagId(tag.getTagId())
+                        .tagName(tag.getTagName())
                         .build()));
 
         currentTags.keySet().stream()
                 .filter(tagId -> !targetTags.containsKey(tagId))
-                .forEach(tagId -> this.articleTags.remove(currentTags.get(tagId)));
+                .forEach(tagId -> this.getArticleTags().remove(currentTags.get(tagId)));
         targetTags.keySet().stream()
                 .filter(tagId -> !currentTags.containsKey(tagId))
-                .forEach(tagId -> this.articleTags.add(targetTags.get(tagId)));
+                .forEach(tagId -> this.getArticleTags().add(targetTags.get(tagId)));
     }
 
-    public void updateCategory(List<Category> categories) {
-        val currentCategories = this.getArticleCategories().stream()
+    public void updateCategory(List<CategoryDto> categories) {
+        Map<Long, ArticleCategory> currentCategories = this.getArticleCategories().stream()
                 .collect(Collectors.toMap(ArticleCategory::getCategoryId,
                         ac -> ac));
-        val targetCategories = categories.stream().collect(Collectors.toMap(Category::getId,
+        Map<Long, ArticleCategory> targetCategories = categories.stream().collect(Collectors.toMap(CategoryDto::getCategoryId,
                 category -> ArticleCategory.builder()
-                        .categoryId(category.getId())
-                        .categoryName(category.getName())
+                        .categoryId(category.getCategoryId())
+                        .categoryName(category.getCategoryName())
                         .build()));
 
         currentCategories.keySet().stream()
                 .filter(categoryId -> !targetCategories.containsKey(categoryId))
-                .forEach(categoryId -> this.articleCategories.remove(currentCategories.get(categoryId)));
+                .forEach(categoryId -> this.getArticleCategories().remove(currentCategories.get(categoryId)));
         targetCategories.keySet().stream()
                 .filter(categoryId -> !currentCategories.containsKey(categoryId))
-                .forEach(categoryId -> this.articleCategories.add(targetCategories.get(categoryId)));
+                .forEach(categoryId -> this.getArticleCategories().add(targetCategories.get(categoryId)));
 
     }
 
@@ -123,7 +128,9 @@ public class Article {
     }
 
     public void updateAuthorInfo(Long memberId, String memberName) {
-
+        if (!hasAuthor()) {
+            throw new KnownException("文章没有作者");
+        }
         this.getArticleAuthors().stream()
                 .filter(aa -> Objects.equals(aa.getId(), memberId))
                 .findFirst()
@@ -131,7 +138,14 @@ public class Article {
                 .updateInfo(memberName);
     }
 
+    private boolean hasAuthor() {
+        return !this.getArticleAuthors().isEmpty();
+    }
+
     public void updateTagInfo(Long tagId, String tagName) {
+        if (!hasTag()) {
+            throw new KnownException("文章没有标签");
+        }
         this.getArticleTags().stream()
                 .filter(at -> Objects.equals(at.getId(), tagId))
                 .findFirst()
@@ -139,12 +153,23 @@ public class Article {
                 .updateInfo(tagName);
     }
 
+    public boolean hasTag() {
+        return !this.getArticleTags().isEmpty();
+    }
+
     public void updateCategoryInfo(Long categoryId, String categoryName) {
+        if (!this.hasCategory()) {
+            throw new KnownException("文章没有分类");
+        }
         this.getArticleCategories().stream()
                 .filter(ac -> Objects.equals(ac.getId(), categoryId))
                 .findFirst()
                 .orElseThrow(() -> new KnownException("分类不存在"))
                 .updateInfo(categoryName);
+    }
+
+    public boolean hasCategory() {
+        return !this.getArticleCategories().isEmpty();
     }
 
     public void updateCommentFlag(Boolean commentFlag) {

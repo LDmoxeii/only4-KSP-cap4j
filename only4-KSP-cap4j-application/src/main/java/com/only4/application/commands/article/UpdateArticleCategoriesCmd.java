@@ -3,6 +3,7 @@ package com.only4.application.commands.article;
 
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.article.dto.CategoryDto;
 import com.only4.domain.aggregates.category.Category;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -35,7 +37,14 @@ public class UpdateArticleCategoriesCmd {
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .orElseThrow(() -> new KnownException("文章不存在"));
 
-            article.updateCategory(cmd.getCategories());
+            List<CategoryDto> categoryDtos = cmd.getCategories().stream()
+                    .map(category -> CategoryDto.builder()
+                            .categoryId(category.getId())
+                            .categoryName(category.getName())
+                            .build())
+                    .collect(Collectors.toList());
+
+            article.updateCategory(categoryDtos);
             Mediator.uow().persist(article);
             Mediator.uow().save();
 

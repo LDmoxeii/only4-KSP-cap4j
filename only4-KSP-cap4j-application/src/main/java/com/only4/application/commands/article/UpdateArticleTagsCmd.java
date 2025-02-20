@@ -3,6 +3,7 @@ package com.only4.application.commands.article;
 
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.article.dto.TagDto;
 import com.only4.domain.aggregates.tag.Tag;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +15,9 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- *
  * @author cap4j-ddd-codegen
  * @date 2025/02/14
  */
@@ -35,7 +36,14 @@ public class UpdateArticleTagsCmd {
                     .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
                     .orElseThrow(() -> new KnownException("文章不存在"));
 
-            article.updateTags(cmd.getTags());
+            List<TagDto> tagDtos = cmd.getTags().stream()
+                    .map(tag -> TagDto.builder()
+                            .tagId(tag.getId())
+                            .tagName(tag.getName())
+                            .build())
+                    .collect(Collectors.toList());
+
+            article.updateTags(tagDtos);
             Mediator.uow().persist(article);
             Mediator.uow().save();
 
