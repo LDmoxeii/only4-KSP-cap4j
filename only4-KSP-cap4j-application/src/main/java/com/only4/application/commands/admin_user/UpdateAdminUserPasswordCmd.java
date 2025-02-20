@@ -11,8 +11,11 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+
 /**
- * todo: 命令描述
+ * 更新管理员用户密码
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04
@@ -31,6 +34,7 @@ public class UpdateAdminUserPasswordCmd {
             AdminUser adminUser = Mediator.repositories()
                     .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
                     .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+
             adminUser.updatePassword(cmd.getNewPassword());
             Mediator.uow().persist(adminUser);
             Mediator.uow().save();
@@ -48,8 +52,11 @@ public class UpdateAdminUserPasswordCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
+        @Positive
         Long adminUserId;
 
+        @NotBlank(message = "密码不能为空")
         String newPassword;
     }
 

@@ -11,6 +11,9 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+
 /**
  * todo: 命令描述
  *
@@ -30,8 +33,8 @@ public class UpdateAdminUserRefreshTokenCmd {
         public Response exec(Request cmd) {
             AdminUser adminUser = Mediator.repositories()
                     .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
-                    .orElseThrow(() ->
-                            new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+                    .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+
             adminUser.updateRefreshToken(cmd.getRefreshToken());
             Mediator.uow().persist(adminUser);
             Mediator.uow().save();
@@ -50,8 +53,11 @@ public class UpdateAdminUserRefreshTokenCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
+        @Positive
         Long adminUserId;
 
+        @NotBlank(message = "刷新令牌不能为空")
         String refreshToken;
     }
 

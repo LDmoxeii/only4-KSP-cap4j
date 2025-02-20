@@ -12,16 +12,6 @@ Aggregate("AdminUser") [
     创建时间
     权限集
     角色集
-    --行为--
-    更新密码
-    更新角色信息
-    更新角色集
-    添加权限集
-    移除权限
-    新增特定权限
-    删除管理员
-    是否有某角色
-    更新刷新Token
 ]
 
 Aggregate("AdminUserRole") [
@@ -30,8 +20,6 @@ Aggregate("AdminUserRole") [
     管理员ID
     角色ID
     角色名称
-    --行为--
-    更新角色信息
 ]
 
 Aggregate("AdminUserPermission") [
@@ -41,8 +29,6 @@ Aggregate("AdminUserPermission") [
     权限码
     权限备注
     源角色ID集(不进行持久化)
-    --行为--
-    添加源角色ID
 ]
 
 AdminUser -right-> AdminUserRole

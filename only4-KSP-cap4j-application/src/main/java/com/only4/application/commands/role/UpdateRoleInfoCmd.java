@@ -11,10 +11,11 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 /**
- * todo: 命令描述
+ * 更新角色信息
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04
@@ -33,9 +34,11 @@ public class UpdateRoleInfoCmd {
             Role role = Mediator.repositories()
                     .findOne(JpaPredicate.byId(Role.class, cmd.getRoleId()))
                     .orElseThrow(() -> new KnownException("角色不存在, roleId=" + cmd.getRoleId()));
+
             role.updateRoleInfo(cmd.getName(), cmd.getDescription());
             Mediator.uow().persist(role);
             Mediator.uow().save();
+
             return Response.builder()
                     .success(true)
                     .build();
@@ -50,11 +53,14 @@ public class UpdateRoleInfoCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
+        @Positive
         public Long roleId;
 
-        @NotEmpty
+        @NotBlank(message = "角色名不能为空")
         public String name;
 
+        @NotBlank(message = "角色描述不能为空")
         public String description;
     }
 

@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.application.RequestParam;
 
 /**
- * todo: 查询描述
+ * 根据名称判断角色是否存在
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04
  */
-public class ExistedRoleByNameQry {
+public class RoleExistsByNameQry {
     /**
      * ExistedRoleByNameQry查询请求参数
      */
@@ -32,6 +32,6 @@ public class ExistedRoleByNameQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        Boolean existed;
+        boolean exists;
     }
 }

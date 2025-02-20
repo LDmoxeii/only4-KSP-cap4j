@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.application.RequestParam;
 
 /**
- * todo: 查询描述
+ * 判断该角色是否关联用户
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04

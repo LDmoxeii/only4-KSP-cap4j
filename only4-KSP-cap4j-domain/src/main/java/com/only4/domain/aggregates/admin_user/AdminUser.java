@@ -66,14 +66,14 @@ public class AdminUser {
         currentRoleMap.keySet().stream()
                 .filter(roleId -> !targetRoleMap.containsKey(roleId))
                 .forEach(roleId -> {
-                    this.adminUserRoles.remove(currentRoleMap.get(roleId));
+                    this.getAdminUserRoles().remove(currentRoleMap.get(roleId));
                     removeRolePermissions(roleId);
                 });
         targetRoleMap.keySet().stream()
                 .filter(roleId -> !currentRoleMap.containsKey(roleId))
                 .forEach(roleId -> {
                     AssignAdminUserRoleDto targetRole = targetRoleMap.get(roleId);
-                    this.adminUserRoles.add(
+                    this.getAdminUserRoles().add(
                             AdminUserRole.builder()
                                     .roleId(roleId)
                                     .roleName(targetRole.getRoleName())
@@ -84,13 +84,13 @@ public class AdminUser {
 
     }
 
-    private void addRolePermissions(Long roleId, List<AdminUserPermission> newPermissions) {
+    public void addRolePermissions(Long roleId, List<AdminUserPermission> newPermissions) {
         newPermissions.forEach(permission -> {
             Optional<AdminUserPermission> existingPermission = this.getAdminUserPermissions().stream()
                     .filter(p -> Objects.equals(p.permissionCode, permission.getPermissionCode()))
                     .findFirst();
-            existingPermission
-                    .ifPresent(p -> p.addSourceRoleId(roleId));
+
+            existingPermission.ifPresent(p -> p.addSourceRoleId(roleId));
             if (!existingPermission.isPresent()) {
                 permission.addSourceRoleId(roleId);
                 this.adminUserPermissions.add(permission);
@@ -103,7 +103,7 @@ public class AdminUser {
         addRolePermissions(roleId, newPermissions);
     }
 
-    private void removeRolePermissions(Long roleId) {
+    public void removeRolePermissions(Long roleId) {
         this.getAdminUserPermissions().stream()
                 .filter(p -> p.getSourceRoleIds().remove(roleId)
                         && p.getSourceRoleIds().isEmpty())
@@ -127,15 +127,14 @@ public class AdminUser {
                             .anyMatch(p -> Objects.equals(p.getPermissionCode(), permissionCode))) {
                         throw new KnownException("权限重复！");
                     }
-                    this.adminUserPermissions.add(newSpecificPermissionMap.get(permissionCode));
+                    this.getAdminUserPermissions().add(newSpecificPermissionMap.get(permissionCode));
                 });
     }
 
     public void delete() {
-        if (delFlag) {
-            throw new KnownException("用户已经被删除！");
+        if (Objects.equals(this.getName(), AppDefaultCredentials.NAME)) {
+            throw new KnownException("默认账号不允许删除");
         }
-        this.delFlag = true;
     }
 
     public boolean isInRole(String roleName) {

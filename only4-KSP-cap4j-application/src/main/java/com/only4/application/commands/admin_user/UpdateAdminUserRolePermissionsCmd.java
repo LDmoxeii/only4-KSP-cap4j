@@ -2,6 +2,7 @@ package com.only4.application.commands.admin_user;
 
 
 import com.only4._share.exception.KnownException;
+import com.only4.application.validater.RoleExists;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.AdminUserPermission;
 import lombok.*;
@@ -12,6 +13,8 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 /**
@@ -34,6 +37,7 @@ public class UpdateAdminUserRolePermissionsCmd {
             AdminUser adminUser = Mediator.repositories()
                     .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
                     .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+
             adminUser.updateRolePermissions(cmd.getRoleId(), cmd.getPermissions());
             Mediator.uow().persist(adminUser);
             Mediator.uow().save();
@@ -51,10 +55,15 @@ public class UpdateAdminUserRolePermissionsCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long roleId;
 
+        @Positive
         Long adminUserId;
 
+        @Positive
+        @RoleExists
+        Long roleId;
+
+        @NotNull
         List<AdminUserPermission> permissions;
     }
 
