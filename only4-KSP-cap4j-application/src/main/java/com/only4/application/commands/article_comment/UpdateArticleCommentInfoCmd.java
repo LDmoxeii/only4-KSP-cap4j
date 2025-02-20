@@ -12,7 +12,7 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 更新文章评论信息
@@ -58,7 +58,7 @@ public class UpdateArticleCommentInfoCmd {
         @MemberExists
         Long memberId;
 
-        @NotEmpty
+        @NotBlank(message = "用户名不能为空")
         String memberName;
     }
 
