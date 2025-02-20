@@ -36,6 +36,10 @@ public class BlockMember {
 
     // 【行为方法开始】
 
+    void update(String otherName) {
+        this.otherName = otherName;
+    }
+
 
     // 【行为方法结束】
 

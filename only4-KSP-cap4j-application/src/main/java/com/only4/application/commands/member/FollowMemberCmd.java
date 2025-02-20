@@ -12,7 +12,7 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 关注用户
@@ -60,7 +60,7 @@ public class FollowMemberCmd {
         @MemberExists
         Long otherId;
 
-        @NotEmpty
+        @NotBlank(message = "用户名不能为空")
         String otherName;
     }
 

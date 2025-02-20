@@ -43,4 +43,24 @@ Query("GetFavoritesByFavoritesId") [
     --属性--
     收藏夹ID
 ]
+Query("MemberExists") [
+    根据用户ID判断用户是否存在
+    --属性--
+    用户ID
+]
+Query("MemberUniqueName") [
+    根据用户帐号判断用户是否存在
+    --属性--
+    用户帐号
+]
+Query("MemberUniqueNickName") [
+    根据昵称判断用户是否存在
+    --属性--
+    昵称
+]
+Query("MemberUniquePhone") [
+    根据手机号判断用户是否存在
+    --属性--
+    手机号
+]
 @enduml

@@ -11,7 +11,7 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * UpdateMemberRankCmd命令
@@ -56,7 +56,7 @@ public class UpdateMemberRankCmd {
 
         Long memberId;
 
-        @NotEmpty
+        @NotNull
         Integer rank;
     }
 

@@ -11,7 +11,7 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 /**
  * UpdateFavoritesInfoCmd命令
@@ -58,10 +58,10 @@ public class UpdateFavoritesInfoCmd {
 
         Long favoritesId;
 
-        @NotEmpty
+        @NotBlank(message = "收藏夹名称不能为空")
         String favoritesName;
 
-        @NotEmpty
+        @NotBlank(message = "收藏夹描述不能为空")
         String favoritesDesc;
     }
 

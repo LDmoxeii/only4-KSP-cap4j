@@ -1,10 +1,7 @@
 package com.only4.domain.aggregates.member;
 
 import com.only4._share.exception.KnownException;
-import com.only4.domain.aggregates.member.events.MemberInfoUpdatedDomainEvent;
-import com.only4.domain.aggregates.member.events.MemberLikeCountUpdatedDomainEvent;
-import com.only4.domain.aggregates.member.events.MemberRankUpdatedDomainEvent;
-import com.only4.domain.aggregates.member.events.MemberRegisteredWithPasswordDomainEvent;
+import com.only4.domain.aggregates.member.events.*;
 import lombok.*;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
@@ -65,19 +62,15 @@ public class Member {
         events().attach(new MemberInfoUpdatedDomainEvent(this), this);
     }
 
-    public boolean hasLevel() {
-        return this.getLevel() >= 0;
-    }
-
     public void upLevel() {
-        if (!hasLevel()) {
+        if (!isActive()) {
             throw new KnownException("用户未处于活跃状态, 无法获取等级分");
         }
-        this.level++;
+        this.level = this.getLevel() + 1;
     }
 
     public void updateRank(Integer rank) {
-        if (this.isActive()) {
+        if (!this.isActive()) {
             throw new KnownException("用户非活跃用户, 无法获取等级分");
         }
 
@@ -85,8 +78,8 @@ public class Member {
         events().attach(new MemberRankUpdatedDomainEvent(this, newRank), this);
     }
 
-    private boolean isActive() {
-        return this.level >= 0;
+    public boolean isActive() {
+        return this.getLevel() >= 0;
     }
 
     public boolean hasStardust() {
@@ -97,7 +90,6 @@ public class Member {
         if (this.hasStardust()) {
             throw new KnownException("用户未遣散星尘, 无法删除");
         }
-        this.delFlag = true;
     }
 
     public void report() {
@@ -115,7 +107,6 @@ public class Member {
 
     public void updateWorkCount(Integer workCount) {
         this.getMemberStatistics().updateWorkCount(workCount);
-        this.getMemberStatistics().workCount += workCount;
     }
 
     public void ban(Integer banDuration) {
@@ -126,7 +117,7 @@ public class Member {
         this.banDuration = banDuration;
     }
 
-    private boolean hasBanned() {
+    public boolean hasBanned() {
         return this.banDuration != 0;
     }
 
@@ -147,6 +138,7 @@ public class Member {
                 .build());
 
         // event
+        events().attach(new MemberFollowedDomainEvent(this, otherId), this);
         this.getMemberStatistics().updateFollowingCount(1);
     }
 
@@ -160,11 +152,12 @@ public class Member {
         Optional.of(this.getFollowMembers().stream()
                         .filter(followMember -> Objects.equals(followMember.getOtherId(), otherId))
                         .findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("关注用户不存在")))
+                        .orElseThrow(() -> new KnownException("关注用户不存在")))
                 .ifPresent(followMember -> {
                     this.getFollowMembers().remove(followMember);
 
                     // event
+                    events().attach(new MemberUnfollowedDomainEvent(this, otherId), this);
                     this.getMemberStatistics().updateFollowingCount(-1);
                 });
     }
@@ -185,13 +178,13 @@ public class Member {
     }
 
     public void updateFavoritesInfo(Long favoritesId, String favoritesName, String favoritesDesc) {
-        if (!this.hasUniqueFavorites(favoritesName)) {
+        if (this.hasUniqueFavorites(favoritesName)) {
             throw new KnownException("该用户已有同名收藏夹");
         }
         this.getFavorites().stream()
                 .filter(favorites -> Objects.equals(favorites.getId(), favoritesId))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("收藏夹不存在"))
+                .orElseThrow(() -> new KnownException("收藏夹不存在"))
                 .updateInfo(favoritesName, favoritesDesc);
     }
 
@@ -204,12 +197,12 @@ public class Member {
                     favorites.addArticle(articleId);
 
                     // event
-                    favorites.getFavoritesStatistics().updateArticleCount(1);
+                    favorites.updateArticleCount(1);
                 });
     }
 
     public void removeArticleFromFavorite(Long favoritesId, Long articleId) {
-        Optional.ofNullable(this.getFavorites().stream()
+        Optional.of(this.getFavorites().stream()
                         .filter(favorites -> Objects.equals(favorites.getId(), favoritesId))
                         .findFirst()
                         .orElseThrow(() -> new KnownException("收藏夹不存在")))
@@ -217,7 +210,7 @@ public class Member {
                     favorites.removeArticle(articleId);
 
                     // event
-                    favorites.getFavoritesStatistics().updateArticleCount(-1);
+                    favorites.updateArticleCount(-1);
                 });
     }
 
@@ -225,28 +218,24 @@ public class Member {
         Optional.of(this.getFavorites().stream()
                         .filter(favorites -> Objects.equals(favorites.getId(), favoritesId))
                         .findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("收藏夹不存在")))
+                        .orElseThrow(() -> new KnownException("收藏夹不存在")))
                 .ifPresent(favorites -> this.getFavorites().remove(favorites));
     }
 
     public void updateBlackInfo(Long otherId, String otherName) {
-        if (this.hasBlocked(otherId)) {
-            throw new KnownException("用户已屏蔽过该用户");
-        }
-        this.getBlockMembers().add(BlockMember.builder()
-                .otherId(otherId)
-                .otherName(otherName)
-                .build());
+        this.getBlockMembers().stream()
+                .filter(blockMember -> Objects.equals(blockMember.getOtherId(), otherId))
+                .findFirst()
+                .orElseThrow(() -> new KnownException("用户未屏蔽过该用户"))
+                .update(otherName);
     }
 
     public void updateFollowInfo(Long otherId, String otherName) {
-        if (this.hasFollowed(otherId)) {
-            throw new KnownException("用户已关注过该用户");
-        }
-        this.getFollowMembers().add(FollowMember.builder()
-                .otherId(otherId)
-                .otherName(otherName)
-                .build());
+        this.getFollowMembers().stream()
+                .filter(fm -> Objects.equals(fm.getOtherId(), otherId))
+                .findFirst()
+                .orElseThrow(() -> new KnownException("关注用户不存在"))
+                .updateInfo(otherName);
     }
 
     public boolean hasBlocked(Long otherId) {

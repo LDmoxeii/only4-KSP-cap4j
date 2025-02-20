@@ -1,9 +1,7 @@
 package com.only4.application.validater;
 
-import com.only4.domain.aggregates.member.Member;
-import com.only4.domain.aggregates.member.meta.MemberSchema;
+import com.only4.application.queries.member.MemberUniquePhoneQry;
 import org.netcorepal.cap4j.ddd.Mediator;
-import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -27,11 +25,9 @@ public @interface MemberUniquePhone {
     class Validator implements ConstraintValidator<MemberUniquePhone, String> {
         @Override
         public boolean isValid(String memberPhone, ConstraintValidatorContext context) {
-            return !Mediator.repositories().exists(JpaPredicate.bySpecification(Member.class,
-                    MemberSchema.specify(member ->
-                            member.phone().equal(memberPhone
-                            ))
-            ));
+            return !Mediator.queries().send(MemberUniquePhoneQry.Request.builder()
+                    .memberPhone(memberPhone)
+                    .build()).isExists();
         }
     }
 }

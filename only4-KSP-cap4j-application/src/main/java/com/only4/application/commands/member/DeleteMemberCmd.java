@@ -33,7 +33,7 @@ public class DeleteMemberCmd {
                     .orElseThrow(() -> new KnownException("用户不存在"));
 
             member.delete();
-            Mediator.uow().persist(member);
+            Mediator.uow().remove(member);
             Mediator.uow().save();
 
             return Response.builder()

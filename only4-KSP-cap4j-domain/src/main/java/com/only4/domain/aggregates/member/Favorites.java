@@ -71,7 +71,7 @@ public class Favorites {
 
     void removeArticle(Long articleId) {
         Optional.of(this.getFavoritesArticles().stream()
-                        .filter(favoriteArticle -> Objects.equals(favoriteArticle.getId(), articleId))
+                        .filter(favoriteArticle -> Objects.equals(favoriteArticle.getArticleId(), articleId))
                         .findFirst()
                         .orElseThrow(() -> new KnownException("文章收藏记录不存在")))
                 .ifPresent(favoritesArticle -> this.getFavoritesArticles().remove(favoritesArticle));

@@ -37,6 +37,9 @@ public class FollowMember {
 
     // 【行为方法开始】
 
+    void updateInfo(String otherName) {
+        this.otherName = otherName;
+    }
 
     // 【行为方法结束】
 

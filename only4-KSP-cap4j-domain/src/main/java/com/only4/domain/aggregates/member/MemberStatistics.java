@@ -61,10 +61,6 @@ public class MemberStatistics {
         this.followingCount += followingCount;
     }
 
-    void updateStardustCount(Integer stardustCount) {
-        this.stardustCount += stardustCount;
-    }
-
     boolean validateRank() {
         return this.rank > 0;
     }
