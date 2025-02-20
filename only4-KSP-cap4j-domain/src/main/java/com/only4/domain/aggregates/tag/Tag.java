@@ -55,7 +55,7 @@ public class Tag {
     }
 
     public void updateRefCount(@NotNull Integer refCount) {
-        this.refCount += refCount;
+        this.refCount = this.getRefCount() + refCount;
     }
 
     public void delete() {

@@ -54,13 +54,13 @@ public class UpdateTagInfoCmd {
 
         Long tagId;
 
-        @NotBlank
+        @NotBlank(message = "标签名称不能为空")
         String name;
 
-        @NotBlank
+        @NotBlank(message = "标签描述不能为空")
         String description;
 
-        @NotBlank
+        @NotBlank(message = "标签图标不能为空")
         String icon;
     }
 
