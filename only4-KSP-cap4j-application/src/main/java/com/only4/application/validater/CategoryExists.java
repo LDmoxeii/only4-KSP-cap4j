@@ -1,8 +1,7 @@
 package com.only4.application.validater;
 
-import com.only4.domain.aggregates.category.Category;
+import com.only4.application.queries.category.CategoryExistsQry;
 import org.netcorepal.cap4j.ddd.Mediator;
-import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -26,7 +25,9 @@ public @interface CategoryExists {
     class Validator implements ConstraintValidator<CategoryExists, Long> {
         @Override
         public boolean isValid(Long categoryId, ConstraintValidatorContext context) {
-            return Mediator.repositories().exists(JpaPredicate.byId(Category.class, categoryId));
+            return Mediator.queries().send(CategoryExistsQry.Request.builder()
+                    .categoryId(categoryId)
+                    .build()).isExists();
         }
     }
 }

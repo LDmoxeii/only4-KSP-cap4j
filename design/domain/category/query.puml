@@ -17,4 +17,14 @@ Query("getCategoryById") [
     --属性--
     分类ID
 ]
+Query("CategoryExists") [
+    判断分类是否存在
+    --属性--
+    分类ID
+]
+Query("CategoryUniqueName") [
+    判断是否存在同名分类
+    --属性--
+    分类名
+]
 @enduml

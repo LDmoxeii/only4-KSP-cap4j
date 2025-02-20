@@ -4,3 +4,6 @@ cmd:category.UpdateCategoryRefCount:更新分类引用数
 cmd:category.DeleteCategory:删除分类
 
 de:category.Category:CategoryInfoUpdated:分类信息已更新
+
+qry:category.CategoryExists:判断分类是否存在
+qry:category.CategoryUniqueName:判断是否存在同名分类
