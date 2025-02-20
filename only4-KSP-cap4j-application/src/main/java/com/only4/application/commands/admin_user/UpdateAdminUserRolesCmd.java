@@ -12,11 +12,12 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 /**
- * todo: 命令描述
+ * 更新管理员用户角色
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04
@@ -35,9 +36,11 @@ public class UpdateAdminUserRolesCmd {
             AdminUser adminUser = Mediator.repositories()
                     .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
                     .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+
             adminUser.updateRoles(cmd.getRolesToBeAssigned());
             Mediator.uow().persist(adminUser);
             Mediator.uow().save();
+
             return Response.builder()
                     .success(true)
                     .build();
@@ -52,10 +55,12 @@ public class UpdateAdminUserRolesCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
+        @Positive
         Long adminUserId;
 
-        @NotEmpty
-        public List<AssignAdminUserRoleDto> rolesToBeAssigned;
+        @NotNull
+        List<AssignAdminUserRoleDto> rolesToBeAssigned;
     }
 
     /**

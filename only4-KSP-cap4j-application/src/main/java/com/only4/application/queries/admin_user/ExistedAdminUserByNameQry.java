@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.application.RequestParam;
 
 /**
- * todo: 查询描述
+ * 根据用户名判断管理员用户是否存在
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04
@@ -32,6 +32,6 @@ public class ExistedAdminUserByNameQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        Boolean existed;
+        boolean exists;
     }
 }
