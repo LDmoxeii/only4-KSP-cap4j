@@ -40,7 +40,9 @@ public class ViewHistory implements ValueObject<Long> {
 
     // 【行为方法开始】
 
-
+    public void create() {
+        events().attach(new ViewHistoryCreatedDomainEvent(this), this);
+    }
 
     // 【行为方法结束】
 
@@ -103,10 +105,6 @@ public class ViewHistory implements ValueObject<Long> {
      */
     @Column(name = "`del_flag`")
     Boolean delFlag;
-
-    public void create() {
-        events().attach(new ViewHistoryCreatedDomainEvent(this), this);
-    }
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }
