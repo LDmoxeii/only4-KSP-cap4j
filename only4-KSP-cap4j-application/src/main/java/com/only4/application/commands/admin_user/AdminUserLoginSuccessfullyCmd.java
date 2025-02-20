@@ -11,10 +11,13 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 /**
- * todo: 命令描述
+ * 记录登录成功
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04
@@ -33,6 +36,7 @@ public class AdminUserLoginSuccessfullyCmd {
             var adminUser = Mediator.repositories()
                     .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
                     .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+
             adminUser.loginSuccessful(cmd.getRefreshToken(), cmd.getLoginExpiryDate());
             return Response.builder()
                     .success(true)
@@ -48,10 +52,14 @@ public class AdminUserLoginSuccessfullyCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
+
+        @Positive
         Long adminUserId;
 
+        @NotBlank
         String refreshToken;
 
+        @NotNull
         LocalDateTime loginExpiryDate;
     }
 

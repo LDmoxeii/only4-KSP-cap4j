@@ -12,6 +12,8 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 /**
@@ -34,6 +36,7 @@ public class UpdateAdminUserRolePermissionsCmd {
             AdminUser adminUser = Mediator.repositories()
                     .findOne(JpaPredicate.byId(AdminUser.class, cmd.getAdminUserId()))
                     .orElseThrow(() -> new KnownException("用户不存在, adminUserId=" + cmd.getAdminUserId()));
+
             adminUser.updateRolePermissions(cmd.getRoleId(), cmd.getPermissions());
             Mediator.uow().persist(adminUser);
             Mediator.uow().save();
@@ -51,10 +54,15 @@ public class UpdateAdminUserRolePermissionsCmd {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long roleId;
 
+        @Positive
         Long adminUserId;
 
+        @Positive
+        //TODO: @RoleExists
+        Long roleId;
+
+        @NotNull
         List<AdminUserPermission> permissions;
     }
 

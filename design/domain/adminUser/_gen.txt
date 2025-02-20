@@ -1,0 +1,9 @@
+cmd:admin_user.CreateAdminUser:创建管理员用户
+cmd:admin_user.UpdateAdminUserRoles:更新管理员角色集
+cmd:admin_user.UpdateAdminUserRoleInfo:更新管理员角色信息
+cmd:admin_user.UpdateAdminUserPassword:更新管理员密码
+cmd:admin_user.UpdateAdminUserRefreshToken:更新管理员刷新Token信息
+cmd:admin_user.UpdateAdminUserRolePermissions:更新管理员权限集
+cmd:admin_user.DeleteAdminUser:删除管理员
+
+qry.admin_user.AdminUserExistsByName:根据用户名判断管理员用户是否存在
