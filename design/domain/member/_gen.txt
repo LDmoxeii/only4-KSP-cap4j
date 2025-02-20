@@ -25,3 +25,8 @@ cmd:member.UpdateFollowMemberInfo:更新关注用户信息
 de:member.Member:MemberInfoUpdated:用户信息已更新
 de:member.Member:MemberFollowed:用户已关注
 de:member.Member:MemberUnfollowed:用户取消关注
+
+qry:member.MemberExists:判断用户是否已存在
+qry:member.MemberUniqueName:判断是否有同帐号用户
+qry:member.MemberUniqueNickName:判断是否有同名用户
+qry:member.MemberUniquePhone:判断手机号是否已绑定用户

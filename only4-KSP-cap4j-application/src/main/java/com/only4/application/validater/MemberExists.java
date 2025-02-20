@@ -1,8 +1,7 @@
 package com.only4.application.validater;
 
-import com.only4.domain.aggregates.member.Member;
+import com.only4.application.queries.member.MemberExistsQry;
 import org.netcorepal.cap4j.ddd.Mediator;
-import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -26,7 +25,9 @@ public @interface MemberExists {
     class Validator implements ConstraintValidator<MemberExists, Long> {
         @Override
         public boolean isValid(Long memberId, ConstraintValidatorContext context) {
-            return Mediator.repositories().exists(JpaPredicate.byId(Member.class, memberId));
+            return Mediator.queries().send(MemberExistsQry.Request.builder()
+                    .memberId(memberId)
+                    .build()).isExists();
         }
     }
 }

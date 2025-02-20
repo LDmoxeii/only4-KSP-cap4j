@@ -12,7 +12,7 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 /**
  * UpdateMemberInfoCmd命令
@@ -57,11 +57,11 @@ public class UpdateMemberInfoCmd {
 
         Long memberId;
 
-        @NotEmpty
+        @NotBlank(message = "昵称不能为空")
         @MemberUniqueNickName
         String nickName;
 
-        @NotEmpty
+        @NotBlank(message = "个性签名不能为空")
         String signature;
     }
 

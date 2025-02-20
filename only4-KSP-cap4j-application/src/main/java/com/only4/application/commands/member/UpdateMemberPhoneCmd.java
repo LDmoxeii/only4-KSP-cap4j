@@ -12,6 +12,8 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * UpdateMemberPhoneCmd命令
  *
@@ -55,6 +57,7 @@ public class UpdateMemberPhoneCmd {
 
         Long memberId;
 
+        @NotBlank(message = "手机号不能为空")
         @MemberUniquePhone
         String phone;
     }

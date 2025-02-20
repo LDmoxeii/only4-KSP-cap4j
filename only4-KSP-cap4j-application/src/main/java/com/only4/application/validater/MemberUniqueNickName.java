@@ -1,9 +1,7 @@
 package com.only4.application.validater;
 
-import com.only4.domain.aggregates.member.Member;
-import com.only4.domain.aggregates.member.meta.MemberSchema;
+import com.only4.application.queries.member.MemberUniqueNickNameQry;
 import org.netcorepal.cap4j.ddd.Mediator;
-import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -27,11 +25,9 @@ public @interface MemberUniqueNickName {
     class Validator implements ConstraintValidator<MemberUniqueNickName, String> {
         @Override
         public boolean isValid(String nickName, ConstraintValidatorContext context) {
-            return !Mediator.repositories().exists(JpaPredicate.bySpecification(Member.class,
-                    MemberSchema.specify(member ->
-                            member.nickName().equal(nickName)
-                    )
-            ));
+            return !Mediator.queries().send(MemberUniqueNickNameQry.Request.builder()
+                    .memberNickName(nickName)
+                    .build()).isExists();
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.only4.application.subscribers.domain;
 
 import com.only4.application.commands.member.UpdateMemberFanCountCmd;
-import com.only4.application.commands.member.UpdateMemberFollowingCountCmd;
 import com.only4.domain.aggregates.member.events.MemberUnfollowedDomainEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -18,17 +17,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class MemberUnfollowedDomainEventSubscriber {
-
-    @EventListener(MemberUnfollowedDomainEvent.class)
-    public void updateMemberFollowingCount(MemberUnfollowedDomainEvent event) {
-        val member = event.getEntity();
-
-        Optional.of(UpdateMemberFollowingCountCmd.Request.builder()
-                .memberId(member.getId())
-                .followingCount(-1)
-                .build())
-                .ifPresent(Mediator.commands()::send);
-    }
 
     @EventListener(MemberUnfollowedDomainEvent.class)
     public void updateMemberFanCount(MemberUnfollowedDomainEvent event) {
