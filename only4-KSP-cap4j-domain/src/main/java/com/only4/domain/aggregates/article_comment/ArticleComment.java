@@ -62,7 +62,7 @@ public class ArticleComment {
     }
 
     public void updateInfo(Long memberId, String memberName) {
-        if (this.isAuthor(memberId)) {
+        if (!this.isAuthor(memberId)) {
             throw new KnownException("不是作者，不能修改");
         }
 
@@ -78,8 +78,6 @@ public class ArticleComment {
 
 
     public void delete() {
-        this.delFlag = true;
-
         events().attach(new ArticleCommentDeletedDomainEvent(this), this);
     }
 

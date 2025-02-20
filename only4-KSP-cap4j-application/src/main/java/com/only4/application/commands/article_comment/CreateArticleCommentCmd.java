@@ -11,7 +11,7 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import java.util.Optional;
 
 /**
@@ -58,10 +58,10 @@ public class CreateArticleCommentCmd {
         @MemberExists
         Long memberId;
 
-        @NotEmpty(message = "评论人名称不能为空")
+        @NotBlank(message = "评论人名称不能为空")
         String memberName;
 
-        @NotEmpty(message = "评论内容不能为空")
+        @NotBlank(message = "评论内容不能为空")
         String content;
     }
 

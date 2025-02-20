@@ -33,7 +33,7 @@ public class DeleteArticleCommentCmd {
                     .orElseThrow(() -> new KnownException("评论不存在"));
 
             comment.delete();
-            Mediator.uow().persist(comment);
+            Mediator.uow().remove(comment);
             Mediator.uow().persist(comment);
             Mediator.uow().save();
 
