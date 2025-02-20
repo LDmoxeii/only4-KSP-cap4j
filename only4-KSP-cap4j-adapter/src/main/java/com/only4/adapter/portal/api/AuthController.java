@@ -1,7 +1,6 @@
 package com.only4.adapter.portal.api;
 
 import cn.dev33.satoken.annotation.SaIgnore;
-import com.only4.adapter.application.distributed.clients.LoginService;
 import com.only4.adapter.portal.api._share.ResponseData;
 import com.only4.adapter.portal.api.request.LoginByAccountRequest;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
-    private final LoginService loginService;
 
     @PostMapping("/loginByAccount")
     public ResponseData<?> login(@RequestBody LoginByAccountRequest request) {

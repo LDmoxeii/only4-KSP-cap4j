@@ -5,6 +5,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.only4._share.utils.RedisUtils;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +48,7 @@ public class PlusSaTokenDao implements SaTokenDao {
     }
 
     /**
-     * 修修改指定key-value键值对 (过期时间不变)
+     * 修改指定key-value键值对 (过期时间不变)
      */
     @Override
     public void update(String key, String value) {

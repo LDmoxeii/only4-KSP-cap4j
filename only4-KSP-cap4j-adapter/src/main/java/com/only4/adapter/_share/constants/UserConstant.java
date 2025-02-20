@@ -2,8 +2,9 @@ package com.only4.adapter._share.constants;
 
 public interface UserConstant {
 
-  String LOGIN_USER_KEY = "loginUser";
-  String CUSTOMER_KEY = "customerId";
-  String CUSTOMER_ACCOUNT_KEY = "account";
+  String ADMIN_USER_KEY = "adminUser";
+  String USER_PERMISSIONS = "userPermissions";
+  String USER_ROLES = "userRoles";
+  String ADMIN_USER_ID = "adminUserId";
 
 }

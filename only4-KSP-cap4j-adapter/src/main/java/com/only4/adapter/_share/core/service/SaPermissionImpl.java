@@ -1,14 +1,11 @@
 package com.only4.adapter._share.core.service;
 
 import cn.dev33.satoken.stp.StpInterface;
+import com.only4.adapter._share.dto.PermissionDto;
+import com.only4.adapter._share.dto.RoleDto;
 import com.only4.adapter._share.utils.LoginHelper;
-import com.only4.domain.aggregates.admin_user.AdminUser;
-import com.only4.domain.aggregates.admin_user.AdminUserPermission;
-import lombok.val;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -19,21 +16,22 @@ import java.util.stream.Collectors;
 public class SaPermissionImpl implements StpInterface {
 
     /**
-     * 获取菜单权限列表
+     * 返回指定账号id所拥有的权限码集合
      */
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        return new ArrayList<>();
+        return LoginHelper.getPermissions().stream()
+                .map(PermissionDto::getCode)
+                .collect(Collectors.toList());
     }
 
     /**
-     * 获取角色权限列表
+     * 返回指定账号id所拥有的角色标识集合
      */
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        val loginUser = LoginHelper.getLoginUser(AdminUser.class);
-        return Objects.requireNonNull(loginUser).getAdminUserPermissions().stream()
-                .map(AdminUserPermission::getPermissionCode)
+        return LoginHelper.getRoles().stream()
+                .map(RoleDto::getName)
                 .collect(Collectors.toList());
     }
 }
