@@ -33,7 +33,7 @@ public class DeleteArticleCommentReplyCmd {
                     .orElseThrow(() -> new KnownException("回复不存在"));
 
             reply.delete();
-            Mediator.uow().persist(reply);
+            Mediator.uow().remove(reply);
             Mediator.uow().save();
 
             return Response.builder()
