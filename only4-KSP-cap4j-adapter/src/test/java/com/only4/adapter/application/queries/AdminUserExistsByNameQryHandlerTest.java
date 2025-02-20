@@ -1,7 +1,7 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.AdminUserMapper;
-import com.only4.application.queries.admin_user.ExistedAdminUserByNameQry;
+import com.only4.application.queries.admin_user.AdminUserExistsByNameQry;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,13 +14,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ExistedAdminUserByNameQryHandlerTest {
+class AdminUserExistsByNameQryHandlerTest {
 
   @InjectMocks
-  ExistedAdminUserByNameQryHandler handler;
+  AdminUserExistsByNameQryHandler handler;
 
   @Mock
-  private ExistedAdminUserByNameQry.Request request;
+  private AdminUserExistsByNameQry.Request request;
 
   @Mock
   AdminUserMapper mapper;

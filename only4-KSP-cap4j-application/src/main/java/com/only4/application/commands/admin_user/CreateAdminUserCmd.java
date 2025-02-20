@@ -43,6 +43,7 @@ public class CreateAdminUserCmd {
             );
 
             // 保存数据库
+            adminUser.create();
             Mediator.uow().persist(adminUser);
             Mediator.uow().save();
 

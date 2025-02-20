@@ -1,6 +1,6 @@
 package com.only4.application.validater;
 
-import com.only4.application.queries.admin_user.ExistedAdminUserByNameQry;
+import com.only4.application.queries.admin_user.AdminUserExistsByNameQry;
 import org.netcorepal.cap4j.ddd.Mediator;
 
 import javax.validation.Constraint;
@@ -27,9 +27,9 @@ public @interface AdminUserUniqueName {
 
         @Override
         public boolean isValid(String name, ConstraintValidatorContext constraintValidatorContext) {
-            return Mediator.queries().send(ExistedAdminUserByNameQry.Request.builder()
-                            .name(name)
-                            .build()).isExists();
+            return !Mediator.queries().send(AdminUserExistsByNameQry.Request.builder()
+                    .name(name)
+                    .build()).isExists();
         }
     }
 }
