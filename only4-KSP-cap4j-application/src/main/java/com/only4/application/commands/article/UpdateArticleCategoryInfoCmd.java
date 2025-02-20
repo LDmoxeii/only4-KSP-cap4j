@@ -2,6 +2,7 @@ package com.only4.application.commands.article;
 
 
 import com.only4._share.exception.KnownException;
+import com.only4.application.validater.CategoryExists;
 import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 /**
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/14
+ * @date 2025/02/20
  */
 public class UpdateArticleCategoryInfoCmd {
 
@@ -54,6 +55,7 @@ public class UpdateArticleCategoryInfoCmd {
 
         Long articleId;
 
+        @CategoryExists
         Long categoryId;
 
         @NotBlank
