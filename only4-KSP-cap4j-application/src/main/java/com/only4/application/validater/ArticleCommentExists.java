@@ -1,8 +1,7 @@
 package com.only4.application.validater;
 
-import com.only4.domain.aggregates.article_comment.ArticleComment;
+import com.only4.application.queries.article_comment.ArticleCommentExistsQry;
 import org.netcorepal.cap4j.ddd.Mediator;
-import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -26,7 +25,9 @@ public @interface ArticleCommentExists {
     class Validator implements ConstraintValidator<ArticleCommentExists, Long> {
         @Override
         public boolean isValid(Long commentId, ConstraintValidatorContext context) {
-            return Mediator.repositories().exists(JpaPredicate.byId(ArticleComment.class, commentId));
+            return Mediator.queries().send(ArticleCommentExistsQry.Request.builder()
+                    .articleCommentId(commentId)
+                    .build()).isExists();
         }
     }
 }
