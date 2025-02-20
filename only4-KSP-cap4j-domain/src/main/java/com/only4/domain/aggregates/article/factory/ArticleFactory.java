@@ -1,6 +1,8 @@
 package com.only4.domain.aggregates.article.factory;
 
-import com.only4.domain.aggregates.article.*;
+import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.article.ArticleAuthor;
+import com.only4.domain.aggregates.article.ArticleStatistics;
 import com.only4.domain.aggregates.article.enums.ArticleVisibility;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Article聚合工厂
@@ -64,16 +65,6 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
         String appendix;
 
         List<ArticleAuthor> authors;
-
-        String getCover() {
-            return Optional.ofNullable(cover)
-                    .orElse("");
-        }
-
-        String getAppendix() {
-            return Optional.ofNullable(appendix)
-                    .orElse("");
-        }
 
     }
 }

@@ -11,7 +11,7 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -54,10 +54,10 @@ public class UpdateArticleInfoCmd {
 
         Long articleId;
 
-        @NotEmpty(message = "文章标题不能为空")
+        @NotBlank(message = "文章标题不能为空")
         String title;
 
-        @NotEmpty(message = "文章描述不能为空")
+        @NotBlank(message = "文章描述不能为空")
         String description;
 
     }

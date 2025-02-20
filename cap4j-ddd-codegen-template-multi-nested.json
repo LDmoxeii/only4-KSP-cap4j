@@ -24,7 +24,7 @@
           "type": "file",
           "name": "${Query}.java",
           "format": "raw",
-          "data": "package ${basePackage}.application.queries${package};\n\nimport lombok.AllArgsConstructor;\nimport lombok.Builder;\nimport lombok.Data;\nimport lombok.NoArgsConstructor;\nimport org.netcorepal.cap4j.ddd.application.RequestParam;\n\n/**\n * todo: 查询描述\n *\n * @author cap4j-ddd-codegen\n * @date ${date}\n */\npublic class ${Query} {\n    /**\n     * ${Query}查询请求参数\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Request implements RequestParam<Response> {\n        String param;\n    }\n\n    /**\n     * ${Query}查询响应\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Response {\n        Long id;\n    }\n}"
+          "data": "package ${basePackage}.application.queries${package};\n\nimport lombok.AllArgsConstructor;\nimport lombok.Builder;\nimport lombok.Data;\nimport lombok.NoArgsConstructor;\nimport org.netcorepal.cap4j.ddd.application.RequestParam;\n\n/**\n * ${CommentEscaped}\n *\n * @author cap4j-ddd-codegen\n * @date ${date}\n */\npublic class ${Query} {\n    /**\n     * ${Query}查询请求参数\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Request implements RequestParam<Response> {\n        String param;\n    }\n\n    /**\n     * ${Query}查询响应\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Response {\n        Long id;\n    }\n}"
         }
       ]
     },
@@ -38,7 +38,7 @@
           "type": "file",
           "name": "${Query}.java",
           "format": "raw",
-          "data": "package ${basePackage}.application.queries${package};\n\nimport lombok.AllArgsConstructor;\nimport lombok.Builder;\nimport lombok.Data;\nimport lombok.NoArgsConstructor;\nimport org.netcorepal.cap4j.ddd.application.query.ListQueryParam;\n\n/**\n * todo: 查询描述\n *\n * @author cap4j-ddd-codegen\n * @date ${date}\n */\npublic class ${Query} {\n    /**\n     * ${Query}查询请求参数\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Request implements ListQueryParam<Response> {\n        String param;\n    }\n\n    /**\n     * ${Query}查询响应\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Response {\n        Long id;\n    }\n}"
+          "data": "package ${basePackage}.application.queries${package};\n\nimport lombok.AllArgsConstructor;\nimport lombok.Builder;\nimport lombok.Data;\nimport lombok.NoArgsConstructor;\nimport org.netcorepal.cap4j.ddd.application.query.ListQueryParam;\n\n/**\n * ${CommentEscaped}\n *\n * @author cap4j-ddd-codegen\n * @date ${date}\n */\npublic class ${Query} {\n    /**\n     * ${Query}查询请求参数\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Request implements ListQueryParam<Response> {\n        String param;\n    }\n\n    /**\n     * ${Query}查询响应\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Response {\n        Long id;\n    }\n}"
         }
       ]
     },
@@ -52,7 +52,7 @@
           "type": "file",
           "name": "${Query}.java",
           "format": "raw",
-          "data": "package ${basePackage}.application.queries${package};\n\nimport lombok.AllArgsConstructor;\nimport lombok.Builder;\nimport lombok.Data;\nimport lombok.NoArgsConstructor;\nimport org.netcorepal.cap4j.ddd.application.query.PageQueryParam;\n\n/**\n * todo: 查询描述\n *\n * @author cap4j-ddd-codegen\n * @date ${date}\n */\npublic class ${Query} {\n    /**\n     * ${Query}查询请求参数\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Request extends PageQueryParam<Response> {\n        String param;\n    }\n\n    /**\n     * ${Query}查询响应\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Response {\n        Long id;\n    }\n}"
+          "data": "package ${basePackage}.application.queries${package};\n\nimport lombok.AllArgsConstructor;\nimport lombok.Builder;\nimport lombok.Data;\nimport lombok.NoArgsConstructor;\nimport org.netcorepal.cap4j.ddd.application.query.PageQueryParam;\n\n/**\n * ${CommentEscaped}\n *\n * @author cap4j-ddd-codegen\n * @date ${date}\n */\npublic class ${Query} {\n    /**\n     * ${Query}查询请求参数\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Request extends PageQueryParam<Response> {\n        String param;\n    }\n\n    /**\n     * ${Query}查询响应\n     */\n    @Data\n    @Builder\n    @NoArgsConstructor\n    @AllArgsConstructor\n    public static class Response {\n        Long id;\n    }\n}"
         }
       ]
     },
