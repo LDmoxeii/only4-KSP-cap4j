@@ -1,4 +1,9 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
+Query("NotCheckedInToday") [
+    判断今天是否已签到
+    --属性--
+    用户ID
+]
 @enduml

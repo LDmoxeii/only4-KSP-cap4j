@@ -1,9 +1,7 @@
 package com.only4.application.validater;
 
-import com.only4.domain.aggregates.check_in.CheckIn;
-import com.only4.domain.aggregates.check_in.meta.CheckInSchema;
+import com.only4.application.queries.check_in.NotCheckedInTodayQry;
 import org.netcorepal.cap4j.ddd.Mediator;
-import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -27,12 +25,9 @@ public @interface NotCheckedInToday {
     class Validator implements ConstraintValidator<NotCheckedInToday, Long> {
         @Override
         public boolean isValid(Long memberId, ConstraintValidatorContext context) {
-            return Mediator.repositories()
-                    .exists(JpaPredicate.bySpecification(CheckIn.class,
-                            CheckInSchema.specify(schema ->
-                                    schema.memberId().equal(memberId)
-                            ))
-                    );
+            return Mediator.queries().send(NotCheckedInTodayQry.Request.builder()
+                    .memberId(memberId)
+                    .build()).isExists();
         }
     }
 }
