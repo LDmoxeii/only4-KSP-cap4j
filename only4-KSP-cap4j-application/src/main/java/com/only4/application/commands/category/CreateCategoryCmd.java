@@ -12,7 +12,7 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import java.util.Optional;
 
 /**
@@ -59,7 +59,7 @@ public class CreateCategoryCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
 
-        @NotEmpty
+        @NotBlank(message = "分类名称不能为空")
         @CategoryUniqueName
         String categoryName;
     }

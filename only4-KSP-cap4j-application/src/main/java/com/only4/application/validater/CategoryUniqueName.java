@@ -1,9 +1,7 @@
 package com.only4.application.validater;
 
-import com.only4.domain.aggregates.category.Category;
-import com.only4.domain.aggregates.category.meta.CategorySchema;
+import com.only4.application.queries.category.CategoryUniqueNameQry;
 import org.netcorepal.cap4j.ddd.Mediator;
-import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -27,12 +25,9 @@ public @interface CategoryUniqueName {
     class Validator implements ConstraintValidator<CategoryUniqueName, String> {
         @Override
         public boolean isValid(String categoryName, ConstraintValidatorContext context) {
-            return !Mediator.repositories()
-                    .exists(JpaPredicate.bySpecification(Category.class,
-                            CategorySchema.specify(category ->
-                                    category.name().equal(categoryName)
-                            )
-                    ));
+            return !Mediator.queries().send(CategoryUniqueNameQry.Request.builder()
+                    .categoryName(categoryName)
+                    .build()).isExists();
         }
     }
 }
