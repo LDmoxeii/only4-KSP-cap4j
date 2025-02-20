@@ -56,7 +56,7 @@ public class Category {
     }
 
     public void updateRefCount(Integer refCount) {
-        this.refCount += refCount;
+        this.refCount = this.getRefCount() + refCount;
     }
 
     // 【行为方法结束】
