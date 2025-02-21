@@ -1,6 +1,5 @@
 package com.only4.domain.aggregates.view_history;
 
-import apache.rocketmq.v2.Address;
 import com.only4.domain.aggregates.view_history.events.ViewHistoryCreatedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -63,7 +62,7 @@ public class ViewHistory implements ValueObject<Long> {
         if (null == o) {
             return false;
         }
-        if (!(o instanceof Address)) {
+        if (!(o instanceof ViewHistory)) {
             return false;
         }
         return hashCode() == o.hashCode();

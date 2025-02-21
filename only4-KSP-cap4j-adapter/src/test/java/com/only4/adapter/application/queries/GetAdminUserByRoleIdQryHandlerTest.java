@@ -3,6 +3,7 @@ package com.only4.adapter.application.queries;
 import com.only4.adapter.infra.mybatis.mapper.AdminUserMapper;
 import com.only4.application.queries.admin_user.GetAdminUserByRoleIdQry;
 import com.only4.domain.aggregates.admin_user.AdminUser;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,11 +30,11 @@ class GetAdminUserByRoleIdQryHandlerTest {
 
   @Test
   void exec() {
-    when(request.getId()).thenReturn(1L);
+    when(request.getAdminUserId()).thenReturn(1L);
     when(mapper.getByRoleId(1L)).thenReturn(Collections.singletonList(adminUser));
-    GetAdminUserByRoleIdQry.Response actual = target.exec(request);
-    verify(request).getId();
+    val actual = target.byMybatis(request.getAdminUserId());
+    verify(request).getAdminUserId();
     verify(mapper).getByRoleId(1L);
-    assertNotNull(actual.getAdminUsers());
+    assertNotNull(actual);
   }
 }

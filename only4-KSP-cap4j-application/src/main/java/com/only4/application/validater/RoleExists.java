@@ -28,7 +28,7 @@ public @interface RoleExists {
 
         @Override
         public boolean isValid(Long roleId, ConstraintValidatorContext constraintValidatorContext) {
-            return !Mediator.queries().send(RoleExistsByIdQry.Request.builder()
+            return Mediator.queries().send(RoleExistsByIdQry.Request.builder()
                     .roleId(roleId)
                     .build()).isExists();
         }

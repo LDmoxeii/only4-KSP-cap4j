@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 /**
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * @author cap4j-ddd-codegen
- * @date 2025/01/09
+ * @date 2025/02/21
  */
 public interface OrderRepository extends AggregateRepository<Order, Long> {
 

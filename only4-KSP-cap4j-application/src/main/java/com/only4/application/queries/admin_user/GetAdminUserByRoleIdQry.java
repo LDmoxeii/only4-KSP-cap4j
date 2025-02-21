@@ -24,7 +24,7 @@ public class GetAdminUserByRoleIdQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long id;
+        Long adminUserId;
     }
 
     /**

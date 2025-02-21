@@ -10,7 +10,7 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 import java.util.List;
 
 /**
- * todo: 查询描述
+ * GetAdminUsersByConditionQry查询
  *
  * @author cap4j-ddd-codegen
  * @date 2024/12/04

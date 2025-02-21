@@ -1,6 +1,5 @@
 package com.only4.domain.aggregates.article_comment_like;
 
-import apache.rocketmq.v2.Address;
 import com.only4.domain.aggregates.article_comment_like.events.ArticleCommentLikedDomainEvent;
 import com.only4.domain.aggregates.article_comment_like.events.ArticleCommentUnlikedDomainEvent;
 import lombok.AllArgsConstructor;
@@ -68,7 +67,7 @@ public class ArticleCommentLike implements ValueObject<Long> {
         if (null == o) {
             return false;
         }
-        if (!(o instanceof Address)) {
+        if (!(o instanceof ArticleCommentLike)) {
             return false;
         }
         return hashCode() == o.hashCode();

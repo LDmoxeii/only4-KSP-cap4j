@@ -22,7 +22,7 @@ public class GetAdminUserByIdQry {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
-        Long id;
+        Long adminUserId;
     }
 
     /**

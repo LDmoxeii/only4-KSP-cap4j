@@ -1,6 +1,5 @@
 package com.only4.domain.aggregates.check_in;
 
-import apache.rocketmq.v2.Address;
 import com.only4.domain.aggregates.check_in.events.CheckedInDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -63,7 +62,7 @@ public class CheckIn implements ValueObject<Long> {
         if (null == o) {
             return false;
         }
-        if (!(o instanceof Address)) {
+        if (!(o instanceof CheckIn)) {
             return false;
         }
         return hashCode() == o.hashCode();

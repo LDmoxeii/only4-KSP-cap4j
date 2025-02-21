@@ -1,6 +1,6 @@
 package com.only4.adapter.domain.repositories;
 
-import com.only4.domain.aggregates.article.Article;
+import com.only4.domain.aggregates.star_comment_like.StarCommentLike;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.netcorepal.cap4j.ddd.domain.repo.AbstractJpaRepository;
 import org.netcorepal.cap4j.ddd.domain.repo.AggregateRepository;
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
  * @author cap4j-ddd-codegen
  * @date 2025/02/21
  */
-public interface ArticleRepository extends AggregateRepository<Article, Long> {
+public interface StarCommentLikeRepository extends AggregateRepository<StarCommentLike, Long> {
 
     @Component
-    @Aggregate(aggregate = "Article", name = "Article", type = Aggregate.TYPE_REPOSITORY, description = "")
-    public static class ArticleJpaRepositoryAdapter extends AbstractJpaRepository<Article, Long>
+    @Aggregate(aggregate = "StarCommentLike", name = "StarCommentLike", type = Aggregate.TYPE_REPOSITORY, description = "")
+    public static class StarCommentLikeJpaRepositoryAdapter extends AbstractJpaRepository<StarCommentLike, Long>
     {
-        public ArticleJpaRepositoryAdapter(JpaSpecificationExecutor<Article> jpaSpecificationExecutor, JpaRepository<Article, Long> jpaRepository) {
+        public StarCommentLikeJpaRepositoryAdapter(JpaSpecificationExecutor<StarCommentLike> jpaSpecificationExecutor, JpaRepository<StarCommentLike, Long> jpaRepository) {
             super(jpaSpecificationExecutor, jpaRepository);
         }
     }
