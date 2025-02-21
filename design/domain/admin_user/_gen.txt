@@ -6,4 +6,5 @@ cmd:admin_user.UpdateAdminUserRefreshToken:更新管理员刷新Token信息
 cmd:admin_user.UpdateAdminUserRolePermissions:更新管理员权限集
 cmd:admin_user.DeleteAdminUser:删除管理员
 
-qry.admin_user.AdminUserExistsByName:根据用户名判断管理员用户是否存在
+qry:admin_user.AdminUserExistsByName:根据用户名判断管理员用户是否存在
+qry:admin_user.AdminUserAccessCriteria:根据登录要求判断是否存在管理员用户

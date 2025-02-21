@@ -1,7 +1,7 @@
 package com.only4.adapter.application.queries;
 
 import com.only4.adapter.infra.mybatis.mapper.AdminUserMapper;
-import com.only4.application.queries.admin_user.ExistedAdminUserByNameQry;
+import com.only4.application.queries.admin_user.AdminUserExistsByNameQry;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import com.only4.domain.aggregates.admin_user.meta.AdminUserSchema;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +21,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ExistedAdminUserByNameQryHandler implements Query<ExistedAdminUserByNameQry.Request, ExistedAdminUserByNameQry.Response> {
+public class AdminUserExistsByNameQryHandler implements Query<AdminUserExistsByNameQry.Request, AdminUserExistsByNameQry.Response> {
 
     private final AdminUserMapper adminUserMapper;
 
     @Override
-    public ExistedAdminUserByNameQry.Response exec(ExistedAdminUserByNameQry.Request request) {
+    public AdminUserExistsByNameQry.Response exec(AdminUserExistsByNameQry.Request request) {
         // mybatis / jpa 哪个顺手就用哪个吧！
-        return ExistedAdminUserByNameQry.Response.builder()
+        return AdminUserExistsByNameQry.Response.builder()
                 .exists(byJpa(request.getName()))
                 .build();
     }

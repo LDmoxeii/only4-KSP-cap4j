@@ -31,4 +31,10 @@ Query("GetAdminUserByCondition") [
 Query("GetAllAdminUser") [
     获取所有管理员用户
 ]
+Query("AdminUserAccessCriteria") [
+    根据登录要求判断是否存在管理员用户
+    --属性--
+    用户名
+    密码
+]
 @enduml

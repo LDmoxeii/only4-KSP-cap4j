@@ -45,6 +45,10 @@ import java.util.stream.Collectors;
 public class AdminUser {
 
     // 【行为方法开始】
+    public void create() {
+
+    }
+
     public void updatePassword(String password) {
         this.password = password;
     }
