@@ -69,7 +69,6 @@ Aggregate("FavoritesArticle") [
     收藏时间
 ]
 
-Member -right-> MemberPermission
 Member -right-> MemberStatistics
 Member -right-> BlockMember
 Member -right-> FollowMember
