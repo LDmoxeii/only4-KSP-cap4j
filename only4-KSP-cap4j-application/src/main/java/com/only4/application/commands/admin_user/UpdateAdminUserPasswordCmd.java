@@ -3,6 +3,8 @@ package com.only4.application.commands.admin_user;
 
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.AdminUser;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -10,9 +12,6 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 
 /**
  * 更新管理员用户密码

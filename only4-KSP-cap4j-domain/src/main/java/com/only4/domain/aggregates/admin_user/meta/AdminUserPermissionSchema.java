@@ -2,12 +2,12 @@ package com.only4.domain.aggregates.admin_user.meta;
 
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.admin_user.AdminUserPermission;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Path;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

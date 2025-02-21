@@ -3,7 +3,7 @@ package com.only4.adapter.portal.api._share.configure;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
@@ -71,7 +71,7 @@ public class SwaggerConfig implements ApplicationListener<WebServerInitializedEv
                 .pathsToMatch(paths)
                 .packagesToScan(pacakage)
                 .addOperationCustomizer((operation, handlerMethod) -> operation)
-                .addOpenApiCustomiser(openApi -> openApiConfig(openApi))
+                .addOpenApiCustomizer(openApi -> openApiConfig(openApi))
                 .build();
     }
 

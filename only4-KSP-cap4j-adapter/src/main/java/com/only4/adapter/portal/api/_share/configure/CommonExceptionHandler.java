@@ -1,12 +1,15 @@
 package com.only4.adapter.portal.api._share.configure;
 
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.only4._share.CodeEnum;
-import com.only4.adapter.portal.api._share.ResponseData;
 import com.only4._share.exception.ErrorException;
 import com.only4._share.exception.KnownException;
 import com.only4._share.exception.WarnException;
-import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.only4.adapter.portal.api._share.ResponseData;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.connector.ClientAbortException;
@@ -25,9 +28,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import java.util.Map;
 import java.util.Set;
 

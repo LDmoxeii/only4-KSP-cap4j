@@ -3,6 +3,7 @@ package com.only4.application.commands.article_comment;
 
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article_comment.ArticleComment;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -10,8 +11,6 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * 更新文章评论点赞数

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="false" scanPeriod="60 seconds">
-    <property resource="application.properties"/>
+    <property resource="application.yml"/>
 
     <conversionRule conversionWord="clr"
                     converterClass="org.springframework.boot.logging.logback.ColorConverter"/>

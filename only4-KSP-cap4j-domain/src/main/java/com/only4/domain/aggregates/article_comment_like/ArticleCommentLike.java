@@ -2,6 +2,8 @@ package com.only4.domain.aggregates.article_comment_like;
 
 import com.only4.domain.aggregates.article_comment_like.events.ArticleCommentLikedDomainEvent;
 import com.only4.domain.aggregates.article_comment_like.events.ArticleCommentUnlikedDomainEvent;
+import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,10 +11,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.ValueObject;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.*;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 

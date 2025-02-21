@@ -1,0 +1,154 @@
+spring:
+  application:
+    name: only4-KSP-cap4j
+    version: 1.2.3
+  servlet:
+    multipart:
+      max-request-size: 50MB
+      max-file-size: 50MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+      INDENT_OUTPUT: false
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+  mvc:
+    log-request-details: true
+  cloud:
+    openfeign:
+      okhttp:
+        enabled: false
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/only4-ksp-cap4j?serverTimezone=Asia%2FShanghai&useSSL=false&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      initial-size: 30
+      max-active: 100
+      min-idle: 30
+      max-wait: 1000
+      use-unfair-lock: true
+      pool-prepared-statements: false
+      validation-query: select 1
+      validation-query-timeout: 2
+      keep-alive: true
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      min-evictable-idle-time-millis: 43200000
+      max-evictable-idle-time-millis: 86400000
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        dialect:
+          storage_engine: innodb
+        jdbc:
+          batch_size: 5000
+          batch_versioned_data: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 123456
+      database: 12
+      timeout: 5000ms
+      ssl:
+        enabled: false
+
+logging:
+  level:
+    sql: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+
+server:
+  port: 8081
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 400
+  servlet:
+    context-path: /only4-KSP-cap4j
+
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics,shutdown
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  health:
+    redis:
+      enabled: false
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: com.only4.adapter.infra.mybatis._share.MyEnumTypeHandler
+
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: ${spring.application.name}
+
+redisson:
+  key-prefix:
+  threads: 4
+  nettyThreads: 8
+  single-server-config:
+    client-name: ${spring.application.name}
+    connection-minimum-idle-size: 8
+    connection-pool-size: 32
+    idle-connection-timeout: 10000
+    timeout: 3000
+    subscription-connection-pool-size: 50
+
+security:
+  excludes: /*.html,/**/*.html,/**/*.css,/**/*.js,/favicon.ico,/error/*/api-docs,/*/api-docs/**,/*/swagger-ui/*,/*/cap4j/*
+
+sa-token:
+  token-name: Authorization
+  is-concurrent: true
+  is-share: false
+  jwt-secret-key: abcdefghijklmnopqrstuvwxyz
+
+cap4j:
+  ddd:
+    archinfo:
+      enabled: true
+      base-package: com.only4
+    distributed:
+      idgenerator:
+        snowflake:
+          enable: true
+    domain:
+      event:
+        event-scan-package: com.only4
+        schedule:
+          add-partition-enable: false
+    application:
+      saga:
+        schedule:
+          add-partition-enable: false
+

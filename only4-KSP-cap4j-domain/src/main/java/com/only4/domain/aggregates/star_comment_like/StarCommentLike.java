@@ -9,9 +9,9 @@ import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.ValueObject;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 /**
  * 星球评论点赞

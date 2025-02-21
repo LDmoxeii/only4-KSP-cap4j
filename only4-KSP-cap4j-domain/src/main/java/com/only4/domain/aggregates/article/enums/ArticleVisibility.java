@@ -1,9 +1,9 @@
 package com.only4.domain.aggregates.article.enums;
 
+import jakarta.persistence.AttributeConverter;
 import lombok.Getter;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
-import javax.persistence.AttributeConverter;
 import java.util.HashMap;
 import java.util.Map;
 

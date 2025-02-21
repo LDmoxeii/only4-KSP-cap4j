@@ -2,6 +2,9 @@ package com.only4.domain.aggregates.admin_user;
 
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.dto.AssignAdminUserRoleDto;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,10 +12,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
