@@ -3,6 +3,7 @@ package com.only4.domain.aggregates.article.factory;
 import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.article.ArticleAuthor;
 import com.only4.domain.aggregates.article.ArticleStatistics;
+import com.only4.domain.aggregates.article.dto.ArticleAuthorDto;
 import com.only4.domain.aggregates.article.enums.ArticleVisibility;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Article聚合工厂
@@ -28,6 +30,13 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
 
     @Override
     public Article create(Payload payload) {
+        List<ArticleAuthor> articleAuthors = payload.getAuthors().stream()
+                .map(articleAuthorDto -> ArticleAuthor.builder()
+                        .authorName(articleAuthorDto.getName())
+                        .authorId(articleAuthorDto.getId())
+                        .build())
+                .collect(Collectors.toList());
+
         return Article.builder()
                 //创建文章
                 .title(payload.getTitle())
@@ -39,7 +48,7 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
                 .visibility(ArticleVisibility.PRIVATE)
                 .stickyFlag(false)
                 .commentFlag(true)
-                .articleAuthors(payload.getAuthors())
+                .articleAuthors(articleAuthors)
                 .articleStatistics(Collections.singletonList(new ArticleStatistics()))
                 .build();
     }
@@ -64,7 +73,7 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
 
         String appendix;
 
-        List<ArticleAuthor> authors;
+        List<ArticleAuthorDto> authors;
 
     }
 }

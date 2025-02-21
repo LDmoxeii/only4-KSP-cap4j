@@ -50,4 +50,19 @@ Query("ArticleExists") [
     --属性--
     文章ID
 ]
+Query("GetArticlesByCategoryId") [
+    根据分类ID获取文章
+    --属性--
+    分类ID
+]
+Query("GetArticlesByMemberId") [
+    根据用户ID获取文章
+    --属性--
+    用户ID
+]
+Query("GetArticlesByTagId") [
+    根据标签ID获取文章
+    --属性--
+    标签ID
+]
 @enduml

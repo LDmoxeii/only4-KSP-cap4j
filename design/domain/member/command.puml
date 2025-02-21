@@ -306,6 +306,17 @@ Command("UpdateFollowMemberInfo") [
     关注用户必须存在
     关注用户名不能为空
 ]
+Command("UpdateMemberViewCount")[
+    更新用户浏览量
+    --触发事件--
+    文章浏览量已更新
+    --属性--
+    用户ID
+    浏览量
+    --规则--
+    用户必须存在
+    浏览量不为NULL
+]
 
 FacadeCommand("UpdateMemberFollowingCount") [
     更新用户关注数

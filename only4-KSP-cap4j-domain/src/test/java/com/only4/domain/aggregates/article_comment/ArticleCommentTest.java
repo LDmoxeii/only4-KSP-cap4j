@@ -75,11 +75,18 @@ class ArticleCommentTest {
     class UpdateReplyCountTests {
         @Test
         void testUpdateReplyCount() {
-            doReturn(articleCommentStatistics).when(articleComment).getArticleCommentStatistics();
+            try (MockedStatic<DomainEventSupervisorSupport> mockStatic = mockStatic(DomainEventSupervisorSupport.class)) {
+                mockStatic.when(DomainEventSupervisorSupport::events).thenReturn(eventSupervisor);
 
-            articleComment.updateReplyCount(1);
+                doReturn(articleCommentStatistics).when(articleComment).getArticleCommentStatistics();
 
-            verify(articleCommentStatistics).updateReplyCount(1);
+                articleComment.updateReplyCount(1);
+
+                verify(articleCommentStatistics).updateReplyCount(1);
+
+                verify(eventSupervisor).attach(any(), any());
+                mockStatic.verify(DomainEventSupervisorSupport::events, times(1));
+            }
         }
     }
 

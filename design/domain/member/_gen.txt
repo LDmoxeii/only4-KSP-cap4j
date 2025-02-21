@@ -21,6 +21,7 @@ cmd:member.RemoveArticleFromFavorite:移除收藏夹文章
 cmd:member.DeleteFavorites:删除收藏夹
 cmd:member.UpdateBlackMemberInfo:更新拉黑用户信息
 cmd:member.UpdateFollowMemberInfo:更新关注用户信息
+cmd:member.UpdateMemberViewCount:更新用户播放量
 
 de:member.Member:MemberInfoUpdated:用户信息已更新
 de:member.Member:MemberFollowed:用户已关注

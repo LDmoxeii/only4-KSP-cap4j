@@ -10,7 +10,7 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 
 /**
  * Article.ArticleCreatedDomainEvent领域事件
- * todo: 领域事件说明
+ * 文章已创建
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/14

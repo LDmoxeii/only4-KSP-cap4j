@@ -12,6 +12,7 @@ import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 /**
  * UpdateMemberWorkCountCmd命令
@@ -54,6 +55,7 @@ public class UpdateMemberWorkCountCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
 
+        @Positive
         Long memberId;
 
         @NotNull

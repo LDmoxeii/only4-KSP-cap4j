@@ -175,4 +175,15 @@ Command("UpdateArticleLikeCount") [
     --规则--
     点赞数不为NULL
 ]
+Command("UpdateArticleViewCount") [
+    更新文章浏览量
+    --触发事件--
+    浏览记录已创建
+    --属性--
+    文章ID
+    浏览量
+    --规则--
+    文章必须存在
+    浏览量不为NULL
+]
 @enduml

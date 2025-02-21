@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/19
+ * @date 2025/02/21
  */
 @RequiredArgsConstructor
 public class MemberStatisticsSchema {
@@ -61,6 +61,11 @@ public class MemberStatisticsSchema {
          * 作品数
          */
         public static final String workCount = "workCount";
+
+        /**
+         * 播放量
+         */
+        public static final String viewCount = "viewCount";
 
         /**
          * 逻辑删除
@@ -140,6 +145,14 @@ public class MemberStatisticsSchema {
      */
     public Schema.Field<Integer> workCount() {
         return new Schema.Field<>(root.get("workCount"), this.criteriaBuilder);
+    }
+
+    /**
+     * 播放量
+     * int
+     */
+    public Schema.Field<Integer> viewCount() {
+        return new Schema.Field<>(root.get("viewCount"), this.criteriaBuilder);
     }
 
     /**

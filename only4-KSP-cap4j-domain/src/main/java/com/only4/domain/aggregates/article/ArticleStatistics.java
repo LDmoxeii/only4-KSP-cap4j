@@ -10,6 +10,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * 文章统计
@@ -46,6 +47,10 @@ public class ArticleStatistics {
 
     void updateCommentCount(Integer commentCount) {
         this.commentCount += commentCount;
+    }
+
+    void updateViewCount(@NotNull Integer viewCount) {
+        this.viewCount = this.getViewCount() + viewCount;
     }
 
     // 【行为方法结束】

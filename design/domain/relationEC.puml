@@ -5,11 +5,11 @@ ArticleLikeCountUpdated         -down-> UpdateMemberLikeCount
 ArticleCategoriesUpdated        -down-> UpdateCategoryRefCount
 ArticleTagsUpdated              -down-> UpdateTagRefCount
 ArticleViewCountUpdated         -down-> UpdateMemberViewCount
-ArticleFavoriteCountUpdated     -down-> UpdateFavoritesArticleCount
 
 'ArticleComment
 ArticleCommentCreated           -down-> UpdateArticleCommentCount
 ArticleCommentDeleted           -down-> UpdateArticleCommentCount
+ArticleCommentReplyCountUpdated -down-> UpdateArticleCommentCount
 ArticleCommentLikeCountUpdated  -down-> UpdateMemberLikeCount
 
 'ArticleCommentLike
@@ -18,9 +18,7 @@ ArticleCommentUnliked       -down-> UpdateArticleCommentLikeCount
 
 'ArticleCommentReply
 ArticleCommentReplyCreated          -down-> UpdateArticleCommentReplyCount
-ArticleCommentReplyCreated          -down-> UpdateArticleCommentCount
 ArticleCommentReplyDeleted          -down-> UpdateArticleCommentReplyCount
-ArticleCommentReplyDeleted          -down-> UpdateArticleCommentCount
 ArticleCommentReplyLikeCountUpdated -down-> UpdateMemberLikeCount
 
 'ArticleLike
@@ -49,6 +47,6 @@ TagInfoUpdated -down-> UpdateArticleTagInfo
 ViewHistoryCreated       -down-> UpdateArticleViewCount
 
 'role
-UpdatedRolePermissions  -down-> UpdateAdminUserRolePermissions
-UpdatedRoleInfo         -down-> UpdateAdminUserRoleInfo
+RolePermissionsUpdated  -down-> UpdateAdminUserRolePermissions
+RoleInfoUpdated         -down-> UpdateAdminUserRoleInfo
 @enduml

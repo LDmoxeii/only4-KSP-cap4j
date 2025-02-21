@@ -4,6 +4,7 @@ import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article_comment.events.ArticleCommentCreatedDomainEvent;
 import com.only4.domain.aggregates.article_comment.events.ArticleCommentDeletedDomainEvent;
 import com.only4.domain.aggregates.article_comment.events.ArticleCommentLikeCountUpdatedDomainEvent;
+import com.only4.domain.aggregates.article_comment.events.ArticleCommentReplyCountUpdatedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,7 +51,7 @@ public class ArticleComment {
     public void updateLikeCount(Integer likeCount) {
         this.getArticleCommentStatistics().updateLikeCount(likeCount);
 
-        events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
+        events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this, likeCount), this);
     }
 
     public void updateSticky(Boolean sticky) {
@@ -59,6 +60,8 @@ public class ArticleComment {
 
     public void updateReplyCount(Integer replyCount) {
         this.getArticleCommentStatistics().updateReplyCount(replyCount);
+
+        events().attach(new ArticleCommentReplyCountUpdatedDomainEvent(this, replyCount), this);
     }
 
     public void updateInfo(Long memberId, String memberName) {

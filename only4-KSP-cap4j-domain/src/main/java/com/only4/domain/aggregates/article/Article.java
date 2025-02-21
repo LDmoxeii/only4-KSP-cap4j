@@ -4,9 +4,7 @@ import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.dto.CategoryDto;
 import com.only4.domain.aggregates.article.dto.TagDto;
 import com.only4.domain.aggregates.article.enums.ArticleVisibility;
-import com.only4.domain.aggregates.article.events.ArticleCreatedDomainEvent;
-import com.only4.domain.aggregates.article.events.ArticleFavoriteCountUpdatedDomainEvent;
-import com.only4.domain.aggregates.article.events.ArticleLikeCountUpdatedDomainEvent;
+import com.only4.domain.aggregates.article.events.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +16,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -86,12 +85,17 @@ public class Article {
                         .tagName(tag.getTagName())
                         .build()));
 
-        currentTags.keySet().stream()
+        List<Long> removeIds = currentTags.keySet().stream()
                 .filter(tagId -> !targetTags.containsKey(tagId))
-                .forEach(tagId -> this.getArticleTags().remove(currentTags.get(tagId)));
-        targetTags.keySet().stream()
+                .peek(tagId -> this.getArticleTags().remove(currentTags.get(tagId)))
+                .collect(Collectors.toList());
+
+        List<Long> addIds = targetTags.keySet().stream()
                 .filter(tagId -> !currentTags.containsKey(tagId))
-                .forEach(tagId -> this.getArticleTags().add(targetTags.get(tagId)));
+                .peek(tagId -> this.getArticleTags().add(targetTags.get(tagId)))
+                .collect(Collectors.toList());
+
+        events().attach(new ArticleTagsUpdatedDomainEvent(this, removeIds, addIds), this);
     }
 
     public void updateCategory(List<CategoryDto> categories) {
@@ -104,23 +108,27 @@ public class Article {
                         .categoryName(category.getCategoryName())
                         .build()));
 
-        currentCategories.keySet().stream()
+        List<Long> removeIds = currentCategories.keySet().stream()
                 .filter(categoryId -> !targetCategories.containsKey(categoryId))
-                .forEach(categoryId -> this.getArticleCategories().remove(currentCategories.get(categoryId)));
-        targetCategories.keySet().stream()
+                .peek(categoryId -> this.getArticleCategories().remove(currentCategories.get(categoryId)))
+                .collect(Collectors.toList());
+
+        List<Long> addIds = targetCategories.keySet().stream()
                 .filter(categoryId -> !currentCategories.containsKey(categoryId))
-                .forEach(categoryId -> this.getArticleCategories().add(targetCategories.get(categoryId)));
+                .peek(categoryId -> this.getArticleCategories().add(targetCategories.get(categoryId)))
+                .collect(Collectors.toList());
+
+        events().attach(new ArticleCategoriesUpdatedDomainEvent(this, removeIds, addIds), this);
 
     }
 
     public void updateLikeCount(Integer likeCount) {
         this.getArticleStatistics().updateLikeCount(likeCount);
-        events().attach(new ArticleLikeCountUpdatedDomainEvent(this), this);
+        events().attach(new ArticleLikeCountUpdatedDomainEvent(this, likeCount), this);
     }
 
     public void updateFavoriteCount(Integer favoriteCount) {
         this.getArticleStatistics().updateFavoriteCount(favoriteCount);
-        events().attach(new ArticleFavoriteCountUpdatedDomainEvent(this), this);
     }
 
     public void updateCommentCount(Integer commentCount) {
@@ -182,6 +190,12 @@ public class Article {
 
     public void updateSticky(Boolean sticky) {
         this.stickyFlag = sticky;
+    }
+
+    public void updateViewCount(@NotNull Integer viewCount) {
+        this.getArticleStatistics().updateViewCount(viewCount);
+
+        events().attach(new ArticleViewCountUpdatedDomainEvent(this, viewCount), this);
     }
 
     // 【行为方法结束】

@@ -54,10 +54,12 @@ Command("UpdateArticleCommentReplyCount") [
     更新文章评论回复数
     --触发事件--
     已创建文章评论回复
+    已删除文章评论回复
     --属性--
     文章评论ID
     回复数
     --规则--
+    文章评论必须存在
     回复数不为NULL
 ]
 Command("UpdateArticleCommentSticky") [

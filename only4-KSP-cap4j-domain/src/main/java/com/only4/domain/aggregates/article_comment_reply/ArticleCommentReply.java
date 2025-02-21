@@ -70,7 +70,7 @@ public class ArticleCommentReply {
     public void updateLikeCount(Integer likeCount) {
         this.getArticleCommentReplyStatistics().updateLikeCount(likeCount);
 
-        events().attach(new ArticleCommentReplyLikeCountUpdatedDomainEvent(this), this);
+        events().attach(new ArticleCommentReplyLikeCountUpdatedDomainEvent(this, likeCount), this);
     }
 
     // 【行为方法结束】

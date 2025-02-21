@@ -16,14 +16,6 @@ Aggregate("Member") [
     封禁时间
 ]
 
-Aggregate("MemberPermission") [
-    用户权限
-    --属性--
-    会员ID
-    权限码
-    权限备注
-]
-
 Aggregate("MemberStatistics") [
     用户统计
     --属性--
@@ -34,6 +26,7 @@ Aggregate("MemberStatistics") [
     举报数
     关注数
     作品数
+    播放量
 ]
 
 Aggregate("BlockMember") [
@@ -76,7 +69,6 @@ Aggregate("FavoritesArticle") [
     收藏时间
 ]
 
-Member -right-> MemberPermission
 Member -right-> MemberStatistics
 Member -right-> BlockMember
 Member -right-> FollowMember

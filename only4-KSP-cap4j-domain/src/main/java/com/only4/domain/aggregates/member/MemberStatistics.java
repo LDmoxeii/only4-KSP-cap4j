@@ -10,6 +10,7 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 /**
@@ -59,6 +60,10 @@ public class MemberStatistics {
 
     void updateFollowingCount(Integer followingCount) {
         this.followingCount += followingCount;
+    }
+
+    public void updateViewCount(@NotNull Integer viewCount) {
+        this.viewCount = this.getViewCount() + viewCount;
     }
 
     boolean validateRank() {
@@ -141,6 +146,13 @@ public class MemberStatistics {
      */
     @Column(name = "`work_count`")
     Integer workCount;
+
+    /**
+     * 播放量
+     * int
+     */
+    @Column(name = "`view_count`")
+    Integer viewCount;
 
     /**
      * 逻辑删除

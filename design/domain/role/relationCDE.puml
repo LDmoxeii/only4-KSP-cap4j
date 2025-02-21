@@ -4,6 +4,6 @@ UpdateRoleInfo          -down-> Role
 UpdateRolePermissions   -down-> Role
 DeleteRole              -down-> Role
 
-Role -down-> UpdatedRoleInfo
-Role -down-> UpdatedRolePermissions
+Role -down-> RoleInfoUpdated
+Role -down-> RolePermissionsUpdated
 @enduml
