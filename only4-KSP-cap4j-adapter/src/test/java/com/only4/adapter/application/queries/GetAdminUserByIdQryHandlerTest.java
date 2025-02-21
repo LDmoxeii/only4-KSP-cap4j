@@ -3,6 +3,7 @@ package com.only4.adapter.application.queries;
 import com.only4.adapter.infra.mybatis.mapper.AdminUserMapper;
 import com.only4.application.queries.admin_user.GetAdminUserByIdQry;
 import com.only4.domain.aggregates.admin_user.AdminUser;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,22 +30,19 @@ class GetAdminUserByIdQryHandlerTest {
     // 预期入参
     GetAdminUserByIdQry.Request request = GetAdminUserByIdQry.Request.builder().build();
 
+    // 预期结果
     AdminUser adminUser = AdminUser.builder().build();
 
-    // 预期结果
-    GetAdminUserByIdQry.Response expect = GetAdminUserByIdQry.Response.builder()
-        .adminUser(adminUser)
-        .build();
 
     when(mapper.getById(any())).thenReturn(adminUser);
 
     // 执行测试方法
-    GetAdminUserByIdQry.Response result = handler.exec(request);
+    val result = handler.byMybatis(request.getAdminUserId());
 
     verify(mapper).getById(any());
 
     // 验证结果
-    assertEquals(expect, result);
+    assertEquals(adminUser, result);
   }
 
 }

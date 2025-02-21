@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * GetAdminUsersByConditionQry查询请求适配实现
- * todo: 查询描述
+ *
  *
  * @author cap4j-ddd-codegen
  * @date 2024/11/14
@@ -24,10 +24,13 @@ public class GetAdminUsersByConditionQryHandler implements Query<GetAdminUsersBy
     private final AdminUserMapper adminUserMapper;
     @Override
     public GetAdminUsersByConditionQry.Response exec(GetAdminUsersByConditionQry.Request request) {
-        List<AdminUser> adminUsers = adminUserMapper.getByCondition(request.getName(), request.getPhone());
         // mybatis / jpa 哪个顺手就用哪个吧！
         return GetAdminUsersByConditionQry.Response.builder()
-            .adminUsers(adminUsers)
+            .adminUsers(byMybatis(request.getName(), request.getPhone()))
             .build();
+    }
+
+    public List<AdminUser> byMybatis(String name, String phone) {
+        return adminUserMapper.getByCondition(name, phone);
     }
 }

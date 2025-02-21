@@ -29,7 +29,7 @@ public class RolePermissionsUpdatedDomainEventSubscriber {
         Long roleId = role.getId();
         var send = Mediator.queries().send(
                 GetAdminUserByRoleIdQry.Request.builder()
-                        .id(roleId)
+                        .adminUserId(roleId)
                         .build());
         List<AdminUser> adminUsers = send.getAdminUsers();
         List<AdminUserPermission> permissions = role.getRolePermissions().stream()

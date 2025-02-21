@@ -98,7 +98,7 @@ public class AdminUserController {
   public ResponseData<?> getAdminUserById(@PathVariable Long id) {
     var send = queries().send(
         GetAdminUserByIdQry.Request.builder()
-            .id(id)
+            .adminUserId(id)
             .build()
     );
     AdminUserResponse result = new AdminUserResponse(send.getAdminUser());
@@ -109,7 +109,7 @@ public class AdminUserController {
   public ResponseData<?> changeAdminUserPassword(@PathVariable Long id, String newPassword) {
     var AdminUserQry = queries().send(
         GetAdminUserByIdQry.Request.builder()
-            .id(id)
+            .adminUserId(id)
             .build()
     );
     Optional.ofNullable(AdminUserQry.getAdminUser())
@@ -127,7 +127,7 @@ public class AdminUserController {
   public ResponseData<?> getAdminUserRoles(@PathVariable Long id) {
     val adminUser = queries().send(
         GetAdminUserByIdQry.Request.builder()
-            .id(id)
+            .adminUserId(id)
             .build()
     ).getAdminUser();
     Optional.ofNullable(adminUser)

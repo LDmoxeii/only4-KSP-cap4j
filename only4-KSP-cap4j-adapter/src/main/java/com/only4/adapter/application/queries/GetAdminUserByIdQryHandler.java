@@ -1,12 +1,14 @@
 package com.only4.adapter.application.queries;
 
+import com.only4._share.exception.KnownException;
 import com.only4.adapter.infra.mybatis.mapper.AdminUserMapper;
 import com.only4.application.queries.admin_user.GetAdminUserByIdQry;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.netcorepal.cap4j.ddd.Mediator;
 import org.netcorepal.cap4j.ddd.application.query.Query;
-import org.springframework.cache.annotation.Cacheable;
+import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,13 +23,22 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class GetAdminUserByIdQryHandler implements Query<GetAdminUserByIdQry.Request, GetAdminUserByIdQry.Response> {
     private final AdminUserMapper adminUserMapper;
+
     @Override
-    @Cacheable(cacheNames = "adminUserCache", key = "#request.id", condition = "#request.id != null")
     public GetAdminUserByIdQry.Response exec(GetAdminUserByIdQry.Request request) {
-        AdminUser adminUser = adminUserMapper.getById(request.getId());
         // mybatis / jpa 哪个顺手就用哪个吧！
         return GetAdminUserByIdQry.Response.builder()
-            .adminUser(adminUser)
-            .build();
+                .adminUser(byJpa(request.getAdminUserId()))
+                .build();
+    }
+
+    public AdminUser byMybatis(Long adminUserId) {
+        return adminUserMapper.getById(adminUserId);
+    }
+
+    public AdminUser byJpa(Long adminUserId) {
+        return Mediator.repositories()
+                .findOne(JpaPredicate.byId(AdminUser.class, adminUserId))
+                .orElseThrow(() -> new KnownException("用户未找到"));
     }
 }

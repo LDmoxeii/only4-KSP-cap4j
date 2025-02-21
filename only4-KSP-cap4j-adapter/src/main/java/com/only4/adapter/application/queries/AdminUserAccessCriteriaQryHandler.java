@@ -30,12 +30,12 @@ public class AdminUserAccessCriteriaQryHandler implements Query<AdminUserAccessC
                 .build();
     }
 
-    public AdminUser byJpa(String acount, String password) {
+    public AdminUser byJpa(String account, String password) {
         return Mediator.repositories()
                 .findOne(JpaPredicate.bySpecification(AdminUser.class,
                         AdminUserSchema.specify(schema ->
                                 schema.all(
-                                        schema.name().equal(acount),
+                                        schema.name().equal(account),
                                         schema.password().equal(password)
                                 )
                         ))).orElse(null);
