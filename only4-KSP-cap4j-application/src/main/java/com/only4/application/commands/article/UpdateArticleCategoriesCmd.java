@@ -5,6 +5,7 @@ import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.article.dto.CategoryDto;
 import com.only4.domain.aggregates.category.Category;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -13,7 +14,6 @@ import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 

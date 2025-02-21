@@ -4,6 +4,7 @@ package com.only4.application.commands.article_comment;
 import com.only4._share.exception.KnownException;
 import com.only4.application.validater.MemberExists;
 import com.only4.domain.aggregates.article_comment.factory.ArticleCommentFactory;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -11,7 +12,6 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotBlank;
 import java.util.Optional;
 
 /**

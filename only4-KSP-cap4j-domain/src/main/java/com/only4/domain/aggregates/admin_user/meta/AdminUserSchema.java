@@ -2,10 +2,10 @@ package com.only4.domain.aggregates.admin_user.meta;
 
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.admin_user.AdminUser;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,7 +25,7 @@ public class AdminUserSchema {
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-        
+
         /**
          * ID
          */

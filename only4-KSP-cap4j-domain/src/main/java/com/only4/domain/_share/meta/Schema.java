@@ -1,10 +1,11 @@
 package com.only4.domain._share.meta;
 
 import com.google.common.collect.Lists;
-import org.hibernate.query.criteria.internal.OrderImpl;
-import org.hibernate.query.criteria.internal.path.SingularAttributePath;
+import jakarta.persistence.criteria.*;
+import org.hibernate.query.sqm.SortOrder;
+import org.hibernate.query.sqm.tree.domain.SqmBasicValuedSimplePath;
+import org.hibernate.query.sqm.tree.select.SqmSortSpecification;
 
-import javax.persistence.criteria.*;
 import java.util.Collection;
 
 /**
@@ -37,15 +38,15 @@ public class Schema {
         LEFT,
         RIGHT;
 
-        public javax.persistence.criteria.JoinType toJpaJoinType(){
-            if(this == Schema.JoinType.INNER){
-                return javax.persistence.criteria.JoinType.INNER;
-            } else if(this == Schema.JoinType.LEFT){
-                return javax.persistence.criteria.JoinType.LEFT;
-            } else if(this == Schema.JoinType.RIGHT){
-                return javax.persistence.criteria.JoinType.RIGHT;
+        public jakarta.persistence.criteria.JoinType toJpaJoinType() {
+            if (this == Schema.JoinType.INNER) {
+                return jakarta.persistence.criteria.JoinType.INNER;
+            } else if (this == Schema.JoinType.LEFT) {
+                return jakarta.persistence.criteria.JoinType.LEFT;
+            } else if (this == Schema.JoinType.RIGHT) {
+                return jakarta.persistence.criteria.JoinType.RIGHT;
             }
-            return javax.persistence.criteria.JoinType.LEFT;
+            return jakarta.persistence.criteria.JoinType.LEFT;
         }
     }
 
@@ -61,8 +62,12 @@ public class Schema {
 
         public Field(Path<T> path, CriteriaBuilder criteriaBuilder) {
             this.path = path;
-            this.name = ((SingularAttributePath<T>) path).getAttribute().getName();
-            this.criteriaBuilder = ((SingularAttributePath<T>) path).criteriaBuilder();
+            this.name = ((SqmBasicValuedSimplePath) path).getNavigablePath().getLocalName();
+            this.criteriaBuilder = criteriaBuilder;
+        }
+
+        public Field(String name) {
+            this.name = name;
         }
 
         protected CriteriaBuilder _criteriaBuilder() {
@@ -74,11 +79,11 @@ public class Schema {
         }
 
         public Order asc() {
-            return new OrderImpl(path, true);
+            return new SqmSortSpecification((SqmBasicValuedSimplePath<T>) path, SortOrder.ASCENDING);
         }
 
         public Order desc() {
-            return new OrderImpl(path, false);
+            return new SqmSortSpecification((SqmBasicValuedSimplePath<T>) path, SortOrder.DESCENDING);
         }
 
         public Predicate isTrue() {

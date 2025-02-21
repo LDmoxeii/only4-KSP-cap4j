@@ -1,13 +1,13 @@
 package com.only4.application.validater;
 
 import com.only4.application.queries.admin_user.ExistedAdminUserByRoleIdQry;
+import jakarta.validation.Constraint;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import jakarta.validation.Payload;
 import lombok.var;
 import org.netcorepal.cap4j.ddd.Mediator;
 
-import javax.validation.Constraint;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import javax.validation.Payload;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -1,15 +1,13 @@
 package com.only4.domain.aggregates.article;
 
+import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.*;
 
 /**
  * 文章标签

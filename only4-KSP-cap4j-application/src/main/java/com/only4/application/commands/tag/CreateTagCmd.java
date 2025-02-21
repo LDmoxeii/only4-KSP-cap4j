@@ -4,6 +4,7 @@ package com.only4.application.commands.tag;
 import com.only4.application.validater.TagUniqueName;
 import com.only4.domain.aggregates.tag.Tag;
 import com.only4.domain.aggregates.tag.factory.TagFactory;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -11,7 +12,6 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotBlank;
 import java.util.Optional;
 
 /**

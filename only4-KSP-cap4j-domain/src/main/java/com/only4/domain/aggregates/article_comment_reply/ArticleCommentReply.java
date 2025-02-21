@@ -4,6 +4,9 @@ import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article_comment_reply.events.ArticleCommentReplyCreatedDomainEvent;
 import com.only4.domain.aggregates.article_comment_reply.events.ArticleCommentReplyDeletedDomainEvent;
 import com.only4.domain.aggregates.article_comment_reply.events.ArticleCommentReplyLikeCountUpdatedDomainEvent;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,10 +14,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.*;
 import java.util.Objects;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
