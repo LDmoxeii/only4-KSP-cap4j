@@ -10,7 +10,7 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 
 /**
  * Article.ArticleLikeCountUpdatedDomainEvent领域事件
- * todo: 领域事件说明
+ * 文章点赞数已更新
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/14
@@ -23,4 +23,6 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 @NoArgsConstructor
 public class ArticleLikeCountUpdatedDomainEvent {
     Article entity;
+
+    Integer likeCount;
 }

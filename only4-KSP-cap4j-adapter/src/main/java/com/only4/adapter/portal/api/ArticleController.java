@@ -2,9 +2,9 @@ package com.only4.adapter.portal.api;
 
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.only4.adapter.portal.api._share.ResponseData;
+import com.only4.adapter.portal.api.request.CreateArticleRequest;
 import com.only4.application.commands.article.CreateArticleCmd;
 import com.only4.application.commands.article.UpdateArticleTagsCmd;
-import com.only4.domain.aggregates.article.ArticleAuthor;
 import com.only4.domain.aggregates.tag.Tag;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -26,21 +26,17 @@ import java.util.Optional;
 public class ArticleController {
 
     @GetMapping("createArticleTest")
-    public ResponseData<?> createArticle() {
-        return Optional.of(CreateArticleCmd.Request.builder()
-                        .title("Test Title")
-                        .description("Test Description")
-                        .content("Test Content")
-                        .authors(Collections.singletonList(ArticleAuthor.builder()
-                                .authorId(1L)
-                                .authorName("Author")
-                                .build())
-                        )
-                        .build())
-                .map(request -> {
-                    val response = Mediator.commands().send(request);
-                    return ResponseData.success(response);
-                }).orElse(ResponseData.fail("创建文章失败"));
+    public ResponseData<?> createArticle(CreateArticleRequest request) {
+
+        CreateArticleCmd.Response response = Mediator.commands()
+                .send(CreateArticleCmd.Request.builder()
+                        .title(request.getTitle())
+                        .description(request.getDescription())
+                        .content(request.getContent())
+                        .authors(request.getAuthors())
+                        .build());
+
+        return ResponseData.success(response);
     }
 
     @GetMapping("updateArticleTagsTest")

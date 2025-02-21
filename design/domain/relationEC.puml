@@ -5,7 +5,6 @@ ArticleLikeCountUpdated         -down-> UpdateMemberLikeCount
 ArticleCategoriesUpdated        -down-> UpdateCategoryRefCount
 ArticleTagsUpdated              -down-> UpdateTagRefCount
 ArticleViewCountUpdated         -down-> UpdateMemberViewCount
-ArticleFavoriteCountUpdated     -down-> UpdateFavoritesArticleCount
 
 'ArticleComment
 ArticleCommentCreated           -down-> UpdateArticleCommentCount

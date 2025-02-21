@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 
+import java.util.List;
+
 /**
  * Article.ArticleTagsUpdatedDomainEvent领域事件<br/>
  * 文章标签更新领域事件
@@ -23,4 +25,8 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 @NoArgsConstructor
 public class ArticleTagsUpdatedDomainEvent {
     Article entity;
+
+    List<Long> removeIds;
+
+    List<Long> addIds;
 }

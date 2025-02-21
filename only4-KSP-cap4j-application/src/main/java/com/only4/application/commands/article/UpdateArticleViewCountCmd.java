@@ -1,8 +1,8 @@
-package com.only4.application.commands.member;
+package com.only4.application.commands.article;
 
 
 import com.only4._share.exception.KnownException;
-import com.only4.domain.aggregates.member.Member;
+import com.only4.domain.aggregates.article.Article;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -15,15 +15,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 /**
- * UpdateMemberWorkCountCmd命令
+ * 更新文章播放量
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/16
+ * @date 2025/02/21
  */
-public class UpdateMemberWorkCountCmd {
+public class UpdateArticleViewCountCmd {
 
     /**
-     * UpdateMemberWorkCountCmd命令请求实现
+     * UpdateArticleViewCountCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -31,23 +31,22 @@ public class UpdateMemberWorkCountCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            Member member = Mediator.repositories()
-                    .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
-                    .orElseThrow(() -> new KnownException("用户不存在"));
+            Article article = Mediator.repositories()
+                    .findOne(JpaPredicate.byId(Article.class, cmd.getArticleId()))
+                    .orElseThrow(() -> new KnownException("文章不存在"));
 
-            member.updateWorkCount(cmd.getWorkCount());
-            Mediator.uow().persist(member);
+            article.updateViewCount(cmd.getViewCount());
+            Mediator.uow().persist(article);
             Mediator.uow().save();
 
             return Response.builder()
                     .success(true)
                     .build();
         }
-
     }
 
     /**
-     * UpdateMemberWorkCountCmd命令请求参数
+     * UpdateArticleViewCountCmd命令请求参数
      */
     @Data
     @Builder
@@ -56,14 +55,14 @@ public class UpdateMemberWorkCountCmd {
     public static class Request implements RequestParam<Response> {
 
         @Positive
-        Long memberId;
+        Long articleId;
 
         @NotNull
-        Integer workCount;
+        Integer viewCount;
     }
 
     /**
-     * UpdateMemberWorkCountCmd命令响应
+     * UpdateArticleViewCountCmd命令响应
      */
     @Data
     @Builder

@@ -14,12 +14,12 @@ cmd:article.UpdateArticleSticky:更新文章是否置顶
 cmd:article.UpdateArticleCommentFlag:更新文章是否可以评论
 cmd:article.UpdateArticlePrice:更新文章价格
 cmd:article.UpdateArticleLikeCount:更新文章点赞数
+cmd:article.UpdateArticleViewCount:更新文章播放量
 
 de:article.Article:ArticleCategoriesUpdated:文章分类集已更新
 de:article.Article:ArticleCreated:文章已创建
 de:article.Article:ArticleLikeCountUpdated:文章点赞数已更新
 de:article.Article:ArticleTagsUpdated:文章标签集已更新
 de:article.Article:ArticleViewCountUpdated:文章播放量已更新
-de:article.Article:ArticleFavoriteCountUpdated:文章收藏数已更新
 
 qry:article.ArticleExists:判断文章是否存在

@@ -133,16 +133,23 @@ class ArticleTest {
     class UpdateTagsTests {
         @Test
         void testUpdateTags() {
-            List<TagDto> tags = Arrays.asList(new TagDto(1L, "Tag1"), new TagDto(2L, "Tag2"));
-            List<ArticleTag> articleTags = new ArrayList<>();
-            articleTags.add(ArticleTag.builder().tagId(1L).tagName("TTT").build());
+            try (MockedStatic<DomainEventSupervisorSupport> mockStatic = mockStatic(DomainEventSupervisorSupport.class)) {
+                mockStatic.when(DomainEventSupervisorSupport::events).thenReturn(eventSupervisor);
 
-            when(article.getArticleTags()).thenReturn(articleTags);
+                List<TagDto> tags = Arrays.asList(new TagDto(1L, "Tag1"), new TagDto(2L, "Tag2"));
+                List<ArticleTag> articleTags = new ArrayList<>();
+                articleTags.add(ArticleTag.builder().tagId(1L).tagName("TTT").build());
 
-            article.updateTags(tags);
+                when(article.getArticleTags()).thenReturn(articleTags);
 
-            assertEquals(2, article.getArticleTags().size());
-            assertTrue(article.getArticleTags().stream().anyMatch(at -> at.getTagName().equals("Tag2")));
+                article.updateTags(tags);
+
+                assertEquals(2, article.getArticleTags().size());
+                assertTrue(article.getArticleTags().stream().anyMatch(at -> at.getTagName().equals("Tag2")));
+
+                verify(eventSupervisor).attach(any(), any());
+                mockStatic.verify(DomainEventSupervisorSupport::events, times(1));
+            }
         }
     }
 
@@ -150,15 +157,22 @@ class ArticleTest {
     class UpdateCategoryTests {
         @Test
         void testUpdateCategory() {
-            List<CategoryDto> categories = Arrays.asList(new CategoryDto(1L, "Category1"), new CategoryDto(2L, "Category2"));
-            List<ArticleCategory> articleCategories = new ArrayList<>();
-            articleCategories.add(ArticleCategory.builder().categoryId(1L).categoryName("TTT").build());
-            when(article.getArticleCategories()).thenReturn(articleCategories);
+            try (MockedStatic<DomainEventSupervisorSupport> mockStatic = mockStatic(DomainEventSupervisorSupport.class)) {
+                mockStatic.when(DomainEventSupervisorSupport::events).thenReturn(eventSupervisor);
 
-            article.updateCategory(categories);
+                List<CategoryDto> categories = Arrays.asList(new CategoryDto(1L, "Category1"), new CategoryDto(2L, "Category2"));
+                List<ArticleCategory> articleCategories = new ArrayList<>();
+                articleCategories.add(ArticleCategory.builder().categoryId(1L).categoryName("TTT").build());
+                when(article.getArticleCategories()).thenReturn(articleCategories);
 
-            assertEquals(2, article.getArticleCategories().size());
-            assertTrue(article.getArticleCategories().stream().anyMatch(at -> at.getCategoryName().equals("Category2")));
+                article.updateCategory(categories);
+
+                assertEquals(2, article.getArticleCategories().size());
+                assertTrue(article.getArticleCategories().stream().anyMatch(at -> at.getCategoryName().equals("Category2")));
+
+                verify(eventSupervisor).attach(any(), any());
+                mockStatic.verify(DomainEventSupervisorSupport::events, times(1));
+            }
         }
     }
 
@@ -166,16 +180,11 @@ class ArticleTest {
     class UpdateFavoriteCountTests {
         @Test
         void testUpdateFavoriteCount() {
-            try (MockedStatic<DomainEventSupervisorSupport> mockStatic = mockStatic(DomainEventSupervisorSupport.class)) {
-                mockStatic.when(DomainEventSupervisorSupport::events).thenReturn(eventSupervisor);
-                when(article.getArticleStatistics()).thenReturn(articleStatistics);
+            when(article.getArticleStatistics()).thenReturn(articleStatistics);
 
-                article.updateFavoriteCount(1);
+            article.updateFavoriteCount(1);
 
-                verify(articleStatistics).updateFavoriteCount(1);
-                verify(eventSupervisor).attach(any(), any());
-                mockStatic.verify(DomainEventSupervisorSupport::events, times(1));
-            }
+            verify(articleStatistics).updateFavoriteCount(1);
         }
     }
 

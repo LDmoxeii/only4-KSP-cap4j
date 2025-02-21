@@ -1,8 +1,7 @@
 package com.only4.application.commands.article;
 
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.ArticleAuthor;
-import com.only4.domain.aggregates.article.enums.ArticleVisibility;
+import com.only4.domain.aggregates.article.dto.ArticleAuthorDto;
 import com.only4.domain.aggregates.article.factory.ArticleFactory;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -43,9 +42,9 @@ class CreateArticleCmdTest {
                 .title("Test Title")
                 .description("Test Description")
                 .content("Test Content")
-                .authors(Collections.singletonList(ArticleAuthor.builder()
-                        .authorId(1L)
-                        .authorName("Author")
+                .authors(Collections.singletonList(ArticleAuthorDto.builder()
+                        .id(1L)
+                        .name("Author")
                         .build())
                 )
                 .build();

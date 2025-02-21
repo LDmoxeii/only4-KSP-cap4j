@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
@@ -238,6 +239,10 @@ public class Member {
                 .updateInfo(otherName);
     }
 
+    public void updateViewCount(@NotNull Integer viewCount) {
+        this.getMemberStatistics().updateViewCount(viewCount);
+    }
+
     public boolean hasBlocked(Long otherId) {
         return this.getBlockMembers().stream()
                 .anyMatch(blockMember -> Objects.equals(blockMember.getOtherId(), otherId));
@@ -281,11 +286,6 @@ public class Member {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "`member_id`", nullable = false)
     private java.util.List<com.only4.domain.aggregates.member.Favorites> favorites;
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`member_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.member.MemberPermission> memberPermissions;
 
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)

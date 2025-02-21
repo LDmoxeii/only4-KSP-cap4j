@@ -15,15 +15,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 /**
- * UpdateMemberWorkCountCmd命令
+ * 更新用户播放量
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/16
+ * @date 2025/02/21
  */
-public class UpdateMemberWorkCountCmd {
+public class UpdateMemberViewCountCmd {
 
     /**
-     * UpdateMemberWorkCountCmd命令请求实现
+     * UpdateMemberViewCountCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -35,7 +35,7 @@ public class UpdateMemberWorkCountCmd {
                     .findOne(JpaPredicate.byId(Member.class, cmd.getMemberId()))
                     .orElseThrow(() -> new KnownException("用户不存在"));
 
-            member.updateWorkCount(cmd.getWorkCount());
+            member.updateViewCount(cmd.getViewCount());
             Mediator.uow().persist(member);
             Mediator.uow().save();
 
@@ -43,11 +43,10 @@ public class UpdateMemberWorkCountCmd {
                     .success(true)
                     .build();
         }
-
     }
 
     /**
-     * UpdateMemberWorkCountCmd命令请求参数
+     * UpdateMemberViewCountCmd命令请求参数
      */
     @Data
     @Builder
@@ -59,11 +58,11 @@ public class UpdateMemberWorkCountCmd {
         Long memberId;
 
         @NotNull
-        Integer workCount;
+        Integer viewCount;
     }
 
     /**
-     * UpdateMemberWorkCountCmd命令响应
+     * UpdateMemberViewCountCmd命令响应
      */
     @Data
     @Builder
