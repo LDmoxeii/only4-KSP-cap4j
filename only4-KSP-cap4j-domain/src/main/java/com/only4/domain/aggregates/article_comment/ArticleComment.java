@@ -50,7 +50,7 @@ public class ArticleComment {
     public void updateLikeCount(Integer likeCount) {
         this.getArticleCommentStatistics().updateLikeCount(likeCount);
 
-        events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this), this);
+        events().attach(new ArticleCommentLikeCountUpdatedDomainEvent(this, likeCount), this);
     }
 
     public void updateSticky(Boolean sticky) {
