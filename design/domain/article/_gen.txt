@@ -23,3 +23,4 @@ de:article.Article:ArticleTagsUpdated:文章标签集已更新
 de:article.Article:ArticleViewCountUpdated:文章播放量已更新
 
 qry:article.ArticleExists:判断文章是否存在
+qry:article.GetArticlesByCategoryId:根据分类ID获取文章
