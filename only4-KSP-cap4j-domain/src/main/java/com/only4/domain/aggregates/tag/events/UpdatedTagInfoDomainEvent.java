@@ -10,7 +10,7 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 
 /**
  * Tag.UpdatedTagInfoDomainEvent领域事件
- * todo: 领域事件说明
+ * 标签信息已更新
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/14

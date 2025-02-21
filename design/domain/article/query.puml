@@ -60,4 +60,9 @@ Query("GetArticlesByMemberId") [
     --属性--
     用户ID
 ]
+Query("GetArticlesByTagId") [
+    根据标签ID获取文章
+    --属性--
+    标签ID
+]
 @enduml
