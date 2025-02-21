@@ -11,4 +11,5 @@ UpdateArticleCommentInfo        -down-> ArticleComment
 ArticleComment -down-> ArticleCommentCreated
 ArticleComment -down-> ArticleCommentDeleted
 ArticleComment -down-> ArticleCommentLikeCountUpdated
+ArticleComment -down->ArticleCommentReplyCountUpdated
 @enduml

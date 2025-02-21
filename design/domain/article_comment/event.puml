@@ -18,4 +18,9 @@ DomainEvent("ArticleCommentLikeCountUpdated") [
     --监听行为--
     更新用户点赞数
 ]
+DomainEvent("ArticleCommentReplyCountUpdated") [
+    已更新文章评论回复数
+    --监听行为--
+    更新文章评论数
+]
 @enduml

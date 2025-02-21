@@ -9,5 +9,6 @@ cmd:article_comment.UpdateArticleCommentInfo:更新文章评论信息
 de:article_comment.ArticleComment:ArticleCommentCreated:文章评论已更创建
 de:article_comment.ArticleComment:ArticleCommentDeleted:文章评论已删除
 de:article_comment.ArticleComment:ArticleCommentLikeCountUpdated:文章评论点赞数已更新
+de:article_comment.ArticleComment:ArticleCommentReplyCountUpdated:文章评论回复数已更新
 
 qry:article_comment.ArticleCommentExists:判断文章评论是否存在

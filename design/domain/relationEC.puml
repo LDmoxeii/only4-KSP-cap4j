@@ -9,6 +9,7 @@ ArticleViewCountUpdated         -down-> UpdateMemberViewCount
 'ArticleComment
 ArticleCommentCreated           -down-> UpdateArticleCommentCount
 ArticleCommentDeleted           -down-> UpdateArticleCommentCount
+ArticleCommentReplyCountUpdated -down-> UpdateArticleCommentCount
 ArticleCommentLikeCountUpdated  -down-> UpdateMemberLikeCount
 
 'ArticleCommentLike
@@ -17,9 +18,7 @@ ArticleCommentUnliked       -down-> UpdateArticleCommentLikeCount
 
 'ArticleCommentReply
 ArticleCommentReplyCreated          -down-> UpdateArticleCommentReplyCount
-ArticleCommentReplyCreated          -down-> UpdateArticleCommentCount
 ArticleCommentReplyDeleted          -down-> UpdateArticleCommentReplyCount
-ArticleCommentReplyDeleted          -down-> UpdateArticleCommentCount
 ArticleCommentReplyLikeCountUpdated -down-> UpdateMemberLikeCount
 
 'ArticleLike

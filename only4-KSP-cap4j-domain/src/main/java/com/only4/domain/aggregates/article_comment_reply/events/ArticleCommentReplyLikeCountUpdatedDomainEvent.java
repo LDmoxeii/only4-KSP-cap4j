@@ -23,4 +23,6 @@ import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 @NoArgsConstructor
 public class ArticleCommentReplyLikeCountUpdatedDomainEvent {
     ArticleCommentReply entity;
+
+    Integer likeCount;
 }
