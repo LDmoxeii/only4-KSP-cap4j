@@ -41,7 +41,7 @@ public class CheckIn implements ValueObject<Long> {
     // 【行为方法开始】
 
     public void create() {
-        events().attach(new CheckedInDomainEvent(this), this);
+        events().attach(new CheckedInDomainEvent(this, 50), this);
     }
 
     // 【行为方法结束】

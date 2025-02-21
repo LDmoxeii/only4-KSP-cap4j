@@ -1,3 +1,8 @@
 @startuml
 !include ..\lib_eventstorming.puml
+Query("GetArticleCommentRepliesByMemberId") [
+    根据用户ID查询评论回复
+    --属性--
+    用户ID
+]
 @enduml

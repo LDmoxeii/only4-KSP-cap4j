@@ -12,3 +12,4 @@ de:article_comment.ArticleComment:ArticleCommentLikeCountUpdated:文章评论点
 de:article_comment.ArticleComment:ArticleCommentReplyCountUpdated:文章评论回复数已更新
 
 qry:article_comment.ArticleCommentExists:判断文章评论是否存在
+qry:article_comment.GetArticleCommentsByMemberId:根据会员ID获取文章评论

@@ -1,8 +1,13 @@
 @startuml
 !include ..\lib_eventstorming.puml
-Query("ArticleCommentExists") {
+Query("ArticleCommentExists") [
     通过评论ID查询评论是否存在
     --属性--
     评论ID
-}
+]
+Query("GetArticleCommentsByMemberId") [
+    根据用户ID查询评论
+    --属性--
+    用户ID
+]
 @enduml

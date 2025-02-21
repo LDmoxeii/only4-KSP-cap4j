@@ -8,3 +8,5 @@ de:article_comment_reply.ArticleCommentReply:ArticleCommentReplyCreated:文章�
 de:article_comment_reply.ArticleCommentReply:ArticleCommentReplyDeleted:文章评论回复已删除
 de:article_comment_reply.ArticleCommentReply:ArticleCommentReplyLikeCountUpdated:文章评论点赞数已更新
 
+qry:article_comment_reply.GetArticleCommentRepliesByMemberId:根据会员ID获取文章评论回复
+

@@ -55,4 +55,9 @@ Query("GetArticlesByCategoryId") [
     --属性--
     分类ID
 ]
+Query("GetArticlesByMemberId") [
+    根据用户ID获取文章
+    --属性--
+    用户ID
+]
 @enduml
