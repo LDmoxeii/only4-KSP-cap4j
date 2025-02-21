@@ -1,12 +1,12 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
-DomainEvent("UpdatedRolePermissions") [
+DomainEvent("RolePermissionsUpdated") [
     已更新角色权限集
     --监听行为--
     更新角色权限信息
 ]
-DomainEvent("UpdatedRoleInfo") [
+DomainEvent("RoleInfoUpdated") [
     已更新角色信息
     --监听行为--
     更新角色信息

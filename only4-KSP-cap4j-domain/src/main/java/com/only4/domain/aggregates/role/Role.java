@@ -1,7 +1,7 @@
 package com.only4.domain.aggregates.role;
 
-import com.only4.domain.aggregates.role.events.UpdatedRoleInfoDomainEvent;
-import com.only4.domain.aggregates.role.events.UpdatedRolePermissionsDomainEvent;
+import com.only4.domain.aggregates.role.events.RoleInfoUpdatedDomainEvent;
+import com.only4.domain.aggregates.role.events.RolePermissionsUpdatedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -52,7 +52,7 @@ public class Role {
     public void updateRoleInfo(String name, String description) {
         this.name = name;
         this.description = description;
-        events().attach(new UpdatedRoleInfoDomainEvent(this), this);
+        events().attach(new RoleInfoUpdatedDomainEvent(this), this);
     }
 
     public void updateRolePermission(List<RolePermission> newPermissions) {
@@ -67,7 +67,7 @@ public class Role {
                 .filter(key -> !currentPermissionMap.containsKey(key))
                 .forEach(key -> this.getRolePermissions().add(newPsermissionMap.get(key)));
 
-        events().attach(new UpdatedRolePermissionsDomainEvent(this), this);
+        events().attach(new RolePermissionsUpdatedDomainEvent(this), this);
     }
 
     public void delete() {

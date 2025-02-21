@@ -47,6 +47,6 @@ TagInfoUpdated -down-> UpdateArticleTagInfo
 ViewHistoryCreated       -down-> UpdateArticleViewCount
 
 'role
-UpdatedRolePermissions  -down-> UpdateAdminUserRolePermissions
-UpdatedRoleInfo         -down-> UpdateAdminUserRoleInfo
+RolePermissionsUpdated  -down-> UpdateAdminUserRolePermissions
+RoleInfoUpdated         -down-> UpdateAdminUserRoleInfo
 @enduml

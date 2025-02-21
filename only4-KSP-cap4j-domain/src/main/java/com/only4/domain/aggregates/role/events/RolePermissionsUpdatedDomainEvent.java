@@ -9,18 +9,18 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import org.netcorepal.cap4j.ddd.domain.event.annotation.DomainEvent;
 
 /**
- * Role.RolePermissionsUpdatedDomainEvent领域事件
+ * Role.UpdatedRolePermissionsDomainEvent领域事件
  * 角色权限集已更新
  *
  * @author cap4j-ddd-codegen
- * @date 2025/02/20
+ * @date 2024/12/15
  */
 @DomainEvent(persist = false)
-@Aggregate(aggregate = "Role", name = "RolePermissionsUpdatedDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
+@Aggregate(aggregate = "Role", name = "UpdatedRolePermissionsDomainEvent", type = Aggregate.TYPE_DOMAIN_EVENT, description = "")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class RolePermissionsUpdatedDomainEvent {
-    Role entity;
+    Role role;
 }
