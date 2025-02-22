@@ -1,19 +1,15 @@
-package com.only4.adapter._share.handler;
+package com.only4.adapter.portal.api._share.handler;
 
 import cn.hutool.core.util.ReUtil;
 import com.only4._share.utils.SpringUtils;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.regex.Pattern;
 import lombok.Data;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * 获取所有Url配置

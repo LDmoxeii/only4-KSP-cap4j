@@ -1,4 +1,4 @@
-package com.only4.domain.aggregates.article.dto;
+package com.only4.adapter.portal.api._share.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,9 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticleAuthorDto {
-
-    private Long id;
-
+public class RoleDto {
     private String name;
 }

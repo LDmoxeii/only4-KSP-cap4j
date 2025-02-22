@@ -18,7 +18,6 @@ import com.only4.domain.aggregates.permission.Permission;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.RolePermission;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

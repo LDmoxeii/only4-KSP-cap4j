@@ -5,7 +5,6 @@ import com.only4.application.queries.admin_user.GetAdminUserByRoleIdQry;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.events.RoleInfoUpdatedDomainEvent;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.netcorepal.cap4j.ddd.Mediator;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;

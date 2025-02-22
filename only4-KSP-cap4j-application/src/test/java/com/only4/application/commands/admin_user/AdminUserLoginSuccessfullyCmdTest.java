@@ -2,7 +2,6 @@ package com.only4.application.commands.admin_user;
 
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.AdminUser;
-import lombok.var;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

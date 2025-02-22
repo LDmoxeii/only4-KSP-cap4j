@@ -1,12 +1,12 @@
-package com.only4.adapter._share.configure;
+package com.only4.adapter.portal.api._share.configure;
 
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.jwt.StpLogicJwtForSimple;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
-import com.only4.adapter._share.core.dao.PlusSaTokenDao;
-import com.only4.adapter._share.core.service.SaPermissionImpl;
-import com.only4.adapter._share.factory.YmlPropertySourceFactory;
+import com.only4._share.factory.YmlPropertySourceFactory;
+import com.only4.adapter.portal.api._share.auth.core.dao.PlusSaTokenDao;
+import com.only4.adapter.portal.api._share.auth.core.service.SaPermissionImpl;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;

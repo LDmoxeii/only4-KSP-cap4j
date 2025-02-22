@@ -6,4 +6,12 @@ package com.only4._share;
  */
 public class Constants {
     public final static String UTF_8 = "UTF-8";
+
+    public final static String ADMIN_USER_KEY = "adminUser";
+
+    public final static String USER_PERMISSIONS = "userPermissions";
+
+    public final static String USER_ROLES = "userRoles";
+
+    public final static String ADMIN_USER_ID = "adminUserId";
 }

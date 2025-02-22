@@ -1,11 +1,11 @@
-package com.only4.adapter._share.configure;
+package com.only4.adapter.portal.api._share.configure;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import com.only4._share.utils.SpringUtils;
-import com.only4.adapter._share.configure.properties.SecurityProperties;
-import com.only4.adapter._share.handler.AllUrlHandler;
+import com.only4.adapter.portal.api._share.configure.properties.SecurityProperties;
+import com.only4.adapter.portal.api._share.handler.AllUrlHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

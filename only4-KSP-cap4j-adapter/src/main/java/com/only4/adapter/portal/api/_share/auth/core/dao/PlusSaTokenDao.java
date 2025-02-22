@@ -1,4 +1,4 @@
-package com.only4.adapter._share.core.dao;
+package com.only4.adapter.portal.api._share.auth.core.dao;
 
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaFoxUtil;

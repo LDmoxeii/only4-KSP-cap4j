@@ -11,12 +11,6 @@
 
     <artifactId>only4-KSP-cap4j-application</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.only4</groupId>
@@ -27,21 +21,6 @@
             <groupId>com.only4</groupId>
             <artifactId>only4-KSP-cap4j-domain</artifactId>
             <version>${project.version}</version>
-        </dependency>
-
-        <!-- 以下自定义 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- mockito -->
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

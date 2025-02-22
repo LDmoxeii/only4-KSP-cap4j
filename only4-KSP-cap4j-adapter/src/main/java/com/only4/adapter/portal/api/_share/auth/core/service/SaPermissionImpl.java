@@ -1,9 +1,9 @@
-package com.only4.adapter._share.core.service;
+package com.only4.adapter.portal.api._share.auth.core.service;
 
 import cn.dev33.satoken.stp.StpInterface;
-import com.only4.adapter._share.dto.PermissionDto;
-import com.only4.adapter._share.dto.RoleDto;
-import com.only4.adapter._share.utils.LoginHelper;
+import com.only4.adapter.portal.api._share.auth.utils.LoginHelper;
+import com.only4.adapter.portal.api._share.dto.PermissionDto;
+import com.only4.adapter.portal.api._share.dto.RoleDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

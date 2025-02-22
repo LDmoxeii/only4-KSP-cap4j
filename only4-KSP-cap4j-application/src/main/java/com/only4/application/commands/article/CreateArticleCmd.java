@@ -3,7 +3,7 @@ package com.only4.application.commands.article;
 
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
-import com.only4.domain.aggregates.article.dto.ArticleAuthorDto;
+import com.only4.domain.aggregates.article.ArticleAuthor;
 import com.only4.domain.aggregates.article.factory.ArticleFactory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -72,7 +72,7 @@ public class CreateArticleCmd {
         String content;
 
         @NotEmpty(message = "文章作者不能为空")
-        List<ArticleAuthorDto> authors;
+        List<ArticleAuthor> authors;
     }
 
     /**

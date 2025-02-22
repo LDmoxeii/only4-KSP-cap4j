@@ -1,6 +1,10 @@
 package com.only4.adapter.portal.api._share.configure;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.lock.exception.LockFailureException;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.only4._share.CodeEnum;
 import com.only4._share.exception.ErrorException;
@@ -60,14 +64,14 @@ public class CommonExceptionHandler {
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseData<Object> handleError(NoHandlerFoundException e) {
-        log.warn(String.format("404没找到请求:%s", e.getMessage()), e);
+        log.warn("404没找到请求:{}", e.getMessage(), e);
         return ResponseData.fail(CodeEnum.NOT_FOUND);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ResponseData<Object> handleError(HttpRequestMethodNotSupportedException e) {
-        log.warn(String.format("不支持当前请求方法:%s", e.getMessage()), e);
+        log.warn("不支持当前请求方法:{}", e.getMessage(), e);
         return ResponseData.fail(CodeEnum.METHOD_NOT_SUPPORTED);
     }
 
@@ -81,7 +85,7 @@ public class CommonExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseData<Object> handleError(HttpServletRequest request, ConstraintViolationException e) {
         String requestInfo = getRequestInfo(request);
-        log.warn(String.format("参数校验异常:%s request:%s ", e.getMessage(), requestInfo), e);
+        log.warn("参数校验异常:{} request:{} ", e.getMessage(), requestInfo, e);
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         for (ConstraintViolation<?> constraintViolation : constraintViolations) {
             String message = constraintViolation.getMessage();
@@ -93,7 +97,7 @@ public class CommonExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseData<Object> handleError(MissingServletRequestParameterException e) {
-        log.warn(String.format("缺少请求参数:%s", e.getMessage()), e);
+        log.warn("缺少请求参数:{}", e.getMessage(), e);
         String message = String.format("缺少必要的请求参数: %s", e.getParameterName());
         return ResponseData.fail(CodeEnum.PARAM_INVALIDATE.getCode(), message);
     }
@@ -101,7 +105,7 @@ public class CommonExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseData<Object> handleError(MethodArgumentTypeMismatchException e) {
-        log.warn(String.format("请求参数格式错误:%s", e.getMessage()), e);
+        log.warn("请求参数格式错误:{}", e.getMessage(), e);
         String message = String.format("请求参数格式错误: %s", e.getName());
         return ResponseData.fail(CodeEnum.PARAM_INVALIDATE.getCode(), message);
     }
@@ -109,28 +113,28 @@ public class CommonExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseData<Object> handleError(MethodArgumentNotValidException e) {
-        log.warn(String.format("参数验证失败:%s", e.getMessage()), e);
+        log.warn("参数验证失败:{}", e.getMessage(), e);
         return ResponseData.fail(CodeEnum.PARAM_INVALIDATE.getCode(), "参数[" + e.getBindingResult().getFieldError().getField() + "]不正确：" + e.getBindingResult().getFieldError().getDefaultMessage());
     }
 
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseData<Object> handleError(BindException e) {
-        log.warn(String.format("参数绑定失败:%s", e.getMessage()), e);
+        log.warn("参数绑定失败:{}", e.getMessage(), e);
         return ResponseData.fail(CodeEnum.PARAM_INVALIDATE.getCode(), "参数不正确");
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseData<Object> handleError(HttpServletRequest request, HttpMessageNotReadableException e) {
-        log.error(String.format("消息不能读取:%s request:%s", e.getMessage(), getRequestInfo(request)), e);
+        log.error("消息不能读取:{} request:{}", e.getMessage(), getRequestInfo(request), e);
         return ResponseData.fail(CodeEnum.MESSAGE_NOT_READABLE);
     }
 
     @ExceptionHandler(value = MissingRequestHeaderException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseData<Object> headerParamException(HttpServletRequest request, MissingRequestHeaderException e) {
-        log.warn(String.format("缺少header参数:%s request:%s",  e.getHeaderName(), getRequestInfo(request)), e);
+        log.warn("缺少header参数:{} request:{}", e.getHeaderName(), getRequestInfo(request), e);
         return ResponseData.fail(CodeEnum.PARAM_INVALIDATE.getCode(), "缺少header参数");
     }
 
@@ -168,6 +172,46 @@ public class CommonExceptionHandler {
         return ResponseData.fail("断开的连接:Broken pipe");
     }
 
+    /**
+     * 分布式锁Lock4j异常
+     */
+    @ExceptionHandler(LockFailureException.class)
+    public ResponseData<Void> handleLockFailureException(LockFailureException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.warn("获取锁失败了'{}',发生Lock4j异常.", requestURI, e);
+        return ResponseData.fail("业务处理中，请稍后再试...");
+    }
+
+    /**
+     * 权限码异常
+     */
+    @ExceptionHandler(NotPermissionException.class)
+    public ResponseData<Void> handleNotPermissionException(NotPermissionException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',权限码校验失败'{}'", requestURI, e.getMessage());
+        return ResponseData.fail("没有访问权限，请联系管理员授权");
+    }
+
+    /**
+     * 角色权限异常
+     */
+    @ExceptionHandler(NotRoleException.class)
+    public ResponseData<Void> handleNotRoleException(NotRoleException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',角色权限校验失败'{}'", requestURI, e.getMessage());
+        return ResponseData.fail("没有访问权限，请联系管理员授权");
+    }
+
+    /**
+     * 认证失败
+     */
+    @ExceptionHandler(NotLoginException.class)
+    public ResponseData<Void> handleNotLoginException(NotLoginException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',认证失败'{}',无法访问系统资源", requestURI, e.getMessage());
+        return ResponseData.fail("认证失败，无法访问系统资源");
+    }
+
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseData<Object> handleError(HttpServletRequest request, Throwable e) {
@@ -175,7 +219,7 @@ public class CommonExceptionHandler {
         if (ke != null) {
             return knownException(ke);
         }
-        log.error(String.format("发生未知异常:%s request:%s", e.getMessage(), getRequestInfo(request)), e);
+        log.error("发生未知异常:{} request:{}", e.getMessage(), getRequestInfo(request), e);
         return ResponseData.fail(CodeEnum.ERROR);
     }
 

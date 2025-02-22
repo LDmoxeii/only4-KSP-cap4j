@@ -1,4 +1,4 @@
-package com.only4.adapter._share.configure.properties;
+package com.only4.adapter.portal.api._share.configure.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
