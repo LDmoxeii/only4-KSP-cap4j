@@ -317,6 +317,51 @@ Command("UpdateMemberViewCount")[
     用户必须存在
     浏览量不为NULL
 ]
+Command("UpdateMemberWorkCountBatch") [
+    批量更新用户作品数
+    --触发事件--
+    已创建文章
+    已删除文章
+    --属性--
+    用户ID列表
+    作品数
+    --规则--
+    作品数不为NULL
+]
+Command("UpdateMemberViewCountBatch") [
+    批量更新用户播放量
+    --触发事件--
+    文章浏览量已更新
+    --属性--
+    用户ID列表
+    浏览量
+    --规则--
+    浏览量不为NULL
+]
+Command("UpdateBlackMemberInfoBatch") [
+    批量更新拉黑用户信息
+    --触发事件--
+    已更新用户信息
+    --属性--
+    用户ID列表
+    被拉黑用户ID
+    被拉黑用户名
+    --规则--
+    被拉黑用户必须存在
+    被拉黑用户名不能为空
+]
+Command("UpdateFollowMemberInfoBatch")[
+    批量更新关注用户信息
+    --触发事件--
+    已更新用户信息
+    --属性--
+    用户ID列表
+    关注用户ID
+    关注用户名
+    --规则--
+    关注用户必须存在
+    关注用户名不能为空
+]
 
 FacadeCommand("UpdateMemberFollowingCount") [
     更新用户关注数

@@ -22,11 +22,10 @@ public class MemberFollowedDomainEventSubscriber {
     public void updateMemberFollowerCount(MemberFollowedDomainEvent event) {
         val otherId = event.getOtherId();
 
-        Optional.ofNullable(UpdateMemberFanCountCmd.Request.builder()
+        Optional.of(UpdateMemberFanCountCmd.Request.builder()
                 .memberId(otherId)
                 .fanCount(1)
-                .build())
-                .ifPresent(Mediator.commands()::send);
+                .build()).ifPresent(Mediator.commands()::send);
     }
 
 }

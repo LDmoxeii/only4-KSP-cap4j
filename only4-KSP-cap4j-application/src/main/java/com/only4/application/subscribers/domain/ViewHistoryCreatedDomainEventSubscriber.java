@@ -25,8 +25,7 @@ public class ViewHistoryCreatedDomainEventSubscriber {
         Optional.of(UpdateArticleViewCountCmd.Request.builder()
                 .articleId(record.getArticleId())
                 .viewCount(1)
-                .build())
-                .ifPresent(Mediator.commands()::send);
+                .build()).ifPresent(Mediator.commands()::send);
     }
 
 }

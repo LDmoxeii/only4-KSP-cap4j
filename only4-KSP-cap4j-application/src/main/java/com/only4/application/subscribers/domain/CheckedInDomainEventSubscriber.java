@@ -26,8 +26,7 @@ public class CheckedInDomainEventSubscriber {
         Optional.of(UpdateMemberRankCmd.Request.builder()
                         .memberId(record.getMemberId())
                         .rank(rank)
-                        .build())
-                .ifPresent(Mediator.commands()::send);
+                        .build()).ifPresent(Mediator.commands()::send);
     }
 
 }

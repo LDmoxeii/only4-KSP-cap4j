@@ -27,6 +27,10 @@ UpdateMemberStardustCount        -down-> Member
 UpdateBlackMemberInfo            -down-> Member
 UpdateFollowMemberInfo           -down-> Member
 UpdateMemberViewCount            -down-> Member
+UpdateMemberWorkCountBatch       -down-> Member
+UpdateMemberViewCountBatch       -down-> Member
+UpdateBlackMemberInfoBatch       -down-> Member
+UpdateFollowMemberInfoBatch      -down-> Member
 
 Member -down-> MemberInfoUpdated
 Member -down-> MemberFollowed

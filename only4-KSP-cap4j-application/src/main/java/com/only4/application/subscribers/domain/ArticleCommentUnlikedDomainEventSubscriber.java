@@ -25,8 +25,7 @@ public class ArticleCommentUnlikedDomainEventSubscriber {
         Optional.of(UpdateArticleCommentLikeCountCmd.Request.builder()
                         .commentId(record.getArticleCommentId())
                         .likeCount(-1)
-                        .build())
-                .ifPresent(Mediator.commands()::send);
+                        .build()).ifPresent(Mediator.commands()::send);
     }
 
 }

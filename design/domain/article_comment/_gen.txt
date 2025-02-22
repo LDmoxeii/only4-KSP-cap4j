@@ -5,6 +5,7 @@ cmd:article_comment.UpdateArticleCommentSticky:更新文章是否置顶
 cmd:article_comment.UpdateArticleCommentLikeCount:更新文章评论点赞数
 cmd:article_comment.UpdateArticleCommentReplyCount:更新文章评论回复数
 cmd:article_comment.UpdateArticleCommentInfo:更新文章评论信息
+cmd:article_comment.UpdateArticleCommentInfoBatch:批量更新文章评论信息
 
 de:article_comment.ArticleComment:ArticleCommentCreated:文章评论已更创建
 de:article_comment.ArticleComment:ArticleCommentDeleted:文章评论已删除

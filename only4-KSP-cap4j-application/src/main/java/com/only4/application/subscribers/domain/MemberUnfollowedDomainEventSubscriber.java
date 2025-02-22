@@ -25,8 +25,7 @@ public class MemberUnfollowedDomainEventSubscriber {
         Optional.of(UpdateMemberFanCountCmd.Request.builder()
                 .memberId(otherId)
                 .fanCount(-1)
-                .build())
-                .ifPresent(Mediator.commands()::send);
+                .build()).ifPresent(Mediator.commands()::send);
     }
 
 }

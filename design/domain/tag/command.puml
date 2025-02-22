@@ -48,5 +48,14 @@ Command("UpdateTagRefCount") [
     标签必须存在
     引用次数不为NULL
 ]
-
+Command("UpdateTagRefCountBatch") [
+    批量更新标签引用次数
+    --触发事件--
+    已更新文章标签集
+    --属性--
+    标签ID列表
+    引用次数
+    --规则--
+    引用次数不为NULL
+]
 @enduml

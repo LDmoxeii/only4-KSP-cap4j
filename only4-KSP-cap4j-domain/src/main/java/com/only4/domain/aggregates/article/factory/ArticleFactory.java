@@ -3,7 +3,6 @@ package com.only4.domain.aggregates.article.factory;
 import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.article.ArticleAuthor;
 import com.only4.domain.aggregates.article.ArticleStatistics;
-import com.only4.domain.aggregates.article.dto.ArticleAuthorDto;
 import com.only4.domain.aggregates.article.enums.ArticleVisibility;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

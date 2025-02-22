@@ -6,4 +6,9 @@ Query("TagExistsByName") [
 	--属性--
 	标签名
 ]
+Query("TagExistsById") [
+	根据标签ID判断标签是否存在
+	--属性--
+	标签ID
+]
 @enduml

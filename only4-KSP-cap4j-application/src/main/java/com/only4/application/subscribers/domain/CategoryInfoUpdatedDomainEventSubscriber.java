@@ -1,6 +1,6 @@
 package com.only4.application.subscribers.domain;
 
-import com.only4.application.commands.article.UpdateArticleCategoryInfoCmd;
+import com.only4.application.commands.article.UpdateArticleCategoryInfoBatchCmd;
 import com.only4.application.queries.article.GetArticlesByCategoryIdQry;
 import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.category.Category;
@@ -10,8 +10,9 @@ import org.netcorepal.cap4j.ddd.Mediator;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Category.CategoryInfoUpdatedDomainEvent领域事件订阅
@@ -25,17 +26,18 @@ public class CategoryInfoUpdatedDomainEventSubscriber {
     public void updateArticleCategoryInfo(CategoryInfoUpdatedDomainEvent event) {
         Category category = event.getEntity();
 
-        List<Article> articles = Mediator.queries().send(GetArticlesByCategoryIdQry.Request.builder()
-                .categoryId(category.getId())
-                .build()).getArticles();
+        Set<Long> ids = Mediator.queries().send(GetArticlesByCategoryIdQry.Request.builder()
+                        .categoryId(category.getId())
+                        .build()).getArticles()
+                .stream()
+                .map(Article::getId)
+                .collect(Collectors.toSet());
 
-        articles.forEach(article -> Optional.of(
-                        UpdateArticleCategoryInfoCmd.Request.builder()
-                                .articleId(article.getId())
-                                .categoryId(category.getId())
-                                .categoryName(category.getName())
-                                .build())
-                .ifPresent(Mediator.commands()::send));
+        Optional.of(UpdateArticleCategoryInfoBatchCmd.Request.builder()
+                .articleIds(ids)
+                .categoryId(category.getId())
+                .categoryName(category.getName())
+                .build()).ifPresent(Mediator.commands()::send);
     }
 
 }
