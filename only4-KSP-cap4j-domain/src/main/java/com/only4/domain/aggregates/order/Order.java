@@ -41,13 +41,15 @@ public class Order {
     }
 
     public void refund() {
+        this.state = -1;
     }
 
     public void pay() {
+        this.state = 1;
     }
 
     public void cancel() {
-
+        this.state = -2;
     }
 
     // 【行为方法结束】
