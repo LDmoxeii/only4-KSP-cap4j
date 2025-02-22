@@ -32,10 +32,9 @@ public class MemberRankUpdatedDomainEventSubscriber {
         levelToRank.put(5, 66666);
 
         if (levelToRank.get(member.getLevel()) < newRank) {
-            Optional.ofNullable(UpMemberLevelCmd.Request.builder()
-                            .memberId(member.getId())
-                            .build())
-                    .ifPresent(Mediator.commands()::send);
+            Optional.of(UpMemberLevelCmd.Request.builder()
+                    .memberId(member.getId())
+                    .build()).ifPresent(Mediator.commands()::send);
         }
     }
 
