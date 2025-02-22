@@ -2,5 +2,9 @@ cmd:tag.CreateTag:创建标签
 cmd:tag.UpdateTagInfo:更新标签信息
 cmd:tag.UpdateTagRefCount:更新标签引用次数
 cmd:tag.DeleteTag:删除标签
+cmd:tag.UpdateTagRefCountBatch:批量更新标签引用次数
 
 de:tag.Tag:TagInfoUpdated:标签信息已更新
+
+qry:tag.TagExistsById:根据Id判断标签是否存在
+qry:tag.TagExistsByName:根据名称判断标签是否存在

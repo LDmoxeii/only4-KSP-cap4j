@@ -17,6 +17,9 @@ UpdateArticleCommentFlag        -down-> Article
 UpdateArticlePrice              -down-> Article
 UpdateArticleLikeCount          -down-> Article
 UpdateArticleViewCount          -down-> Article
+UpdateArticleCategoryInfoBatch  -down-> Article
+UpdateArticleTagInfoBatch       -down-> Article
+UpdateArticleAuthorInfoBatch    -down-> Article
 
 Article -down-> ArticleCategoriesUpdated
 Article -down-> ArticleCreated

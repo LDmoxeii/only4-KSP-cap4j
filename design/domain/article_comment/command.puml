@@ -70,4 +70,16 @@ Command("UpdateArticleCommentSticky") [
     文章置顶标识
     --规则--
 ]
+Command("UpdateArticleCommentInfoBatch") [
+    批量更新文章评论信息
+    --触发事件--
+    已更新用户信息
+    --属性--
+    文章评论ID列表
+    用户ID
+    用户名
+    --规则--
+    用户必须存在
+    用户名不能为空
+]
 @enduml

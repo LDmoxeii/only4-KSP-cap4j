@@ -51,4 +51,16 @@ Command("UpdateArticleCommentReplyLikeCount") [
     --规则--
     点赞数不为NULL
 ]
+Command("UpdateArticleCommentReplyInfoBatch") [
+    批量更新文章评论回复信息
+    --触发事件--
+    已更新用户信息
+    --属性--
+    文章评论回复ID列表
+    用户ID
+    用户名
+    --规则--
+    用户必须存在
+    用户名不能为空
+]
 @enduml
