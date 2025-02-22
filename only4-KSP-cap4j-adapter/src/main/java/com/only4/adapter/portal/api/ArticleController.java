@@ -5,6 +5,7 @@ import com.only4.adapter.portal.api._share.ResponseData;
 import com.only4.adapter.portal.api.request.CreateArticleRequest;
 import com.only4.application.commands.article.CreateArticleCmd;
 import com.only4.application.commands.article.UpdateArticleTagsCmd;
+import com.only4.domain.aggregates.article.ArticleAuthor;
 import com.only4.domain.aggregates.tag.Tag;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author LD_moxeii
@@ -27,13 +30,20 @@ public class ArticleController {
 
     @GetMapping("createArticleTest")
     public ResponseData<?> createArticle(CreateArticleRequest request) {
+        List<ArticleAuthor> articleAuthors = request.getAuthors().stream()
+                .map(articleAuthorDto -> ArticleAuthor.builder()
+                        .authorId(articleAuthorDto.getId())
+                        .authorName(articleAuthorDto.getName())
+                        .build())
+                .collect(Collectors.toList());
+
 
         CreateArticleCmd.Response response = Mediator.commands()
                 .send(CreateArticleCmd.Request.builder()
                         .title(request.getTitle())
                         .description(request.getDescription())
                         .content(request.getContent())
-                        .authors(request.getAuthors())
+                        .authors(articleAuthors)
                         .build());
 
         return ResponseData.success(response);

@@ -1,6 +1,6 @@
 package com.only4.adapter.portal.api.request;
 
-import com.only4.domain.aggregates.article.dto.ArticleAuthorDto;
+import com.only4.adapter.portal.api._share.dto.ArticleAuthorDto;
 import lombok.Data;
 
 import java.util.List;

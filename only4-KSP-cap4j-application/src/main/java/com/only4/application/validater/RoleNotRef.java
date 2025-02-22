@@ -5,7 +5,6 @@ import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
-import lombok.var;
 import org.netcorepal.cap4j.ddd.Mediator;
 
 import java.lang.annotation.ElementType;

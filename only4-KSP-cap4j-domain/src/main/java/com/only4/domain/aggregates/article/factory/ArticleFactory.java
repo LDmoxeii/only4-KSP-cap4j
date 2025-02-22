@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Article聚合工厂
@@ -30,13 +29,6 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
 
     @Override
     public Article create(Payload payload) {
-        List<ArticleAuthor> articleAuthors = payload.getAuthors().stream()
-                .map(articleAuthorDto -> ArticleAuthor.builder()
-                        .authorName(articleAuthorDto.getName())
-                        .authorId(articleAuthorDto.getId())
-                        .build())
-                .collect(Collectors.toList());
-
         return Article.builder()
                 //创建文章
                 .title(payload.getTitle())
@@ -48,7 +40,7 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
                 .visibility(ArticleVisibility.PRIVATE)
                 .stickyFlag(false)
                 .commentFlag(true)
-                .articleAuthors(articleAuthors)
+                .articleAuthors(payload.getAuthors())
                 .articleStatistics(Collections.singletonList(new ArticleStatistics()))
                 .build();
     }
@@ -73,7 +65,7 @@ public class ArticleFactory implements AggregateFactory<ArticleFactory.Payload, 
 
         String appendix;
 
-        List<ArticleAuthorDto> authors;
+        List<ArticleAuthor> authors;
 
     }
 }

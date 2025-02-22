@@ -18,7 +18,6 @@ import com.only4.domain.aggregates.admin_user.AdminUserPermission;
 import com.only4.domain.aggregates.admin_user.dto.AssignAdminUserRoleDto;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import lombok.var;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

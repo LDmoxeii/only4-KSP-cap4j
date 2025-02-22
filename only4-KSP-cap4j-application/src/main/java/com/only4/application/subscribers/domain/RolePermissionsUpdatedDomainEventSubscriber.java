@@ -7,7 +7,6 @@ import com.only4.domain.aggregates.admin_user.AdminUserPermission;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.events.RolePermissionsUpdatedDomainEvent;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.netcorepal.cap4j.ddd.Mediator;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;

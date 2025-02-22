@@ -1,13 +1,13 @@
-package com.only4.adapter._share.utils;
+package com.only4.adapter.portal.api._share.auth.utils;
 
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
-import com.only4.adapter._share.dto.LoginUser;
-import com.only4.adapter._share.dto.PermissionDto;
-import com.only4.adapter._share.dto.RoleDto;
+import com.only4.adapter.portal.api._share.dto.LoginUser;
+import com.only4.adapter.portal.api._share.dto.PermissionDto;
+import com.only4.adapter.portal.api._share.dto.RoleDto;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -15,8 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-import static com.only4.adapter._share.constants.UserConstant.*;
-
+import static com.only4._share.Constants.*;
 /**
  * @author LD_moxeii
  */
