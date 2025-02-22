@@ -1,6 +1,6 @@
 package com.only4.application.subscribers.domain;
 
-import com.only4.application.commands.tag.UpdateTagRefCountCmd;
+import com.only4.application.commands.tag.UpdateTagRefCountBatchCmd;
 import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.article.events.ArticleTagsUpdatedDomainEvent;
 import lombok.RequiredArgsConstructor;
@@ -25,18 +25,15 @@ public class ArticleTagsUpdatedDomainEventSubscriber {
         List<Long> removeIds = event.getRemoveIds();
         List<Long> addIds = event.getAddIds();
 
-        removeIds.forEach(tagId -> Optional.of(UpdateTagRefCountCmd.Request.builder()
-                .tagId(tagId)
+        Optional.of(UpdateTagRefCountBatchCmd.Request.builder()
+                .tagIds(removeIds)
                 .refCount(-1)
-                .build()).ifPresent(Mediator.commands()::send)
-        );
+                .build()).ifPresent(Mediator.commands()::send);
 
-        addIds.forEach(tagId -> Optional.of(UpdateTagRefCountCmd.Request.builder()
-                .tagId(tagId)
+        Optional.of(UpdateTagRefCountBatchCmd.Request.builder()
+                .tagIds(addIds)
                 .refCount(1)
-                .build()).ifPresent(Mediator.commands()::send)
-        );
-
+                .build()).ifPresent(Mediator.commands()::send);
     }
 
 }
