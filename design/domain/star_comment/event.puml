@@ -1,108 +1,41 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
-DomainEvent("StarCreated") [
-    已创建星球
-    --属性--
-    星球ID
-    星球名
-    --监听者--
-    星主
+DomainEvent("StarCommentCreated") [
+    星球评论已创建
+    --监听行为--
+    更新星球评论数
 ]
-DomainEvent("StarDeleted") [
-    已删除星球
-    --属性--
-    星球ID
-    星球名
-    --监听者--
-    星主
-]
-DomainEvent("JoinedStar")[
-    已加入星球
-    --属性--
-    星球ID
-    加入数量
-    --监听者--
-    星球
-]
-DomainEvent("LeftStar")[
-    已离开星球
-    --属性--
-    星球ID
-    离开数量
-    --监听者--
-    星球
-]
-DomainEvent("StarLiked")[
-    已点赞星球
-    --属性--
-    星球ID
-    点赞数量
-    --监听者--
-    星球
-    操作者
-]
-DomainEvent("StarUnliked")[
-    已取消点赞星球
-    --属性--
-    星球ID
-    取消点赞数量
-    --监听者--
-    星球
-    操作者
-]
-DomainEvent("StarCreatedComment")[
-    已创建星球评论
-    --属性--
-    星球ID
-    --监听者--
-    星球
-]
-DomainEvent("StarDeletedComment")[
-    已删除星球评论
-    --属性--
-    星球ID
-    --监听者--
-    星球
-]
-DomainEvent("StarCommentLiked")[
-    已点赞星球评论
-    --属性--
-    星球ID
-    --监听者--
-    星球
-    操作者
-]
-DomainEvent("StarCommentUnliked")[
-    已取消点赞星球评论
-    --属性--
-    星球ID
-    --监听者--
-    星球
-    操作者
-]
-DomainEvent("StarLikeCountUpdated") [
-    已更新星球点赞数
-    --属性--
-    星球ID
-    点赞数量
-    --监听者--
-    星主
+DomainEvent("StarCommentDeleted") [
+    星球评论已删除
+    --监听行为--
+    更新星球评论数
 ]
 DomainEvent("StarCommentLikeCountUpdated") [
-    已更新星球评论点赞数
-    --属性--
-    星球评论ID
-    点赞数量
-    --监听者--
-    星球评论作者
+    星球评论点赞数已更新
+    --监听行为--
+    更新星球点赞数
 ]
-DomainEvent("StarInfoUpdated") [
-    已更新星球信息
-    --属性--
-    星球ID
-    星球名
-    --监听者--
-    星主
+DomainEvent("StarCommentReplyCountUpdated") [
+    星球评论回复数已更新
+    --监听行为--
+    更新星球评论数
+]
+
+Event("StarCommentPinned") [
+    星球评论已置顶
+    --监听行为--
+]
+Event("StarCommentUnPinned") [
+    星球评论已取消置顶
+    --监听行为--
+]
+Event("StarCommentReportCountUpdated") [
+    星球评论举报数已更新
+    --监听行为--
+]
+Event("StarCommentInfoUpdated") [
+    星球评论信息已更新
+    --监听行为--
 ]
 @enduml
