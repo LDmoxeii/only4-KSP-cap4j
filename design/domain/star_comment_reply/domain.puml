@@ -1,0 +1,23 @@
+@startuml
+!include ..\lib_eventstorming.puml
+
+Aggregate("StarCommentReply") [
+    星球评论回复
+    --属性--
+    评论回复ID
+    作者ID
+    作者名
+    内容
+    创建时间
+]
+
+Aggregate("StarCommentReplyStatistics") [
+    星球评论回复统计
+    --属性--
+    星球评论回复ID
+    星球评论回复点赞数
+    星球评论回复举报数
+]
+
+StarCommentReply -right-> StarCommentReplyStatistics
+@enduml

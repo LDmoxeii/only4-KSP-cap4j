@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+!include ..\lib_eventstorming.puml
+
+!if VIEW_COMMENT
+Comment("need") [
+    创建星球评论回复
+    删除星球评论回复
+    更新星球评论回复举报数
+    更新星球评论回复信息
+    更新星球评论回复点赞数
+]
+!endif
+
+!include command.puml
+!include domain.puml
+!include event.puml
+!include relationCDE.puml
+
+!if VIEW_QUERY
+!include query.puml
+!endif
+
+!include relationEC.puml
+@enduml
