@@ -2,10 +2,9 @@ package com.only4.application.commands.star_comment;
 
 
 import com.only4._share.exception.KnownException;
-import com.only4.application.validater.MemberExists;
 import com.only4.domain.aggregates.star_comment.StarComment;
-import com.only4.domain.aggregates.star_comment.factory.StarCommentFactory;
-import jakarta.validation.constraints.NotBlank;
+import com.only4.domain.aggregates.star_comment.meta.StarCommentSchema;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -14,18 +13,16 @@ import org.netcorepal.cap4j.ddd.application.RequestParam;
 import org.netcorepal.cap4j.ddd.application.command.Command;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 /**
- * 创建星球评论
+ * 更新星球回复数
  *
  * @author cap4j-ddd-codegen
  * @date 2025/02/23
  */
-public class CreateStarCommentCmd {
+public class UpdateStarCommentReplyCountCmd {
 
     /**
-     * CreateStarCommentCmd命令请求实现
+     * UpdateStarCommentReplyCountCmd命令请求实现
      */
     @Service
     @RequiredArgsConstructor
@@ -33,16 +30,12 @@ public class CreateStarCommentCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            StarComment comment = Optional.of(Mediator.factories()
-                    .create(StarCommentFactory.Payload.builder()
-                            .starId(cmd.getStarId())
-                            .authorId(cmd.getMemberId())
-                            .authorName(cmd.getMemberName())
-                            .content(cmd.getContent())
-                            .build())).orElseThrow(() -> new KnownException("星球评论创建失败"));
+            StarComment comment = Mediator.repositories()
+                    .findOne(StarCommentSchema.predicateById(cmd.getStarCommentId()))
+                    .orElseThrow(() -> new KnownException("评论不存在"));
 
 
-            comment.create();
+            comment.updateReplyCount(cmd.getReplyCount());
             Mediator.uow().persist(comment);
             Mediator.uow().save();
 
@@ -53,7 +46,7 @@ public class CreateStarCommentCmd {
     }
 
     /**
-     * CreateStarCommentCmd命令请求参数
+     * UpdateStarCommentReplyCountCmd命令请求参数
      */
     @Data
     @Builder
@@ -62,22 +55,15 @@ public class CreateStarCommentCmd {
     public static class Request implements RequestParam<Response> {
 
         @Positive
-        //TODO: @StarExists
-        Long starId;
+        Long starCommentId;
 
-        @Positive
-        @MemberExists
-        Long memberId;
+        @NotNull
+        Integer replyCount;
 
-        @NotBlank(message = "用户名称不能为空")
-        String memberName;
-
-        @NotBlank(message = "评论内容不能为空")
-        String content;
     }
 
     /**
-     * CreateStarCommentCmd命令响应
+     * UpdateStarCommentReplyCountCmd命令响应
      */
     @Data
     @Builder

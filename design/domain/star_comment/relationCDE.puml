@@ -1,35 +1,19 @@
 @startuml
-CreateStar                      -down-> Star
-DeleteStar                      -down-> Star
-JoinStar                        -down-> Star
-LeaveStar                       -down-> Star
-LikeStar                        -down-> Star
-UnLikeStar                      -down-> Star
-CreateStarComment               -down-> Star
-DeleteStarComment               -down-> Star
-LikeStarComment                 -down-> Star
-UnlikeStarComment               -down-> Star
-UpdateStardustCountInfo              -down-> Star
-UpdateStarCommentAuthorInfo     -down-> Star
-UpdateStarCommentCount              -down-> Star
-UpdateStarCommentAuthorInfo     -down-> Star
-UpdateStarLikeCount                 -down-> Star
-UpdateStarCommentLikeCount          -down-> Star
-UpdateStardustCount                  -down-> Star
+CreateStarComment            -down-> StarComment
+DeleteStarComment            -down-> StarComment
+UpdateStarCommentLikeCount   -down-> StarComment
+UpdateStarCommentReportCount -down-> StarComment
+UpdateStarCommentReplyCount  -down-> StarComment
+PinStarComment               -down-> StarComment
+UnPinStarComment             -down-> StarComment
+UpdateStarCommentInfo        -down-> StarComment
 
-Star -down-> StarCreated
-Star -down-> StarDeleted
-Star -down-> JoinedStar
-Star -down-> LeftStar
-Star -down-> StarLiked
-Star -down-> StarUnliked
-Star -down-> StarCreatedComment
-Star -down-> StarDeletedComment
-Star -down-> StarCommentLiked
-Star -down-> StarCommentUnliked
-Star -down-> StarLikeCountUpdated
-Star -down-> StarCommentLikeCountUpdated
-Star -down-> StarInfoUpdated
-
-
+StarComment -down-> StarCommentCreated
+StarComment -down-> StarCommentDeleted
+StarComment -down-> StarCommentLikeCountUpdated
+StarComment -down-> StarCommentReportCountUpdated
+StarComment -down-> StarCommentReplyCountUpdated
+StarComment -down-> StarCommentPinned
+StarComment -down-> StarCommentUnPinned
+StarComment -down-> StarCommentInfoUpdated
 @enduml
