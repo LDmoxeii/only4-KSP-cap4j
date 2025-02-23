@@ -1,0 +1,9 @@
+cmd:star_comment_reply.CreateStarCommentReply:创建星球评论回复
+cmd:star_comment_reply.UpdateStarCommentReplyReportCount:更新星球评论回复举报数
+cmd:star_comment_reply.DeleteStarCommentReply:删除星球评论回复
+cmd:star_comment_reply.UpdateStarCommentReplyInfo:更新星球评论回复信息
+cmd:star_comment_reply.UpdateStarCommentReplyLikeCount:更新星球评论回复点赞数
+
+de:star_comment_reply.StarCommentReply:StarCommentReplyCreated:星球评论回复已创建
+de:star_comment_reply.StarCommentReply:StarCommentReplyDeleted:星球评论回复已删除
+de:star_comment_reply.StarCommentReply:StarCommentReplyLikeCountUpdated:星球评论回复点赞数已更新

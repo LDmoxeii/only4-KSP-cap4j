@@ -1,0 +1,14 @@
+@startuml
+
+CreateStarCommentReply               -down-> StarCommentReply
+UpdateStarCommentReplyReportCount   -down-> StarCommentReply
+DeleteStarCommentReply               -down-> StarCommentReply
+UpdateStarCommentReplyInfo           -down-> StarCommentReply
+UpdateStarCommentReplyLikeCount      -down-> StarCommentReply
+
+StarCommentReply -down-> StarCommentReplyCreated
+StarCommentReply -down-> StarCommentReplyDeleted
+StarCommentReply -down-> StarCommentReplyLikeCountUpdated
+StarCommentReply -down-> StarCommentReplyReportCountUpdated
+StarCommentReply -down-> StarCommentReplyInfoUpdated
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+!include ..\lib_eventstorming.puml
+DomainEvent("StarCommentReplyCreated") [
+    已创建星球评论回复
+    --监听行为--
+    更新星球评论回复数
+]
+DomainEvent("StarCommentReplyDeleted") [
+    已删除星球评论回复
+    --监听行为--
+    更新星球评论回复数
+]
+DomainEvent("StarCommentReplyLikeCountUpdated") [
+    已更新星球评论回复点赞数
+    --监听行为--
+    更新用户点赞数
+]
+
+Event("StarCommentReplyReportCountUpdated") [
+    已更新星球评论回复举报数
+    --监听行为--
+]
+Event("StarCommentReplyInfoUpdated") [
+    已更新星球评论回复信息
+    --监听行为--
+]
+@enduml
