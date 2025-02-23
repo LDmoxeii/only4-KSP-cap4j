@@ -1,0 +1,64 @@
+@startuml
+!include ..\lib_eventstorming.puml
+Command("CreateStarCommentReply")[
+    创建星球评论回复
+    --触发事件--
+    --属性--
+    星球评论ID
+    用户ID
+    用户名
+    回复内容
+    --规则--
+    星球评论必须存在
+    用户必须存在
+    用户名不能为空
+    回复内容不能为空
+]
+Command("DeleteStarCommentReply") [
+    删除星球评论回复
+    --触发事件--
+    --属性--
+    星球评论回复ID
+    --规则--
+    星球评论回复必须存在
+]
+Command("UpdateStarCommentReplyInfo") [
+    更新星球评论回复信息
+    --触发事件--
+    用户信息已更新
+    --属性--
+    星球评论回复ID
+    用户ID
+    用户名
+    --规则--
+    星球评论回复必须存在
+    用户必须存在
+    用户名不能为空
+]
+
+Command("UpdateStarCommentReplyLikeCount") [
+    更新星球评论回复点赞数
+    --触发事件--
+    星球评论点赞记录已创建
+    星球评论点赞记录已删除
+    --属性--
+    星球评论回复ID
+    点赞数
+    --规则--
+    星球评论回复必须存在
+    点赞数不为NULL
+]
+
+Command("UpdateStarCommentReplyReportCount")[
+    更新星球评论回复举报数
+    --触发事件--
+    星球评论回复举报记录已创建
+    星球评论回复举报记录已删除
+    --属性--
+    星球评论回复ID
+    举报数
+    --规则--
+    星球评论回复必须存在
+    举报数不为NULL
+]
+@enduml
