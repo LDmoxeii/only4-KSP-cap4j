@@ -26,8 +26,7 @@ public class ArticleCommentReplyLikeCountUpdatedDomainEventSubscriber {
         Optional.of(UpdateMemberLikeCountCmd.Request.builder()
                 .memberId(reply.getAuthorId())
                 .likeCount(likeCount)
-                .build())
-                .ifPresent(Mediator.commands()::send);
+                .build()).ifPresent(Mediator.commands()::send);
     }
 
 }

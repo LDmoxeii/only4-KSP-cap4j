@@ -7,6 +7,7 @@ UpdateArticleCommentSticky      -down-> ArticleComment
 UpdateArticleCommentLikeCount   -down-> ArticleComment
 UpdateArticleCommentReplyCount  -down-> ArticleComment
 UpdateArticleCommentInfo        -down-> ArticleComment
+UpdateArticleCommentInfoBatch   -down-> ArticleComment
 
 ArticleComment -down-> ArticleCommentCreated
 ArticleComment -down-> ArticleCommentDeleted

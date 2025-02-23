@@ -15,6 +15,9 @@ cmd:article.UpdateArticleCommentFlag:更新文章是否可以评论
 cmd:article.UpdateArticlePrice:更新文章价格
 cmd:article.UpdateArticleLikeCount:更新文章点赞数
 cmd:article.UpdateArticleViewCount:更新文章播放量
+cmd:article.UpdateArticleCategoryInfoBatch:批量更新文章分类信息
+cmd:article.UpdateArticleTagInfoBatch:批量更新文章标签信息
+cmd:article.UpdateArticleAuthorInfoBatch:批量更新文章作者信息
 
 de:article.Article:ArticleCategoriesUpdated:文章分类集已更新
 de:article.Article:ArticleCreated:文章已创建

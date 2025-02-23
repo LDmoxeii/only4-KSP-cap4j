@@ -1,10 +1,10 @@
 package com.only4.application.subscribers.domain;
 
-import com.only4.application.commands.article.UpdateArticleAuthorInfoCmd;
-import com.only4.application.commands.article_comment.UpdateArticleCommentInfoCmd;
-import com.only4.application.commands.article_comment_reply.UpdateArticleCommentReplyInfoCmd;
-import com.only4.application.commands.member.UpdateBlackMemberInfoCmd;
-import com.only4.application.commands.member.UpdateFollowMemberInfoCmd;
+import com.only4.application.commands.article.UpdateArticleAuthorInfoBatchCmd;
+import com.only4.application.commands.article_comment.UpdateArticleCommentInfoBatchCmd;
+import com.only4.application.commands.article_comment_reply.UpdateArticleCommentReplyInfoBatchCmd;
+import com.only4.application.commands.member.UpdateBlackMemberInfoBatchCmd;
+import com.only4.application.commands.member.UpdateFollowMemberInfoBatchCmd;
 import com.only4.application.queries.article.GetArticlesByMemberIdQry;
 import com.only4.application.queries.article_comment.GetArticleCommentsByMemberIdQry;
 import com.only4.application.queries.article_comment_reply.GetArticleCommentRepliesByMemberIdQry;
@@ -22,8 +22,9 @@ import org.netcorepal.cap4j.ddd.domain.repo.JpaPredicate;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Member.MemberInfoUpdatedDomainEvent领域事件订阅
@@ -37,85 +38,90 @@ public class MemberInfoUpdatedDomainEventSubscriber {
     public void updateArticleAuthorInfo(MemberInfoUpdatedDomainEvent event) {
         val member = event.getEntity();
 
-        List<Article> articles = Mediator.queries().send(GetArticlesByMemberIdQry.Request.builder()
-                .memberId(member.getId())
-                .build()).getArticles();
-
-        articles.forEach(article -> Optional.of(UpdateArticleAuthorInfoCmd.Request.builder()
-                        .articleId(article.getId())
+        Set<Long> ids = Mediator.queries().send(GetArticlesByMemberIdQry.Request.builder()
                         .memberId(member.getId())
-                        .memberName(member.getNickName())
-                        .build())
-                .ifPresent(Mediator.commands()::send)
-        );
+                        .build()).getArticles().stream()
+                .map(Article::getId)
+                .collect(Collectors.toSet());
+
+        Optional.of(UpdateArticleAuthorInfoBatchCmd.Request.builder()
+                .articleIds(ids)
+                .authorId(member.getId())
+                .authorName(member.getNickName())
+                .build()).ifPresent(Mediator.commands()::send);
     }
 
     @EventListener(MemberInfoUpdatedDomainEvent.class)
     public void UpdateArticleCommentInfo(MemberInfoUpdatedDomainEvent event) {
         val member = event.getEntity();
 
-        List<ArticleComment> comments = Mediator.queries().send(GetArticleCommentsByMemberIdQry.Request.builder()
-                .memberId(member.getId())
-                .build()).getComments();
-
-        comments.forEach(comment -> Optional.of(UpdateArticleCommentInfoCmd.Request.builder()
-                        .commentId(comment.getId())
+        Set<Long> ids = Mediator.queries().send(GetArticleCommentsByMemberIdQry.Request.builder()
                         .memberId(member.getId())
-                        .memberName(member.getNickName())
-                        .build())
-                .ifPresent(Mediator.commands()::send));
+                        .build()).getComments().stream()
+                .map(ArticleComment::getId)
+                .collect(Collectors.toSet());
+
+        Optional.of(UpdateArticleCommentInfoBatchCmd.Request.builder()
+                .articleCommentIds(ids)
+                .authorId(member.getId())
+                .authorName(member.getNickName())
+                .build()).ifPresent(Mediator.commands()::send);
     }
 
     @EventListener(MemberInfoUpdatedDomainEvent.class)
-    public void UpdateArticleCommentReply(MemberInfoUpdatedDomainEvent event) {
+    public void UpdateArticleCommentReplyInfo(MemberInfoUpdatedDomainEvent event) {
         val member = event.getEntity();
 
-        List<ArticleCommentReply> replies = Mediator.queries().send(GetArticleCommentRepliesByMemberIdQry.Request.builder()
-                .memberId(member.getId())
-                .build()).getReplies();
-
-        replies.forEach(reply -> Optional.of(UpdateArticleCommentReplyInfoCmd.Request.builder()
-                        .replyId(reply.getId())
+        Set<Long> ids = Mediator.queries().send(GetArticleCommentRepliesByMemberIdQry.Request.builder()
                         .memberId(member.getId())
-                        .memberName(member.getNickName())
-                        .build())
-                .ifPresent(Mediator.commands()::send));
+                        .build()).getReplies().stream()
+                .map(ArticleCommentReply::getId)
+                .collect(Collectors.toSet());
+
+        Optional.of(UpdateArticleCommentReplyInfoBatchCmd.Request.builder()
+                .articleCommentReplyIds(ids)
+                .authorId(member.getId())
+                .authorName(member.getNickName())
+                .build()).ifPresent(Mediator.commands()::send);
     }
 
     @EventListener(MemberInfoUpdatedDomainEvent.class)
     public void updateBlackMemberInfo(MemberInfoUpdatedDomainEvent event) {
         val other = event.getEntity();
 
-        Mediator.repositories()
+        Set<Long> ids = Mediator.repositories()
                 .find(JpaPredicate.bySpecification(Member.class,
                         MemberSchema.specify(member ->
                                 member.joinBlockMember(Schema.JoinType.INNER)
                                         .otherId().equal(other.getId())
-                        )))
-                .forEach(member -> Optional.of(UpdateBlackMemberInfoCmd.Request.builder()
-                                .memberId(member.getId())
-                                .otherId(other.getId())
-                                .otherName(other.getNickName())
-                                .build())
-                        .ifPresent(Mediator.commands()::send));
+                        ))).stream()
+                .map(Member::getId)
+                .collect(Collectors.toSet());
+
+        Optional.of(UpdateBlackMemberInfoBatchCmd.Request.builder()
+                .memberIds(ids)
+                .otherId(other.getId())
+                .otherName(other.getNickName())
+                .build()).ifPresent(Mediator.commands()::send);
     }
 
     @EventListener(MemberInfoUpdatedDomainEvent.class)
     public void updateFollowMemberInfo(MemberInfoUpdatedDomainEvent event) {
         val other = event.getEntity();
 
-        Mediator.repositories()
+        Set<Long> ids = Mediator.repositories()
                 .find(JpaPredicate.bySpecification(Member.class,
                         MemberSchema.specify(member ->
                                 member.joinFollowMember(Schema.JoinType.INNER)
                                         .otherId().equal(other.getId())
-                        )))
-                .forEach(member -> Optional.of(UpdateFollowMemberInfoCmd.Request.builder()
-                                .memberId(member.getId())
-                                .otherId(other.getId())
-                                .otherName(other.getNickName())
-                                .build())
-                        .ifPresent(Mediator.commands()::send)
-                );
+                        ))).stream()
+                .map(Member::getId)
+                .collect(Collectors.toSet());
+
+        Optional.of(UpdateFollowMemberInfoBatchCmd.Request.builder()
+                .memberIds(ids)
+                .otherId(other.getId())
+                .otherName(other.getNickName())
+                .build()).ifPresent(Mediator.commands()::send);
     }
 }

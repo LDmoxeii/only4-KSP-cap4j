@@ -41,4 +41,14 @@ Command("DeleteCategory") [
     分类必须存在
     分类未被使用
 ]
+Command("UpdateCategoryRefCountBatch") [
+    批量更新分类引用数
+    --触发事件--
+    更新文章分类集
+    --属性--
+    分类ID列表
+    文章数
+    --规则--
+    文章数不为空
+]
 @enduml

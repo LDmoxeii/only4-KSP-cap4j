@@ -186,4 +186,40 @@ Command("UpdateArticleViewCount") [
     文章必须存在
     浏览量不为NULL
 ]
+Command("UpdateArticleCategoryInfoBatch") [
+    批量更新文章分类信息
+    --触发事件--
+    已更新分类信息事件
+    --属性--
+    文章ID列表
+    分类ID
+    分类名
+    --规则--
+    分类必须存在
+    分类名不为空
+]
+Command("UpdateArticleTagInfoBatch") [
+    批量更新文章标签信息
+    --触发事件--
+    已更新标签信息
+    --属性--
+    文章ID列表
+    标签ID
+    标签名
+    --规则--
+    标签必须存在
+    标签名不为空
+]
+Command("UpdateArticleAuthorInfoBatch") [
+    批量更新文章作者信息
+    --触发事件--
+    已更新用户信息
+    --属性--
+    文章ID列表
+    用户ID
+    作者名
+    --规则--
+    用户必须存在
+    用户名不为空
+]
 @enduml

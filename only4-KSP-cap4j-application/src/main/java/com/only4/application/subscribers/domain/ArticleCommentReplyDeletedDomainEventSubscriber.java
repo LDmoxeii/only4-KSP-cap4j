@@ -22,11 +22,10 @@ public class ArticleCommentReplyDeletedDomainEventSubscriber {
     public void updateArticleCommentReplyCount(ArticleCommentReplyDeletedDomainEvent event) {
         ArticleCommentReply reply = event.getEntity();
 
-        Optional.ofNullable(UpdateArticleCommentReplyCountCmd.Request.builder()
+        Optional.of(UpdateArticleCommentReplyCountCmd.Request.builder()
                         .commentId(reply.getArticleCommentId())
                         .replyCount(-1)
-                        .build())
-                .ifPresent(Mediator.commands()::send);
+                        .build()).ifPresent(Mediator.commands()::send);
     }
 
 }
