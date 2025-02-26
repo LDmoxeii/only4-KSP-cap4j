@@ -46,6 +46,18 @@ TagInfoUpdated -down-> UpdateArticleTagInfo
 'ViewHistory
 ViewHistoryCreated       -down-> UpdateArticleViewCount
 
+'StarCommentReply
+StarCommentReplyCreated          -down-> UpdateStarCommentReplyCount
+StarCommentReplyDeleted          -down-> UpdateStarCommentReplyCount
+StarCommentReplyLikeCountUpdated -down-> UpdateMemberLikeCount
+
+'unField
+StarCommentLikeReplyRecordCreated     -down-> UpdateStarCommentReplyLikeCount
+StarCommentLikeReplyRecordDeleted     -down-> UpdateStarCommentReplyLikeCount
+StarCommentReplyReportRecordCreated   -down-> UpdateStarCommentReplyReportCount
+StarCommentReplyReportRecordDeleted   -down-> UpdateStarCommentReplyReportCount
+MemberInfoUpdated                     -down-> UpdateStarCommentReplyInfo
+
 'role
 RolePermissionsUpdated  -down-> UpdateAdminUserRolePermissions
 RoleInfoUpdated         -down-> UpdateAdminUserRoleInfo
