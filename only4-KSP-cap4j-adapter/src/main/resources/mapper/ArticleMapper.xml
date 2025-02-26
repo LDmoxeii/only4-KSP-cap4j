@@ -10,9 +10,11 @@
         <result column="cover" property="cover"/>
         <result column="appendix" property="appendix"/>
         <result column="price" property="price"/>
-        <result column="state" property="state"/>
+        <result column="visibility" property="visibility"/>
         <result column="sticky_flag" property="stickyFlag"/>
         <result column="comment_flag" property="commentFlag"/>
+        <result column="banned_at" property="bannedAt"/>
+        <result column="ban_duration" property="banDuration"/>
         <result column="del_flag" property="delFlag"/>
 
         <collection property="articleCategories"
@@ -23,16 +25,6 @@
 
         <collection property="articleAuthors"
                     ofType="com.only4.domain.aggregates.article.ArticleAuthor">
-        </collection>
-
-        <collection property="articleComments"
-                    ofType="com.only4.domain.aggregates.article.ArticleComment">
-            <result column="parent_id" property="parentId"/>
-            <result column="author_id" property="authorId"/>
-            <result column="author_name" property="authorName"/>
-            <result column="content" property="content"/>
-            <result column="sticky_flag" property="stickyFlag"/>
-            <result column="create_at" property="createAt"/>
         </collection>
 
         <collection property="articleStatistics"
@@ -46,19 +38,8 @@
             <result column="tag_name" property="tagName"/>
         </collection>
 
-        <collection property="articleLikes"
-                    ofType="com.only4.domain.aggregates.article.ArticleLike">
-            <result column="member_id" property="memberId"/>
-            <result column="like_time" property="likeTime"/>
-        </collection>
     </resultMap>
 
-    <select id="existedCommentByArticleId" resultType="java.lang.Boolean">
-        SELECT EXISTS(SELECT 1
-                      FROM article_comment arco
-                               LEFT JOIN article ar ON arco.article_id = ar.id
-                      WHERE ar.id = #{id}) as is_exists
-    </select>
     <select id="existedByCategoryId" resultType="java.lang.Boolean">
         SELECT EXISTS(SELECT 1
                       FROM article ar
@@ -70,25 +51,5 @@
                       FROM article ar
                                LEFT JOIN article_tag art ON ar.id = art.article_id
                       WHERE art.id = #{id}) as is_exists
-    </select>
-    <select id="existedCommentLikeByCommentIdAndMemberId" resultType="java.lang.Boolean">
-        SELECT EXISTS(SELECT 1
-                      FROM article_comment_like arcl
-                      WHERE arcl.article_comment_id = #{CommentId} AND arcl.member_id = #{MemberId}) as is_exists
-    </select>
-    <select id="countArticleLikeByMemberIdAndDate" resultType="java.lang.Integer">
-        SELECT COUNT(*) AS like_count
-        FROM article_like arl
-        where arl.member_id = #{MemberId} AND TO_DAYS(arl.like_time) = TO_DAYS(NOW())
-    </select>
-    <select id="countCommentLikeByMemberIdAndDate" resultType="java.lang.Integer">
-        SELECT COUNT(*) AS comment_like_count
-        FROM article_comment_like arcl
-        WHERE arcl.member_id = #{MemberId} AND TO_DAYS(arcl.create_at) = TO_DAYS(NOW())
-    </select>
-    <select id="countCommentByMemberIdAndDate" resultType="java.lang.Integer">
-        SELECT COUNT(*) AS comment_count
-        FROM article_comment arc
-        WHERE arc.author_id = #{authorId} AND TO_DAYS(arc.create_at) = TO_DAYS(NOW())
     </select>
 </mapper>
