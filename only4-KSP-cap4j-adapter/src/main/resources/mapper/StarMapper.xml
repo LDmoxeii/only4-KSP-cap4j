@@ -10,23 +10,12 @@
         <result column="amount" property="amount"/>
         <result column="del_flag" property="delFlag"/>
 
-        <collection property="starStatistics"
-                    ofType="com.only4.domain.aggregates.star.StarStatistic"
-                    resultMap="starStatistic">
-        </collection>
-
         <collection property="stardusts"
                     ofType="com.only4.domain.aggregates.star.Stardust"
                     resultMap="stardust">
             <result column="name" property="name"/>
             <result column="create_at" property="createAt"/>
             <result column="del_at" property="delAt"/>
-        </collection>
-
-        <collection property="starLikes"
-                    ofType="com.only4.domain.aggregates.star.StarLike">
-            <result column="stardust_id" property="stardustId"/>
-            <result column="create_at" property="createAt"/>
         </collection>
     </resultMap>
 
@@ -36,12 +25,6 @@
         <result column="create_at" property="createAt"/>
         <result column="del_at" property="delAt"/>
         <result column="del_flag" property="delFlag"/>
-    </resultMap>
-
-    <resultMap id="starStatistic" type="com.only4.domain.aggregates.star.StarStatistic">
-        <result column="likes" property="likes"/>
-        <result column="comments" property="comments"/>
-        <result column="stardust" property="stardust"/>
     </resultMap>
 
     <select id="existedStarByName" resultType="java.lang.Boolean">
@@ -55,28 +38,5 @@
                s.amount      as amount
         FROM star s
         WHERE s.member_id = #{memberId}
-    </select>
-    <select id="getStarStatisticsByMemberId" resultMap="starStatistic">
-        SELECT ss.likes    as likes,
-               ss.comments as comments,
-               ss.stardust as stardust
-        FROM star_statistic ss
-                 LEFT JOIN star s ON ss.star_id = s.id
-        WHERE s.member_id = #{memberId}
-    </select>
-    <select id="existedStardustByStardustId" resultType="java.lang.Boolean">
-        SELECT EXISTS(SELECT 1 FROM stardust WHERE id = #{id}) as is_exists
-    </select>
-    <select id="existedStarLikeByStardustId" resultType="java.lang.Boolean">
-        SELECT EXISTS(SELECT 1 FROM star_like WHERE stardust_id = #{stardustId}) as is_exists
-    </select>
-    <select id="getStardustByStardustId" resultMap="stardust">
-        SELECT sd.id        as id,
-               sd.name      as name,
-               sd.create_at as createAt,
-               sd.del_at    as delAt,
-               sd.del_flag  as delFlag
-        FROM stardust sd
-        WHERE sd.id = #{id}
     </select>
 </mapper>

@@ -7,6 +7,7 @@
         <result column="name" property="name"/>
         <result column="description" property="description"/>
         <result column="icon" property="icon"/>
+        <result column="ref_count" property="refCount"/>
         <result column="del_flag" property="delFlag"/>
     </resultMap>
 
