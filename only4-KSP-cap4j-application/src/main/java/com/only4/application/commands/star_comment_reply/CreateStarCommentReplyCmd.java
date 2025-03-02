@@ -33,7 +33,7 @@ public class CreateStarCommentReplyCmd {
     public static class Handler implements Command<Request, Response> {
         @Override
         public Response exec(Request cmd) {
-            StarCommentReply reply = Optional.of(Mediator.factories()
+            StarCommentReply reply = Optional.ofNullable(Mediator.factories()
                 .create(StarCommentReplyFactory.Payload.builder()
                     .starCommentId(cmd.getStarCommentId())
                     .memberId(cmd.getMemberId())

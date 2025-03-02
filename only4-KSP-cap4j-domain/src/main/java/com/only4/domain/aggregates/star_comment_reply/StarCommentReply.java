@@ -78,10 +78,6 @@ public class StarCommentReply {
         this.getStarCommentReplyStatistics().updateReportCount(reportCount);
     }
 
-    public int getReportCount() {
-        return getStarCommentReplyStatistics() == null ? 0 : getStarCommentReplyStatistics().getReportCount();
-    }
-
     // 【行为方法结束】
 
 
