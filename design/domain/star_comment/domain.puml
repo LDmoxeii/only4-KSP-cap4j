@@ -1,24 +1,72 @@
 @startuml
 !include ..\lib_eventstorming.puml
 
+Aggregate("Star") [
+    星球
+    --属性--
+    星球ID
+    星主ID
+    星球名
+    星球描述
+    星球价格
+    --行为--
+    更新星球信息
+    更新星球价格
+    更新星球评论数
+    更新星球点赞数
+    更新星球星尘数
+]
+
+Aggregate("Stardust") [
+    星尘
+    --属性--
+    星球ID
+    星尘ID
+    星尘名
+    吸引时间
+    逃逸时间
+]
+
 Aggregate("StarComment") [
     星球评论
     --属性--
     星球ID
-    用户ID
-    用户名
-    内容
-    置顶标识
-    创建时间
-]
-Aggregate("StarCommentStatistics") [
-    星球统计
-    --属性--
     星球评论ID
-    星球评论点赞数
-    星球评论举报数
-    星球评论回复数
+    星尘ID
+    星尘名
+    评论内容
+    评论时间
 ]
 
-StarComment -right-> StarCommentStatistics
+Aggregate("StarStatistics") [
+    星球统计
+    --属性--
+    星球ID
+    星球点赞数
+    星球评论数
+    星尘数
+]
+
+Aggregate("StarLike") [
+    星球点赞
+    --属性--
+    星球ID
+    星尘ID
+    点赞时间
+]
+
+Aggregate("StarCommentLike")[
+    星球评论点赞
+    --属性--
+    星球ID
+    星尘ID
+    点赞时间
+]
+
+Star -right-> Stardust
+Star -right-> StarComment
+StarComment -right-> StarCommentLike
+Star -right-> StarStatistics
+Star -right-> StarLike
+
 @enduml

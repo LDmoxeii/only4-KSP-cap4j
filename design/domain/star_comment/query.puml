@@ -1,3 +1,39 @@
 @startuml
 !include ..\lib_eventstorming.puml
+
+'Deprecation
+Query("getStarByMemberId") [
+    根据用户ID获取星球列表
+    --属性--
+    用户ID
+]
+
+Query("StarExistsByName") [
+    根据星球名判断星球是否存在
+    --属性--
+    星球名
+]
+
+Query("GetStarStarStatisticsByMemberId") [
+    根据用户ID获取星球统计
+    --属性--
+    用户ID
+]
+
+Query("StardustExistsByStardustId") [
+    根据星尘ID判断星尘是否存在
+    --属性--
+    星尘ID
+]
+
+Query("StarLikeExistsByStardustId") [
+    根据星尘ID判断星球点赞是否存在
+    --属性--
+    星尘ID
+]
+
+Query("GetStardustByStarId") [
+    根据星尘ID获取星尘
+
+]
 @enduml
