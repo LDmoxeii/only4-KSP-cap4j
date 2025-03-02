@@ -61,4 +61,16 @@ MemberInfoUpdated                     -down-> UpdateStarCommentReplyInfo
 'role
 RolePermissionsUpdated  -down-> UpdateAdminUserRolePermissions
 RoleInfoUpdated         -down-> UpdateAdminUserRoleInfo
+
+'StarComment
+StarCommentCreated -down-> UpdateStarCommentCount
+StarCommentDeleted -down-> UpdateStarCommentCount
+StarCommentLikeCountUpdated -down-> UpdateStarLikeCount
+StarCommentReplyCountUpdated -down-> UpdateStarCommentCount
+
+'UnField
+StarCommentLikeCreated -down-> UpdateStarCommentLikeCount
+StarCommentLikeDeleted -down-> UpdateStarCommentLikeCount
+StarCommentReportCreated -down-> UpdateStarCommentReportCount
+StarCommentReportDeleted -down-> UpdateStarCommentReportCount
 @enduml
