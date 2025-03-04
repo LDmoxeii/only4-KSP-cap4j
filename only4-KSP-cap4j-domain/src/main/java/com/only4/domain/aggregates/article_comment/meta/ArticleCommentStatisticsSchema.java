@@ -1,14 +1,13 @@
 package com.only4.domain.aggregates.article_comment.meta;
 
+import jakarta.persistence.criteria.*;
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.article_comment.ArticleCommentStatistics;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.Path;
-import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/19
+ * @date 2025/03/03
  */
 @RequiredArgsConstructor
 public class ArticleCommentStatisticsSchema {
@@ -26,7 +25,7 @@ public class ArticleCommentStatisticsSchema {
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-
+        
         /**
          * ID
          */
@@ -41,6 +40,11 @@ public class ArticleCommentStatisticsSchema {
          * 评论回复数
          */
         public static final String replyCount = "replyCount";
+
+        /**
+         * 评论举报数
+         */
+        public static final String reportCount = "reportCount";
 
         /**
          * 逻辑删除
@@ -59,7 +63,6 @@ public class ArticleCommentStatisticsSchema {
     public Path<ArticleCommentStatistics> _root() {
         return root;
     }
-
 
     /**
      * ID
@@ -83,6 +86,14 @@ public class ArticleCommentStatisticsSchema {
      */
     public Schema.Field<Integer> replyCount() {
         return new Schema.Field<>(root.get("replyCount"), this.criteriaBuilder);
+    }
+
+    /**
+     * 评论举报数
+     * int
+     */
+    public Schema.Field<Integer> reportCount() {
+        return new Schema.Field<>(root.get("reportCount"), this.criteriaBuilder);
     }
 
     /**

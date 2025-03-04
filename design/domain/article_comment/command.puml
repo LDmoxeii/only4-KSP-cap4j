@@ -82,4 +82,16 @@ Command("UpdateArticleCommentInfoBatch") [
     用户必须存在
     用户名不能为空
 ]
+
+Command("AddArticleCommentReportCount") [
+    增加文章评论举报数
+    --触发事件--
+    --属性--
+    文章评论ID
+    举报数
+    --规则--
+    文章评论必须存在
+    举报数不为负数
+]
+
 @enduml

@@ -1,8 +1,8 @@
 package com.only4.domain.aggregates.article_comment.meta;
 
+import jakarta.persistence.criteria.*;
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.article_comment.ArticleComment;
-import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/19
+ * @date 2025/03/03
  */
 @RequiredArgsConstructor
 public class ArticleCommentSchema {
@@ -25,7 +25,7 @@ public class ArticleCommentSchema {
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-
+        
         /**
          * ID
          */
@@ -78,7 +78,6 @@ public class ArticleCommentSchema {
     public Path<ArticleComment> _root() {
         return root;
     }
-
 
     /**
      * ID

@@ -23,4 +23,12 @@ DomainEvent("ArticleCommentReplyCountUpdated") [
     --监听行为--
     更新文章评论数
 ]
+
+Event("ArticleCommentReportCountAdded") [
+    已增加文章评论举报数
+    --监听行为--
+
+
+]
+
 @enduml

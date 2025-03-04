@@ -8,11 +8,19 @@ import com.only4.domain.aggregates.article_comment.events.ArticleCommentReplyCou
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import java.util.Objects;
@@ -78,6 +86,11 @@ public class ArticleComment {
     public void report() {
     }
 
+    public void addReportCount(@Positive Integer reportCount) {
+        this.getArticleCommentStatistics().addReportCount(reportCount);
+
+        events().attach(new ArticleCommentDeletedDomainEvent(this), this);
+    }
 
     public void delete() {
         events().attach(new ArticleCommentDeletedDomainEvent(this), this);
@@ -157,6 +170,7 @@ public class ArticleComment {
      */
     @Column(name = "`del_flag`")
     Boolean delFlag;
+
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

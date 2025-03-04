@@ -6,11 +6,14 @@ cmd:article_comment.UpdateArticleCommentLikeCount:更新文章评论点赞数
 cmd:article_comment.UpdateArticleCommentReplyCount:更新文章评论回复数
 cmd:article_comment.UpdateArticleCommentInfo:更新文章评论信息
 cmd:article_comment.UpdateArticleCommentInfoBatch:批量更新文章评论信息
+cmd:article_comment.AddArticleCommentReportCount:增加文章评论举报数
+
 
 de:article_comment.ArticleComment:ArticleCommentCreated:文章评论已更创建
 de:article_comment.ArticleComment:ArticleCommentDeleted:文章评论已删除
 de:article_comment.ArticleComment:ArticleCommentLikeCountUpdated:文章评论点赞数已更新
 de:article_comment.ArticleComment:ArticleCommentReplyCountUpdated:文章评论回复数已更新
+
 
 qry:article_comment.ArticleCommentExists:判断文章评论是否存在
 qry:article_comment.GetArticleCommentsByMemberId:根据会员ID获取文章评论
