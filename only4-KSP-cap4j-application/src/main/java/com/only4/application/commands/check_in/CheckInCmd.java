@@ -1,9 +1,9 @@
 package com.only4.application.commands.check_in;
 
 
-import com.only4._share.exception.KnownException;
 import com.only4.application.validater.MemberExists;
 import com.only4.application.validater.NotCheckedInToday;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.check_in.CheckIn;
 import com.only4.domain.aggregates.check_in.factory.CheckInFactory;
 import lombok.*;

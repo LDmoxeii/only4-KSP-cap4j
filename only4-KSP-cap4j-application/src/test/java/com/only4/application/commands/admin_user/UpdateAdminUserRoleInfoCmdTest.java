@@ -1,6 +1,6 @@
 package com.only4.application.commands.admin_user;
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

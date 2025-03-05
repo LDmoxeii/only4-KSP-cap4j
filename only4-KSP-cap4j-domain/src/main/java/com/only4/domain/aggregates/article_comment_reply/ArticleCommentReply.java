@@ -1,12 +1,12 @@
 package com.only4.domain.aggregates.article_comment_reply;
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.article_comment_reply.events.ArticleCommentReplyCreatedDomainEvent;
 import com.only4.domain.aggregates.article_comment_reply.events.ArticleCommentReplyDeletedDomainEvent;
 import com.only4.domain.aggregates.article_comment_reply.events.ArticleCommentReplyLikeCountUpdatedDomainEvent;
+import jakarta.persistence.*;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

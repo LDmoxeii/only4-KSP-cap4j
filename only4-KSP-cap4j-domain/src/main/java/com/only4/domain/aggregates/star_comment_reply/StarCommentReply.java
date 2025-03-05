@@ -1,9 +1,12 @@
 package com.only4.domain.aggregates.star_comment_reply;
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.star_comment_reply.events.StarCommentReplyCreatedDomainEvent;
 import com.only4.domain.aggregates.star_comment_reply.events.StarCommentReplyDeletedDomainEvent;
 import com.only4.domain.aggregates.star_comment_reply.events.StarCommentReplyLikeCountUpdatedDomainEvent;
+import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -11,17 +14,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
-import jakarta.persistence.*;
 
-import java.util.Collections;
 import java.util.Objects;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;

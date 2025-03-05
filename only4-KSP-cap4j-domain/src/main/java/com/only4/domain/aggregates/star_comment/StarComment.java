@@ -1,12 +1,12 @@
 package com.only4.domain.aggregates.star_comment;
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.star_comment.events.StarCommentCreatedDomainEvent;
 import com.only4.domain.aggregates.star_comment.events.StarCommentLikeCountUpdatedDomainEvent;
 import com.only4.domain.aggregates.star_comment.events.StarCommentReplyCountUpdatedDomainEvent;
+import jakarta.persistence.*;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

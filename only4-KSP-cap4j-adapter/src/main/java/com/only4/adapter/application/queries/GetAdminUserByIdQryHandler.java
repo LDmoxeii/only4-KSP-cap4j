@@ -1,8 +1,8 @@
 package com.only4.adapter.application.queries;
 
-import com.only4._share.exception.KnownException;
 import com.only4.adapter.infra.mybatis.mapper.AdminUserMapper;
 import com.only4.application.queries.admin_user.GetAdminUserByIdQry;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.AdminUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

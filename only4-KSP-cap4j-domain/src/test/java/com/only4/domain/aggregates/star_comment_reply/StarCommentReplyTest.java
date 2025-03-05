@@ -1,10 +1,9 @@
 package com.only4.domain.aggregates.star_comment_reply;
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Spy;

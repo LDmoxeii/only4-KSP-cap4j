@@ -1,7 +1,7 @@
 package com.only4.application.commands.article_comment;
 
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.article_comment.ArticleComment;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

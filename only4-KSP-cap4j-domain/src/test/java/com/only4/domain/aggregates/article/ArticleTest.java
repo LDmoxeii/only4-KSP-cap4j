@@ -1,6 +1,6 @@
 package com.only4.domain.aggregates.article;
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.article.dto.CategoryDto;
 import com.only4.domain.aggregates.article.dto.TagDto;
 import com.only4.domain.aggregates.article.enums.ArticleVisibility;

@@ -1,7 +1,7 @@
 package com.only4.application.commands.role;
 
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.RolePermission;
 import jakarta.validation.constraints.NotNull;
