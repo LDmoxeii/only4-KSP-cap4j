@@ -2,7 +2,7 @@
 !define VIEW_COMMENT
 !define VIEW_QUERY
 
-!include adminUser/view.puml
+!include admin_user/view.puml
 !include article/view.puml
 !include article_comment/view.puml
 !include article_comment_like/view.puml

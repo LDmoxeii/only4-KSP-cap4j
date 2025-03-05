@@ -1,4 +1,2 @@
 @startuml
-JoinedStar                  -down-> UpdateStardustCount
-LeftStar                    -down-> UpdateStardustCount
 @enduml

@@ -39,7 +39,7 @@ public class StarFactory implements AggregateFactory<StarFactory.Payload, Star> 
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<Star> {
         String name;
-        Long amount;
+        Integer amount;
         String description;
 
     }
