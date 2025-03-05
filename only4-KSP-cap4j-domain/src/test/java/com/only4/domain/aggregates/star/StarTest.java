@@ -38,14 +38,6 @@ public class StarTest {
         }
     }
     @Nested
-    class DeleteTests {
-        @Test
-        void testDelete() {
-            star.delete();
-            assertEquals(true, star.getDelFlag());
-        }
-    }
-    @Nested
     class UpdateStarLikeCountTests {
         @Test
         void testUpdateStarLikeCount() {

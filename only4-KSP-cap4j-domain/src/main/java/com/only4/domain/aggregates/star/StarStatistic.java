@@ -40,13 +40,13 @@ public class StarStatistic {
 
     // 【行为方法开始】
     void updateLikeCount(Integer likeCount) {
-        this.likeCount += likeCount;
+        this.likeCount = this.getLikeCount() + likeCount;
     }
     void updateStarDustCount(Integer stardustCount) {
-        this.stardustCount += stardustCount;
+        this.stardustCount = this.getStardustCount() + stardustCount;
     }
     void updateCommentCount(Integer commentCount) {
-        this.commentCount += commentCount;
+        this.commentCount = this.getCommentCount() + commentCount;
     }
     // 【行为方法结束】
 

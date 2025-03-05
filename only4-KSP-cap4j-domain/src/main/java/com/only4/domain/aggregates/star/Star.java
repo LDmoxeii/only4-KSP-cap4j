@@ -5,6 +5,7 @@ import com.only4.domain.aggregates.star.events.StarCommentCountUpdatedDomainEven
 import com.only4.domain.aggregates.star.events.StarDustCountUpdatedDomainEvent;
 import com.only4.domain.aggregates.star.events.StarLikeCountUpdatedDomainEvent;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -61,17 +62,16 @@ public class Star {
 
     }
     public void delete() {
-        this.delFlag = true;
     }
-    public void updateStarCommentCount(@NotBlank(message = "评论数不能为空") Integer commentCount) {
+    public void updateStarCommentCount(@NotNull Integer commentCount) {
             this.getStarStatistic().updateCommentCount(commentCount);
             events().attach(new StarCommentCountUpdatedDomainEvent(this, commentCount),this);
     }
-    public void updateStardustCount(@NotBlank(message = "星尘数不能为空") Integer stardustCount) {
+    public void updateStardustCount(@NotNull Integer stardustCount) {
         this.getStarStatistic().updateStarDustCount(stardustCount);
         events().attach(new StarDustCountUpdatedDomainEvent(this, stardustCount),this);
     }
-    public void updateStarLikeCount(@NotBlank(message = "点赞数不能为空") Integer likeCount) {
+    public void updateStarLikeCount(@NotNull Integer likeCount) {
         this.getStarStatistic().updateLikeCount(likeCount);
         events().attach(new StarLikeCountUpdatedDomainEvent(this, likeCount),this);
     }

@@ -4,6 +4,7 @@ package com.only4.application.commands.star;
 import com.only4._share.exception.KnownException;
 import com.only4.domain.aggregates.star.Star;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +53,7 @@ public class UpdateStardustCountCmd {
     public static class Request implements RequestParam<Response> {
         @Positive
         long starId;
-        @NotBlank(message = "星尘数不能为空")
+        @NotNull
         Integer stardustCount;
     }
 
