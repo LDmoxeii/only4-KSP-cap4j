@@ -95,30 +95,17 @@
         <!--            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>-->
         <!--        </dependency>-->
 
-        <!-- 接口文档 -->
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <groupId>com.only4</groupId>
+            <artifactId>only4-doc</artifactId>
         </dependency>
-
-        <!-- 以下自定义 -->
-        <!--  satoken  -->
         <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot3-starter</artifactId>
-            <version>${satoken.version}</version>
+            <groupId>com.only4</groupId>
+            <artifactId>only4-security</artifactId>
         </dependency>
-        <!-- Sa-Token 整合 jwt -->
         <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-jwt</artifactId>
-            <version>${satoken.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>cn.hutool</groupId>
-                    <artifactId>hutool-all</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>com.only4</groupId>
+            <artifactId>only4-web</artifactId>
         </dependency>
     </dependencies>
 

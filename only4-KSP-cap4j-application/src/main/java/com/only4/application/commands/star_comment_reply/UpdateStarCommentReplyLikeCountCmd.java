@@ -1,10 +1,9 @@
 package com.only4.application.commands.star_comment_reply;
 
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.star_comment_reply.StarCommentReply;
 import com.only4.domain.aggregates.star_comment_reply.meta.StarCommentReplySchema;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;

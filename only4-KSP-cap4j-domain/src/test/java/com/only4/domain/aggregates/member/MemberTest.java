@@ -1,6 +1,6 @@
 package com.only4.domain.aggregates.member;
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import lombok.val;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

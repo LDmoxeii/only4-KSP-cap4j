@@ -3,15 +3,15 @@ package com.only4.adapter.portal.api;
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
-import com.only4.adapter.portal.api._share.ResponseData;
-import com.only4.adapter.portal.api._share.auth.utils.LoginHelper;
-import com.only4.adapter.portal.api._share.dto.LoginUser;
-import com.only4.adapter.portal.api._share.dto.PermissionDto;
-import com.only4.adapter.portal.api._share.dto.RoleDto;
 import com.only4.adapter.portal.api.request.LoginByAccountRequest;
 import com.only4.application.commands.admin_user.AdminUserLoginSuccessfullyCmd;
 import com.only4.application.queries.admin_user.AdminUserAccessCriteriaQry;
+import com.only4.common.entity.LoginUser;
+import com.only4.common.entity.Permission;
+import com.only4.common.entity.R;
+import com.only4.common.entity.Role;
 import com.only4.domain.aggregates.admin_user.AdminUser;
+import com.only4.satoken.utils.LoginHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.netcorepal.cap4j.ddd.Mediator;
@@ -26,6 +26,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * 权限
  * @author LD_moxeii
  */
 @Slf4j
@@ -36,21 +37,21 @@ import java.util.stream.Collectors;
 public class AuthController {
 
     @PostMapping("/loginByAccount")
-    public ResponseData<?> login(@RequestBody LoginByAccountRequest request) {
+    public R<?> login(@RequestBody LoginByAccountRequest request) {
         AdminUser adminUser = Optional.ofNullable(Mediator.queries().send(AdminUserAccessCriteriaQry.Request.builder()
                         .account(request.getAccount())
                         .password(request.getPassword())
                         .build()).getAdminUser())
                 .orElseThrow(() -> new RuntimeException("账号或密码错误"));
 
-        List<RoleDto> roles = adminUser.getAdminUserRoles().stream()
-                .map(r -> RoleDto.builder()
+        List<Role> roles = adminUser.getAdminUserRoles().stream()
+                .map(r -> Role.builder()
                         .name(r.getRoleName())
                         .build())
                 .collect(Collectors.toList());
 
-        List<PermissionDto> permissions = adminUser.getAdminUserPermissions().stream()
-                .map(p -> PermissionDto.builder()
+        List<Permission> permissions = adminUser.getAdminUserPermissions().stream()
+                .map(p -> Permission.builder()
                         .code(p.getPermissionCode())
                         .name(p.getPermissionRemark())
                         .build())
@@ -75,10 +76,10 @@ public class AuthController {
                 .refreshToken(token)
                 .build()).isSuccess()) {
 
-            return ResponseData.success(token);
+            return R.ok(token);
         }
 
-        return ResponseData.fail("登录失败");
+        return R.fail("登录失败");
     }
 
 }

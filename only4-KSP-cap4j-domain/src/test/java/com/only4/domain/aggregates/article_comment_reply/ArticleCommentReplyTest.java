@@ -1,6 +1,6 @@
 package com.only4.domain.aggregates.article_comment_reply;
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

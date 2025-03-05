@@ -1,6 +1,6 @@
 package com.only4.domain.aggregates.admin_user;
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.dto.AssignAdminUserRoleDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Nested;
