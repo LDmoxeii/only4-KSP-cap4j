@@ -1,11 +1,11 @@
 package com.only4.domain.aggregates.star.meta;
 
+import jakarta.persistence.criteria.*;
 import com.only4.domain._share.meta.Schema;
 import com.only4.domain.aggregates.star.Star;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import jakarta.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 本文件由[cap4j-ddd-codegen-maven-plugin]生成
  * 警告：请勿手工修改该文件，重新生成会覆盖该文件
  * @author cap4j-ddd-codegen
- * @date 2025/02/19
+ * @date 2025/03/04
  */
 @RequiredArgsConstructor
 public class StarSchema {
@@ -25,16 +25,11 @@ public class StarSchema {
      * 属性字段集合
      */
     public static class PROPERTY_NAMES {
-
+        
         /**
          * ID
          */
         public static final String id = "id";
-
-        /**
-         * 星主ID
-         */
-        public static final String memberId = "memberId";
 
         /**
          * 星球名
@@ -69,21 +64,12 @@ public class StarSchema {
         return root;
     }
 
-
     /**
      * ID
      * bigint
      */
     public Schema.Field<Long> id() {
         return new Schema.Field<>(root.get("id"), this.criteriaBuilder);
-    }
-
-    /**
-     * 星主ID
-     * bigint
-     */
-    public Schema.Field<Long> memberId() {
-        return new Schema.Field<>(root.get("memberId"), this.criteriaBuilder);
     }
 
     /**
@@ -146,30 +132,6 @@ public class StarSchema {
         return builder.build(this);
     }
 
-    /**
-     * Stardust 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.star.meta.StardustSchema joinStardust(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Star, com.only4.domain.aggregates.star.Stardust> join = ((Root<Star>) this.root).join("stardusts", type);
-        com.only4.domain.aggregates.star.meta.StardustSchema schema = new com.only4.domain.aggregates.star.meta.StardustSchema(join, this.criteriaBuilder);
-        return schema;
-    }
-    /**
-     * StarComment 关联查询条件定义
-     *
-     * @param joinType
-     * @return
-     */
-    public com.only4.domain.aggregates.star.meta.StarCommentSchema joinStarComment(Schema.JoinType joinType) {
-        JoinType type = joinType.toJpaJoinType();
-        Join<Star, com.only4.domain.aggregates.star.StarComment> join = ((Root<Star>) this.root).join("starComments", type);
-        com.only4.domain.aggregates.star.meta.StarCommentSchema schema = new com.only4.domain.aggregates.star.meta.StarCommentSchema(join, this.criteriaBuilder);
-        return schema;
-    }
     /**
      * StarStatistic 关联查询条件定义
      *

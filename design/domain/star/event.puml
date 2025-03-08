@@ -4,31 +4,27 @@
 DomainEvent("StarCreated") [
     已创建星球
     --监听行为--
-    更新用户星球集
+'    更新用户星球集
 ]
 DomainEvent("StarDeleted") [
     已删除星球
     --监听行为--
-    更新用户星球集
+'    更新用户星球集
 ]
-DomainEvent("JoinedStar")[
-    已加入星球
+
+Event("StarCommentCountUpdated") [
+    已更新星球评论数
     --监听行为--
-    更新星球星尘数
+'    更新星球评论数
 ]
-DomainEvent("LeftStar")[
-    已离开星球
+Event("StarLikeCountStatistized") [
+    已统计星球点赞数
     --监听行为--
-    更新星球星尘数
+'    更新用户点赞数
 ]
-DomainEvent("StarLikeCountUpdated") [
-    已更新星球点赞数
+Event("StarDustCountUpdated") [
+    已更新星尘数
     --监听行为--
-    更新用户点赞数
-]
-DomainEvent("StarInfoUpdated") [
-    已更新星球信息
-    --监听行为--
-    更新用户星球信息
+'    更新星球评论数
 ]
 @enduml

@@ -22,7 +22,7 @@ spring:
       okhttp:
         enabled: false
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/only4-ksp-cap4j?serverTimezone=Asia%2FShanghai&useSSL=false&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://127.0.0.1:3306/only4-ksp-cap4j?serverTimezone=Asia/Shanghai&useSSL=false&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
     password: 123456
@@ -97,9 +97,32 @@ management:
       enabled: false
 
 springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    disable-swagger-default-url: true
+  api-docs:
+    # 是否开启接口文档
+    enabled: true
+    resolve-schema-properties: true
+  #  swagger-ui:
+  #    # 持久化认证数据
+  #    persistAuthorization: true
+  info:
+    # 标题
+    title: '标题：${spring.application.name}_接口文档'
+    # 描述
+    description: '描述...,具体包括XXX,XXX模块...'
+    # 版本
+    version: '版本号: ${spring.application.version}'
+    # 作者信息
+    contact:
+      name: LD_moxeii
+      email: 15976781430@163.com
+      url: https://github.com/LDmoxeii/only4-KSP-cap4j
+  components:
+    # 鉴权方式配置
+    security-schemes:
+      apiKey:
+        type: APIKEY
+        in: HEADER
+        name: ${sa-token.token-name}
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
@@ -125,7 +148,16 @@ redisson:
     subscription-connection-pool-size: 50
 
 security:
-  excludes: /*.html,/**/*.html,/**/*.css,/**/*.js,/favicon.ico,/error/*/api-docs,/*/api-docs/**,/*/swagger-ui/*,/*/cap4j/*
+  excludes:
+    - /*.html
+    - /**/*.html
+    - /**/*.css
+    - /**/*.js
+    - /favicon.ico
+    - /error/*/api-docs
+    - /*/api-docs/**
+    - /*/swagger-ui/*
+    - /*/cap4j/*
 
 sa-token:
   token-name: Authorization

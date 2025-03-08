@@ -1,7 +1,7 @@
 package com.only4.application.commands.article;
 
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.article.Article;
 import com.only4.domain.aggregates.article.dto.CategoryDto;
 import com.only4.domain.aggregates.category.Category;

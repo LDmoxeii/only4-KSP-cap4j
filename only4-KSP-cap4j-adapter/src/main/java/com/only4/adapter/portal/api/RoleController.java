@@ -1,8 +1,6 @@
 package com.only4.adapter.portal.api;
 
 import cn.dev33.satoken.annotation.SaIgnore;
-import com.only4._share.exception.KnownException;
-import com.only4.adapter.portal.api._share.ResponseData;
 import com.only4.adapter.portal.api.request.CreateRoleRequest;
 import com.only4.adapter.portal.api.request.UpdateRoleInfoRequest;
 import com.only4.adapter.portal.api.response.RolePermissionResponse;
@@ -14,6 +12,8 @@ import com.only4.application.commands.role.UpdateRolePermissionsCmd;
 import com.only4.application.queries.role.GetAllRolesQry;
 import com.only4.application.queries.role.GetRolesByConditionQry;
 import com.only4.application.queries.role.GetRolesByIdQry;
+import com.only4.common.entity.R;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.permission.Permission;
 import com.only4.domain.aggregates.role.Role;
 import com.only4.domain.aggregates.role.RolePermission;
@@ -28,6 +28,8 @@ import static org.netcorepal.cap4j.ddd.Mediator.commands;
 import static org.netcorepal.cap4j.ddd.Mediator.queries;
 
 /**
+ * 角色
+ *
  * @author LD_moxeii
  */
 @RestController
@@ -37,7 +39,7 @@ import static org.netcorepal.cap4j.ddd.Mediator.queries;
 public class RoleController {
 
   @PostMapping("createRole")
-  public ResponseData<?> createRole(@RequestBody CreateRoleRequest request) {
+  public R<?> createRole(@RequestBody CreateRoleRequest request) {
     List<Permission> allPermissions = Permission.getAllPermissions();
     List<RolePermission> permissionsToBeAssigned = allPermissions.stream()
         .filter(p -> request.getPermissionCodes().contains(p.getCode()))
@@ -55,20 +57,20 @@ public class RoleController {
             .permissions(permissionsToBeAssigned)
             .build()
     );
-    return ResponseData.success(send);
+    return R.ok(send);
   }
 
   @GetMapping("getAllRoles")
-  public ResponseData<?> getAllRoles() {
+  public R<?> getAllRoles() {
     var send = queries().send(GetAllRolesQry.Request.builder().build());
     List<RoleResponse> result = send.getRoles().stream()
         .map(RoleResponse::new)
         .collect(Collectors.toList());
-    return ResponseData.success(result);
+    return R.ok(result);
   }
 
   @PostMapping("getRolesByCondition")
-  public ResponseData<?> getRolesByCondition(@RequestBody CreateRoleRequest request) {
+  public R<?> getRolesByCondition(@RequestBody CreateRoleRequest request) {
     var send = queries().send(
         GetRolesByConditionQry.Request.builder()
             .name(request.getName())
@@ -78,11 +80,11 @@ public class RoleController {
     List<RoleResponse> result = send.getRoles().stream()
         .map(RoleResponse::new)
         .collect(Collectors.toList());
-    return ResponseData.success(result);
+    return R.ok(result);
   }
 
   @GetMapping("{id}")
-  public ResponseData<?> getRoleById(@PathVariable("id") Long id) {
+  public R<?> getRoleById(@PathVariable("id") Long id) {
     var send = queries().send(
         GetRolesByIdQry.Request.builder()
             .id(id)
@@ -91,11 +93,11 @@ public class RoleController {
     Role role = Optional.ofNullable(send.getRole())
         .orElseThrow(() -> new KnownException("未找到角色， RoleId =" + id));
     RoleResponse result = new RoleResponse(role);
-    return ResponseData.success(result);
+    return R.ok(result);
   }
 
   @GetMapping("getRolePermissions/{id}")
-  public ResponseData<?> getRolePermissions(@PathVariable Long id) {
+  public R<?> getRolePermissions(@PathVariable Long id) {
     var send = queries().send(GetRolesByIdQry.Request.builder()
         .id(id)
         .build());
@@ -104,31 +106,31 @@ public class RoleController {
     List<Permission> allPermissions = Permission.getAllPermissions();
     List<String> rolePermissionCodes = role.getRolePermissions().stream()
         .map(RolePermission::getPermissionCode)
-        .collect(Collectors.toList());
+        .toList();
     List<RolePermissionResponse> result = allPermissions.stream()
         .map(p -> rolePermissionCodes.contains(p.getCode())
             ? new RolePermissionResponse(p.getCode(), p.getRemark(), p.getGroupName(), Boolean.TRUE)
             : new RolePermissionResponse(p.getCode(), p.getRemark(), p.getGroupName(),
                 Boolean.FALSE))
         .collect(Collectors.toList());
-    return ResponseData.success(result);
+    return R.ok(result);
   }
 
   @PutMapping("updateRoleInfo/{id}")
-  public ResponseData<?> updateRoleInfo(@PathVariable Long id,
-      @RequestBody UpdateRoleInfoRequest request) {
+  public R<?> updateRoleInfo(@PathVariable Long id,
+                             @RequestBody UpdateRoleInfoRequest request) {
     commands().send(UpdateRoleInfoCmd.Request.builder()
         .roleId(id)
         .name(request.getName())
         .description(request.getDescription())
         .build()
     );
-    return ResponseData.success("ok");
+    return R.ok("ok");
   }
 
   @PutMapping("updateRolePermissions/{id}")
-  public ResponseData<?> updateRolePermissions(@PathVariable Long id,
-      @RequestBody List<String> permissionCodes) {
+  public R<?> updateRolePermissions(@PathVariable Long id,
+                                    @RequestBody List<String> permissionCodes) {
     List<Permission> allPermissions = Permission.getAllPermissions();
     List<RolePermission> permissionsToBeAssigned = allPermissions.stream()
         .filter(x -> permissionCodes.contains(x.getCode()))
@@ -143,14 +145,14 @@ public class RoleController {
         .roleId(id)
         .permissions(permissionsToBeAssigned)
         .build());
-    return ResponseData.success("ok");
+    return R.ok("ok");
   }
 
   @DeleteMapping("{id}")
-  public ResponseData<?> deleteRole(@PathVariable Long id) {
+  public R<?> deleteRole(@PathVariable Long id) {
     commands().send(DeleteRoleCmd.Request.builder()
         .roleId(id)
         .build());
-    return ResponseData.success("ok");
+    return R.ok("ok");
   }
 }

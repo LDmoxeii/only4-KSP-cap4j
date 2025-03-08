@@ -1,11 +1,23 @@
 package com.only4.domain.aggregates.star;
 
 import com.only4.domain.aggregates.star.events.CreatedStarDomainEvent;
+import com.only4.domain.aggregates.star.events.StarCommentCountUpdatedDomainEvent;
+import com.only4.domain.aggregates.star.events.StarDustCountUpdatedDomainEvent;
+import com.only4.domain.aggregates.star.events.StarLikeCountUpdatedDomainEvent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 
 import jakarta.persistence.CascadeType;
@@ -39,6 +51,9 @@ import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport
 public class Star {
 
     // 【行为方法开始】
+//    public void create() {
+//        events().attach(new CreatedStarDomainEvent(this), this);
+//    }
     public void create() {
         events().attach(new CreatedStarDomainEvent(this), this);
     }
@@ -46,24 +61,24 @@ public class Star {
     public void updateInfo(String newName, String newDescription, Long newPrice) {
 
     }
-
     public void delete() {
     }
-
+    public void updateStarCommentCount(@NotNull Integer commentCount) {
+            this.getStarStatistic().updateCommentCount(commentCount);
+            events().attach(new StarCommentCountUpdatedDomainEvent(this, commentCount),this);
+    }
+    public void updateStardustCount(@NotNull Integer stardustCount) {
+        this.getStarStatistic().updateStarDustCount(stardustCount);
+        events().attach(new StarDustCountUpdatedDomainEvent(this, stardustCount),this);
+    }
+    public void updateStarLikeCount(@NotNull Integer likeCount) {
+        this.getStarStatistic().updateLikeCount(likeCount);
+        events().attach(new StarLikeCountUpdatedDomainEvent(this, likeCount),this);
+    }
     // 【行为方法结束】
 
 
     // 【字段映射开始】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`star_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.star.Stardust> stardusts;
-
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "`star_id`", nullable = false)
-    private java.util.List<com.only4.domain.aggregates.star.StarComment> starComments;
 
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
@@ -86,13 +101,6 @@ public class Star {
     Long id;
 
     /**
-     * 星主ID
-     * bigint
-     */
-    @Column(name = "`member_id`")
-    Long memberId;
-
-    /**
      * 星球名
      * varchar(50)
      */
@@ -111,7 +119,7 @@ public class Star {
      * bigint
      */
     @Column(name = "`amount`")
-    Long amount;
+    Integer amount;
 
     /**
      * 逻辑删除
@@ -119,6 +127,9 @@ public class Star {
      */
     @Column(name = "`del_flag`")
     Boolean delFlag;
+
+
+
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

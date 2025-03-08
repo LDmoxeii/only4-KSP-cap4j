@@ -1,7 +1,7 @@
 package com.only4.application.commands.member;
 
 
-import com.only4._share.exception.KnownException;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.member.Member;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

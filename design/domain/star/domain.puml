@@ -5,26 +5,15 @@ Aggregate("Star") [
     星球
     --属性--
     星球ID
-    星主ID
     星球名
     星球描述
     星球价格
     --行为--
-    更新星球信息
-    更新星球价格
-    更新星球评论数
-    更新星球点赞数
-    更新星球星尘数
-]
-
-Aggregate("Stardust") [
-    星尘
-    --属性--
-    星球ID
-    星尘ID
-    星尘名
-    吸引时间
-    逃逸时间
+'    更新星球信息
+'    更新星球价格
+'    更新星球评论数
+'    更新星球点赞数
+'    更新星球星尘数
 ]
 
 Aggregate("StarStatistics") [
@@ -34,8 +23,11 @@ Aggregate("StarStatistics") [
     星球点赞数
     星球评论数
     星尘数
+    --行为--
+'    更新点赞数
+'    更新评论数
+'    更新星尘数
 ]
 
-Star -right-> Stardust
 Star -right-> StarStatistics
 @enduml

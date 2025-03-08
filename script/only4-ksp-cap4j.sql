@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : only4-ksp-capj4
+ Source Server         : only4-ksp-cap4j
  Source Server Type    : MySQL
  Source Server Version : 80033
  Source Host           : localhost:3306

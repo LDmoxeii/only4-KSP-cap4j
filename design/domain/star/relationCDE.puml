@@ -1,18 +1,11 @@
 @startuml
 CreateStar                      -down-> Star
 DeleteStar                      -down-> Star
-JoinStar                        -down-> Star
-LeaveStar                       -down-> Star
-UpdateStardustInfo              -down-> Star
-UpdateStarCommentCount          -down-> Star
 UpdateStarLikeCount             -down-> Star
-UpdateStardustCount             -down-> Star
+UpdateStarCommentCount          -down-> Star
 
 Star -down-> StarCreated
 Star -down-> StarDeleted
-Star -down-> JoinedStar
-Star -down-> LeftStar
-Star -down-> StarLikeCountUpdated
-Star -down-> StarInfoUpdated
-
+Star -down-> StarCommentCountUpdated
+Star -down-> StarLikeCountStatistized
 @enduml
