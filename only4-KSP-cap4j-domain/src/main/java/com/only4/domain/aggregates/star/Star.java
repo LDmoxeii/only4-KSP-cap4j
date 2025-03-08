@@ -1,29 +1,19 @@
 package com.only4.domain.aggregates.star;
 
-import com.only4.domain.aggregates.star.events.CreatedStarDomainEvent;
 import com.only4.domain.aggregates.star.events.StarCommentCountUpdatedDomainEvent;
+import com.only4.domain.aggregates.star.events.StarCreatedDomainEvent;
 import com.only4.domain.aggregates.star.events.StarDustCountUpdatedDomainEvent;
 import com.only4.domain.aggregates.star.events.StarLikeCountUpdatedDomainEvent;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.*;
 
 import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
@@ -55,7 +45,7 @@ public class Star {
 //        events().attach(new CreatedStarDomainEvent(this), this);
 //    }
     public void create() {
-        events().attach(new CreatedStarDomainEvent(this), this);
+        events().attach(new StarCreatedDomainEvent(this), this);
     }
 
     public void updateInfo(String newName, String newDescription, Long newPrice) {
