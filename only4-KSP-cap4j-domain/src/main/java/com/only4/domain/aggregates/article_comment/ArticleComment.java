@@ -90,7 +90,7 @@ public class ArticleComment {
     public void addReportCount(@Positive Integer reportCount) {
         this.getArticleCommentStatistics().addReportCount(reportCount);
 
-        events().attach(new ArticleCommentDeletedDomainEvent(this), this);
+
     }
 
     public void delete() {

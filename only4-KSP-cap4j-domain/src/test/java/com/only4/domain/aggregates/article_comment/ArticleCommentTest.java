@@ -144,23 +144,11 @@ class ArticleCommentTest {
     class testAddReportCount{
         @Test
         void testAddReportCount(){
-            try (MockedStatic<DomainEventSupervisorSupport> mockStatic = mockStatic(DomainEventSupervisorSupport.class)) {
-                mockStatic.when(DomainEventSupervisorSupport::events).thenReturn(eventSupervisor);
-
                 doReturn(articleCommentStatistics).when(articleComment).getArticleCommentStatistics();
 
                 articleComment.addReportCount(1);
 
                 verify(articleCommentStatistics).addReportCount(1);
-
-                verify(eventSupervisor).attach(any(), any());
-                mockStatic.verify(DomainEventSupervisorSupport::events, times(1));
-
-
-
-
-
-            }
         }
     }
 }
