@@ -2,12 +2,19 @@ package com.only4.domain.aggregates.article_comment;
 
 import jakarta.persistence.Table;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 文章评论
@@ -41,6 +48,9 @@ public class ArticleCommentStatistics {
         this.replyCount += replyCount;
     }
 
+    void addReportCount(@Positive Integer reportCount) {
+        this.reportCount = this.getReportCount() + reportCount;
+    }
     // 【行为方法结束】
 
 
@@ -70,6 +80,13 @@ public class ArticleCommentStatistics {
      */
     @Column(name = "`reply_count`")
     Integer replyCount;
+
+    /**
+     * 评论举报数
+     * int
+     */
+    @Column(name = "`report_count`")
+    Integer reportCount;
 
     /**
      * 逻辑删除

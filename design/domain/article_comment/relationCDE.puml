@@ -8,9 +8,11 @@ UpdateArticleCommentLikeCount   -down-> ArticleComment
 UpdateArticleCommentReplyCount  -down-> ArticleComment
 UpdateArticleCommentInfo        -down-> ArticleComment
 UpdateArticleCommentInfoBatch   -down-> ArticleComment
+UpdateArticleCommentReportCount -down-> ArticleComment
 
 ArticleComment -down-> ArticleCommentCreated
 ArticleComment -down-> ArticleCommentDeleted
 ArticleComment -down-> ArticleCommentLikeCountUpdated
-ArticleComment -down->ArticleCommentReplyCountUpdated
+ArticleComment -down-> ArticleCommentReplyCountUpdated
+ArticleComment -down-> ArticleCommentReportCountUpdated
 @enduml
