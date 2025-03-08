@@ -1,0 +1,5 @@
+cmd:star_comment_like.LikeStarComment:点赞星球评论
+cmd:star_comment_like.UnlikeStarComment:取消点赞星球评论
+
+de:star_comment_like.StarCommentLike:StarCommentLiked:已点赞星球评论
+de:star_comment_like.StarCommentLike:StarCommentUnliked:已取消点赞星球评论
