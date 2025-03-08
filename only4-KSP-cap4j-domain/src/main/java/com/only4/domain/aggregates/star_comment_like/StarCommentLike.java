@@ -1,6 +1,9 @@
 package com.only4.domain.aggregates.star_comment_like;
 
 import apache.rocketmq.v2.Address;
+import com.only4.domain.aggregates.star_comment.events.StarCommentCreatedDomainEvent;
+import com.only4.domain.aggregates.star_comment_like.events.StarCommentLikedDomainEvent;
+import com.only4.domain.aggregates.star_comment_like.events.StarCommentUnlikedDomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +15,8 @@ import org.netcorepal.cap4j.ddd.domain.aggregate.annotation.Aggregate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.*;
+
+import static org.netcorepal.cap4j.ddd.domain.event.DomainEventSupervisorSupport.events;
 
 /**
  * 星球评论点赞
@@ -38,6 +43,13 @@ public class StarCommentLike implements ValueObject<Long> {
 
     // 【行为方法开始】
 
+    public void like() {
+        events().attach(new StarCommentLikedDomainEvent(this), this);
+    }
+
+    public void unlike() {
+        events().attach(new StarCommentUnlikedDomainEvent(this), this);
+    }
 
     // 【行为方法结束】
 
@@ -113,6 +125,8 @@ public class StarCommentLike implements ValueObject<Long> {
      */
     @Column(name = "`del_flag`")
     Boolean delFlag;
+
+
 
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }

@@ -176,5 +176,7 @@ public class StarComment {
     @Column(name = "`del_flag`")
     Boolean delFlag;
 
+
+
     // 【字段映射结束】本段落由[cap4j-ddd-codegen-maven-plugin]维护，请不要手工改动
 }
