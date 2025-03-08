@@ -21,53 +21,6 @@ Command("DeleteStar") [
     星球ID
     --规则--
     星球必须存在
-    星尘已全部遣散
-]
-Command("JoinStar") [
-    加入星球
-    --触发事件--
-    --属性--
-    星球ID
-    用户ID
-    用户名
-    --规则--
-    星球必须存在
-    用户必须存在
-    用户名不能为空
-    用户未加入星球
-]
-Command("UpdateStardustInfo") [
-    更新星尘信息
-    --触发事件--
-    已更新用户信息
-    --属性--
-    用户ID
-    用户名
-    --规则--
-    用户必须存在
-]
-Command("UpdateStardustCount") [
-    更新星尘数
-    --触发事件--
-    已加入星球
-    已离开星球
-    --属性--
-    星球ID
-    星尘数
-    --规则--
-    星球必须存在
-    星尘数不为NULL
-]
-Command("LeaveStar") [
-    离开星球
-    --触发事件--
-    --属性--
-    星球ID
-    用户ID
-    --规则--
-    星球必须存在
-    用户必须存在
-    用户已加入星球
 ]
 Command("UpdateStarLikeCount") [
     更新星球点赞数
@@ -92,5 +45,17 @@ Command("UpdateStarCommentCount") [
     --规则--
     星球必须存在
     评论数不为NULL
+]
+Command("UpdateStarDustCount") [
+    已更新星尘数
+    --触发事件--
+    加入星球
+    离开星球
+    --属性--
+    星球ID
+    星尘数
+    --规则--
+    星球必须存在
+    星尘数不为NULL
 ]
 @enduml
