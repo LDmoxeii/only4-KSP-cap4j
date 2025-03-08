@@ -1,8 +1,8 @@
 package com.only4.application.commands.star_comment;
 
 
-import com.only4._share.exception.KnownException;
 import com.only4.application.validater.MemberExists;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.star_comment.StarComment;
 import com.only4.domain.aggregates.star_comment.factory.StarCommentFactory;
 import jakarta.validation.constraints.NotBlank;

@@ -1,10 +1,10 @@
 package com.only4.adapter.portal.api;
 
 import cn.dev33.satoken.annotation.SaIgnore;
-import com.only4.adapter.portal.api._share.ResponseData;
 import com.only4.adapter.portal.api.request.CreateArticleRequest;
 import com.only4.application.commands.article.CreateArticleCmd;
 import com.only4.application.commands.article.UpdateArticleTagsCmd;
+import com.only4.common.entity.R;
 import com.only4.domain.aggregates.article.ArticleAuthor;
 import com.only4.domain.aggregates.tag.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +20,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * 文章
+ *
  * @author LD_moxeii
  */
 @Slf4j
@@ -29,7 +31,7 @@ import java.util.stream.Collectors;
 public class ArticleController {
 
     @GetMapping("createArticleTest")
-    public ResponseData<?> createArticle(CreateArticleRequest request) {
+    public R<?> createArticle(CreateArticleRequest request) {
         List<ArticleAuthor> articleAuthors = request.getAuthors().stream()
                 .map(articleAuthorDto -> ArticleAuthor.builder()
                         .authorId(articleAuthorDto.getId())
@@ -46,11 +48,11 @@ public class ArticleController {
                         .authors(articleAuthors)
                         .build());
 
-        return ResponseData.success(response);
+        return R.ok(response);
     }
 
     @GetMapping("updateArticleTagsTest")
-    public ResponseData<?> updateArticleTags() {
+    public R<?> updateArticleTags() {
         Tag tag = Tag.builder()
                 .id(1L)
                 .name("Tag")
@@ -62,7 +64,7 @@ public class ArticleController {
                         .build())
                 .map(request -> {
                     val response = Mediator.commands().send(request);
-                    return ResponseData.success(response);
-                }).orElse(ResponseData.fail("创建文章失败"));
+                    return R.ok(response);
+                }).orElse(R.fail("创建文章失败"));
     }
 }

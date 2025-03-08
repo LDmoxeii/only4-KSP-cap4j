@@ -1,8 +1,6 @@
 package com.only4.adapter.portal.api;
 
 import cn.dev33.satoken.annotation.SaIgnore;
-import com.only4._share.exception.KnownException;
-import com.only4.adapter.portal.api._share.ResponseData;
 import com.only4.adapter.portal.api.request.AdminUserQryRequest;
 import com.only4.adapter.portal.api.request.CreateAdminUserRequest;
 import com.only4.adapter.portal.api.response.AdminUserResponse;
@@ -14,6 +12,8 @@ import com.only4.application.queries.admin_user.GetAdminUserByIdQry;
 import com.only4.application.queries.admin_user.GetAdminUsersByConditionQry;
 import com.only4.application.queries.admin_user.GetAllAdminUserQry;
 import com.only4.application.queries.role.GetAllRolesQry;
+import com.only4.common.entity.R;
+import com.only4.common.exception.KnownException;
 import com.only4.domain.aggregates.admin_user.AdminUserPermission;
 import com.only4.domain.aggregates.admin_user.dto.AssignAdminUserRoleDto;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +28,8 @@ import static org.netcorepal.cap4j.ddd.Mediator.commands;
 import static org.netcorepal.cap4j.ddd.Mediator.queries;
 
 /**
+ * 管理员
+ *
  * @author LD_moxeii
  */
 @Slf4j
@@ -37,7 +39,7 @@ import static org.netcorepal.cap4j.ddd.Mediator.queries;
 public class AdminUserController {
 
   @PostMapping("createAdminUser")
-  public ResponseData<?> createAdminUser(@RequestBody CreateAdminUserRequest request) {
+  public R<?> createAdminUser(@RequestBody CreateAdminUserRequest request) {
     var send = queries().send(
         GetAllRolesQry.Request.builder().build()
     );
@@ -64,11 +66,11 @@ public class AdminUserController {
                     .rolesToBeAssigned(rolesToBeAssigned)
                     .build()
     );
-    return ResponseData.success(result.getId());
+    return R.ok(result.getId());
   }
 
   @GetMapping("getAllAdminUsers")
-  public ResponseData<?> getAllAdminUsers() {
+  public R<?> getAllAdminUsers() {
     var send = queries().send(
         GetAllAdminUserQry.Request.builder().build()
     );
@@ -76,11 +78,11 @@ public class AdminUserController {
         .map(AdminUserResponse::new)
         .collect(Collectors.toList());
 
-    return ResponseData.success(result);
+    return R.ok(result);
   }
 
   @PostMapping("getAdminUsersByCondition")
-  public ResponseData<?> getAdminUsersByCondition(@RequestBody AdminUserQryRequest request) {
+  public R<?> getAdminUsersByCondition(@RequestBody AdminUserQryRequest request) {
     var send = queries().send(
         GetAdminUsersByConditionQry.Request.builder()
             .name(request.getName())
@@ -90,22 +92,22 @@ public class AdminUserController {
     var result = send.getAdminUsers().stream()
         .map(AdminUserResponse::new)
         .collect(Collectors.toList());
-    return ResponseData.success(result);
+    return R.ok(result);
   }
 
   @GetMapping("{id}")
-  public ResponseData<?> getAdminUserById(@PathVariable Long id) {
+  public R<?> getAdminUserById(@PathVariable Long id) {
     var send = queries().send(
         GetAdminUserByIdQry.Request.builder()
             .adminUserId(id)
             .build()
     );
     AdminUserResponse result = new AdminUserResponse(send.getAdminUser());
-    return ResponseData.success(result);
+    return R.ok(result);
   }
 
   @PutMapping("changeAdminUserPassword/{id}")
-  public ResponseData<?> changeAdminUserPassword(@PathVariable Long id, String newPassword) {
+  public R<?> changeAdminUserPassword(@PathVariable Long id, String newPassword) {
     var AdminUserQry = queries().send(
         GetAdminUserByIdQry.Request.builder()
             .adminUserId(id)
@@ -119,11 +121,11 @@ public class AdminUserController {
             .newPassword(newPassword)
             .build()
     );
-    return ResponseData.success("ok");
+    return R.ok("ok");
   }
 
   @PutMapping("getAdminUserRoles/{id}")
-  public ResponseData<?> getAdminUserRoles(@PathVariable Long id) {
+  public R<?> getAdminUserRoles(@PathVariable Long id) {
     val adminUser = queries().send(
         GetAdminUserByIdQry.Request.builder()
             .adminUserId(id)
@@ -149,17 +151,17 @@ public class AdminUserController {
                 .isAssigned(false)
                 .build()
         ).collect(Collectors.toList());
-    return ResponseData.success(result);
+    return R.ok(result);
   }
 
   @DeleteMapping("{id}")
-  public ResponseData<?> deleteAdminUser(@PathVariable Long id) {
+  public R<?> deleteAdminUser(@PathVariable Long id) {
     commands().send(
         DeleteAdminUserCmd.Request.builder()
             .adminUserId(id)
             .build()
     );
-    return ResponseData.success("ok");
+    return R.ok("ok");
   }
 
 }

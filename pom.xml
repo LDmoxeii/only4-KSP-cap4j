@@ -41,16 +41,12 @@
         <apollo.version>2.0.1</apollo.version>
         <xxljob.version>2.3.1</xxljob.version>
 
-        <!-- 以下自定义 -->
-        <!--    插件版本    -->
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <therapi-javadoc.version>0.15.0</therapi-javadoc.version>
 
-        <satoken.version>1.40.0</satoken.version>
         <mockito.version>5.2.0</mockito.version>
-        <redisson.version>3.37.0</redisson.version>
-        <lock4j.version>2.2.7</lock4j.version>
-        <caffeine.version>2.9.3</caffeine.version>
-        <hutool.version>5.8.20</hutool.version>
+
+        <only4j.version>1.2.3</only4j.version>
     </properties>
 
     <dependencyManagement>
@@ -69,10 +65,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
             <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-dependencies</artifactId>
-                <version>${knife4j.version}</version>
+                <groupId>com.only4</groupId>
+                <artifactId>only4-bom</artifactId>
+                <version>${only4j.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -123,7 +120,7 @@
                     <designFile></designFile>
                     <multiModule>true</multiModule>
                     <connectionString>
-                        <![CDATA[jdbc:mysql://127.0.0.1:3306/only4-ksp-cap4j?serverTimezone=Asia%2FShanghai&useSSL=false&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull]]>
+                        <![CDATA[jdbc:mysql://127.0.0.1:3306/only4-ksp-cap4j?serverTimezone=Asia\Shanghai&useSSL=false&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull]]>
                     </connectionString>
                     <user>root</user>
                     <pwd>123456</pwd>
@@ -138,11 +135,11 @@
                     <entitySchemaOutputMode>ref</entitySchemaOutputMode>
                     <entitySchemaOutputPackage>domain._share.meta</entitySchemaOutputPackage>
                     <idGenerator>org.netcorepal.cap4j.ddd.domain.distributed.SnowflakeIdentifierGenerator</idGenerator>
+                    <fetchType>LAZY</fetchType>
                     <enumValueField>code</enumValueField>
                     <datePackage4Java>java.time</datePackage4Java>
                     <generateDbType>true</generateDbType>
                     <generateSchema>true</generateSchema>
-                    <designFile></designFile>
                 </configuration>
             </plugin>
             <plugin>
@@ -153,8 +150,46 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.github.therapi</groupId>
+                            <artifactId>therapi-runtime-javadoc-scribe</artifactId>
+                            <version>${therapi-javadoc.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${org.projectlombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                            <version>${spring-boot.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- 关闭过滤 -->
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- 引入所有 匹配文件进行过滤 -->
+                <includes>
+                    <include>application*</include>
+                    <include>bootstrap*</include>
+                    <include>banner*</include>
+                </includes>
+                <!-- 启用过滤 即该资源中的变量将会被过滤器中的值替换 -->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 </project>
