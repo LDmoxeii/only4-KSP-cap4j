@@ -38,7 +38,8 @@ public class StarCommentLikeFactory implements AggregateFactory<StarCommentLikeF
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<StarCommentLike> {
-        String name;
+        Long starId;
+        Long starCommentId;
 
     }
 }
