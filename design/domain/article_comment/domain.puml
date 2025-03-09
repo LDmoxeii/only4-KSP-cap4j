@@ -17,6 +17,7 @@ Aggregate("ArticleCommentStatistics") [
     文章评论ID
     点赞数
     回复数
+    举报数
 ]
 
 ArticleComment -right-> ArticleCommentStatistics

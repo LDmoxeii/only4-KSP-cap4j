@@ -139,4 +139,16 @@ class ArticleCommentTest {
             }
         }
     }
+
+    @Nested
+    class testAddReportCount{
+        @Test
+        void testAddReportCount(){
+                doReturn(articleCommentStatistics).when(articleComment).getArticleCommentStatistics();
+
+                articleComment.addReportCount(1);
+
+                verify(articleCommentStatistics).addReportCount(1);
+        }
+    }
 }
