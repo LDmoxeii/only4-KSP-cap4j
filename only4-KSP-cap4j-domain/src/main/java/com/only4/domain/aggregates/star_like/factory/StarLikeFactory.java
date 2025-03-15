@@ -38,7 +38,8 @@ public class StarLikeFactory implements AggregateFactory<StarLikeFactory.Payload
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Payload implements AggregatePayload<StarLike> {
-        String name;
+        Integer userId;
+        Integer starId;
 
     }
 }
