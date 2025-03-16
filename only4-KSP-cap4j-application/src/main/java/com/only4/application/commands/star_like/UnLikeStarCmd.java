@@ -53,9 +53,9 @@ public class UnLikeStarCmd {
     @AllArgsConstructor
     public static class Request implements RequestParam<Response> {
         @Positive
-        Integer userId;
+        Long userId;
         @Positive
-        Integer starId;
+        Long starId;
     }
 
     /**
