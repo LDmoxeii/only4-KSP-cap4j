@@ -59,10 +59,10 @@ public class LikeStarCmd {
 
 
         @Positive
-        Integer userId;
+        Long userId;
         @Positive
         //TODO:@StarExists
-        Integer starId;
+        Long starId;
     }
 
     /**
