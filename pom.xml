@@ -117,7 +117,7 @@
                     <archTemplate>cap4j-ddd-codegen-template-multi-nested.json</archTemplate>
                     <archTemplateEncoding>UTF-8</archTemplateEncoding>
                     <outputEncoding>UTF-8</outputEncoding>
-                    <designFile></designFile>
+                    <designFile>design/domain/star_like/_gen.txt</designFile>
                     <multiModule>true</multiModule>
                     <connectionString>
                         <![CDATA[jdbc:mysql://127.0.0.1:3306/only4-ksp-cap4j?serverTimezone=Asia\Shanghai&useSSL=false&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull]]>
@@ -125,7 +125,7 @@
                     <user>root</user>
                     <pwd>123456</pwd>
                     <schema>only4-ksp-cap4j</schema>
-                    <table></table>
+                    <table>star_like</table>
                     <ignoreTable>\_\_%</ignoreTable>
                     <ignoreFields>db_%</ignoreFields>
                     <versionField>version</versionField>

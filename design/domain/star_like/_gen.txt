@@ -1,0 +1,5 @@
+cmd:star_like.LikeStar:点赞星球
+cmd:star_like.UnLikeStar:取消点赞星球
+
+de:star_like.StarLike:StarLike:StarLiked:已点赞星球
+de:star_like.StarLike:StarLike:StarUnliked:已取消点赞星球
